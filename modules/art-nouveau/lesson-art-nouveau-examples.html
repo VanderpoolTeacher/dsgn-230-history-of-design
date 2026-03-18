@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Art Nouveau — Key Examples — DSGN 230</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#111;--surface:#1a1a1a;--surface2:#222;--border:#333;
+  --text:#e8e8e8;--text-dim:#999;--accent:#669BBC;--accent-light:#89b4d4;
+  --white:#FDF0D5;--gold:#c9a84c;
+  --font-body:'Segoe UI',system-ui,-apple-system,sans-serif;
+  --font-display:'Georgia',serif;
+  --radius:10px;
+}
+html.light{
+  --bg:#f4f3f0;--surface:#fff;--surface2:#eae9e5;--border:#d5d3cd;
+  --text:#222;--text-dim:#555;--accent:#780000;--accent-light:#C1121F;
+  --white:#003049;--gold:#8a6d1b;
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.8;margin:0}
+a{color:var(--accent-light);text-decoration:none}
+a:hover{text-decoration:underline}
+img{max-width:100%;height:auto;border-radius:var(--radius);margin:20px 0;display:block}
+
+.toolbar{
+  position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);
+  padding:12px 24px;display:flex;align-items:center;justify-content:space-between;
+}
+.toolbar a{font-size:.85rem;color:var(--text-dim)}
+.toolbar a:hover{color:var(--accent-light)}
+.tool-btn{
+  width:34px;height:34px;border-radius:50%;border:1px solid var(--border);
+  background:var(--surface);color:var(--text-dim);display:flex;align-items:center;
+  justify-content:center;font-size:1rem;cursor:pointer;transition:.2s;padding:0;
+}
+.tool-btn:hover{border-color:var(--accent);color:var(--accent-light)}
+.tool-btn svg{width:16px;height:16px;fill:currentColor}
+
+.hero{
+  padding:60px 24px 40px;text-align:center;
+  background:radial-gradient(ellipse at 50% 30%,#1a1a1a 0%,var(--bg) 70%);
+}
+html.light .hero{background:radial-gradient(ellipse at 50% 30%,#e8e6e0 0%,var(--bg) 70%)}
+.hero h1{font-family:var(--font-display);font-size:clamp(1.8rem,4.5vw,3rem);color:var(--white);margin-bottom:8px;letter-spacing:-.02em;line-height:1.2}
+.hero .subtitle{font-size:1.05rem;color:var(--gold);font-style:italic;margin-bottom:4px}
+.hero .dates{font-size:.95rem;color:var(--text-dim)}
+
+.container{max-width:760px;margin:0 auto;padding:40px 24px 80px}
+
+.container h2{
+  font-family:var(--font-display);font-size:clamp(1.4rem,3vw,1.9rem);color:var(--white);
+  margin:48px 0 20px;padding-top:20px;border-top:1px solid var(--border);line-height:1.3;
+}
+.container h2:first-child{border-top:none;margin-top:0;padding-top:0}
+.container h3{
+  font-family:var(--font-display);font-size:1.15rem;color:var(--white);
+  margin:32px 0 12px;font-weight:700;
+}
+.container p{margin-bottom:16px;color:var(--text)}
+.container strong{color:var(--white)}
+.container em{color:var(--accent-light);font-style:italic}
+.container hr{border:none;border-top:1px solid var(--border);margin:40px 0}
+.container ul,.container ol{margin:0 0 20px 24px;color:var(--text)}
+.container li{margin-bottom:8px}
+
+footer{padding:40px 24px;text-align:center;border-top:1px solid var(--border)}
+footer p{font-size:.8rem;color:var(--text-dim)}
+
+@media(max-width:640px){
+  .container{padding:24px 16px 60px}
+}
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <a href="../../index.html">&larr; Back to Index</a>
+  <button class="tool-btn" onclick="document.documentElement.classList.toggle('light')" title="Toggle theme" aria-label="Toggle theme">
+    <svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zm0 16V5a7 7 0 1 1 0 14z"/></svg>
+  </button>
+</div>
+
+<div class="hero">
+  <h1>Art Nouveau — Key Examples</h1>
+  <div class='subtitle'>Visual Reference Guide</div>
+  <div class="dates">DSGN 230 — Survey of Design History</div>
+</div>
+
+<div class="container">
+<h2 id="architecture">Architecture</h2>
+<p><strong>Hôtel Tassel</strong> — Victor Horta, 1893, Brussels, Belgium
+<img alt="Hôtel Tassel stairway" src="images/Tassel_House_stairway.jpeg" />
+Widely considered the first Art Nouveau building. Open floor plan around a central staircase, exposed iron columns as organic decoration, mosaic floors, painted walls, and stained-glass ceiling unified into a single vision. UNESCO World Heritage Site.</p>
+<p><strong>Hôtel Solvay</strong> — Victor Horta, 1894–1898, Brussels, Belgium
+Private townhouse for industrialist Armand Solvay. Lavish interiors with custom furniture, ironwork, and stained glass — a complete Gesamtkunstwerk. UNESCO World Heritage Site.</p>
+<p><strong>Hôtel van Eetvelde</strong> — Victor Horta, 1895–1898, Brussels, Belgium
+Built for a diplomat; notable for its winter garden with iron-and-glass dome and African-wood interiors. UNESCO World Heritage Site.</p>
+<p><strong>Horta House and Studio</strong> — Victor Horta, 1898–1901, Brussels, Belgium
+Now the Horta Museum. Demonstrates Art Nouveau principles applied to the architect&rsquo;s own living and working space. UNESCO World Heritage Site.</p>
+<p><strong>Castel Béranger</strong> — Hector Guimard, 1895–1898, Paris, France
+An apartment building that established Guimard&rsquo;s reputation. Won a City of Paris facade competition in 1898. Wrought-iron gates, ceramic detailing, and asymmetric ornamentation throughout.</p>
+<p><strong>Paris Métro Entrances</strong> — Hector Guimard, 1900–1913, Paris, France
+Cast-iron and glass canopies in three standardized designs, industrially produced. Green-painted organic ironwork with amber glass lamps. 86 of the original 167 survive as protected monuments.
+<img alt="Abbesses Métro entrance" src="images/Abbesses.JPG" /></p>
+<p><strong>Abbesses Métro Station Entrance (édicule)</strong> — Hector Guimard, c. 1900, Paris, France
+One of only two surviving full glass-canopied <em>édicule</em> entrances (the other is at Porte Dauphine). Originally installed at Hôtel de Ville, relocated to Abbesses in 1974. The fan-shaped glass and iron canopy is the most complete example of Guimard&rsquo;s Métro design.</p>
+<p><strong>Casa Batlló</strong> — Antoni Gaudí, 1904–1906, Barcelona, Spain
+Renovation of an existing apartment building into a marine-organic fantasy. Undulating stone facade, bone-like balconies, dragon-spine roofline, shimmering trencadís mosaic. UNESCO World Heritage Site.</p>
+<p><strong>Casa Milà (La Pedrera)</strong> — Antoni Gaudí, 1906–1912, Barcelona, Spain
+Apartment building with a rippling stone facade resembling ocean waves or eroded cliffs. Rooftop sculptural chimneys, open-plan interiors, no load-bearing walls. UNESCO World Heritage Site.</p>
+<p><strong>Park Güell</strong> — Antoni Gaudí, 1900–1914, Barcelona, Spain
+A residential park development featuring mosaic-covered terraces, organic stone viaducts, and the iconic mosaic salamander fountain. UNESCO World Heritage Site.</p>
+<p><strong>Sagrada Família</strong> — Antoni Gaudí, 1883–present, Barcelona, Spain
+Basilica combining Gothic and Art Nouveau forms with nature-derived structural systems: tree-like columns, hyperboloid vaults, parabolic arches. Still under construction over a century after Gaudí&rsquo;s death.</p>
+<p><strong>Glasgow School of Art</strong> — Charles Rennie Mackintosh, 1897–1909, Glasgow, Scotland
+Mackintosh&rsquo;s masterwork in two phases (East Wing 1897–1899, West Wing 1907–1909). Spare rectilinear forms combined with subtle organic touches, Japanese-influenced interiors, and masterful use of natural light.</p>
+<p><strong>Palau de la Música Catalana</strong> — Lluís Domènech i Montaner, 1905–1908, Barcelona, Spain
+Concert hall with an extraordinary stained-glass skylight, sculptural facades, and richly decorated interiors combining floral mosaic, ironwork, and ceramic ornament. UNESCO World Heritage Site.</p>
+<p><strong>Vienna Stadtbahn Stations</strong> — Otto Wagner, 1894–1897, Vienna, Austria
+Stations, bridges, and viaducts for the Vienna city rail system. Elegant ironwork, tile decoration, and Jugendstil ornamentation applied to civic infrastructure.</p>
+<p><strong>Austrian Postal Savings Bank (Postsparkasse)</strong> — Otto Wagner, 1904–1906, Vienna, Austria
+Curving glass roof over the main banking hall, aluminum-bolted marble facade. A transitional work bridging Art Nouveau decoration with early modernist rationality.</p>
+<p><strong>Villa Bloemenwerf</strong> — Henry van de Velde, 1895–1896, Uccle (Brussels), Belgium
+Van de Velde&rsquo;s private residence, designed as a total environment — architecture, furniture, wallpaper, even his wife&rsquo;s dresses were part of a unified aesthetic program.</p>
+<p><strong>Villa Majorelle</strong> — Henri Sauvage (architect), Louis Majorelle (furniture), 1901–1902, Nancy, France
+A collaborative Gesamtkunstwerk: Sauvage designed the building, Majorelle the furniture, Alexandre Bigot the ceramics, and Jacques Grüber the stained glass.</p>
+<p><strong>Secession Building</strong> — Joseph Maria Olbrich, 1897–1898, Vienna, Austria
+Exhibition hall for the Vienna Secession artists. Known for its gilded openwork dome of laurel leaves and the inscription &ldquo;To every age its art, to every art its freedom.&rdquo;</p>
+<hr />
+<h2 id="glass">Glass</h2>
+<p><strong>Tiffany Wisteria Lamp</strong> — Louis Comfort Tiffany / Clara Driscoll (designer), c. 1901, New York, USA
+Bronze tree-trunk base supporting a shade of cascading wisteria blossoms in opalescent Favrile glass. Among the most iconic Art Nouveau decorative objects.</p>
+<p><strong>Tiffany Dragonfly Lamp</strong> — Louis Comfort Tiffany / Clara Driscoll, c. 1899–1906, New York, USA
+Jeweled dragonfly wings in leaded glass with cabochon &ldquo;eyes.&rdquo; Demonstrates the copper-foil technique that allowed more intricate organic designs than traditional lead came.</p>
+<p><strong>Tiffany Pond Lily Table Lamp</strong> — Louis Comfort Tiffany, c. 1900–1910, New York, USA
+<img alt="Tiffany Pond Lily lamp" src="images/Louis_comfort_tiffany,_lampada_da_tavolo_pomb_lily,_1900-10_ca..jpeg" />
+Bronze base of lily pad stems supporting twelve opalescent Favrile glass shades shaped as opening lily blossoms. Each shade glows individually, creating a naturalistic cluster of light. One of the most recognizable Tiffany Studios lamp designs.</p>
+<p><strong>Tiffany Magnolia Window</strong> — Louis Comfort Tiffany, c. 1900, New York, USA
+Large-scale stained glass depicting magnolia branches in bloom. Opalescent glass creates painterly depth without the use of paint on the glass surface.</p>
+<p><strong>Gallé Cameo Glass Vases</strong> — Émile Gallé, 1880s–1904, Nancy, France
+Layered colored glass, acid-etched and engraved to reveal botanical imagery beneath — flowers, dragonflies, landscapes. Elevated glasswork to fine art status.</p>
+<p><strong>Gallé &ldquo;Les Coprins&rdquo; Table Lamp</strong> — Émile Gallé, c. 1902, Nancy, France
+Mushroom-form lamp in layered glass with organic carved wood base. Demonstrates the integration of glass and nature-derived form.</p>
+<p><strong>Daum Brothers Glass</strong> — Auguste and Antonin Daum, 1890s–1910s, Nancy, France
+Pâte de verre (glass paste) and cameo glass pieces rivaling Gallé in technical sophistication. Floral and landscape motifs with rich, translucent color.</p>
+<p><strong>Loetz Iridescent Glass</strong> — Glasfabrik Johann Loetz Witwe, 1890s–1910s, Klostermühle, Bohemia (now Czech Republic)
+Bohemian art glass with metallic iridescent surfaces achieved through chemical treatment. Organic, undulating forms in blues, greens, and golds.</p>
+<hr />
+<h2 id="jewelry">Jewelry</h2>
+<p><strong>Dragonfly Woman Corsage Ornament</strong> — René Lalique, c. 1897–1898, Paris, France
+A hybrid female-dragonfly figure in gold, enamel, chrysoprase, moonstone, and diamonds. Now in the Calouste Gulbenkian Museum, Lisbon. One of the most famous Art Nouveau jewelry pieces.</p>
+<p><strong>Serpent Pectoral</strong> — René Lalique, c. 1898–1899, Paris, France
+Intertwined enamel snakes with gemstone accents. Demonstrates Lalique&rsquo;s interest in nature&rsquo;s darker, less conventionally &ldquo;beautiful&rdquo; creatures.</p>
+<p><strong>Peacock Diadem</strong> — René Lalique, c. 1897–1898, Paris, France
+Enamel and gemstone tiara featuring stylized peacock feathers. Design-driven rather than gem-driven — the hallmark of Lalique&rsquo;s approach.</p>
+<p><strong>Fouquet Bracelet and Ring</strong> — Georges Fouquet (designed by Alphonse Mucha), 1899, Paris, France
+A connected bracelet and ring in gold, enamel, and gemstones created for Sarah Bernhardt. Mucha&rsquo;s ornamental graphic style translated into wearable form. Now in the Petit Palais, Paris.</p>
+<hr />
+<h2 id="furniture">Furniture</h2>
+<p><strong>Majorelle &ldquo;Nénuphar&rdquo; (Water Lily) Desk</strong> — Louis Majorelle, c. 1902–1905, Nancy, France
+Carved mahogany desk with water lily and dragonfly bronze mounts. Flowing organic lines unify the wooden structure with metal fittings.</p>
+<p><strong>Majorelle &ldquo;Orchidée&rdquo; Cabinet</strong> — Louis Majorelle, c. 1903, Nancy, France
+Display cabinet with orchid marquetry and bronze ornamental hardware. Demonstrates the Nancy School&rsquo;s botanical naturalism.</p>
+<p><strong>Majorelle Wall Cabinet</strong> — Louis Majorelle, late 19th century, Nancy, France
+<img alt="Majorelle Wall Cabinet" src="images/Louis_Majorelle_-_Wall_Cabinet_-_Walters_6587.jpg" />
+Fruit wood with marquetry inlay in the sinuous Nancy School style, with rich vegetal decoration inspired by Japanese design. Collection of the Walters Art Museum, Baltimore (accession no. 65.87).</p>
+<p><strong>Gallé Marquetry Tables</strong> — Émile Gallé, 1890s–1904, Nancy, France
+Furniture featuring elaborate wood-inlay imagery of landscapes, flowers, insects, and literary quotations.</p>
+<p><strong>Mackintosh High-Back Chair</strong> — Charles Rennie Mackintosh, 1897–1900, Glasgow, Scotland
+Tall, narrow, ladder-back chair with attenuated proportions and subtle oval cutouts. Demonstrates the Glasgow Style&rsquo;s geometric restraint within Art Nouveau.</p>
+<p><strong>Bugatti &ldquo;Snail&rdquo; Room Suite</strong> — Carlo Bugatti, c. 1902, Milan, Italy
+Furniture with hammered copper, parchment, and painted decoration incorporating Moorish and Japanese motifs. An eccentric Italian contribution to Art Nouveau furniture.</p>
+<hr />
+<h2 id="posters-and-graphic-art">Posters and Graphic Art</h2>
+<p><strong>Gismonda</strong> — Alphonse Mucha, 1895, Paris, France
+Tall lithographic poster for Sarah Bernhardt. Idealized female figure in Byzantine-inspired robes, ornamental arch, mosaic-pattern background, integrated typography. The poster that launched Mucha&rsquo;s career and the &ldquo;Mucha style.&rdquo;</p>
+<p><strong>Médée</strong> — Alphonse Mucha, 1898, Paris, France
+Poster for Bernhardt&rsquo;s role as Medea. Dark-haired figure with a bloodied dagger, within Mucha&rsquo;s signature decorative framing.</p>
+<p><strong>Job Cigarette Papers</strong> — Alphonse Mucha, 1896, Paris, France
+Commercial poster with a woman exhaling smoke amid flowing hair and ornamental curves. Demonstrates Art Nouveau&rsquo;s penetration into mass-market advertising.</p>
+<p><strong>The Seasons (series)</strong> — Alphonse Mucha, 1896, Paris, France
+Four decorative panels personifying spring, summer, autumn, and winter as female figures surrounded by seasonal flora. Among Mucha&rsquo;s most reproduced works.</p>
+<p><strong>Salomé Illustrations</strong> — Aubrey Beardsley, 1894, London, England
+Black-ink illustrations for Oscar Wilde&rsquo;s play. Erotic, grotesque, and darkly beautiful — demonstrating Art Nouveau&rsquo;s capacity for psychological provocation. Japanese woodcut influence visible in the bold black-and-white contrasts.</p>
+<p><strong>Le Morte d&rsquo;Arthur Illustrations</strong> — Aubrey Beardsley, 1893, London, England
+Beardsley&rsquo;s first major commission. Intricate pen-and-ink borders and illustrations for Malory&rsquo;s Arthurian text, blending medieval imagery with Art Nouveau line.</p>
+<p><strong>The Yellow Book Covers</strong> — Aubrey Beardsley, 1894, London, England
+Cover illustrations for the literary quarterly associated with the Aesthetic and Decadent movements.</p>
+<p><strong>Tropon Poster</strong> — Henry van de Velde, 1899, Belgium
+Advertisement for a food concentrate. One of the earliest examples of abstract Art Nouveau graphic design — organic curves derived from egg whites being separated, stripped of literal representation.</p>
+<p><strong>Privat-Livemont Posters</strong> — Henri Privat-Livemont, 1890s–1900s, Brussels, Belgium
+Advertising posters in a style closely related to Mucha&rsquo;s, featuring idealized female figures and floral borders. Includes work for Absinthe Robette (1896) and Cacao Van Houten.</p>
+<p><strong><em>Jugend</em> Magazine Cover, No. 14</strong> — Otto Eckmann, 4 April 1896, Munich, Germany
+<img alt="Jugend No. 14 cover" src="images/Otto_Eckmann_-_Jugend_Nr._14,_1896.jpg" />
+Cover of the art and literary weekly that gave the German variant of Art Nouveau its name — <em>Jugendstil</em> (&ldquo;Youth Style&rdquo;). Eckmann&rsquo;s organic, flowing illustration epitomizes the movement&rsquo;s fusion of typography, image, and decorative form. Published by Georg Hirth in Munich.</p>
+<hr />
+<h2 id="painting">Painting</h2>
+<p><strong>The Kiss</strong> — Gustav Klimt, 1907–1908, Vienna, Austria
+Two figures dissolving into ornamental gold and geometric pattern. Painted during Klimt&rsquo;s &ldquo;Golden Period.&rdquo; Purchased by the Austrian government while unfinished. Now in the Belvedere Palace, Vienna.</p>
+<p><strong>Portrait of Adele Bloch-Bauer I</strong> — Gustav Klimt, 1907, Vienna, Austria
+Gold-leaf portrait merging the sitter&rsquo;s face and hands with abstract decorative fields. Byzantine mosaic influence fused with Viennese Sezessionstil.</p>
+<p><strong>Beethoven Frieze</strong> — Gustav Klimt, 1902, Vienna, Austria
+Monumental wall painting created for the Secession Building&rsquo;s 14th exhibition, interpreting Beethoven&rsquo;s Ninth Symphony. Combines figural painting with ornamental gold surfaces and abstract pattern.</p>
+<p><strong>Judith and the Head of Holofernes</strong> — Gustav Klimt, 1901, Vienna, Austria
+An ecstatic female figure in gold-decorated garment. Demonstrates Klimt&rsquo;s fusion of eroticism, ornament, and classical subject matter.</p>
+<hr />
+<h2 id="ceramics-and-tile">Ceramics and Tile</h2>
+<p><strong>Zsolnay Eosin-Glazed Ceramics</strong> — Zsolnay Porcelain Manufactory, 1890s–1910s, Pécs, Hungary
+Lustrous eosin glaze creating iridescent metallic surfaces on vases and architectural tiles. Used extensively on Hungarian Art Nouveau buildings.</p>
+<p><strong>Gaudí Trencadís Mosaics</strong> — Antoni Gaudí, 1900s, Barcelona, Spain
+Broken-tile mosaic technique covering benches, rooftops, and facades at Park Güell, Casa Batlló, and other buildings. Colorful, irregular, and organic.</p>
+<p><strong>Bigot Architectural Ceramics</strong> — Alexandre Bigot, 1890s–1900s, Paris and Nancy, France
+Stoneware tiles and facade elements for Art Nouveau buildings, including the Villa Majorelle. Matte and semi-glazed finishes with organic relief patterns.</p>
+<hr />
+<h2 id="interior-design-gesamtkunstwerk-examples">Interior Design (Gesamtkunstwerk Examples)</h2>
+<p><strong>Hôtel Tassel Interior</strong> — Victor Horta, 1893, Brussels, Belgium
+The benchmark for Art Nouveau total design: iron columns, mosaic floors, painted walls, stained-glass ceiling, and custom furniture unified by a continuous organic vocabulary.</p>
+<p><strong>Maison de l&rsquo;Art Nouveau Interior</strong> — Henry van de Velde, 1895, Paris, France
+Van de Velde&rsquo;s interior design for Siegfried Bing&rsquo;s gallery — the space that gave the movement its name.</p>
+<p><strong>Willow Tea Rooms</strong> — Charles Rennie Mackintosh, 1903, Glasgow, Scotland
+Complete interior design including furniture, light fixtures, wall decoration, and stained glass. The high-backed chairs and geometric paneling represent the Glasgow Style at its most refined.</p>
+<p><strong>Wiener Werkstätte Productions</strong> — Josef Hoffmann, Koloman Moser, et al., 1903–1932, Vienna, Austria
+Furniture, metalwork, textiles, ceramics, and fashion produced as unified design programs. More geometric than other Art Nouveau interiors, pointing toward Art Deco and early modernism.</p>
+<hr />
+</div>
+
+<footer>
+  <p>DSGN 230 — Survey of Design History</p>
+</footer>
+
+</body>
+</html>
