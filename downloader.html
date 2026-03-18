@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html><head><title>Image Downloader</title></head>
+<body>
+<h2>Image Downloader</h2>
+<div id="status">Starting downloads...</div>
+<script>
+const images = [
+    {
+        url: 'https://upload.wikimedia.org/wikipedia/commons/0/06/Bauhaus_Dessau%2CGropiusallee.jpg',
+        filename: 'Bauhaus_Masters_Houses.jpg'
+    },
+    {
+        url: 'https://upload.wikimedia.org/wikipedia/commons/e/e5/Eameslounch.jpg',
+        filename: 'Eames_Lounge_Chair.jpg'
+    },
+    {
+        url: 'https://upload.wikimedia.org/wikipedia/commons/3/32/Ettore_Sottsass_per_Memphis_-_Libreria_Casablanca_-_1981_-_laminato_plastico_-_Casablanca_bookcase_in_plastic_laminate.JPG',
+        filename: 'Sottsass_Casablanca.jpg'
+    },
+    {
+        url: 'https://upload.wikimedia.org/wikipedia/commons/0/0b/Graphic-designer-application-projects-collage-2.0.jpg',
+        filename: 'ARPANET_Map.png'
+    }
+];
+
+const status = document.getElementById('status');
+
+async function downloadAll() {
+    for (const img of images) {
+        status.innerHTML += '<br>Fetching ' + img.filename + '...';
+        try {
+            const resp = await fetch(img.url);
+            if (!resp.ok) throw new Error('HTTP ' + resp.status);
+            const blob = await resp.blob();
+            status.innerHTML += ' fetched (' + blob.size + ' bytes), resizing...';
+            
+            const imgEl = new Image();
+            imgEl.crossOrigin = 'anonymous';
+            const loaded = new Promise((resolve, reject) => { 
+                imgEl.onload = resolve; 
+                imgEl.onerror = reject; 
+            });
+            imgEl.src = URL.createObjectURL(blob);
+            await loaded;
+            
+            const canvas = document.createElement('canvas');
+            const maxW = 1200;
+            const scale = Math.min(maxW / imgEl.naturalWidth, 1);
+            canvas.width = imgEl.naturalWidth * scale;
+            canvas.height = imgEl.naturalHeight * scale;
+            canvas.getContext('2d').drawImage(imgEl, 0, 0, canvas.width, canvas.height);
+            const resizedB64 = canvas.toDataURL('image/jpeg', 0.85).split(',')[1];
+            
+            status.innerHTML += ' uploading...';
+            const res = await fetch('http://localhost:9999', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({filename: img.filename, base64: resizedB64})
+            });
+            const result = await res.json();
+            status.innerHTML += ' SAVED (' + result.size + ' bytes)';
+        } catch(e) {
+            status.innerHTML += ' ERROR: ' + e.message;
+        }
+    }
+    status.innerHTML += '<br><br><b>ALL DOWNLOADS COMPLETE</b>';
+}
+
+downloadAll();
+</script>
+</body></html>

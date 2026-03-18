@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Art Nouveau Deep Dive — DSGN 230</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#111111;--surface:#1a1a1a;--surface2:#222222;--border:#333;
+  --text:#e8e8e8;--text-dim:#999;--accent:#669BBC;--accent-light:#89b4d4;
+  --success:#2ecc71;--fail:#e74c3c;--white:#FDF0D5;--gold:#c9a84c;
+  --font-body:'Segoe UI',system-ui,-apple-system,sans-serif;
+  --font-display:'Georgia',serif;
+  --radius:10px;--shadow:0 4px 24px rgba(0,0,0,.5);
+}
+html.light{
+  --bg:#f4f3f0;--surface:#ffffff;--surface2:#eae9e5;--border:#d5d3cd;
+  --text:#222;--text-dim:#555;--accent:#780000;--accent-light:#C1121F;
+  --success:#1fa85a;--fail:#C1121F;--white:#003049;--gold:#8a6d1b;
+  --shadow:0 4px 24px rgba(0,0,0,.08);
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.7;margin:0}
+a{color:var(--accent-light);text-decoration:none}
+img{max-width:100%;display:block}
+button{cursor:pointer;font-family:var(--font-body)}
+
+.container{max-width:960px;margin:0 auto;padding:0 24px}
+
+/* HERO */
+.hero{
+  min-height:75vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:60px 24px;
+  background:radial-gradient(ellipse at 50% 30%,#1a1a1a 0%,var(--bg) 70%);
+}
+html.light .hero{background:radial-gradient(ellipse at 50% 30%,#e8e6e0 0%,var(--bg) 70%)}
+.hero h1{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.2rem);color:var(--white);margin-bottom:8px;letter-spacing:-.02em;line-height:1.2}
+.hero .subtitle{font-size:1.1rem;color:var(--gold);margin-bottom:8px;font-style:italic}
+.hero p{font-size:1.05rem;color:var(--text-dim);max-width:600px;margin-bottom:36px}
+.btn-start{
+  display:inline-block;padding:14px 40px;background:var(--accent);color:var(--white);
+  border:none;border-radius:50px;font-size:1.05rem;font-weight:600;transition:.2s;
+}
+.btn-start:hover{background:var(--accent-light);transform:translateY(-2px)}
+
+/* TOOLBAR */
+.toolbar{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:12px 0}
+.toolbar-inner{display:flex;align-items:center;gap:12px;padding:0 24px;max-width:960px;margin:0 auto}
+.progress-label{font-size:.8rem;color:var(--text-dim);min-width:90px}
+.progress-bar{flex:1;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-light));width:0;transition:width .4s ease;border-radius:3px}
+.tool-btn{
+  width:34px;height:34px;border-radius:50%;border:1px solid var(--border);
+  background:var(--surface);color:var(--text-dim);display:flex;align-items:center;
+  justify-content:center;font-size:1rem;transition:.2s;padding:0;
+}
+.tool-btn:hover{border-color:var(--accent);color:var(--accent-light)}
+.tool-btn svg{width:16px;height:16px;fill:currentColor}
+
+/* TAB NAV */
+.tab-nav{display:flex;gap:4px;overflow-x:auto;padding:20px 24px 0;max-width:960px;margin:0 auto}
+.tab-btn{
+  padding:10px 18px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius) var(--radius) 0 0;
+  color:var(--text-dim);font-size:.82rem;font-weight:600;white-space:nowrap;transition:.2s;border-bottom:none;
+}
+.tab-btn:hover{color:var(--text);border-color:var(--accent)}
+.tab-btn.active{background:var(--surface2);color:var(--accent-light);border-color:var(--accent)}
+.tab-btn.completed{color:var(--success)}
+
+/* SECTIONS */
+.section{display:none;padding:40px 0 60px;animation:fadeUp .5s ease}
+.section.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+
+.section-header{margin-bottom:32px}
+.section-header .period-label{font-size:.8rem;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px}
+.section-header h2{font-family:var(--font-display);font-size:clamp(1.6rem,3.5vw,2.2rem);color:var(--white);line-height:1.2;font-weight:700}
+.section-header .dates{font-size:.9rem;color:var(--text-dim);margin-top:4px}
+
+/* IMAGE CARDS */
+.img-card{
+  margin:28px 0;border-radius:var(--radius);overflow:hidden;
+  background:var(--surface);border:1px solid var(--border);
+}
+.img-card img{width:100%;height:auto;max-height:70vh;object-fit:contain;background:#0a0a0a}
+.img-card .caption{padding:14px 18px;font-size:.82rem;color:var(--text-dim);line-height:1.5}
+.img-card .caption strong{color:var(--text)}
+
+/* CONTENT */
+.content-block{margin-bottom:28px}
+.content-block h3{font-size:1.15rem;color:var(--white);margin-bottom:10px;font-weight:700}
+.content-block p{color:var(--text);margin-bottom:14px}
+
+.key-ideas{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:24px 0}
+.idea-chip{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;font-size:.9rem;line-height:1.5}
+.idea-chip .chip-label{font-size:.95rem;color:var(--accent);letter-spacing:.02em;margin-bottom:6px;font-weight:700}
+
+.key-figures{margin:20px 0;padding:18px;background:var(--surface2);border-left:3px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0}
+.key-figures h4{font-size:.85rem;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;font-weight:700}
+.key-figures ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+.key-figures li{font-size:.92rem;padding-left:16px;position:relative;line-height:1.5}
+.key-figures li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+
+/* TIMELINE */
+.hist-timeline{margin:28px 0;padding:0 0 0 24px;border-left:2px solid var(--accent);position:relative}
+.hist-timeline .ht-title{font-size:.95rem;color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px;margin-left:-24px;padding-left:24px}
+.ht-event{position:relative;padding:0 0 20px 16px;font-size:.88rem;line-height:1.5}
+.ht-event:last-child{padding-bottom:0}
+.ht-event::before{content:"";position:absolute;left:-29px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--accent);border:2px solid var(--bg)}
+.ht-event .ht-year{font-weight:700;color:var(--accent-light);margin-right:6px}
+
+/* THINK QUESTION */
+.think-question{margin:28px 0;padding:20px 22px;background:rgba(102,155,188,.08);border:1px solid rgba(102,155,188,.25);border-radius:var(--radius)}
+html.light .think-question{background:rgba(120,0,0,.05);border-color:rgba(120,0,0,.18)}
+.think-question .tq-label{font-size:.95rem;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;font-weight:700}
+.think-question p{font-size:1rem;color:var(--white);line-height:1.6;margin:0}
+
+/* NAV */
+.section-nav{display:flex;justify-content:space-between;gap:16px;margin-top:40px;padding-top:20px;border-top:1px solid var(--border)}
+.nav-btn{
+  padding:12px 28px;border-radius:50px;font-size:.92rem;font-weight:600;border:1px solid var(--border);
+  background:var(--surface);color:var(--text);transition:.2s;
+}
+.nav-btn:hover{border-color:var(--accent);color:var(--accent-light)}
+.nav-btn.primary{background:var(--accent);border-color:var(--accent);color:var(--white)}
+.nav-btn.primary:hover{background:var(--accent-light)}
+html.light .nav-btn.primary{color:#FDF0D5}
+
+/* ============ FLIP CARDS ============ */
+.flip-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin:28px 0}
+.flip-card{perspective:800px;height:360px;cursor:pointer}
+.flip-card-inner{
+  position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d;
+}
+.flip-card.flipped .flip-card-inner{transform:rotateY(180deg)}
+.flip-front,.flip-back{
+  position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:var(--radius);
+  border:1px solid var(--border);padding:24px;display:flex;flex-direction:column;justify-content:center;
+}
+.flip-front{background:var(--surface);text-align:center}
+.flip-front .flip-name{font-family:var(--font-display);font-size:1.2rem;color:var(--white);margin-bottom:8px}
+.flip-front .flip-dates{font-size:.85rem;color:var(--accent)}
+.flip-front .flip-hint{font-size:.75rem;color:var(--text-dim);margin-top:auto;padding-top:12px}
+.flip-back{background:var(--surface2);transform:rotateY(180deg);overflow-y:auto;font-size:.88rem;line-height:1.6}
+.flip-back .flip-role{font-size:.8rem;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;font-weight:700}
+.flip-back p{margin-bottom:8px}
+.flip-back .flip-works{font-size:.82rem;color:var(--text-dim);margin-top:auto;padding-top:8px;border-top:1px solid var(--border)}
+
+/* ============ MATCHING ============ */
+.match-activity{margin:28px 0}
+.match-instructions{font-size:.9rem;color:var(--text-dim);margin-bottom:16px}
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.match-col-label{font-size:.8rem;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:10px}
+.match-item{
+  padding:14px 16px;background:var(--surface);border:2px solid var(--border);border-radius:var(--radius);
+  font-size:.9rem;cursor:pointer;transition:.2s;margin-bottom:8px;
+}
+.match-item:hover{border-color:var(--accent)}
+.match-item.selected{border-color:var(--accent);background:rgba(102,155,188,.1);box-shadow:0 0 0 1px var(--accent)}
+html.light .match-item.selected{background:rgba(120,0,0,.06)}
+.match-item.correct{border-color:var(--success);background:rgba(46,204,113,.1)}
+.match-item.wrong{border-color:var(--fail);background:rgba(231,76,60,.1)}
+.match-item.matched{opacity:.5;pointer-events:none;border-color:var(--success)}
+.match-feedback{margin-top:16px;padding:14px;border-radius:8px;font-size:.9rem;display:none}
+.match-feedback.show{display:block}
+.match-feedback.success{background:rgba(46,204,113,.1);border:1px solid rgba(46,204,113,.3);color:var(--success)}
+.match-score{font-size:.85rem;color:var(--text-dim);margin-top:8px}
+.match-reset{margin-top:12px;padding:8px 20px;border:1px solid var(--border);border-radius:50px;background:var(--surface);color:var(--text);font-size:.85rem}
+.match-reset:hover{border-color:var(--accent);color:var(--accent-light)}
+
+/* ============ QUIZ ============ */
+.quiz-wrap{margin:28px 0}
+.q-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;margin-bottom:20px}
+.q-card .q-num{font-size:.75rem;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.q-card .q-text{font-size:1.05rem;color:var(--white);margin-bottom:18px;line-height:1.5}
+.q-card .q-img{margin-bottom:16px;border-radius:8px;overflow:hidden}
+.q-card .q-img img{width:100%;max-height:260px;object-fit:contain;background:#0a0a0a}
+.q-options{display:flex;flex-direction:column;gap:10px}
+.q-opt{
+  display:flex;align-items:center;gap:12px;padding:14px 18px;
+  background:var(--surface2);border:2px solid var(--border);border-radius:var(--radius);
+  cursor:pointer;transition:.2s;font-size:.95rem;
+}
+.q-opt:hover{border-color:var(--accent)}
+.q-opt.selected{border-color:var(--accent);background:rgba(102,155,188,.1)}
+html.light .q-opt.selected{background:rgba(120,0,0,.06)}
+.q-opt.correct{border-color:var(--success);background:rgba(46,204,113,.1)}
+.q-opt.wrong{border-color:var(--fail);background:rgba(231,76,60,.1)}
+.q-opt .letter{
+  width:30px;height:30px;border-radius:50%;background:var(--surface);display:flex;
+  align-items:center;justify-content:center;font-weight:700;font-size:.8rem;flex-shrink:0;border:1px solid var(--border);
+}
+.q-opt.selected .letter{background:var(--accent);color:var(--white);border-color:var(--accent)}
+.q-opt.correct .letter{background:var(--success);color:var(--white);border-color:var(--success)}
+.q-opt.wrong .letter{background:var(--fail);color:var(--white);border-color:var(--fail)}
+html.light .q-opt.selected .letter,html.light .q-opt.correct .letter,html.light .q-opt.wrong .letter{color:#FDF0D5}
+.q-feedback{margin-top:14px;padding:14px;border-radius:8px;font-size:.9rem;display:none;line-height:1.5}
+.q-feedback.show{display:block}
+.q-feedback.right{background:rgba(46,204,113,.1);border:1px solid rgba(46,204,113,.3);color:var(--success)}
+html.light .q-feedback.right{background:rgba(46,204,113,.08);border-color:rgba(46,204,113,.25)}
+.q-feedback.wrong{background:rgba(231,76,60,.1);border:1px solid rgba(231,76,60,.3);color:var(--fail)}
+html.light .q-feedback.wrong{background:rgba(193,18,31,.08);border-color:rgba(193,18,31,.25)}
+
+/* RESULTS */
+.results-card{
+  display:none;text-align:center;padding:40px;margin:28px 0;
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+}
+.results-card.show{display:block;animation:fadeUp .5s ease}
+.score-ring{
+  width:140px;height:140px;border-radius:50%;margin:0 auto 20px;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  border:5px solid var(--border);
+}
+.score-ring.pass{border-color:var(--success)}
+.score-ring.fail{border-color:var(--fail)}
+.score-num{font-size:2.5rem;font-weight:700;color:var(--white);line-height:1}
+.score-lbl{font-size:.8rem;color:var(--text-dim)}
+.results-card h3{font-family:var(--font-display);font-size:1.4rem;color:var(--white);margin-bottom:8px}
+.results-card p{color:var(--text-dim);margin-bottom:20px}
+.btn-retry{
+  padding:12px 32px;background:var(--accent);color:var(--white);border:none;
+  border-radius:50px;font-size:.95rem;font-weight:600;transition:.2s;
+}
+html.light .btn-retry{color:#FDF0D5}
+.btn-retry:hover{background:var(--accent-light)}
+
+/* IMAGE GALLERY */
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin:28px 0}
+.gallery-item{
+  border-radius:var(--radius);overflow:hidden;background:var(--surface);border:1px solid var(--border);
+  cursor:pointer;transition:.2s;
+}
+.gallery-item:hover{border-color:var(--accent);transform:translateY(-2px)}
+.gallery-item img{width:100%;height:180px;object-fit:cover;background:#0a0a0a}
+.gallery-item .g-info{padding:12px 14px}
+.gallery-item .g-title{font-size:.88rem;color:var(--white);font-weight:600;margin-bottom:2px}
+.gallery-item .g-meta{font-size:.78rem;color:var(--text-dim)}
+
+/* LIGHTBOX */
+.lightbox{
+  display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.92);
+  align-items:center;justify-content:center;padding:24px;
+}
+.lightbox.show{display:flex}
+.lightbox img{max-width:90vw;max-height:80vh;object-fit:contain;border-radius:var(--radius)}
+.lightbox .lb-caption{
+  position:absolute;bottom:24px;left:50%;transform:translateX(-50%);
+  color:#ccc;font-size:.9rem;text-align:center;max-width:600px;
+}
+.lightbox .lb-close{
+  position:absolute;top:20px;right:24px;width:40px;height:40px;border-radius:50%;
+  background:rgba(255,255,255,.1);border:none;color:#fff;font-size:1.4rem;
+  display:flex;align-items:center;justify-content:center;
+}
+.lightbox .lb-close:hover{background:rgba(255,255,255,.2)}
+
+/* FOOTER */
+.footer{padding:40px 24px;text-align:center;border-top:1px solid var(--border);margin-top:60px}
+.footer p{font-size:.8rem;color:var(--text-dim);line-height:1.8}
+
+@media(max-width:640px){
+  .key-ideas{grid-template-columns:1fr}
+  .flip-grid{grid-template-columns:1fr}
+  .match-grid{grid-template-columns:1fr}
+  .gallery-grid{grid-template-columns:1fr 1fr}
+  .section-nav{flex-direction:column}
+  .nav-btn{width:100%;text-align:center}
+  .tab-nav{gap:2px}
+  .tab-btn{padding:8px 12px;font-size:.75rem}
+}
+</style>
+</head>
+<body>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lb-close" onclick="closeLightbox()">&times;</button>
+  <img id="lbImg" src="" alt="">
+  <div class="lb-caption" id="lbCaption"></div>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <h1>Art Nouveau: The New Art</h1>
+  <div class="subtitle">c. 1890–1910</div>
+  <p>An interactive deep-dive into the first truly international modern design style — its people, places, materials, and legacy.</p>
+  <button class="btn-start" onclick="startLesson()">Begin Exploring</button>
+</section>
+
+<!-- TOOLBAR -->
+<div class="toolbar" id="toolbar" style="display:none">
+  <div class="toolbar-inner">
+    <span class="progress-label" id="progressLabel">Section 1 / 6</span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <button class="tool-btn" onclick="toggleTheme()" title="Toggle light/dark" aria-label="Toggle theme">
+      <svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zm0 16V5a7 7 0 1 1 0 14z"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- TAB NAV -->
+<nav class="tab-nav" id="tabNav" style="display:none">
+  <button class="tab-btn active" onclick="goSection(0)">Context</button>
+  <button class="tab-btn" onclick="goSection(1)">Gallery</button>
+  <button class="tab-btn" onclick="goSection(2)">People</button>
+  <button class="tab-btn" onclick="goSection(3)">Regions</button>
+  <button class="tab-btn" onclick="goSection(4)">Matching</button>
+  <button class="tab-btn" onclick="goSection(5)">Quiz</button>
+</nav>
+
+<!-- MAIN -->
+<main class="container" id="lessonMain">
+
+<!-- ===== SECTION 0: CONTEXT ===== -->
+<div class="section" data-idx="0">
+  <div class="section-header">
+    <div class="period-label">Historical Context</div>
+    <h2>The World That Made Art Nouveau</h2>
+    <div class="dates">Belle Époque &middot; Japonisme &middot; 1900 Exposition</div>
+  </div>
+
+  <div class="img-card">
+    <img src="images/art-nouveau/Abbesses.JPG"
+         alt="Guimard's Art Nouveau entrance to the Abbesses Métro station in Paris"
+         loading="lazy">
+    <div class="caption"><strong>Abbesses Métro Station, Paris.</strong> Hector Guimard, c. 1900. One of only two surviving full glass-canopied <em>édicule</em> entrances — the most complete example of Guimard's organic cast-iron and glass Métro design. Photo: Iste Praetor, CC BY-SA 3.0.</div>
+  </div>
+
+  <div class="content-block">
+    <h3>Fin de Siècle</h3>
+    <p>Art Nouveau emerged during the Belle Époque (c. 1871–1914), a period of relative prosperity shot through with anxiety about rapid change. Cities were expanding at disorienting speed. Electric light, telephones, automobiles, and cinema were transforming daily life. There was a widespread sense that an old world was dissolving.</p>
+    <p>Two impulses competed: a retreat toward handcraft (Arts &amp; Crafts) and an embrace of modernity that refused to be ugly. Art Nouveau chose the second path — accepting new materials and industrial techniques while insisting they could produce beauty by inventing new forms, not copying old ones.</p>
+  </div>
+
+  <div class="key-ideas">
+    <div class="idea-chip"><div class="chip-label">Japonisme</div>Japanese ukiyo-e prints flooded Europe after the 1850s — flat color, asymmetry, natural motifs, and the fusion of "useful" and "beautiful" mapped directly onto Art Nouveau's sensibility.</div>
+    <div class="idea-chip"><div class="chip-label">Siegfried Bing</div>In 1895, the Paris dealer renamed his gallery <em>Maison de l'Art Nouveau</em>, giving the movement its name and a meeting point between Japanese art and European modernists.</div>
+    <div class="idea-chip"><div class="chip-label">1900 Exposition</div>The Paris Exposition Universelle was Art Nouveau's peak — 50 million visitors, the style permeating every pavilion. But critics already called it excessive.</div>
+  </div>
+
+  <div class="content-block">
+    <h3>Defining Characteristics</h3>
+    <p>The <strong>whiplash line</strong>: a sinuous, asymmetric, organic curve appearing in iron, glass, wood, and print. <strong>Natural motifs</strong>: lilies, irises, dragonflies, peacocks, flowing water, the female form rendered with botanical fluidity. <strong>Gesamtkunstwerk</strong>: the total work of art — architects designed everything from the building to the door handles. <strong>Expressive materials</strong>: wrought iron bent into tendrils, glass layered and chemically treated, ceramic tile flowing across facades.</p>
+  </div>
+
+  <div class="hist-timeline">
+    <div class="ht-title">Key Dates</div>
+    <div class="ht-event"><span class="ht-year">1893</span><span class="ht-desc">Victor Horta completes Hôtel Tassel in Brussels — the first Art Nouveau building</span></div>
+    <div class="ht-event"><span class="ht-year">1895</span><span class="ht-desc">Siegfried Bing opens Maison de l'Art Nouveau in Paris; Mucha creates the Gismonda poster</span></div>
+    <div class="ht-event"><span class="ht-year">1897</span><span class="ht-desc">Vienna Secession founded by Klimt, Hoffmann, and others</span></div>
+    <div class="ht-event"><span class="ht-year">1900</span><span class="ht-desc">Paris Exposition Universelle — Art Nouveau at its peak; Guimard's Métro opens</span></div>
+    <div class="ht-event"><span class="ht-year">1901</span><span class="ht-desc">École de Nancy established under Émile Gallé</span></div>
+    <div class="ht-event"><span class="ht-year">1903</span><span class="ht-desc">Wiener Werkstätte founded; critics begin calling Art Nouveau excessive</span></div>
+    <div class="ht-event"><span class="ht-year">c. 1910</span><span class="ht-desc">Art Nouveau fades — geometric modernism and functionalism take over</span></div>
+  </div>
+
+  <div class="think-question">
+    <div class="tq-label">Think About It</div>
+    <p>Art Nouveau embraced new industrial materials but insisted they produce beauty, not just function. Where do you see contemporary designers using new technologies (3D printing, parametric design, AI) to create beauty rather than just efficiency?</p>
+  </div>
+
+  <div class="section-nav">
+    <span></span>
+    <button class="nav-btn primary" onclick="goSection(1)">Next: Image Gallery &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 1: GALLERY ===== -->
+<div class="section" data-idx="1">
+  <div class="section-header">
+    <div class="period-label">Visual Examples</div>
+    <h2>Image Gallery</h2>
+    <div class="dates">Click any image to enlarge</div>
+  </div>
+
+  <div class="gallery-grid">
+    <div class="gallery-item" onclick="openLightbox('images/art-nouveau/Tassel_House_stairway.jpeg','Hôtel Tassel stairway — Victor Horta, 1893, Brussels. Exposed iron columns curve into organic tendrils, mosaic floor, painted walls. The building that launched Art Nouveau architecture.')">
+      <img src="images/art-nouveau/Tassel_House_stairway.jpeg" alt="Hôtel Tassel stairway" loading="lazy">
+      <div class="g-info"><div class="g-title">Hôtel Tassel Stairway</div><div class="g-meta">Victor Horta, 1893 &middot; Brussels</div></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox('images/art-nouveau/Abbesses.JPG','Abbesses Métro Station entrance — Hector Guimard, c. 1900, Paris. One of two surviving full édicule canopies with organic cast-iron and amber glass.')">
+      <img src="images/art-nouveau/Abbesses.JPG" alt="Abbesses Métro entrance" loading="lazy">
+      <div class="g-info"><div class="g-title">Abbesses Métro Entrance</div><div class="g-meta">Hector Guimard, c. 1900 &middot; Paris</div></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox('images/art-nouveau/Louis_comfort_tiffany,_lampada_da_tavolo_pomb_lily,_1900-10_ca..jpeg','Tiffany Pond Lily Table Lamp, c. 1900–1910. Bronze lily-pad stems supporting twelve opalescent Favrile glass shades. Photo: Sailko, CC BY-SA 3.0.')">
+      <img src="images/art-nouveau/Louis_comfort_tiffany,_lampada_da_tavolo_pomb_lily,_1900-10_ca..jpeg" alt="Tiffany Pond Lily lamp" loading="lazy">
+      <div class="g-info"><div class="g-title">Tiffany Pond Lily Lamp</div><div class="g-meta">Louis Comfort Tiffany, c. 1900–10</div></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox('images/art-nouveau/Louis_Majorelle_-_Wall_Cabinet_-_Walters_6587.jpg','Majorelle Wall Cabinet — Louis Majorelle, late 19th c., Nancy. Fruit wood with marquetry in the sinuous Nancy School style. Walters Art Museum.')">
+      <img src="images/art-nouveau/Louis_Majorelle_-_Wall_Cabinet_-_Walters_6587.jpg" alt="Majorelle Wall Cabinet" loading="lazy">
+      <div class="g-info"><div class="g-title">Majorelle Wall Cabinet</div><div class="g-meta">Louis Majorelle &middot; Nancy</div></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox('images/art-nouveau/Otto_Eckmann_-_Jugend_Nr._14,_1896.jpg','Jugend magazine cover No. 14 — Otto Eckmann, April 1896, Munich. The magazine that gave Jugendstil its name. Organic flowing illustration fusing typography, image, and decorative form.')">
+      <img src="images/art-nouveau/Otto_Eckmann_-_Jugend_Nr._14,_1896.jpg" alt="Jugend magazine cover" loading="lazy">
+      <div class="g-info"><div class="g-title">Jugend Magazine, No. 14</div><div class="g-meta">Otto Eckmann, 1896 &middot; Munich</div></div>
+    </div>
+  </div>
+
+  <div class="think-question">
+    <div class="tq-label">Observe</div>
+    <p>Look at the range of media represented here: architecture, glass, furniture, graphic design. What visual elements connect these works across such different materials and scales? Can you identify the "whiplash line" in each?</p>
+  </div>
+
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(0)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(2)">Next: Key People &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 2: FLIP CARDS — PEOPLE ===== -->
+<div class="section" data-idx="2">
+  <div class="section-header">
+    <div class="period-label">Key Figures</div>
+    <h2>The People of Art Nouveau</h2>
+    <div class="dates">Click a card to reveal details</div>
+  </div>
+
+  <div class="flip-grid">
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Alphonse Mucha</div>
+          <div class="flip-dates">1860–1939 &middot; Prague &amp; Paris</div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Graphic Artist &amp; Painter</div>
+          <p>Defined Art Nouveau's graphic language with his theatrical posters for Sarah Bernhardt. His "Mucha style" — idealized female figures, cascading hair, ornamental borders, muted pastels with gold — became synonymous with the era.</p>
+          <div class="flip-works"><strong>Key works:</strong> Gismonda (1895), Médée (1898), Job Cigarettes (1896), The Seasons (1896)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Victor Horta</div>
+          <div class="flip-dates">1861–1947 &middot; Brussels</div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Architect</div>
+          <p>His Hôtel Tassel (1893) is widely considered the first Art Nouveau building. Pioneered exposed iron as organic decoration, open floor plans, and total interior design — four of his Brussels townhouses are UNESCO World Heritage Sites.</p>
+          <div class="flip-works"><strong>Key works:</strong> Hôtel Tassel, Hôtel Solvay, Hôtel van Eetvelde, Horta Museum</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Antoni Gaudí</div>
+          <div class="flip-dates">1852–1926 &middot; Barcelona</div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Architect (Catalan Modernisme)</div>
+          <p>Pushed architecture into almost biological territory — his buildings seem to grow rather than be built. Used trencadís mosaic, parabolic arches, and nature-derived structural systems. Worked exclusively on the Sagrada Família from 1914 until his death.</p>
+          <div class="flip-works"><strong>Key works:</strong> Sagrada Família, Casa Batlló (1904–06), Park Güell (1900–14), Casa Milà (1906–12)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Hector Guimard</div>
+          <div class="flip-dates">1867–1942 &middot; Paris</div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Architect &amp; Designer</div>
+          <p>Brought Art Nouveau to the Paris streets with his iconic cast-iron Métro entrances (1900–1913). Parisians called the style "le style Guimard." Only 86 of the original 167 survive as protected monuments.</p>
+          <div class="flip-works"><strong>Key works:</strong> Paris Métro entrances, Castel Béranger (1895–98)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Gustav Klimt</div>
+          <div class="flip-dates">1862–1918 &middot; Vienna</div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Painter (Vienna Secession)</div>
+          <p>Co-founded the Vienna Secession in 1897. Fused figurative naturalism with flat, ornamental gold surfaces inspired by Byzantine mosaics. His work bridges Art Nouveau's organic curves with the geometric abstraction of early modernism.</p>
+          <div class="flip-works"><strong>Key works:</strong> The Kiss (1907–08), Portrait of Adele Bloch-Bauer I (1907), Beethoven Frieze (1902)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Louis Comfort Tiffany</div>
+          <div class="flip-dates">1848–1933 &middot; New York</div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Glass Artist &amp; Designer</div>
+          <p>Developed Favrile glass using metallic oxides for iridescent surfaces. His stained-glass lamps used copper-foil technique for intricate organic designs — wisteria, dragonflies, water lilies in opalescent glass.</p>
+          <div class="flip-works"><strong>Key works:</strong> Wisteria Lamp (c. 1901), Dragonfly Lamp (c. 1899–1906), Pond Lily Lamp (c. 1900–10)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Charles Rennie Mackintosh</div>
+          <div class="flip-dates">1868–1928 &middot; Glasgow</div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Architect &amp; Designer</div>
+          <p>Developed a cooler, more geometric Art Nouveau. His Glasgow School of Art (1897–1909) combined spare rectilinear forms with subtle organic touches and Japanese-influenced spaces. Strongly influenced the Vienna Secessionists.</p>
+          <div class="flip-works"><strong>Key works:</strong> Glasgow School of Art, Willow Tea Rooms (1903), Hill House (1902–04)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Émile Gallé</div>
+          <div class="flip-dates">1846–1904 &middot; Nancy</div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Glassmaker &amp; Furniture Designer</div>
+          <p>Leading figure of the École de Nancy. Developed glass marquetry (layered, acid-etched glass) and pâte de verre casting. His vases and lamps drew imagery from nature with an almost literary quality. Founded the École de Nancy in 1901.</p>
+          <div class="flip-works"><strong>Key works:</strong> Cameo glass vases, "Les Coprins" lamp (c. 1902), marquetry furniture</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">René Lalique</div>
+          <div class="flip-dates">1860–1945 &middot; Paris</div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Jeweler &amp; Glass Artist</div>
+          <p>Revolutionized jewelry by rejecting gem obsession in favor of design — using enamel, glass, horn, and unconventional imagery (dragonflies, serpents, orchids). Later pivoted to iconic perfume bottles for Coty and others.</p>
+          <div class="flip-works"><strong>Key works:</strong> Dragonfly Woman corsage (c. 1897–98), Serpent Pectoral (c. 1898–99)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Aubrey Beardsley</div>
+          <div class="flip-dates">1872–1898 &middot; London</div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Illustrator</div>
+          <p>Seven-year career cut short by tuberculosis at age 25, but enormously influential. Black-ink drawings combined Art Nouveau's line with darkness, eroticism, and grotesque wit. Influenced by Japanese woodcuts and the Decadent movement.</p>
+          <div class="flip-works"><strong>Key works:</strong> Salomé illustrations (1894), Le Morte d'Arthur (1893), The Yellow Book (1894)</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(1)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(3)">Next: Regional Variations &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 3: REGIONAL VARIATIONS ===== -->
+<div class="section" data-idx="3">
+  <div class="section-header">
+    <div class="period-label">Geography</div>
+    <h2>Regional Variations</h2>
+    <div class="dates">One impulse, many expressions</div>
+  </div>
+
+  <div class="content-block">
+    <p>Art Nouveau appeared almost simultaneously across Europe under different names. The same desire to create a modern style rooted in nature produced strikingly different results depending on local traditions, materials, and cultural politics.</p>
+  </div>
+
+  <div class="flip-grid">
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-name">Brussels, Belgium</div><div class="flip-dates">Art Nouveau</div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">The Cradle</div><p>Where it began. Horta's Hôtel Tassel (1893) launched the movement. Known for dramatic "whiplash" curves in iron, glass, and stone. Horta, van de Velde, and Paul Hankar all worked here.</p></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-name">Paris &amp; Nancy, France</div><div class="flip-dates">Art Nouveau / Style 1900</div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">Two Poles</div><p>Paris: Bing's gallery, Guimard's Métro, Mucha's posters, Lalique's jewelry. Nancy: the École de Nancy under Gallé and Majorelle — more botanically precise, reflecting craft traditions.</p></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-name">Vienna, Austria</div><div class="flip-dates">Sezessionstil</div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">Geometry &amp; Gold</div><p>The Vienna Secession moved earlier toward geometric abstraction. Klimt, Hoffmann, Moser, Wagner favored rectilinear forms and checkerboard patterns. The Wiener Werkstätte (1903) forecast Art Deco and modernism.</p></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-name">Barcelona, Spain</div><div class="flip-dates">Modernisme</div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">National Identity</div><p>Inseparable from Catalonia's drive for cultural distinctiveness. Gaudí, Domènech i Montaner — more ornamental, colorful, and structurally daring than Art Nouveau elsewhere. Trencadís mosaics, parabolic arches.</p></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-name">Glasgow, Scotland</div><div class="flip-dates">Glasgow Style</div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">Restraint &amp; Rigor</div><p>Mackintosh and "The Four" — vertical emphasis, geometric structure, pale austere palette. Influenced the Vienna Secessionists when Mackintosh exhibited there in 1900.</p></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-name">Germany</div><div class="flip-dates">Jugendstil</div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">Youth Style</div><p>Named after the Munich magazine <em>Jugend</em> (1896). More structured and linear than French/Belgian variants. Peter Behrens began here before pioneering industrial design. The Darmstadt Artists' Colony (1899) was a key center.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="think-question">
+    <div class="tq-label">Think About It</div>
+    <p>Catalan Modernisme was inseparable from regional political identity. Can you identify contemporary design movements that are similarly tied to a specific place or cultural struggle?</p>
+  </div>
+
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(2)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(4)">Next: Matching Activity &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 4: MATCHING ===== -->
+<div class="section" data-idx="4">
+  <div class="section-header">
+    <div class="period-label">Activity</div>
+    <h2>Match the Artist to Their Work</h2>
+    <div class="dates">Select one item from each column to form a pair</div>
+  </div>
+
+  <p class="match-instructions">Click an artist on the left, then click their work on the right. Correct matches will lock in place.</p>
+
+  <div class="match-grid">
+    <div>
+      <div class="match-col-label">Artists</div>
+      <div id="matchLeft"></div>
+    </div>
+    <div>
+      <div class="match-col-label">Works</div>
+      <div id="matchRight"></div>
+    </div>
+  </div>
+  <div class="match-score" id="matchScore"></div>
+  <div class="match-feedback" id="matchFeedback"></div>
+  <button class="match-reset" id="matchResetBtn" onclick="resetMatch()" style="display:none">Try Again</button>
+
+  <div style="margin-top:40px"></div>
+
+  <div class="section-header">
+    <div class="period-label">Activity</div>
+    <h2>Match the Regional Name</h2>
+    <div class="dates">Connect each country to its local name for Art Nouveau</div>
+  </div>
+
+  <p class="match-instructions">Click a country on the left, then its Art Nouveau name on the right.</p>
+
+  <div class="match-grid">
+    <div>
+      <div class="match-col-label">Country</div>
+      <div id="matchLeft2"></div>
+    </div>
+    <div>
+      <div class="match-col-label">Local Name</div>
+      <div id="matchRight2"></div>
+    </div>
+  </div>
+  <div class="match-score" id="matchScore2"></div>
+  <div class="match-feedback" id="matchFeedback2"></div>
+  <button class="match-reset" id="matchResetBtn2" onclick="resetMatch2()" style="display:none">Try Again</button>
+
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(3)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(5)">Next: Quiz &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 5: QUIZ ===== -->
+<div class="section" data-idx="5">
+  <div class="section-header">
+    <div class="period-label">Knowledge Check</div>
+    <h2>Art Nouveau Quiz</h2>
+    <div class="dates">Test what you've learned</div>
+  </div>
+
+  <div class="quiz-wrap" id="quizWrap"></div>
+
+  <div class="results-card" id="resultsCard">
+    <div class="score-ring" id="scoreRing">
+      <div class="score-num" id="scoreNum">0%</div>
+      <div class="score-lbl">Score</div>
+    </div>
+    <h3 id="resultsTitle">Results</h3>
+    <p id="resultsMsg"></p>
+    <button class="btn-retry" onclick="retryQuiz()">Try Again</button>
+  </div>
+
+  <div class="section-nav" id="quizNav">
+    <button class="nav-btn" onclick="goSection(4)">&larr; Previous</button>
+    <span></span>
+  </div>
+</div>
+
+</main>
+
+<footer class="footer">
+  <p>DSGN 230 — Survey of Design History<br>Art Nouveau Deep Dive Interactive</p>
+</footer>
+
+<script>
+/* ============ GLOBALS ============ */
+const TOTAL_SECTIONS = 6;
+let currentSection = 0;
+
+/* ============ NAVIGATION ============ */
+function startLesson(){
+  document.getElementById('hero').style.display='none';
+  document.getElementById('toolbar').style.display='block';
+  document.getElementById('tabNav').style.display='flex';
+  goSection(0);
+}
+
+function goSection(idx){
+  currentSection=idx;
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.section')[idx].classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>{b.classList.toggle('active',i===idx)});
+  document.getElementById('progressLabel').textContent=`Section ${idx+1} / ${TOTAL_SECTIONS}`;
+  document.getElementById('progressFill').style.width=((idx+1)/TOTAL_SECTIONS*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleTheme(){document.documentElement.classList.toggle('light')}
+
+/* ============ LIGHTBOX ============ */
+function openLightbox(src,cap){
+  const lb=document.getElementById('lightbox');
+  document.getElementById('lbImg').src=src;
+  document.getElementById('lbCaption').textContent=cap;
+  lb.classList.add('show');
+}
+function closeLightbox(){document.getElementById('lightbox').classList.remove('show')}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox()});
+
+/* ============ MATCHING 1: Artist → Work ============ */
+const matchPairs=[
+  {left:'Victor Horta',right:'Hôtel Tassel'},
+  {left:'Alphonse Mucha',right:'Gismonda poster'},
+  {left:'Antoni Gaudí',right:'Casa Batlló'},
+  {left:'Louis Comfort Tiffany',right:'Favrile glass lamps'},
+  {left:'René Lalique',right:'Dragonfly Woman corsage'},
+  {left:'Gustav Klimt',right:'The Kiss'},
+  {left:'Charles Rennie Mackintosh',right:'Glasgow School of Art'},
+  {left:'Émile Gallé',right:'Cameo glass vases'},
+];
+let m1Left=null,m1Matched=0;
+
+function initMatch(){
+  const lC=document.getElementById('matchLeft'),rC=document.getElementById('matchRight');
+  const shuffledL=[...matchPairs].sort(()=>Math.random()-.5);
+  const shuffledR=[...matchPairs].sort(()=>Math.random()-.5);
+  lC.innerHTML='';rC.innerHTML='';
+  shuffledL.forEach(p=>{
+    const d=document.createElement('div');d.className='match-item';d.textContent=p.left;
+    d.dataset.key=p.left;d.onclick=()=>selectMatchLeft(d);lC.appendChild(d);
+  });
+  shuffledR.forEach(p=>{
+    const d=document.createElement('div');d.className='match-item';d.textContent=p.right;
+    d.dataset.key=p.left;d.onclick=()=>selectMatchRight(d);rC.appendChild(d);
+  });
+  m1Left=null;m1Matched=0;
+  document.getElementById('matchScore').textContent='';
+  document.getElementById('matchFeedback').className='match-feedback';
+  document.getElementById('matchResetBtn').style.display='none';
+}
+
+function selectMatchLeft(el){
+  if(el.classList.contains('matched'))return;
+  document.querySelectorAll('#matchLeft .match-item').forEach(e=>e.classList.remove('selected'));
+  el.classList.add('selected');m1Left=el;
+}
+
+function selectMatchRight(el){
+  if(!m1Left||el.classList.contains('matched'))return;
+  if(m1Left.dataset.key===el.dataset.key){
+    m1Left.classList.remove('selected');m1Left.classList.add('matched');
+    el.classList.add('matched');m1Matched++;
+    document.getElementById('matchScore').textContent=`${m1Matched} / ${matchPairs.length} matched`;
+    if(m1Matched===matchPairs.length){
+      const fb=document.getElementById('matchFeedback');
+      fb.className='match-feedback show success';fb.textContent='All matched! Great work.';
+    }
+  } else {
+    el.classList.add('wrong');m1Left.classList.add('wrong');
+    setTimeout(()=>{el.classList.remove('wrong');m1Left.classList.remove('wrong','selected');m1Left=null},800);
+    document.getElementById('matchResetBtn').style.display='inline-block';
+    return;
+  }
+  m1Left=null;
+}
+
+function resetMatch(){initMatch()}
+
+/* ============ MATCHING 2: Country → Name ============ */
+const matchPairs2=[
+  {left:'France / Belgium',right:'Art Nouveau'},
+  {left:'Germany',right:'Jugendstil'},
+  {left:'Austria',right:'Sezessionstil'},
+  {left:'Spain / Catalonia',right:'Modernisme'},
+  {left:'Italy',right:'Stile Liberty'},
+  {left:'Scotland',right:'Glasgow Style'},
+];
+let m2Left=null,m2Matched=0;
+
+function initMatch2(){
+  const lC=document.getElementById('matchLeft2'),rC=document.getElementById('matchRight2');
+  const shuffledL=[...matchPairs2].sort(()=>Math.random()-.5);
+  const shuffledR=[...matchPairs2].sort(()=>Math.random()-.5);
+  lC.innerHTML='';rC.innerHTML='';
+  shuffledL.forEach(p=>{
+    const d=document.createElement('div');d.className='match-item';d.textContent=p.left;
+    d.dataset.key=p.left;d.onclick=()=>selectM2Left(d);lC.appendChild(d);
+  });
+  shuffledR.forEach(p=>{
+    const d=document.createElement('div');d.className='match-item';d.textContent=p.right;
+    d.dataset.key=p.left;d.onclick=()=>selectM2Right(d);rC.appendChild(d);
+  });
+  m2Left=null;m2Matched=0;
+  document.getElementById('matchScore2').textContent='';
+  document.getElementById('matchFeedback2').className='match-feedback';
+  document.getElementById('matchResetBtn2').style.display='none';
+}
+
+function selectM2Left(el){
+  if(el.classList.contains('matched'))return;
+  document.querySelectorAll('#matchLeft2 .match-item').forEach(e=>e.classList.remove('selected'));
+  el.classList.add('selected');m2Left=el;
+}
+
+function selectM2Right(el){
+  if(!m2Left||el.classList.contains('matched'))return;
+  if(m2Left.dataset.key===el.dataset.key){
+    m2Left.classList.remove('selected');m2Left.classList.add('matched');
+    el.classList.add('matched');m2Matched++;
+    document.getElementById('matchScore2').textContent=`${m2Matched} / ${matchPairs2.length} matched`;
+    if(m2Matched===matchPairs2.length){
+      const fb=document.getElementById('matchFeedback2');
+      fb.className='match-feedback show success';fb.textContent='All matched! You know your regional names.';
+    }
+  } else {
+    el.classList.add('wrong');m2Left.classList.add('wrong');
+    setTimeout(()=>{el.classList.remove('wrong');m2Left.classList.remove('wrong','selected');m2Left=null},800);
+    document.getElementById('matchResetBtn2').style.display='inline-block';
+    return;
+  }
+  m2Left=null;
+}
+
+function resetMatch2(){initMatch2()}
+
+/* ============ QUIZ ============ */
+const quizData=[
+  {q:'Which building is widely considered the first Art Nouveau structure?',
+   img:'images/art-nouveau/Tassel_House_stairway.jpeg',
+   opts:['Hôtel Tassel, Brussels','Casa Batlló, Barcelona','Secession Building, Vienna','Glasgow School of Art'],
+   ans:0,
+   explain:'Victor Horta\'s Hôtel Tassel (1893) in Brussels is widely considered the first fully realized Art Nouveau building.'},
+  {q:'What German term describes Art Nouveau\'s ideal of a "total work of art"?',
+   opts:['Zeitgeist','Gesamtkunstwerk','Jugendstil','Wanderlust'],
+   ans:1,
+   explain:'Gesamtkunstwerk — originally associated with Wagner\'s opera — became central to Art Nouveau, where architects designed everything from the building to the cutlery.'},
+  {q:'Which artist created the iconic poster for Sarah Bernhardt\'s Gismonda in 1895?',
+   opts:['Aubrey Beardsley','Henri Privat-Livemont','Alphonse Mucha','Otto Eckmann'],
+   ans:2,
+   explain:'Mucha was called upon to produce an emergency poster for Bernhardt on Dec. 26, 1894. The resulting Gismonda poster was an instant sensation.'},
+  {q:'What technique did Louis Comfort Tiffany develop for his iridescent glass?',
+   opts:['Pâte de verre','Cameo etching','Favrile glass','Trencadís'],
+   ans:2,
+   explain:'Favrile glass used metallic oxides introduced into molten glass to produce iridescent, luminous surfaces that changed color with the light.'},
+  {q:'Art Nouveau in Germany was known as Jugendstil. What does this name reference?',
+   opts:['A Munich art magazine called Jugend','The German word for "young style"','A Jugendstil manifesto by Otto Wagner','The youth of its practitioners'],
+   ans:0,
+   explain:'Jugendstil ("Youth Style") was named after the Munich-based art and literary magazine Jugend, founded in 1896.'},
+  {q:'Which Art Nouveau variant moved earliest toward geometric abstraction?',
+   opts:['French Art Nouveau','Catalan Modernisme','Belgian Art Nouveau','Vienna Secession'],
+   ans:3,
+   explain:'By around 1903, the Viennese — Hoffmann, Moser, Wagner — had already begun leaving organic curves behind in favor of geometric forms, forecasting Art Deco and modernism.'},
+  {q:'Antoni Gaudí\'s broken-tile mosaic technique is called:',
+   opts:['Marquetry','Cloisonné','Trencadís','Favrile'],
+   ans:2,
+   explain:'Trencadís uses broken ceramic pieces assembled into colorful, irregular mosaic surfaces, seen at Park Güell, Casa Batlló, and other Gaudí buildings.'},
+  {q:'René Lalique revolutionized jewelry by prioritizing what over precious gemstones?',
+   opts:['Industrial materials','Design and unconventional imagery','Minimalist forms','Political symbolism'],
+   ans:1,
+   explain:'Lalique rejected the Victorian obsession with precious stones in favor of design-driven pieces using enamel, glass, horn, and imagery like dragonflies and serpents.'},
+  {q:'Which event is considered Art Nouveau\'s peak — and the beginning of its decline?',
+   opts:['The Great Exhibition of 1851','The 1900 Paris Exposition Universelle','The founding of the Vienna Secession','The 1925 Art Deco Exposition'],
+   ans:1,
+   explain:'The 1900 Exposition Universelle in Paris attracted 50 million visitors and showcased Art Nouveau everywhere — but critics already called it excessive, foreshadowing its decline.'},
+  {q:'What major influence on Art Nouveau came from Japan?',
+   opts:['Zen Buddhism architecture','Samurai armor construction','Ukiyo-e woodblock prints','Japanese tea ceremony'],
+   ans:2,
+   explain:'Japonisme — the enthusiasm for Japanese art, particularly ukiyo-e prints — brought flat color, asymmetry, natural motifs, and the fusion of "useful" and "beautiful" into Art Nouveau\'s DNA.'},
+];
+
+let quizAnswers=[], quizLocked=[];
+
+function initQuiz(){
+  const wrap=document.getElementById('quizWrap');wrap.innerHTML='';
+  quizAnswers=new Array(quizData.length).fill(-1);
+  quizLocked=new Array(quizData.length).fill(false);
+  document.getElementById('resultsCard').classList.remove('show');
+
+  quizData.forEach((q,qi)=>{
+    let imgHtml=q.img?`<div class="q-img"><img src="${q.img}" alt="Quiz image" loading="lazy"></div>`:'';
+    let optsHtml=q.opts.map((o,oi)=>`
+      <div class="q-opt" data-qi="${qi}" data-oi="${oi}" onclick="selectQuizOpt(${qi},${oi})">
+        <span class="letter">${String.fromCharCode(65+oi)}</span><span>${o}</span>
+      </div>`).join('');
+    wrap.innerHTML+=`
+      <div class="q-card">
+        <div class="q-num">Question ${qi+1} of ${quizData.length}</div>
+        ${imgHtml}
+        <div class="q-text">${q.q}</div>
+        <div class="q-options">${optsHtml}</div>
+        <div class="q-feedback" id="qfb${qi}"></div>
+      </div>`;
+  });
+
+  wrap.innerHTML+=`<div style="text-align:center;margin-top:24px"><button class="btn-start" onclick="submitQuiz()">Submit Answers</button></div>`;
+}
+
+function selectQuizOpt(qi,oi){
+  if(quizLocked[qi])return;
+  quizAnswers[qi]=oi;
+  document.querySelectorAll(`.q-opt[data-qi="${qi}"]`).forEach(e=>{
+    e.classList.remove('selected');
+    if(parseInt(e.dataset.oi)===oi)e.classList.add('selected');
+  });
+}
+
+function submitQuiz(){
+  let score=0;
+  quizData.forEach((q,qi)=>{
+    quizLocked[qi]=true;
+    const opts=document.querySelectorAll(`.q-opt[data-qi="${qi}"]`);
+    opts.forEach(o=>{
+      o.classList.remove('selected');
+      const oi=parseInt(o.dataset.oi);
+      if(oi===q.ans)o.classList.add('correct');
+      else if(oi===quizAnswers[qi])o.classList.add('wrong');
+    });
+    const fb=document.getElementById('qfb'+qi);
+    if(quizAnswers[qi]===q.ans){score++;fb.className='q-feedback show right';fb.textContent='Correct! '+q.explain;}
+    else{fb.className='q-feedback show wrong';fb.textContent='Not quite. '+q.explain;}
+  });
+
+  const pct=Math.round(score/quizData.length*100);
+  const rc=document.getElementById('resultsCard');rc.classList.add('show');
+  const ring=document.getElementById('scoreRing');
+  ring.className='score-ring '+(pct>=70?'pass':'fail');
+  document.getElementById('scoreNum').textContent=pct+'%';
+  document.getElementById('resultsTitle').textContent=pct>=70?'Well Done!':'Keep Studying';
+  document.getElementById('resultsMsg').textContent=`You got ${score} out of ${quizData.length} correct.`+(pct>=70?' You have a solid understanding of Art Nouveau.':' Review the lesson sections and try again.');
+}
+
+function retryQuiz(){initQuiz();window.scrollTo({top:document.getElementById('quizWrap').offsetTop-100,behavior:'smooth'})}
+
+/* ============ INIT ============ */
+initMatch();
+initMatch2();
+initQuiz();
+</script>
+</body>
+</html>

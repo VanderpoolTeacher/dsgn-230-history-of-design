@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Survey of Design Periods — DSGN 230</title>
+<script src="scormapi.js"></script>
+<style>
+/* ============ RESET & BASE ============ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0f0f0f; --surface:#1a1a1a; --surface2:#242424; --border:#333;
+  --text:#e8e8e8; --text-dim:#999; --accent:#e85d26; --accent-light:#ff7a45;
+  --success:#2ecc71; --fail:#e74c3c; --white:#fff;
+  --font-body:'Segoe UI',system-ui,-apple-system,sans-serif;
+  --font-display:'Georgia',serif;
+  --radius:10px; --shadow:0 4px 24px rgba(0,0,0,.4);
+}
+html{font-size:16px}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.7;overflow-x:hidden}
+a{color:var(--accent-light);text-decoration:none}
+a:hover{text-decoration:underline}
+img{max-width:100%;display:block}
+button{cursor:pointer;font-family:var(--font-body)}
+
+/* ============ LAYOUT ============ */
+.container{max-width:960px;margin:0 auto;padding:0 24px}
+
+/* ============ HERO ============ */
+.hero{
+  min-height:80vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:60px 24px;
+  background:radial-gradient(ellipse at 50% 30%,#2a1a10 0%,var(--bg) 70%);
+}
+.hero h1{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.4rem);color:var(--white);margin-bottom:16px;letter-spacing:-.02em;line-height:1.2}
+.hero p{font-size:1.15rem;color:var(--text-dim);max-width:600px;margin-bottom:36px}
+.hero .btn-start{
+  display:inline-block;padding:14px 40px;background:var(--accent);color:var(--white);
+  border:none;border-radius:50px;font-size:1.05rem;font-weight:600;transition:.2s;
+}
+.hero .btn-start:hover{background:var(--accent-light);transform:translateY(-2px)}
+
+/* ============ PROGRESS BAR ============ */
+.progress-wrap{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:12px 0}
+.progress-inner{display:flex;align-items:center;gap:12px}
+.progress-label{font-size:.8rem;color:var(--text-dim);min-width:90px}
+.progress-bar{flex:1;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-light));width:0;transition:width .4s ease;border-radius:3px}
+
+/* ============ TIMELINE NAV ============ */
+.timeline-nav{padding:40px 0 20px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.timeline-track{display:flex;gap:4px;min-width:max-content;padding:0 24px}
+.tl-dot{
+  display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 14px;
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  cursor:pointer;transition:.2s;min-width:110px;
+}
+.tl-dot:hover,.tl-dot.active{border-color:var(--accent);background:var(--surface2)}
+.tl-dot.visited{border-color:var(--success)}
+.tl-dot .year{font-size:.72rem;color:var(--text-dim);font-weight:600;letter-spacing:.04em}
+.tl-dot .name{font-size:.72rem;color:var(--text);text-align:center;line-height:1.3}
+.tl-dot.active .name{color:var(--accent-light)}
+
+/* ============ SECTION ============ */
+.section{display:none;padding:40px 0 60px;animation:fadeUp .5s ease}
+.section.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+
+.section-header{margin-bottom:32px}
+.section-header .period-label{font-size:.8rem;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px}
+.section-header h2{font-family:var(--font-display);font-size:clamp(1.6rem,3.5vw,2.4rem);color:var(--white);line-height:1.2}
+.section-header .dates{font-size:.95rem;color:var(--text-dim);margin-top:4px}
+
+/* ============ IMAGE CARD ============ */
+.img-card{
+  margin:28px 0;border-radius:var(--radius);overflow:hidden;
+  background:var(--surface);border:1px solid var(--border);
+}
+.img-card img{width:100%;height:auto;object-fit:contain}
+.img-card .caption{padding:14px 18px;font-size:.82rem;color:var(--text-dim);line-height:1.5}
+.img-card .caption strong{color:var(--text)}
+
+/* ============ CONTENT BLOCKS ============ */
+.content-block{margin-bottom:28px}
+.content-block h3{font-size:1.15rem;color:var(--white);margin-bottom:10px;font-weight:600}
+.content-block p{color:var(--text);margin-bottom:14px}
+
+.key-ideas{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:24px 0;
+}
+.idea-chip{
+  background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);
+  padding:16px;font-size:.9rem;line-height:1.5;
+}
+.idea-chip .chip-label{font-size:.7rem;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+
+.key-figures{margin:20px 0;padding:18px;background:var(--surface2);border-left:3px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0}
+.key-figures h4{font-size:.85rem;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+.key-figures p{font-size:.92rem}
+.key-figures ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+.key-figures li{font-size:.92rem;padding-left:16px;position:relative;line-height:1.5}
+.key-figures li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+
+/* ============ THINK ABOUT IT ============ */
+.think-question{
+  margin:28px 0;padding:20px 22px;background:rgba(232,93,38,.08);
+  border:1px solid rgba(232,93,38,.25);border-radius:var(--radius);
+}
+.think-question .tq-label{font-size:.72rem;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;font-weight:700}
+.think-question p{font-size:1rem;color:var(--white);line-height:1.6;font-style:italic;margin:0}
+
+/* ============ NAV BUTTONS ============ */
+.section-nav{display:flex;justify-content:space-between;gap:16px;margin-top:40px;padding-top:20px;border-top:1px solid var(--border)}
+.nav-btn{
+  padding:12px 28px;border-radius:50px;font-size:.92rem;font-weight:600;border:1px solid var(--border);
+  background:var(--surface);color:var(--text);transition:.2s;
+}
+.nav-btn:hover{border-color:var(--accent);color:var(--accent-light)}
+.nav-btn.primary{background:var(--accent);border-color:var(--accent);color:var(--white)}
+.nav-btn.primary:hover{background:var(--accent-light)}
+
+/* ============ QUIZ ============ */
+.quiz-section{display:none;padding:40px 0 80px}
+.quiz-section.active{display:block;animation:fadeUp .5s ease}
+.quiz-header{text-align:center;margin-bottom:40px}
+.quiz-header h2{font-family:var(--font-display);font-size:2rem;color:var(--white)}
+.quiz-header p{color:var(--text-dim);margin-top:8px}
+.quiz-progress{font-size:.85rem;color:var(--text-dim);text-align:center;margin-bottom:24px}
+
+.q-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:28px;margin-bottom:20px;
+}
+.q-card .q-num{font-size:.75rem;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.q-card .q-text{font-size:1.05rem;color:var(--white);margin-bottom:18px;line-height:1.5}
+.q-card .q-img{margin-bottom:16px;border-radius:8px;overflow:hidden}
+.q-card .q-img img{width:100%;max-height:260px;object-fit:cover}
+
+.q-options{display:flex;flex-direction:column;gap:10px}
+.q-opt{
+  display:flex;align-items:center;gap:12px;padding:14px 18px;
+  background:var(--surface2);border:2px solid var(--border);border-radius:var(--radius);
+  cursor:pointer;transition:.2s;font-size:.95rem;
+}
+.q-opt:hover{border-color:var(--accent)}
+.q-opt.selected{border-color:var(--accent);background:rgba(232,93,38,.1)}
+.q-opt.correct{border-color:var(--success);background:rgba(46,204,113,.1)}
+.q-opt.wrong{border-color:var(--fail);background:rgba(231,76,60,.1)}
+.q-opt .letter{
+  width:30px;height:30px;border-radius:50%;background:var(--surface);
+  display:flex;align-items:center;justify-content:center;font-weight:700;
+  font-size:.8rem;flex-shrink:0;border:1px solid var(--border);
+}
+.q-opt.selected .letter{background:var(--accent);color:var(--white);border-color:var(--accent)}
+.q-opt.correct .letter{background:var(--success);color:var(--white);border-color:var(--success)}
+.q-opt.wrong .letter{background:var(--fail);color:var(--white);border-color:var(--fail)}
+
+.q-feedback{margin-top:14px;padding:14px;border-radius:8px;font-size:.9rem;display:none;line-height:1.5}
+.q-feedback.show{display:block}
+.q-feedback.right{background:rgba(46,204,113,.1);border:1px solid rgba(46,204,113,.3);color:var(--success)}
+.q-feedback.wrong{background:rgba(231,76,60,.1);border:1px solid rgba(231,76,60,.3);color:var(--fail)}
+
+/* ============ RESULTS ============ */
+.results{display:none;text-align:center;padding:60px 0}
+.results.active{display:block;animation:fadeUp .5s ease}
+.results .score-ring{
+  width:180px;height:180px;border-radius:50%;margin:0 auto 24px;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  border:6px solid var(--border);position:relative;
+}
+.results .score-ring.pass{border-color:var(--success)}
+.results .score-ring.fail{border-color:var(--fail)}
+.results .score-num{font-size:3rem;font-weight:700;color:var(--white);line-height:1}
+.results .score-label{font-size:.85rem;color:var(--text-dim)}
+.results h2{font-family:var(--font-display);font-size:1.8rem;color:var(--white);margin-bottom:12px}
+.results p{color:var(--text-dim);max-width:480px;margin:0 auto 28px}
+.results .btn-retry{
+  padding:14px 36px;background:var(--accent);color:var(--white);border:none;
+  border-radius:50px;font-size:1rem;font-weight:600;transition:.2s;
+}
+.results .btn-retry:hover{background:var(--accent-light)}
+
+/* ============ FOOTER ============ */
+.footer{padding:40px 24px;text-align:center;border-top:1px solid var(--border);margin-top:60px}
+.footer p{font-size:.8rem;color:var(--text-dim);line-height:1.8}
+
+/* ============ RESPONSIVE ============ */
+@media(max-width:640px){
+  .key-ideas{grid-template-columns:1fr}
+  .section-nav{flex-direction:column}
+  .nav-btn{width:100%;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- ========== HERO ========== -->
+<section class="hero" id="hero">
+  <h1>Survey of Design Periods</h1>
+  <p>From the Industrial Revolution to the present day — an interactive exploration of the movements that shaped our visual world.</p>
+  <button class="btn-start" onclick="startLesson()">Begin the Lesson</button>
+</section>
+
+<!-- ========== PROGRESS ========== -->
+<div class="progress-wrap container" id="progressWrap" style="display:none">
+  <div class="progress-inner">
+    <span class="progress-label" id="progressLabel">Section 1 / 10</span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+</div>
+
+<!-- ========== TIMELINE NAV ========== -->
+<nav class="timeline-nav container" id="timelineNav" style="display:none">
+  <div class="timeline-track" id="timelineTrack"></div>
+</nav>
+
+<!-- ========== CONTENT CONTAINER ========== -->
+<main class="container" id="lessonMain">
+
+<!-- SECTION 0: Industrial Revolution -->
+<div class="section" data-idx="0">
+  <div class="section-header">
+    <div class="period-label">Period 1</div>
+    <h2>The Industrial Revolution &amp; Early Design Reform</h2>
+    <div class="dates">c. 1760–1880</div>
+  </div>
+  <div class="img-card">
+    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Crystal_Palace.PNG?width=900"
+         alt="Engraving of the Crystal Palace in Hyde Park, London, built for the Great Exhibition of 1851"
+         loading="lazy">
+    <div class="caption"><strong>The Crystal Palace, London, 1851.</strong> Engraving by J. McNeven after Joseph Paxton's design. The iron-and-glass structure housed the Great Exhibition, which showcased industrial manufacturing to the world — and exposed the aesthetic crisis of mass production. <em>Public Domain, Wikimedia Commons.</em></div>
+  </div>
+  <div class="content-block">
+    <h3>Context</h3>
+    <p>Before the Industrial Revolution, most objects were made by hand. Industrialization shattered that model — factories produced goods at unprecedented scale, but the results were often aesthetically chaotic. Ornament was applied indiscriminately and cheap imitations of handcrafted luxury flooded the market.</p>
+  </div>
+  <div class="content-block">
+    <h3>The Great Exhibition of 1851</h3>
+    <p>The Crystal Palace exhibition in London was a watershed moment. It showcased industrial manufacturing to the world but also laid bare the problem: rooms full of over-decorated, poorly designed machine-made goods. Critics like Henry Cole and Owen Jones began arguing that industrialization demanded a new design sensibility — one suited to the machine rather than awkwardly imitating the hand.</p>
+  </div>
+  <div class="key-ideas">
+    <div class="idea-chip"><div class="chip-label">Key Tension</div>Handcraft vs. machine production — authenticity vs. efficiency</div>
+    <div class="idea-chip"><div class="chip-label">Core Question</div>When technology gives us new capabilities, what should we do with them?</div>
+  </div>
+  <div class="key-figures">
+    <h4>Key Figures</h4>
+    <ul>
+      <li><strong>John Ruskin</strong> — argued the division of labor degraded both worker and work</li>
+      <li><strong>Henry Cole</strong> — pushed for design education and industrial standards</li>
+      <li><strong>Owen Jones</strong> — advocated for new principles of ornament suited to the machine age</li>
+      <li><strong>Joseph Paxton</strong> — designed the Crystal Palace</li>
+    </ul>
+  </div>
+  <div class="think-question">
+    <div class="tq-label">Think About It</div>
+    <p>Can you identify a modern technology that has created a similar "crisis of taste" — where capability outpaced design sensibility? How does that compare to what happened during industrialization?</p>
+  </div>
+  <div class="section-nav">
+    <span></span>
+    <button class="nav-btn primary" onclick="goSection(1)">Next: Arts &amp; Crafts &rarr;</button>
+  </div>
+</div>
+
+<!-- SECTION 1: Arts & Crafts -->
+<div class="section" data-idx="1">
+  <div class="section-header">
+    <div class="period-label">Period 2</div>
+    <h2>Arts &amp; Crafts Movement</h2>
+    <div class="dates">c. 1880–1910</div>
+  </div>
+  <div class="img-card">
+    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Strawberrythief.jpg?width=900"
+         alt="Strawberry Thief textile pattern by William Morris showing birds among flowering strawberry plants"
+         loading="lazy">
+    <div class="caption"><strong>Strawberry Thief, 1883.</strong> William Morris, printed at Merton Abbey Works. Indigo-discharge printing with natural bird and plant motifs — emblematic of the movement's devotion to handcraft and nature. <em>Public Domain, Wikimedia Commons.</em></div>
+  </div>
+  <div class="content-block">
+    <h3>The First Design Reform Movement</h3>
+    <p>Led by William Morris — artist, writer, socialist, and designer — the Arts &amp; Crafts movement rejected the factory system entirely and championed a return to hand production, honest materials, and the medieval guild model. The goal was not mere decoration but an integrated approach to living.</p>
+  </div>
+  <div class="key-ideas">
+    <div class="idea-chip"><div class="chip-label">Philosophy</div>Visible craftsmanship, natural forms, honesty of materials</div>
+    <div class="idea-chip"><div class="chip-label">Contradiction</div>Handcraft produced beautiful objects only the wealthy could afford</div>
+    <div class="idea-chip"><div class="chip-label">Legacy</div>Established that design carries moral weight — how something is made matters</div>
+  </div>
+  <div class="key-figures">
+    <h4>Key Figures</h4>
+    <ul>
+      <li><strong>William Morris</strong> — designer, writer, socialist who championed handcraft across media</li>
+      <li><strong>John Ruskin</strong> — critic and theorist who argued for the moral dimensions of making</li>
+    </ul>
+  </div>
+  <div class="think-question">
+    <div class="tq-label">Think About It</div>
+    <p>Morris believed handcraft was morally superior to machine production, yet his objects were too expensive for ordinary people. Is this contradiction fatal to the movement's ideals, or does the underlying principle still hold value today?</p>
+  </div>
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(0)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(2)">Next: Art Nouveau &rarr;</button>
+  </div>
+</div>
+
+<!-- SECTION 2: Art Nouveau -->
+<div class="section" data-idx="2">
+  <div class="section-header">
+    <div class="period-label">Period 3</div>
+    <h2>Art Nouveau</h2>
+    <div class="dates">c. 1890–1910</div>
+  </div>
+  <div class="img-card">
+    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Alphonse_Mucha_-_Job_Cigarettes_1.jpg?width=800"
+         alt="Art Nouveau poster for Job Cigarettes by Alphonse Mucha featuring flowing lines and ornate typography"
+         loading="lazy">
+    <div class="caption"><strong>Job Cigarettes, 1896.</strong> Alphonse Mucha. Mucha's flowing lines, ornate typography, and idealized feminine form with rising smoke creating decorative arabesques — quintessential Art Nouveau. <em>Public Domain, Wikimedia Commons.</em></div>
+  </div>
+  <div class="content-block">
+    <h3>The Organic International Style</h3>
+    <p>Where Arts &amp; Crafts looked backward to medieval craft, Art Nouveau looked sideways — to nature, to the organic, to the sensuous curve. It was the first truly international modern style, appearing across Europe under different names: Jugendstil in Germany, Stile Liberty in Italy, Modernisme in Catalonia.</p>
+    <p>Art Nouveau aspired to <em>Gesamtkunstwerk</em> — the total work of art — where architecture, furniture, lighting, and decorative detail formed a single unified vision.</p>
+  </div>
+  <div class="key-ideas">
+    <div class="idea-chip"><div class="chip-label">Visual Language</div>Sinuous whiplash lines, asymmetry, natural motifs — vines, flowers, insects</div>
+    <div class="idea-chip"><div class="chip-label">Materials</div>Wrought iron, glass, ceramic tile — used expressively, not just structurally</div>
+    <div class="idea-chip"><div class="chip-label">Big Idea</div>Modernity does not have to mean austerity — new techniques can produce new beauty</div>
+  </div>
+  <div class="key-figures">
+    <h4>Key Figures</h4>
+    <ul>
+      <li><strong>Alphonse Mucha</strong> — defined the movement's graphic language</li>
+      <li><strong>Hector Guimard</strong> — iconic Paris Métro entrances</li>
+      <li><strong>Antoni Gaudí</strong> — architecture as biology in Barcelona</li>
+      <li><strong>Louis Comfort Tiffany</strong> — stained glass and decorative arts in America</li>
+    </ul>
+  </div>
+  <div class="think-question">
+    <div class="tq-label">Think About It</div>
+    <p>Art Nouveau proved that new industrial materials could produce beauty rather than just function. Where do you see contemporary designers using new technologies (3D printing, parametric design, AI) to create beauty rather than just efficiency?</p>
+  </div>
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(1)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(3)">Next: Early Modernism &rarr;</button>
+  </div>
+</div>
+
+<!-- SECTION 3: Early Modernism -->
+<div class="section" data-idx="3">
+  <div class="section-header">
+    <div class="period-label">Period 4</div>
+    <h2>Early Modernism &amp; the Avant-Garde</h2>
+    <div class="dates">c. 1910–1930</div>
+  </div>
+  <div class="img-card">
+    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Klinom_Krasnym_Bej_Belych.JPG?width=800"
+         alt="Beat the Whites with the Red Wedge, a Suprematist poster by El Lissitzky showing a red triangle penetrating a white circle"
+         loading="lazy">
+    <div class="caption"><strong>Beat the Whites with the Red Wedge, 1919.</strong> El Lissitzky. A dynamic red triangle penetrating a white circle — pure geometric abstraction used for political messaging, exemplifying avant-garde design's revolutionary spirit. <em>Public Domain, Wikimedia Commons.</em></div>
+  </div>
+  <div class="content-block">
+    <h3>The Age of Rupture</h3>
+    <p>World War I, political revolution, rapid urbanization, and technological acceleration created a sense that the old world had been swept away. Artists and designers responded with radical new visual languages that deliberately broke with tradition.</p>
+  </div>
+  <div class="key-ideas">
+    <div class="idea-chip"><div class="chip-label">Futurism</div>Speed, machinery, explosive typography — Marinetti's 1909 manifesto shattered the grid</div>
+    <div class="idea-chip"><div class="chip-label">Constructivism</div>Art in service of society — Rodchenko &amp; El Lissitzky's bold geometric graphic work</div>
+    <div class="idea-chip"><div class="chip-label">De Stijl</div>Primary colors, black lines, rectangles — Mondrian &amp; Rietveld reduced design to essence</div>
+  </div>
+  <div class="content-block">
+    <h3>The Functionalist Turn</h3>
+    <p>Across these movements, a common thread: design should be rational, stripped of ornament, and determined by purpose. "Form follows function" became the unofficial slogan. Decoration was not just unnecessary — it was dishonest. These movements established the visual vocabulary of modernism and the idea that design could reshape how people live.</p>
+  </div>
+  <div class="key-figures">
+    <h4>Key Figures</h4>
+    <ul>
+      <li><strong>Filippo Tommaso Marinetti</strong> — launched the Futurist manifesto in 1909</li>
+      <li><strong>Alexander Rodchenko</strong> — bold Constructivist graphic work and photography</li>
+      <li><strong>El Lissitzky</strong> — geometric abstraction bridging art and political messaging</li>
+      <li><strong>Piet Mondrian</strong> — reduced painting to primary colors and black lines</li>
+      <li><strong>Gerrit Rietveld</strong> — translated De Stijl principles into furniture and architecture</li>
+    </ul>
+  </div>
+  <div class="think-question">
+    <div class="tq-label">Think About It</div>
+    <p>The avant-garde believed design could be a tool for social transformation. Do you think design still has that power today, or has it become primarily a commercial activity? What examples support your view?</p>
+  </div>
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(2)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(4)">Next: Bauhaus &rarr;</button>
+  </div>
+</div>
+
+<!-- SECTION 4: Bauhaus -->
+<div class="section" data-idx="4">
+  <div class="section-header">
+    <div class="period-label">Period 5</div>
+    <h2>Bauhaus</h2>
+    <div class="dates">1919–1933</div>
+  </div>
+  <div class="img-card">
+    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Bauhaus-Dessau_Meisterhaeuser1.JPG?width=800"
+         alt="Bauhaus Masters' Houses in Dessau showing modernist architecture with clean geometric lines"
+         loading="lazy">
+    <div class="caption"><strong>Bauhaus Masters' Houses, Dessau, 1925–26.</strong> Designed by Walter Gropius. Clean geometric volumes, functional glass-and-metal elements embodying the school's philosophy of uniting art, craft, and technology. <em>Photo: Wikimedia Commons, CC BY-SA 3.0.</em></div>
+  </div>
+  <div class="content-block">
+    <h3>More Than a School</h3>
+    <p>The Bauhaus was the most influential design institution of the twentieth century. Founded by Walter Gropius in Weimar, it set out to dissolve the boundaries between fine art, craft, and industrial production. Its revolutionary teaching model — the Vorkurs preliminary course in color, form, and materials — produced designers who could think across disciplines.</p>
+  </div>
+  <div class="key-ideas">
+    <div class="idea-chip"><div class="chip-label">Gropius (1919–28)</div>Workshop pedagogy, preliminary course, painters + craftsmen united</div>
+    <div class="idea-chip"><div class="chip-label">Meyer (1928–30)</div>Socially oriented, functionalist focus</div>
+    <div class="idea-chip"><div class="chip-label">Mies (1930–33)</div>Architecture emphasis, closed under Nazi pressure</div>
+  </div>
+  <div class="content-block">
+    <h3>Lasting Impact</h3>
+    <p>Geometric clarity, functional simplicity, honest use of modern materials — steel, glass, concrete. When the Bauhaus closed, its faculty scattered to the United States, carrying its ideas into American design education, architecture, and industry. The school lasted only fourteen years, but its influence is incalculable.</p>
+  </div>
+  <div class="key-figures">
+    <h4>Key Figures</h4>
+    <ul>
+      <li><strong>Walter Gropius</strong> — founder; unified art, craft, and technology</li>
+      <li><strong>Hannes Meyer</strong> — second director; socially oriented functionalism</li>
+      <li><strong>Ludwig Mies van der Rohe</strong> — third director; architecture focus</li>
+      <li><strong>László Moholy-Nagy</strong> — photography, typography, and the preliminary course</li>
+      <li><strong>Herbert Bayer</strong> — graphic design and universal typeface</li>
+      <li><strong>Wassily Kandinsky</strong> — color theory and abstract painting</li>
+    </ul>
+  </div>
+  <div class="think-question">
+    <div class="tq-label">Think About It</div>
+    <p>The Bauhaus lasted only 14 years but reshaped design education worldwide. What made its teaching model so influential, and how do you see its DNA in the way design is taught today?</p>
+  </div>
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(3)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(5)">Next: Art Deco &rarr;</button>
+  </div>
+</div>
+
+<!-- SECTION 5: Art Deco -->
+<div class="section" data-idx="5">
+  <div class="section-header">
+    <div class="period-label">Period 6</div>
+    <h2>Art Deco</h2>
+    <div class="dates">c. 1920–1940</div>
+  </div>
+  <div class="img-card">
+    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Tree_and_village_-_1930s_Japan_Travel_Poster_-_09_(cropped).jpg?width=800"
+         alt="1930s Art Deco travel poster from Japan showing geometric stylized tree and village scene"
+         loading="lazy">
+    <div class="caption"><strong>Japanese Travel Poster, 1930s.</strong> Japanese Government Railways. Bold geometric forms and streamlined composition — Art Deco's angular, machine-inspired aesthetic applied to commercial tourism promotion. <em>Public Domain, Wikimedia Commons.</em></div>
+  </div>
+  <div class="content-block">
+    <h3>Glamour, Geometry, and Modernity</h3>
+    <p>Art Deco emerged alongside modernism but took a different path. Where the Bauhaus sought purity and social purpose, Art Deco embraced glamour, luxury, and spectacle. It drew from diverse sources — Egyptian archaeology, Aztec geometry, African art, Cubism — and fused them into a style of confident, angular elegance.</p>
+  </div>
+  <div class="key-ideas">
+    <div class="idea-chip"><div class="chip-label">Visual Language</div>Zigzags, chevrons, sunbursts, stepped forms — bold geometric patterns</div>
+    <div class="idea-chip"><div class="chip-label">Materials</div>Chrome, lacquer, shagreen, ivory, ebony — rich and often exotic</div>
+    <div class="idea-chip"><div class="chip-label">vs. Bauhaus</div>Strip away vs. celebrate — both sincere responses to the modern world</div>
+  </div>
+  <div class="think-question">
+    <div class="tq-label">Think About It</div>
+    <p>Art Deco and Bauhaus were contemporaries with opposite philosophies — glamour vs. austerity. Which approach do you find more compelling as a response to modernity, and why might both have been necessary?</p>
+  </div>
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(4)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(6)">Next: Mid-Century Modern &rarr;</button>
+  </div>
+</div>
+
+<!-- SECTION 6: Mid-Century Modern -->
+<div class="section" data-idx="6">
+  <div class="section-header">
+    <div class="period-label">Period 7</div>
+    <h2>Mid-Century Modern</h2>
+    <div class="dates">c. 1945–1970</div>
+  </div>
+  <div class="img-card">
+    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Ngv_design,_charles_eames_and_herman_miller,_lounge_chair_670,_1956.JPG?width=800"
+         alt="Eames Lounge Chair 670 with molded plywood shells and leather upholstery on aluminum base"
+         loading="lazy">
+    <div class="caption"><strong>Eames Lounge Chair 670, 1956.</strong> Charles and Ray Eames, manufactured by Herman Miller. Molded plywood, leather upholstery, and aluminum — mid-century modern's blend of organic curves with industrial manufacturing. <em>Photo: Sailko, Wikimedia Commons, CC BY-SA 3.0.</em></div>
+  </div>
+  <div class="content-block">
+    <h3>Post-War Optimism and Democratic Design</h3>
+    <p>New materials (plywood molding, fiberglass, plastics), new manufacturing techniques, and broad cultural optimism. Good design should be available to everyone. Clean lines, organic curves, minimal ornamentation, and a celebration of new materials define this era.</p>
+  </div>
+  <div class="key-ideas">
+    <div class="idea-chip"><div class="chip-label">American</div>Playful, democratic modernism — new materials, mass accessibility</div>
+    <div class="idea-chip"><div class="chip-label">Scandinavian</div>Functionalism + warmth — natural materials, affordable good design</div>
+    <div class="idea-chip"><div class="chip-label">German</div>"Good design is as little design as possible" — rigor in consumer products</div>
+  </div>
+  <div class="key-figures">
+    <h4>Key Figures</h4>
+    <ul>
+      <li><strong>Charles &amp; Ray Eames</strong> — furniture, films, exhibitions, toys — democratic modernism</li>
+      <li><strong>Eero Saarinen</strong> — sweeping architectural forms (TWA Terminal, Gateway Arch)</li>
+      <li><strong>Arne Jacobsen</strong> — Egg and Swan chairs; Scandinavian organic modernism</li>
+      <li><strong>Dieter Rams</strong> — ten principles of good design; shaped Braun electronics</li>
+      <li><strong>Alvar Aalto</strong> — Finnish furniture and architecture blending warmth with function</li>
+      <li><strong>Hans Wegner</strong> — Danish chair master; "The Chair"</li>
+    </ul>
+  </div>
+  <div class="think-question">
+    <div class="tq-label">Think About It</div>
+    <p>Mid-Century Modern promised "good design for everyone." Did mass production deliver on that promise, or did it create new problems? Think about IKEA — is it the fulfillment of this ideal or a compromise?</p>
+  </div>
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(5)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(7)">Next: Postmodernism &rarr;</button>
+  </div>
+</div>
+
+<!-- SECTION 7: Postmodernism -->
+<div class="section" data-idx="7">
+  <div class="section-header">
+    <div class="period-label">Period 8</div>
+    <h2>Postmodernism</h2>
+    <div class="dates">c. 1970–1990</div>
+  </div>
+  <div class="img-card">
+    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Ettore_sottsass,_libreria_casablanca,_1981.JPG?width=800"
+         alt="Casablanca bookcase by Ettore Sottsass for Memphis Group featuring bold asymmetric colored forms"
+         loading="lazy">
+    <div class="caption"><strong>Casablanca Bookcase, 1981.</strong> Ettore Sottsass for Memphis Group. Asymmetrical forms, vibrant laminate surfaces, and playful rejection of functional minimalism — postmodernism's challenge to modernist orthodoxy. <em>Photo: Sailko, Wikimedia Commons, CC BY-SA 3.0.</em></div>
+  </div>
+  <div class="content-block">
+    <h3>"Less Is a Bore"</h3>
+    <p>By the 1970s, modernism's dominance had produced a backlash. Postmodern design embraces color, pattern, historical reference, humor, irony, and contradiction. It rejects the idea of a single correct solution in favor of multiple, coexisting approaches.</p>
+  </div>
+  <div class="key-ideas">
+    <div class="idea-chip"><div class="chip-label">Architecture</div>Complexity, contradiction, and historical reference replace modernist purity</div>
+    <div class="idea-chip"><div class="chip-label">Product Design</div>Deliberately garish, confrontational — laminate, clashing colors, absurd forms</div>
+    <div class="idea-chip"><div class="chip-label">Graphic Design</div>Deconstructed, layered, almost illegible typography</div>
+  </div>
+  <div class="key-figures">
+    <h4>Key Figures</h4>
+    <ul>
+      <li><strong>Robert Venturi</strong> — <em>Complexity and Contradiction in Architecture</em>; "Less is a bore"</li>
+      <li><strong>Ettore Sottsass</strong> — founded the Memphis Group in Milan, 1981</li>
+      <li><strong>Michael Graves</strong> — mixed classical references with cartoon color (Portland Building, Alessi kettle)</li>
+      <li><strong>April Greiman</strong> — layered, deconstructed graphic design</li>
+      <li><strong>Wolfgang Weingart</strong> — pushed Swiss typography into experimental territory</li>
+      <li><strong>David Carson</strong> — near-illegible layouts for <em>Ray Gun</em> magazine</li>
+    </ul>
+  </div>
+  <div class="think-question">
+    <div class="tq-label">Think About It</div>
+    <p>Postmodernism argued there is no single "correct" design solution. Has this idea liberated designers or made the field more chaotic? How do you navigate between personal expression and clear communication in your own work?</p>
+  </div>
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(6)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(8)">Next: Digital Revolution &rarr;</button>
+  </div>
+</div>
+
+<!-- SECTION 8: Digital Revolution -->
+<div class="section" data-idx="8">
+  <div class="section-header">
+    <div class="period-label">Period 9</div>
+    <h2>Digital Revolution &amp; Contemporary Design</h2>
+    <div class="dates">c. 1990–Present</div>
+  </div>
+  <div class="img-card">
+    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/NeXTSTEP_Desktop.png?width=900"
+         alt="Screenshot of NeXTSTEP operating system interface showing early graphical user interface design"
+         loading="lazy">
+    <div class="caption"><strong>NeXTSTEP Desktop Interface, c. 1988–90s.</strong> NeXT Computer Corporation. An early graphical user interface that influenced web design — the transition from command-line to visual interaction. <em>Public Domain, Wikimedia Commons.</em></div>
+  </div>
+  <div class="content-block">
+    <h3>The Screen as Design Surface</h3>
+    <p>The personal computer, the internet, and the smartphone transformed design more than any development since the printing press. UX and UI emerged as distinct disciplines. The visual landscape cycled rapidly from skeuomorphism to flat design to material design to today's comprehensive design systems.</p>
+  </div>
+  <div class="key-ideas">
+    <div class="idea-chip"><div class="chip-label">Interaction</div>Time, motion, and user input became part of the designer's toolkit</div>
+    <div class="idea-chip"><div class="chip-label">Sustainability</div>Rethinking materials, manufacturing, and product lifecycles</div>
+    <div class="idea-chip"><div class="chip-label">Inclusive Design</div>Expanding "the user" to the full range of human ability and experience</div>
+    <div class="idea-chip"><div class="chip-label">AI &amp; Design</div>Changing the creative process — raising questions about authorship and the designer's role</div>
+  </div>
+  <div class="think-question">
+    <div class="tq-label">Think About It</div>
+    <p>AI tools can now generate layouts, images, and even entire interfaces. If a machine can design, what is the designer's role? How does this echo the same question the Industrial Revolution posed about craft?</p>
+  </div>
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(7)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(9)">Next: Conclusion &rarr;</button>
+  </div>
+</div>
+
+<!-- SECTION 9: Conclusion -->
+<div class="section" data-idx="9">
+  <div class="section-header">
+    <div class="period-label">Conclusion</div>
+    <h2>Patterns &amp; Perspectives</h2>
+  </div>
+  <div class="content-block">
+    <h3>Recurring Themes</h3>
+    <p>Looking across these periods, several patterns emerge. Nearly every movement defined itself against its predecessor — action and reaction. New materials and tools don't just enable new forms; they demand them. The tension between universalism and pluralism runs throughout: modernism sought universal solutions while postmodernism celebrated difference.</p>
+    <p>Perhaps the deepest thread is design as ethics. From William Morris onward, the best design thinkers have insisted that choices about form, material, access, and production have moral dimensions. The history of design is not a story of steady progress — it is a conversation, ongoing, contentious, and vital, about how we shape the world we live in.</p>
+  </div>
+  <div class="key-ideas">
+    <div class="idea-chip"><div class="chip-label">Pattern 1</div>Action &amp; Reaction — each movement defines itself against its predecessor</div>
+    <div class="idea-chip"><div class="chip-label">Pattern 2</div>Technology as Catalyst — new tools demand new forms and new thinking</div>
+    <div class="idea-chip"><div class="chip-label">Pattern 3</div>Universal vs. Plural — systems that are consistent yet flexible, inclusive yet coherent</div>
+    <div class="idea-chip"><div class="chip-label">Pattern 4</div>Design as Ethics — how something is made and for whom carries moral weight</div>
+  </div>
+  <div class="think-question">
+    <div class="tq-label">Think About It</div>
+    <p>Looking across all the periods you've studied, which recurring pattern — action/reaction, technology as catalyst, universalism vs. pluralism, or design as ethics — do you think is most relevant to the next decade of design? Why?</p>
+  </div>
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(8)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="startQuiz()">Take the Quiz &rarr;</button>
+  </div>
+</div>
+
+</main>
+
+<!-- ========== QUIZ ========== -->
+<div class="container">
+<div class="quiz-section" id="quizSection">
+  <div class="quiz-header">
+    <h2>Knowledge Check</h2>
+    <p>Answer 12 questions to complete the lesson. You need 70% (9/12) to pass.</p>
+  </div>
+  <div class="quiz-progress" id="quizProgress">Question 1 of 12</div>
+  <div id="quizContainer"></div>
+  <div style="text-align:center;margin-top:24px">
+    <button class="nav-btn" id="quizNextBtn" onclick="nextQuestion()" style="display:none">Next Question &rarr;</button>
+    <button class="nav-btn primary" id="quizSubmitBtn" onclick="submitQuiz()" style="display:none">Submit &amp; See Results</button>
+  </div>
+</div>
+
+<!-- ========== RESULTS ========== -->
+<div class="results" id="resultsSection">
+  <div class="score-ring" id="scoreRing">
+    <div class="score-num" id="scoreNum">0%</div>
+    <div class="score-label">Score</div>
+  </div>
+  <h2 id="resultsTitle">Results</h2>
+  <p id="resultsMsg"></p>
+  <button class="btn-retry" onclick="retryQuiz()">Retake Quiz</button>
+</div>
+</div>
+
+<!-- ========== FOOTER ========== -->
+<footer class="footer">
+  <p>DSGN 230 — Survey of Design History<br>
+  Image Credits: All images sourced from Wikimedia Commons. Crystal Palace engraving (Public Domain); Morris <em>Strawberry Thief</em> (Public Domain); Mucha <em>Job Cigarettes</em> (Public Domain); El Lissitzky <em>Beat the Whites with the Red Wedge</em> (Public Domain); Bauhaus Masters' Houses photo (CC BY-SA 3.0); Japanese Travel Poster 1930s (Public Domain); Eames Lounge Chair photo by Sailko (CC BY-SA 3.0); Sottsass <em>Casablanca</em> photo by Sailko (CC BY-SA 3.0); NeXTSTEP Desktop (Public Domain).</p>
+</footer>
+
+<script>
+/* ===================================================================
+   DATA
+   =================================================================== */
+var sections = [
+  {year:"1760–1880",name:"Industrial Revolution"},
+  {year:"1880–1910",name:"Arts & Crafts"},
+  {year:"1890–1910",name:"Art Nouveau"},
+  {year:"1910–1930",name:"Early Modernism"},
+  {year:"1919–1933",name:"Bauhaus"},
+  {year:"1920–1940",name:"Art Deco"},
+  {year:"1945–1970",name:"Mid-Century Modern"},
+  {year:"1970–1990",name:"Postmodernism"},
+  {year:"1990–Now",name:"Digital Revolution"},
+  {year:"",name:"Conclusion"}
+];
+
+var quizData = [
+  {
+    q:"The Great Exhibition of 1851 is significant in design history because it:",
+    opts:["Launched the Arts & Crafts movement","Exposed the aesthetic problems of mass-produced industrial goods","Introduced Art Nouveau to the world","Established the Bauhaus school"],
+    ans:1,
+    feedback:"The Crystal Palace exhibition showcased industrial manufacturing but revealed the poor design quality of machine-made goods, sparking the design reform conversation."
+  },
+  {
+    q:"William Morris and the Arts & Crafts movement primarily valued:",
+    opts:["Machine efficiency and mass production","Geometric abstraction and primary colors","Handcraft, natural forms, and honesty of materials","Speed, technology, and futuristic imagery"],
+    ans:2,
+    feedback:"The Arts & Crafts movement championed a return to hand production, natural motifs, and visible craftsmanship as a reaction against industrialization."
+  },
+  {
+    q:"Which term describes Art Nouveau's aspiration to create a unified work across all design disciplines?",
+    opts:["Form follows function","Gesamtkunstwerk","Vorkurs","De Stijl"],
+    ans:1,
+    feedback:"Gesamtkunstwerk (total work of art) describes Art Nouveau's ambition to unify architecture, furniture, lighting, and decoration into a single vision."
+  },
+  {
+    q:"El Lissitzky's 'Beat the Whites with the Red Wedge' (1919) exemplifies which movement?",
+    opts:["Art Deco","Arts & Crafts","Russian Constructivism","Postmodernism"],
+    ans:2,
+    feedback:"This iconic poster uses geometric abstraction for political messaging — a hallmark of Russian Constructivism, which sought to put art in service of society."
+  },
+  {
+    q:"The Bauhaus school's preliminary course (Vorkurs) was designed to:",
+    opts:["Teach students traditional oil painting techniques","Strip away preconceptions through intensive study of color, form, and materials","Train students exclusively in architecture","Focus on Art Deco ornamentation"],
+    ans:1,
+    feedback:"The Vorkurs was an intensive foundation course that broke down students' assumptions, teaching fundamental principles of color, form, and materials across disciplines."
+  },
+  {
+    q:"What is a key difference between Art Deco and Bauhaus modernism?",
+    opts:["Art Deco rejected geometry; Bauhaus embraced it","Art Deco embraced glamour and ornament; Bauhaus sought functional purity","Art Deco was earlier; Bauhaus came later","There is no meaningful difference — they are the same movement"],
+    ans:1,
+    feedback:"Both responded to modernity, but drew opposite conclusions: Bauhaus said strip away and simplify; Art Deco said celebrate and dazzle."
+  },
+  {
+    q:"Dieter Rams is most closely associated with which design period?",
+    opts:["Art Nouveau","Postmodernism","Mid-Century Modern","Digital Revolution"],
+    ans:2,
+    feedback:"Rams, working at Braun from the 1960s, developed his famous ten principles of good design and shaped consumer electronics during the Mid-Century Modern era."
+  },
+  {
+    q:"The Memphis Group, founded by Ettore Sottsass in 1981, is associated with:",
+    opts:["Minimalist functionalism","Postmodernism — bold color, irony, and rejection of modernist orthodoxy","Scandinavian organic modernism","Russian Constructivism"],
+    ans:1,
+    feedback:"Memphis was deliberately garish and confrontational — clashing colors, asymmetric forms, and laminate surfaces that mocked functionalist design. Quintessential postmodernism."
+  },
+  {
+    q:"Robert Venturi's famous critique of Mies van der Rohe's minimalism was:",
+    opts:["\"Form follows function\"","\"Less is a bore\"","\"God is in the details\"","\"Ornament is crime\""],
+    ans:1,
+    feedback:"Venturi's rejoinder to Mies's 'Less is more' became a rallying cry for the postmodern movement's embrace of complexity, decoration, and contradiction."
+  },
+  {
+    q:"Which concept best describes contemporary design's approach to considering the full range of human ability?",
+    opts:["Gesamtkunstwerk","Skeuomorphism","Inclusive design","Futurism"],
+    ans:2,
+    feedback:"Inclusive design expands the definition of 'the user' to encompass the full range of human ability and experience — a defining concern of contemporary practice."
+  },
+  {
+    q:"The recurring pattern where each design movement defines itself against its predecessor is called:",
+    opts:["Functionalism","Action and reaction","Gesamtkunstwerk","Material design"],
+    ans:1,
+    feedback:"Nearly every movement defined itself against what came before — Arts & Crafts rejected industrialization, modernism rejected ornament, postmodernism rejected modernism."
+  },
+  {
+    q:"Which statement best captures a theme that runs across ALL design periods studied in this lesson?",
+    opts:["Ornament is always wrong","Technology eliminates the need for designers","Design choices carry ethical and moral weight","Good design must always be minimal"],
+    ans:2,
+    feedback:"From William Morris to inclusive design, the best design thinkers have insisted that choices about form, material, access, and production have moral dimensions."
+  }
+];
+
+/* ===================================================================
+   STATE
+   =================================================================== */
+var currentSection = -1;
+var visitedSections = new Set();
+var currentQ = 0;
+var answers = new Array(quizData.length).fill(-1);
+var quizLocked = new Array(quizData.length).fill(false);
+
+/* ===================================================================
+   INIT
+   =================================================================== */
+window.addEventListener("load", function(){
+  SCORMapi.init();
+  buildTimeline();
+  var bm = SCORMapi.getBookmark();
+  if(bm && bm.startsWith("s")){
+    var idx = parseInt(bm.substring(1));
+    if(!isNaN(idx) && idx >=0 && idx < sections.length){ startLesson(); goSection(idx); }
+  }
+});
+window.addEventListener("beforeunload", function(){ SCORMapi.finish(); });
+
+/* ===================================================================
+   TIMELINE
+   =================================================================== */
+function buildTimeline(){
+  var track = document.getElementById("timelineTrack");
+  track.innerHTML = "";
+  sections.forEach(function(s,i){
+    var d = document.createElement("div");
+    d.className = "tl-dot";
+    d.setAttribute("data-idx",i);
+    d.innerHTML = '<div class="year">'+s.year+'</div><div class="name">'+s.name+'</div>';
+    d.onclick = function(){ goSection(i); };
+    track.appendChild(d);
+  });
+}
+
+function updateTimeline(){
+  var dots = document.querySelectorAll(".tl-dot");
+  dots.forEach(function(d,i){
+    d.classList.remove("active");
+    if(visitedSections.has(i)) d.classList.add("visited");
+    if(i === currentSection) d.classList.add("active");
+  });
+}
+
+/* ===================================================================
+   NAVIGATION
+   =================================================================== */
+function startLesson(){
+  document.getElementById("hero").style.display = "none";
+  document.getElementById("progressWrap").style.display = "";
+  document.getElementById("timelineNav").style.display = "";
+  goSection(0);
+}
+
+function scrollTop(){
+  window.scrollTo(0,0);
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+  var pw = document.getElementById("progressWrap");
+  if(pw) pw.scrollIntoView(true);
+}
+
+function goSection(idx){
+  // Hide everything first
+  var allS = document.querySelectorAll(".section");
+  allS.forEach(function(s){ s.classList.remove("active"); });
+  // Scroll to top before showing new content
+  scrollTop();
+  // Small delay to let scroll settle, then show content
+  requestAnimationFrame(function(){
+    scrollTop();
+    allS[idx].classList.add("active");
+    currentSection = idx;
+    visitedSections.add(idx);
+    updateTimeline();
+    updateProgress();
+    SCORMapi.setBookmark("s"+idx);
+    // Final scroll insurance
+    requestAnimationFrame(scrollTop);
+  });
+}
+
+function updateProgress(){
+  var pct = ((currentSection+1)/sections.length)*100;
+  document.getElementById("progressFill").style.width = pct+"%";
+  document.getElementById("progressLabel").textContent = "Section "+(currentSection+1)+" / "+sections.length;
+}
+
+/* ===================================================================
+   QUIZ
+   =================================================================== */
+function startQuiz(){
+  document.querySelectorAll(".section").forEach(function(s){ s.classList.remove("active"); });
+  document.getElementById("quizSection").classList.add("active");
+  document.getElementById("resultsSection").classList.remove("active");
+  document.getElementById("progressFill").style.width = "100%";
+  document.getElementById("progressLabel").textContent = "Knowledge Check";
+  currentQ = 0;
+  answers = new Array(quizData.length).fill(-1);
+  quizLocked = new Array(quizData.length).fill(false);
+  scrollTop();
+  renderQuestion();
+  requestAnimationFrame(scrollTop);
+}
+
+function renderQuestion(){
+  var qd = quizData[currentQ];
+  var html = '<div class="q-card">';
+  html += '<div class="q-num">Question '+(currentQ+1)+' of '+quizData.length+'</div>';
+  html += '<div class="q-text">'+qd.q+'</div>';
+  html += '<div class="q-options">';
+  var letters = ["A","B","C","D"];
+  qd.opts.forEach(function(o,i){
+    var cls = "q-opt";
+    if(quizLocked[currentQ]){
+      if(i === qd.ans) cls += " correct";
+      else if(i === answers[currentQ] && i !== qd.ans) cls += " wrong";
+    } else if(i === answers[currentQ]){
+      cls += " selected";
+    }
+    html += '<div class="'+cls+'" onclick="pickAnswer('+i+')">';
+    html += '<div class="letter">'+letters[i]+'</div><div>'+o+'</div></div>';
+  });
+  html += '</div>';
+  // feedback
+  if(quizLocked[currentQ]){
+    var isRight = answers[currentQ] === qd.ans;
+    html += '<div class="q-feedback show '+(isRight?"right":"wrong")+'">';
+    html += (isRight?"Correct! ":"Incorrect. ")+qd.feedback+'</div>';
+  }
+  html += '</div>';
+  document.getElementById("quizContainer").innerHTML = html;
+  document.getElementById("quizProgress").textContent = "Question "+(currentQ+1)+" of "+quizData.length;
+
+  // buttons
+  var isLast = currentQ === quizData.length - 1;
+  document.getElementById("quizNextBtn").style.display = quizLocked[currentQ] && !isLast ? "" : "none";
+  document.getElementById("quizSubmitBtn").style.display = quizLocked[currentQ] && isLast ? "" : "none";
+}
+
+function pickAnswer(idx){
+  if(quizLocked[currentQ]) return;
+  answers[currentQ] = idx;
+  quizLocked[currentQ] = true;
+  renderQuestion();
+}
+
+function nextQuestion(){
+  if(currentQ < quizData.length - 1){ currentQ++; scrollTop(); renderQuestion(); requestAnimationFrame(scrollTop); }
+}
+
+function submitQuiz(){
+  var correct = 0;
+  answers.forEach(function(a,i){ if(a === quizData[i].ans) correct++; });
+  var pct = Math.round((correct / quizData.length) * 100);
+  var passed = pct >= 70;
+
+  document.getElementById("quizSection").classList.remove("active");
+  document.getElementById("resultsSection").classList.add("active");
+  document.getElementById("scoreNum").textContent = pct + "%";
+  document.getElementById("scoreRing").className = "score-ring " + (passed ? "pass" : "fail");
+  document.getElementById("resultsTitle").textContent = passed ? "Lesson Complete!" : "Not Quite — Try Again";
+  document.getElementById("resultsMsg").textContent = "You scored " + correct + " out of " + quizData.length + ". " + (passed ? "Great work — you've demonstrated a solid understanding of design history." : "You need at least 70% to pass. Review the lesson and try again.");
+
+  SCORMapi.setScore(pct);
+  SCORMapi.setComplete(passed ? "passed" : "failed");
+
+  scrollTop();
+  requestAnimationFrame(scrollTop);
+}
+
+function retryQuiz(){ startQuiz(); }
+</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html><head><title>Image Test</title>
+<style>body{background:#111;color:#fff;font-family:sans-serif;padding:20px}
+.test{margin:20px 0;padding:10px;border:1px solid #333}
+.test img{max-width:400px;height:auto;background:#222}
+.test p{font-size:12px;color:#999;word-break:break-all;margin:5px 0}
+.ok{color:#2ecc71}.fail{color:#e74c3c}
+</style></head><body>
+<h1>Image URL Test</h1>
+<script>
+var imgs = [
+  {name:"1. Crystal Palace", url:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Crystal_Palace.PNG/900px-Crystal_Palace.PNG"},
+  {name:"2. Strawberry Thief", url:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Strawberrythief.jpg/900px-Strawberrythief.jpg"},
+  {name:"3. Mucha Job", url:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Alphonse_Mucha_-_Job_Cigarettes_1.jpg/800px-Alphonse_Mucha_-_Job_Cigarettes_1.jpg"},
+  {name:"4. El Lissitzky", url:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Klinom_Krasnym_Bej_Belych.JPG/800px-Klinom_Krasnym_Bej_Belych.JPG"},
+  {name:"5. Bauhaus", url:"https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Bauhaus-Dessau_Meisterhaeuser1.JPG/800px-Bauhaus-Dessau_Meisterhaeuser1.JPG"},
+  {name:"6. Art Deco Japan", url:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Tree_and_village_-_1930s_Japan_Travel_Poster_-_09_%28cropped%29.jpg/600px-Tree_and_village_-_1930s_Japan_Travel_Poster_-_09_%28cropped%29.jpg"},
+  {name:"7. Eames Chair", url:"https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Ngv_design%2C_charles_eames_and_herman_miller%2C_lounge_chair_670%2C_1956.JPG/800px-Ngv_design%2C_charles_eames_and_herman_miller%2C_lounge_chair_670%2C_1956.JPG"},
+  {name:"8. Memphis Sottsass", url:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Ettore_sottsass%2C_libreria_casablanca%2C_1981.JPG/800px-Ettore_sottsass%2C_libreria_casablanca%2C_1981.JPG"},
+  {name:"9. ARPANET", url:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Arpanet_logical_map%2C_march_1977.png/900px-Arpanet_logical_map%2C_march_1977.png"}
+];
+imgs.forEach(function(item){
+  var div = document.createElement("div");
+  div.className = "test";
+  div.innerHTML = "<h3>"+item.name+"</h3><p>"+item.url+"</p>";
+  var img = document.createElement("img");
+  img.src = item.url;
+  img.onload = function(){
+    var s = document.createElement("span");
+    s.className = "ok";
+    s.textContent = " LOADED ("+img.naturalWidth+"x"+img.naturalHeight+")";
+    div.querySelector("h3").appendChild(s);
+  };
+  img.onerror = function(){
+    var s = document.createElement("span");
+    s.className = "fail";
+    s.textContent = " FAILED";
+    div.querySelector("h3").appendChild(s);
+  };
+  div.appendChild(img);
+  document.body.appendChild(div);
+});
+</script>
+</body></html>
