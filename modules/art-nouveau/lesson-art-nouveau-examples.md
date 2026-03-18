@@ -6,7 +6,7 @@
 ## Architecture
 
 **Hôtel Tassel** — Victor Horta, 1893, Brussels, Belgium
-![Hôtel Tassel stairway](images/art-nouveau/Tassel_House_stairway.jpeg)
+![Hôtel Tassel stairway](images/Tassel_House_stairway.jpeg)
 Widely considered the first Art Nouveau building. Open floor plan around a central staircase, exposed iron columns as organic decoration, mosaic floors, painted walls, and stained-glass ceiling unified into a single vision. UNESCO World Heritage Site.
 
 **Hôtel Solvay** — Victor Horta, 1894–1898, Brussels, Belgium
@@ -23,7 +23,7 @@ An apartment building that established Guimard's reputation. Won a City of Paris
 
 **Paris Métro Entrances** — Hector Guimard, 1900–1913, Paris, France
 Cast-iron and glass canopies in three standardized designs, industrially produced. Green-painted organic ironwork with amber glass lamps. 86 of the original 167 survive as protected monuments.
-![Abbesses Métro entrance](images/art-nouveau/Abbesses.JPG)
+![Abbesses Métro entrance](images/Abbesses.JPG)
 
 **Abbesses Métro Station Entrance (édicule)** — Hector Guimard, c. 1900, Paris, France
 One of only two surviving full glass-canopied *édicule* entrances (the other is at Porte Dauphine). Originally installed at Hôtel de Ville, relocated to Abbesses in 1974. The fan-shaped glass and iron canopy is the most complete example of Guimard's Métro design.
@@ -72,7 +72,7 @@ Bronze tree-trunk base supporting a shade of cascading wisteria blossoms in opal
 Jeweled dragonfly wings in leaded glass with cabochon "eyes." Demonstrates the copper-foil technique that allowed more intricate organic designs than traditional lead came.
 
 **Tiffany Pond Lily Table Lamp** — Louis Comfort Tiffany, c. 1900–1910, New York, USA
-![Tiffany Pond Lily lamp](images/art-nouveau/Louis_comfort_tiffany,_lampada_da_tavolo_pomb_lily,_1900-10_ca..jpeg)
+![Tiffany Pond Lily lamp](images/Louis_comfort_tiffany,_lampada_da_tavolo_pomb_lily,_1900-10_ca..jpeg)
 Bronze base of lily pad stems supporting twelve opalescent Favrile glass shades shaped as opening lily blossoms. Each shade glows individually, creating a naturalistic cluster of light. One of the most recognizable Tiffany Studios lamp designs.
 
 **Tiffany Magnolia Window** — Louis Comfort Tiffany, c. 1900, New York, USA
@@ -117,7 +117,7 @@ Carved mahogany desk with water lily and dragonfly bronze mounts. Flowing organi
 Display cabinet with orchid marquetry and bronze ornamental hardware. Demonstrates the Nancy School's botanical naturalism.
 
 **Majorelle Wall Cabinet** — Louis Majorelle, late 19th century, Nancy, France
-![Majorelle Wall Cabinet](images/art-nouveau/Louis_Majorelle_-_Wall_Cabinet_-_Walters_6587.jpg)
+![Majorelle Wall Cabinet](images/Louis_Majorelle_-_Wall_Cabinet_-_Walters_6587.jpg)
 Fruit wood with marquetry inlay in the sinuous Nancy School style, with rich vegetal decoration inspired by Japanese design. Collection of the Walters Art Museum, Baltimore (accession no. 65.87).
 
 **Gallé Marquetry Tables** — Émile Gallé, 1890s–1904, Nancy, France
@@ -161,7 +161,7 @@ Advertisement for a food concentrate. One of the earliest examples of abstract A
 Advertising posters in a style closely related to Mucha's, featuring idealized female figures and floral borders. Includes work for Absinthe Robette (1896) and Cacao Van Houten.
 
 ***Jugend* Magazine Cover, No. 14** — Otto Eckmann, 4 April 1896, Munich, Germany
-![Jugend No. 14 cover](images/art-nouveau/Otto_Eckmann_-_Jugend_Nr._14,_1896.jpg)
+![Jugend No. 14 cover](images/Otto_Eckmann_-_Jugend_Nr._14,_1896.jpg)
 Cover of the art and literary weekly that gave the German variant of Art Nouveau its name — *Jugendstil* ("Youth Style"). Eckmann's organic, flowing illustration epitomizes the movement's fusion of typography, image, and decorative form. Published by Georg Hirth in Munich.
 
 ---
