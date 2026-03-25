@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Early Modernism &amp; the Avant-Garde — DSGN 230</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#111;--surface:#1a1a1a;--surface2:#222;--border:#333;
+  --text:#e8e8e8;--text-dim:#999;--accent:#669BBC;--accent-light:#89b4d4;
+  --white:#FDF0D5;--gold:#c9a84c;
+  --font-body:'Segoe UI',system-ui,-apple-system,sans-serif;
+  --font-display:'Georgia',serif;
+  --radius:10px;
+}
+html.light{
+  --bg:#f4f3f0;--surface:#fff;--surface2:#eae9e5;--border:#d5d3cd;
+  --text:#222;--text-dim:#555;--accent:#780000;--accent-light:#C1121F;
+  --white:#003049;--gold:#8a6d1b;
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.8;margin:0}
+a{color:var(--accent-light);text-decoration:none}
+a:hover{text-decoration:underline}
+
+.toolbar{
+  position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);
+  padding:12px 24px;display:flex;align-items:center;justify-content:space-between;
+}
+.toolbar a{font-size:.85rem;color:var(--text-dim)}
+.toolbar a:hover{color:var(--accent-light)}
+.tool-btn{
+  width:34px;height:34px;border-radius:50%;border:1px solid var(--border);
+  background:var(--surface);color:var(--text-dim);display:flex;align-items:center;
+  justify-content:center;font-size:1rem;cursor:pointer;transition:.2s;padding:0;
+}
+.tool-btn:hover{border-color:var(--accent);color:var(--accent-light)}
+.tool-btn svg{width:16px;height:16px;fill:currentColor}
+
+.hero{
+  padding:60px 24px 40px;text-align:center;
+  background:radial-gradient(ellipse at 50% 30%,#1a1a1a 0%,var(--bg) 70%);
+}
+html.light .hero{background:radial-gradient(ellipse at 50% 30%,#e8e6e0 0%,var(--bg) 70%)}
+.hero h1{font-family:var(--font-display);font-size:clamp(1.8rem,4.5vw,3rem);color:var(--white);margin-bottom:8px;letter-spacing:-.02em;line-height:1.2}
+.hero .subtitle{font-size:1.05rem;color:var(--gold);font-style:italic;margin-bottom:4px}
+.hero .dates{font-size:.95rem;color:var(--text-dim)}
+
+.container{max-width:760px;margin:0 auto;padding:40px 24px 80px}
+
+.container h2{
+  font-family:var(--font-display);font-size:clamp(1.4rem,3vw,1.9rem);color:var(--white);
+  margin:48px 0 20px;padding-top:20px;border-top:1px solid var(--border);line-height:1.3;
+}
+.container h2:first-child{border-top:none;margin-top:0;padding-top:0}
+.container h3{
+  font-family:var(--font-display);font-size:1.15rem;color:var(--white);
+  margin:32px 0 12px;font-weight:700;
+}
+.container p{margin-bottom:16px;color:var(--text)}
+.container strong{color:var(--white)}
+.container em{color:var(--accent-light);font-style:italic}
+.container hr{border:none;border-top:1px solid var(--border);margin:40px 0}
+.container ul,.container ol{margin:0 0 20px 24px;color:var(--text)}
+.container li{margin-bottom:8px}
+
+/* Timeline navigation */
+.movement-nav{
+  display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 32px;
+}
+.movement-nav a{
+  padding:8px 14px;background:var(--surface2);border:1px solid var(--border);
+  border-radius:var(--radius);font-size:.82rem;color:var(--text);transition:.2s;
+}
+.movement-nav a:hover{border-color:var(--accent);color:var(--accent-light);text-decoration:none}
+.movement-nav a .nav-dates{font-size:.7rem;color:var(--text-dim);display:block;margin-top:2px}
+
+/* Key terms table */
+table{width:100%;border-collapse:collapse;margin:24px 0;border-radius:var(--radius);overflow:hidden}
+thead{background:var(--surface2)}
+th{padding:12px 16px;text-align:left;font-size:.85rem;color:var(--white);font-weight:600;border-bottom:1px solid var(--border)}
+td{padding:10px 16px;border-bottom:1px solid var(--border);font-size:.92rem}
+tbody tr:hover{background:var(--surface2)}
+
+footer{padding:40px 24px;text-align:center;border-top:1px solid var(--border)}
+footer p{font-size:.8rem;color:var(--text-dim)}
+
+@media(max-width:640px){
+  .container{padding:24px 16px 60px}
+  .movement-nav a{font-size:.75rem;padding:6px 10px}
+}
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <a href="../../index.html">&larr; Back to Index</a>
+  <button class="tool-btn" onclick="document.documentElement.classList.toggle('light')" title="Toggle theme" aria-label="Toggle theme">
+    <svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zm0 16V5a7 7 0 1 1 0 14z"/></svg>
+  </button>
+</div>
+
+<div class="hero">
+  <h1>Early Modernism &amp; the Avant-Garde</h1>
+  <div class="subtitle">c. 1910&ndash;1930</div>
+  <div class="dates">DSGN 230 &mdash; Survey of Design History</div>
+</div>
+
+<div class="container">
+
+<h2 id="introduction">Introduction &mdash; Breaking Everything Open</h2>
+
+<p>Between roughly 1910 and 1930, a series of overlapping art and design movements dismantled nearly every assumption that had governed visual culture for centuries. These movements &mdash; collectively called the <em>avant-garde</em> &mdash; did not simply introduce new styles. They challenged what art and design could <em>be</em>, what materials were acceptable, what role the audience should play, and whether beauty was even the point.</p>
+
+<p>The term <em>avant-garde</em> comes from French military vocabulary: the advance guard, the troops who go first into unfamiliar territory. In art and design, it describes practitioners who deliberately break from established conventions to explore new forms, materials, and ideas. Avant-garde work is not simply &ldquo;different&rdquo; or &ldquo;unusual&rdquo; &mdash; it is work that challenges the assumptions of its own time.</p>
+
+<p>This lesson surveys the major avant-garde movements that reshaped three-dimensional art, graphic design, architecture, and object-making across the twentieth century. Many works that shocked audiences when first shown are now foundational to how we think about design. The movements overlap, argue with each other, and recombine in ways that resist neat timelines &mdash; but understanding them in sequence reveals a conversation that continues today.</p>
+
+<div class="movement-nav">
+  <a href="#cubism">Cubism<span class="nav-dates">c. 1910&ndash;1920</span></a>
+  <a href="#constructivism">Constructivism<span class="nav-dates">c. 1913&ndash;1930s</span></a>
+  <a href="#dada">Dada<span class="nav-dates">c. 1916&ndash;1924</span></a>
+  <a href="#surrealism">Surrealism<span class="nav-dates">c. 1924&ndash;1940s</span></a>
+  <a href="#abex">Abstract Expressionism<span class="nav-dates">c. 1940s&ndash;1960s</span></a>
+  <a href="#minimalism">Minimalism<span class="nav-dates">c. 1960&ndash;1975</span></a>
+  <a href="#postminimalism">Post-Minimalism<span class="nav-dates">c. 1966&ndash;1980s</span></a>
+  <a href="#installation">Installation Art<span class="nav-dates">c. 1970s&ndash;Present</span></a>
+</div>
+
+<hr />
+
+<h2 id="cubism">Cubist Sculpture &amp; Design (c. 1910&ndash;1920)</h2>
+
+<h3>The Idea</h3>
+
+<p>Cubism began in painting with <strong>Pablo Picasso</strong> and <strong>Georges Braque</strong>, who fractured objects into geometric planes seen from multiple viewpoints simultaneously. When this thinking moved into three dimensions and into design, it produced objects, typography, and architecture that no longer tried to present a single, coherent view of their subject. Instead, the form breaks apart &mdash; planes tilt, surfaces intersect, solid and void interweave.</p>
+
+<h3>What Changed</h3>
+
+<p>Before Cubism, Western sculpture and decorative arts overwhelmingly worked with solid, continuous mass. A marble figure had a clear inside and outside. Cubist work introduced <strong>transparency</strong> &mdash; you could see through the work, around it, into it. The distinction between interior and exterior began to dissolve. In graphic design, Cubism shattered the picture plane and introduced collage &mdash; the combination of disparate materials and typefaces on a single surface &mdash; which would become one of the most powerful tools in twentieth-century visual communication.</p>
+
+<h3>Key Figures</h3>
+
+<p><strong>Pablo Picasso</strong> created some of the earliest Cubist sculptures, including assembled sheet-metal guitars and constructed heads that translated the fractured planes of Cubist painting into real space. These works were among the first modern sculptures made by <em>assembling</em> parts rather than carving or modeling &mdash; a construction principle that would reshape industrial and product design.</p>
+
+<p><strong>Alexander Archipenko</strong> pioneered the use of concavities &mdash; pushing forms inward where classical sculpture would have pushed outward. His figures use voids as actively as solids, treating empty space as a design element.</p>
+
+<p><strong>Jacques Lipchitz</strong> developed a more monumental Cubist sculpture, building complex arrangements of interlocking planes and masses that read differently from every angle.</p>
+
+<h3>Design Legacy</h3>
+
+<p>Cubism&rsquo;s fragmentation of form and its introduction of collage directly influenced graphic design, typography, and packaging throughout the twentieth century. The idea that a composition does not need a single focal point, that multiple perspectives can coexist, and that negative space is as active as positive form &mdash; these are now basic design principles, and they started here.</p>
+
+<hr />
+
+<h2 id="constructivism">Constructivism (c. 1913&ndash;1930s)</h2>
+
+<h3>The Idea</h3>
+
+<p>Constructivism emerged in Russia alongside the revolution. Its founders rejected the idea that art should represent the world or express emotions. Instead, art should be <em>constructed</em> &mdash; built from industrial materials using engineering logic &mdash; and should serve society. Sculpture became structure. Design became a tool for social transformation.</p>
+
+<h3>What Changed</h3>
+
+<p>Constructivism replaced carving and modeling with <strong>industrial fabrication</strong>. Artists used metal, glass, wire, plastic, and wood not to represent something else but to be themselves &mdash; materials organized in space according to principles of tension, balance, and dynamic movement. The pedestal disappeared. Sculpture began to hang from ceilings, project from walls, and occupy the center of rooms. Perhaps most importantly for design history, Constructivists insisted that there was no meaningful distinction between &ldquo;fine art&rdquo; and &ldquo;applied design&rdquo; &mdash; everything from a building to a book cover to a tea set was part of the same project.</p>
+
+<h3>Key Figures</h3>
+
+<p><strong>Vladimir Tatlin</strong> proposed his <em>Monument to the Third International</em> (1919&ndash;20) &mdash; an enormous spiraling steel and glass tower that was never built but became one of the most influential unbuilt structures in art and design history. It declared that sculpture could be architecture, engineering, and political statement simultaneously.</p>
+
+<p><strong>Naum Gabo</strong> and <strong>Antoine Pevsner</strong> wrote the <em>Realistic Manifesto</em> (1920), arguing for a sculpture of space and time rather than mass and volume. Gabo&rsquo;s transparent plastic and nylon-thread constructions made space itself visible &mdash; the material was a scaffold for emptiness.</p>
+
+<p><strong>El Lissitzky</strong> blurred the boundary between sculpture, architecture, and graphic design with his <em>Proun</em> works &mdash; spatial compositions that existed as paintings, prints, and room-sized installations. His exhibition designs and typographic experiments directly influenced the Bauhaus, De Stijl, and the entire trajectory of modern graphic design.</p>
+
+<p><strong>Alexander Rodchenko</strong> moved fluidly between painting, sculpture, photography, and graphic design, creating some of the most iconic Soviet posters, book covers, and advertisements. His work demonstrated that Constructivist principles could operate at any scale, from a kiosk design to a photomontage.</p>
+
+<h3>Design Legacy</h3>
+
+<p>Constructivism&rsquo;s insistence that design should serve society, use industrial materials honestly, and reject ornament in favor of structure became foundational to modernist design philosophy. Its influence runs through the Bauhaus, the International Typographic Style, and virtually every movement that has argued for design as a social practice rather than a decorative one.</p>
+
+<hr />
+
+<h2 id="dada">Dada and the Readymade (c. 1916&ndash;1924)</h2>
+
+<h3>The Idea</h3>
+
+<p>Dada emerged during World War I as a rejection of everything &mdash; rationality, bourgeois culture, traditional aesthetics, and the art establishment itself. Dada artists used absurdity, chance, and provocation to challenge the idea that art required skill, beauty, or even intention.</p>
+
+<p>The most radical Dada gesture in three dimensions was <strong>Marcel Duchamp&rsquo;s readymade</strong> &mdash; an ordinary manufactured object presented as art with no alteration beyond the artist&rsquo;s decision to select it.</p>
+
+<h3>What Changed</h3>
+
+<p>The readymade shattered the assumption that art must be made by the artist&rsquo;s hand. If a snow shovel or a bottle rack could be art simply because an artist said so, then the entire framework of craft, skill, and beauty that had defined both art and design for centuries was in question. The artist&rsquo;s <em>idea</em> became the work&rsquo;s primary content. For design, the implications were profound: if context determines meaning, then the way an object is presented, packaged, and named is as important as how it is made.</p>
+
+<h3>Key Figures</h3>
+
+<p><strong>Marcel Duchamp</strong> submitted a porcelain urinal titled <em>Fountain</em> (1917) to a New York exhibition under a false name. It was rejected, debated, and eventually became the single most discussed artwork of the twentieth century. His other readymades &mdash; a bicycle wheel mounted on a stool, a coat rack nailed to the floor &mdash; continue to raise the question: what makes something art?</p>
+
+<p><strong>Man Ray</strong> created Dada objects that combined everyday items in disorienting ways &mdash; a flatiron with a row of tacks glued to its surface (<em>Gift</em>, 1921), or a metronome with a photograph of an eye clipped to its arm. He also pioneered photographic techniques &mdash; rayographs, solarization &mdash; that would profoundly influence commercial photography and graphic design.</p>
+
+<p><strong>Kurt Schwitters</strong> built <em>Merzbau</em> &mdash; an ongoing, room-filling sculptural environment made from found materials, trash, and personal artifacts that grew over years, consuming his studio. It anticipated installation art by decades. His collaged typography and design work, including the <em>Merz</em> magazine, pushed graphic design toward a freedom that would not be fully explored until postmodernism.</p>
+
+<p><strong>Hannah H&ouml;ch</strong> pioneered photomontage &mdash; cutting and recombining photographic images from mass media into disorienting compositions that critiqued gender roles, consumerism, and political power. Her technique became one of the most important tools in twentieth-century graphic design and advertising.</p>
+
+<h3>Design Legacy</h3>
+
+<p>Dada&rsquo;s subversive energy resurfaces whenever designers deliberately violate conventions &mdash; in punk graphics, in postmodern typography, in guerrilla advertising, in the &ldquo;anti-design&rdquo; movements of the 1960s and 1970s. The readymade&rsquo;s central question &mdash; <em>what happens when context changes meaning?</em> &mdash; is a question that branding, packaging, and experience design confront every day.</p>
+
+<hr />
+
+<h2 id="surrealism">Surrealist Objects (c. 1924&ndash;1940s)</h2>
+
+<h3>The Idea</h3>
+
+<p>Surrealism sought to access the unconscious mind &mdash; dreams, desires, irrational associations &mdash; and give them physical form. Where Dada used absurdity to destroy meaning, Surrealism used it to reveal hidden meanings. Surrealist objects are familiar things made strange, combining recognizable elements in ways that feel dreamlike or uncanny.</p>
+
+<h3>What Changed</h3>
+
+<p>Surrealism expanded what three-dimensional art and design could mean psychologically. Objects were no longer just forms in space &mdash; they were triggers for unconscious associations, desire, anxiety, and humor. Materials were chosen for their symbolic resonance, not their functional or sculptural properties. This had enormous implications for advertising, which quickly recognized Surrealism&rsquo;s power to create desire through irrational juxtaposition.</p>
+
+<h3>Key Figures</h3>
+
+<p><strong>Meret Oppenheim</strong> lined a teacup, saucer, and spoon with gazelle fur (<em>Object</em>, 1936) &mdash; transforming a domestic item into something simultaneously inviting and repulsive. The work exploits the gap between what we expect to feel (smooth porcelain) and what we actually encounter (animal fur against our lips).</p>
+
+<p><strong>Alberto Giacometti</strong> created both Surrealist game-objects and, later, the emaciated standing figures he is best known for. His Surrealist work &mdash; like <em>Suspended Ball</em> (1930), a cleft sphere hanging above a crescent &mdash; generates tension through near-contact and implied motion.</p>
+
+<p><strong>Salvador Dal&iacute;</strong> extended his painted dreamscapes into three dimensions with objects like the <em>Lobster Telephone</em> (1936) &mdash; a functioning telephone with a plaster lobster replacing the handset. The object works because both elements are real and familiar; their combination is not. His <em>Mae West Lips Sofa</em> (1937) turned a face into furniture &mdash; an idea that anticipated Pop Art by two decades.</p>
+
+<h3>Design Legacy</h3>
+
+<p>Surrealism taught designers that material choices carry psychological weight &mdash; that objects carry associations beyond their function. Its influence runs through mid-century advertising (which borrowed Surrealist imagery wholesale), postmodern furniture design, conceptual product design, and contemporary branding that trades on surprise, disorientation, and the uncanny. Every advertisement that places a familiar object in an impossible context is working in Surrealism&rsquo;s shadow.</p>
+
+<hr />
+
+<h2 id="abex">Abstract Expressionist Sculpture (c. 1940s&ndash;1960s)</h2>
+
+<h3>The Idea</h3>
+
+<p>Abstract Expressionism is best known as a painting movement &mdash; Pollock, de Kooning, Rothko. But its emphasis on gesture, process, emotional intensity, and monumental scale had profound effects on sculpture and three-dimensional design. The artist&rsquo;s physical encounter with the material became the subject of the work.</p>
+
+<h3>What Changed</h3>
+
+<p>Sculpture became more about <strong>process</strong> than product. The evidence of making &mdash; welding marks, torch cuts, rough surfaces &mdash; was left visible rather than polished away. Scale increased dramatically. And sculpture broke free from the figure entirely, embracing pure abstraction. For design, the movement established a new respect for material honesty and visible craft that would influence everything from Brutalist architecture to studio furniture.</p>
+
+<h3>Key Figures</h3>
+
+<p><strong>David Smith</strong> welded industrial steel into large-scale abstract compositions that stood in open landscapes. His <em>Cubi</em> series &mdash; burnished stainless steel geometric volumes balanced in precarious-looking arrangements &mdash; combined industrial muscle with surprising delicacy.</p>
+
+<p><strong>Louise Bourgeois</strong> created deeply personal, psychologically charged sculptures in bronze, marble, latex, and fabric. Her work ranges from intimate scale to monumental &mdash; her giant spider sculptures (<em>Maman</em>) stand over 30 feet tall and evoke both threat and maternal protection.</p>
+
+<p><strong>Peter Voulkos</strong> exploded the conventions of ceramic art, tearing, stacking, and gouging clay with the physical intensity of an Abstract Expressionist painter. His work liberated ceramics from craft tradition and established it as a fine-art medium &mdash; a liberation that reverberates in contemporary ceramic design.</p>
+
+<h3>Design Legacy</h3>
+
+<p>The Abstract Expressionist attitude &mdash; that the process of making is as important as the result, and that materials should be allowed to speak honestly &mdash; influenced studio craft, Brutalist architecture, and the broader postwar turn toward authenticity in design. The movement gave permission for roughness, imperfection, and emotional directness in designed objects.</p>
+
+<hr />
+
+<h2 id="minimalism">Minimalism (c. 1960&ndash;1975)</h2>
+
+<h3>The Idea</h3>
+
+<p>Minimalism stripped sculpture down to its most essential elements &mdash; simple geometric forms, industrial materials, no representation, no narrative, no emotional expression. The work is exactly what it appears to be: a steel cube is a steel cube, not a symbol of anything else. Meaning arises from the viewer&rsquo;s physical encounter with the object in space.</p>
+
+<h3>What Changed</h3>
+
+<p>Minimalism removed the artist&rsquo;s hand almost entirely. Works were fabricated industrially from specifications, like engineering projects. The viewer&rsquo;s body became central &mdash; Minimalist sculpture is experienced by walking around it, through it, and alongside it. The relationship between the object, the space, and the viewer&rsquo;s moving body <em>is</em> the content. For design, Minimalism&rsquo;s reduction of form to essentials became perhaps the single most influential aesthetic idea of the late twentieth century.</p>
+
+<h3>Key Figures</h3>
+
+<p><strong>Donald Judd</strong> created precisely fabricated boxes and progressions in aluminum, steel, and plexiglass. He rejected the term &ldquo;sculpture&rdquo; entirely, calling his works &ldquo;specific objects.&rdquo; They are neither painting nor sculpture but something in between &mdash; three-dimensional things that insist on being encountered physically. Judd later designed furniture and architecture at his Marfa, Texas compound, applying the same reductive logic.</p>
+
+<p><strong>Carl Andre</strong> placed industrial materials (bricks, metal plates, timber beams) directly on the floor in flat, grid-like arrangements. His work eliminates the pedestal, eliminates vertical gesture, and asks the viewer to look <em>down</em> &mdash; and sometimes walk <em>on</em> &mdash; the sculpture.</p>
+
+<p><strong>Dan Flavin</strong> used commercially available fluorescent light tubes as his sole material. His arrangements of colored light transform the architecture of the rooms they occupy, dissolving the boundary between the object and its environment.</p>
+
+<p><strong>Anne Truitt</strong> created tall, painted wooden columns whose carefully chosen colors and proportions carry emotional resonance that her Minimalist peers often avoided. Her work demonstrates that geometric simplicity does not require emotional emptiness.</p>
+
+<h3>Design Legacy</h3>
+
+<p>Minimalism&rsquo;s influence on design is immeasurable. It runs through Dieter Rams&rsquo;s &ldquo;less, but better&rdquo; philosophy at Braun, through Apple&rsquo;s product language, through Japanese design culture, through the clean interfaces of digital products, and through the broader cultural equation of simplicity with sophistication. When we say a design is &ldquo;minimal,&rdquo; we are invoking &mdash; whether we know it or not &mdash; the legacy of Judd, Flavin, and their generation.</p>
+
+<hr />
+
+<h2 id="postminimalism">Post-Minimalism and Process Art (c. 1966&ndash;1980s)</h2>
+
+<h3>The Idea</h3>
+
+<p>Post-Minimalism accepted Minimalism&rsquo;s rejection of representation but reintroduced the body, impermanence, and organic materials. Where Minimalism was rigid and industrial, Post-Minimalism was soft, flexible, and often deliberately temporary. The process of making &mdash; gravity pulling, materials sagging, fibers tangling &mdash; became visible in the finished work.</p>
+
+<h3>What Changed</h3>
+
+<p>Sculpture could now be soft, flexible, scattered, poured, or hung. Rigid geometric forms gave way to latex draped over structures, felt cut into strips and hung from walls, rope tangled on floors. The artist set up conditions and let materials behave according to their nature. For design, this opened a conversation about impermanence, material intelligence, and the beauty of natural processes that continues in sustainable design, biomimicry, and material experimentation today.</p>
+
+<h3>Key Figures</h3>
+
+<p><strong>Eva Hesse</strong> used fiberglass, latex, rope, and other non-traditional materials to create works that hang, droop, and accumulate. Her sculptures feel simultaneously systematic and organic &mdash; repetitive units that sag, discolor, and deteriorate over time.</p>
+
+<p><strong>Robert Morris</strong> exhibited piles of industrial felt, cut and dropped to form different arrangements each time the work was installed. The same material produced different sculptures depending on gravity, chance, and the installer&rsquo;s decisions.</p>
+
+<p><strong>Richard Serra</strong> threw molten lead against the junction of wall and floor, letting the material cool and harden in place. His later work &mdash; enormous curved steel plates installed in public spaces &mdash; creates passages and enclosures that the viewer must physically navigate.</p>
+
+<p><strong>Lynda Benglis</strong> poured latex and polyurethane directly onto gallery floors, letting the material flow and pool according to its own logic. The resulting forms are simultaneously paintings and sculptures &mdash; flat but dimensional, controlled but accidental.</p>
+
+<h3>Design Legacy</h3>
+
+<p>Post-Minimalism taught that materials have their own tendencies &mdash; they bend, drape, tear, and resist in characteristic ways. Working <em>with</em> those tendencies rather than against them is a powerful design strategy. This material intelligence runs through contemporary textile design, parametric architecture, and any design practice that treats material behavior as a generative force rather than a problem to overcome.</p>
+
+<hr />
+
+<h2 id="installation">Installation Art (c. 1970s&ndash;Present)</h2>
+
+<h3>The Idea</h3>
+
+<p>Installation art expands sculpture to fill an entire space &mdash; sometimes an entire building or landscape. The viewer does not look <em>at</em> the work from outside; they enter it, move through it, and experience it with their whole body. The environment itself becomes the medium.</p>
+
+<h3>What Changed</h3>
+
+<p>The boundary between artwork and architecture dissolved. Scale became immersive. Time, sound, light, temperature, and the viewer&rsquo;s movement all became design materials. Installation art cannot be fully experienced through photographs &mdash; it demands presence. This insistence on embodied experience directly prefigured the contemporary focus on experience design, spatial branding, and immersive environments.</p>
+
+<h3>Key Figures</h3>
+
+<p><strong>Yayoi Kusama</strong> creates immersive infinity rooms &mdash; mirrored chambers filled with lights that appear to extend endlessly in all directions. The viewer&rsquo;s body becomes part of the visual field, multiplied and dissolved into the pattern.</p>
+
+<p><strong>Olafur Eliasson</strong> uses natural phenomena &mdash; light, water, fog, temperature &mdash; as sculptural materials. His <em>Weather Project</em> (2003) placed a giant artificial sun in the Turbine Hall of Tate Modern, transforming the vast space into a shared atmospheric experience. His studio operates as a design laboratory, collaborating with architects, engineers, and scientists.</p>
+
+<p><strong>Kara Walker</strong> fills gallery spaces with enormous silhouette installations and sculptural environments that confront histories of race, violence, and power in the American South. Her 2014 work <em>A Subtlety</em> &mdash; a massive sphinx-like figure coated in white sugar inside a former sugar refinery &mdash; used architecture, material, scale, and history simultaneously.</p>
+
+<p><strong>Ai Weiwei</strong> works across sculpture, architecture, and installation to address political freedom, cultural destruction, and human rights. His installations often use massive quantities of a single material &mdash; thousands of porcelain sunflower seeds, hundreds of bicycle frames &mdash; to create meaning through accumulation and repetition. His work demonstrates that design decisions are never politically neutral.</p>
+
+<h3>Design Legacy</h3>
+
+<p>Installation art&rsquo;s influence is everywhere in contemporary design: in immersive retail environments, in experiential marketing, in museum and exhibition design, in the pop-up installations that dominate social media. The idea that a designed space should be <em>entered</em> and <em>experienced</em> rather than merely looked at &mdash; that the visitor&rsquo;s body and movement are part of the design &mdash; is an installation art idea, and it is now central to how designers think about space.</p>
+
+<hr />
+
+<h2 id="connecting">Connecting the Movements</h2>
+
+<p>These movements did not happen in isolation. Each one responded to what came before:</p>
+
+<p>Cubism shattered the solid, unified form. Constructivism rebuilt it from industrial materials and demanded that design serve society. Dada questioned whether form needed to be built at all. Surrealism loaded it with psychological meaning. Abstract Expressionism made the process of building visible. Minimalism stripped everything away to the bare encounter between object and viewer. Post-Minimalism reintroduced the body and impermanence. Installation art expanded sculpture to fill the world.</p>
+
+<p>Understanding this sequence gives you a vocabulary for analyzing contemporary design, which freely draws from all of these traditions. When you encounter work that uses found materials, geometric reduction, industrial fabrication, immersive space, or deliberate impermanence, you can trace those choices back to their origins &mdash; and understand the conversation the designer is joining.</p>
+
+<hr />
+
+<h2 id="key-terms">Key Terms</h2>
+
+<table>
+<thead>
+  <tr><th>Term</th><th>Definition</th></tr>
+</thead>
+<tbody>
+  <tr><td><strong>Avant-garde</strong></td><td>Art or design that deliberately challenges the conventions of its time</td></tr>
+  <tr><td><strong>Readymade</strong></td><td>An ordinary manufactured object selected and presented as art</td></tr>
+  <tr><td><strong>Assemblage</strong></td><td>Sculpture or design made by combining found objects and materials</td></tr>
+  <tr><td><strong>Constructivism</strong></td><td>Building from industrial materials rather than carving or modeling; design as social practice</td></tr>
+  <tr><td><strong>Photomontage</strong></td><td>Combining photographic images from multiple sources into a single composition</td></tr>
+  <tr><td><strong>Negative space</strong></td><td>The empty areas in, around, and between forms</td></tr>
+  <tr><td><strong>Site-specific</strong></td><td>Art or design created for and responding to a particular location</td></tr>
+  <tr><td><strong>Installation</strong></td><td>Art that encompasses an entire environment or space</td></tr>
+  <tr><td><strong>Process art</strong></td><td>Art in which the method of making is visible in the finished work</td></tr>
+  <tr><td><strong>Anti-form</strong></td><td>Art that rejects rigid geometric structure in favor of soft, flexible, or scattered materials</td></tr>
+</tbody>
+</table>
+
+<hr />
+
+<h2 id="discussion">Discussion Questions</h2>
+
+<ol>
+<li><p>Constructivism insisted that design should serve society. Is that still a reasonable expectation for designers? What does &ldquo;serving society&rdquo; mean in a commercial design context?</p></li>
+<li><p>Duchamp&rsquo;s readymade argues that context determines meaning. How does this idea apply to branding and packaging design today?</p></li>
+<li><p>Minimalism&rsquo;s &ldquo;less is more&rdquo; became a dominant design philosophy. When does reduction serve the user, and when does it become an aesthetic choice that ignores practical needs?</p></li>
+<li><p>Surrealism used irrational juxtaposition to provoke emotional responses. Can you identify contemporary advertisements or products that use the same strategy?</p></li>
+<li><p>Installation art demands physical presence. In an increasingly digital and remote world, what is the future of immersive, spatial design experiences?</p></li>
+</ol>
+
+<hr />
+
+</div>
+
+<footer>
+  <p>DSGN 230 &mdash; Survey of Design History</p>
+</footer>
+
+</body>
+</html>
