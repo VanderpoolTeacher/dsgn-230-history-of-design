@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bauhaus — Key Examples — DSGN 230</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#111;--surface:#1a1a1a;--surface2:#222;--border:#333;
+  --text:#e8e8e8;--text-dim:#999;--accent:#669BBC;--accent-light:#89b4d4;
+  --white:#FDF0D5;--gold:#c9a84c;
+  --font-body:'Segoe UI',system-ui,-apple-system,sans-serif;
+  --font-display:'Georgia',serif;
+  --radius:10px;
+}
+html.light{
+  --bg:#f4f3f0;--surface:#fff;--surface2:#eae9e5;--border:#d5d3cd;
+  --text:#222;--text-dim:#555;--accent:#780000;--accent-light:#C1121F;
+  --white:#003049;--gold:#8a6d1b;
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.8;margin:0}
+a{color:var(--accent-light);text-decoration:none}
+a:hover{text-decoration:underline}
+img{max-width:100%;height:auto;border-radius:var(--radius);margin:20px 0;display:block}
+
+.toolbar{
+  position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);
+  padding:12px 24px;display:flex;align-items:center;justify-content:space-between;
+}
+.toolbar a{font-size:.85rem;color:var(--text-dim)}
+.toolbar a:hover{color:var(--accent-light)}
+.tool-btn{
+  width:34px;height:34px;border-radius:50%;border:1px solid var(--border);
+  background:var(--surface);color:var(--text-dim);display:flex;align-items:center;
+  justify-content:center;font-size:1rem;cursor:pointer;transition:.2s;padding:0;
+}
+.tool-btn:hover{border-color:var(--accent);color:var(--accent-light)}
+.tool-btn svg{width:16px;height:16px;fill:currentColor}
+
+.hero{
+  padding:60px 24px 40px;text-align:center;
+  background:radial-gradient(ellipse at 50% 30%,#1a1a1a 0%,var(--bg) 70%);
+}
+html.light .hero{background:radial-gradient(ellipse at 50% 30%,#e8e6e0 0%,var(--bg) 70%)}
+.hero h1{font-family:var(--font-display);font-size:clamp(1.8rem,4.5vw,3rem);color:var(--white);margin-bottom:8px;letter-spacing:-.02em;line-height:1.2}
+.hero .subtitle{font-size:1.05rem;color:var(--gold);font-style:italic;margin-bottom:4px}
+.hero .dates{font-size:.95rem;color:var(--text-dim)}
+
+.container{max-width:760px;margin:0 auto;padding:40px 24px 80px}
+
+.container h2{
+  font-family:var(--font-display);font-size:clamp(1.4rem,3vw,1.9rem);color:var(--white);
+  margin:48px 0 20px;padding-top:20px;border-top:1px solid var(--border);line-height:1.3;
+}
+.container h2:first-child{border-top:none;margin-top:0;padding-top:0}
+.container h3{
+  font-family:var(--font-display);font-size:1.15rem;color:var(--white);
+  margin:32px 0 12px;font-weight:700;
+}
+.container p{margin-bottom:16px;color:var(--text)}
+.container strong{color:var(--white)}
+.container em{color:var(--accent-light);font-style:italic}
+.container hr{border:none;border-top:1px solid var(--border);margin:40px 0}
+.container ul,.container ol{margin:0 0 20px 24px;color:var(--text)}
+.container li{margin-bottom:8px}
+
+footer{padding:40px 24px;text-align:center;border-top:1px solid var(--border)}
+footer p{font-size:.8rem;color:var(--text-dim)}
+
+@media(max-width:640px){
+  .container{padding:24px 16px 60px}
+}
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <a href="../../index.html">&larr; Back to Index</a>
+  <button class="tool-btn" onclick="document.documentElement.classList.toggle('light')" title="Toggle theme" aria-label="Toggle theme">
+    <svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zm0 16V5a7 7 0 1 1 0 14z"/></svg>
+  </button>
+</div>
+
+<div class="hero">
+  <h1>Bauhaus — Key Examples</h1>
+  <div class='subtitle'>Essential Works and Their Significance</div>
+  <div class="dates">DSGN 230 — Survey of Design History</div>
+</div>
+
+<div class="container">
+<h2 id="architecture">Architecture</h2>
+
+<h3>Bauhaus Building, Dessau — Walter Gropius, 1925–1926</h3>
+<figure style="margin:20px 0">
+  <img src="images/Dessau_Bauhaus-Geb%C3%A4ude_asv2024-06_img1.jpg" alt="Bauhaus building in Dessau-Roßlau, Germany" style="width:100%;border-radius:var(--radius)">
+  <figcaption style="font-size:.78rem;color:var(--text-dim);margin-top:6px;line-height:1.4">Bauhaus building, Dessau-Roßlau. Photo: A.Savin, Wikipedia (2024). <a href="https://artlibre.org/licence/lal/en/" style="color:var(--accent-light)">Free Art License</a>.</figcaption>
+</figure>
+<p>The iconic modernist structure that housed the Bauhaus school&rsquo;s final and most flourishing period. Gropius designed a building that embodied Bauhaus principles: functional program expressed through form, integration of glass and steel, and elimination of unnecessary ornament. The complex features workshop areas with extensive glazing, administrative offices, and residential quarters for faculty and students unified by a sculptural concrete and glass composition.</p>
+<p>The building became the physical manifestation of Bauhaus ideology — a teaching tool in itself. Its horizontal bands of windows, clean rectangular forms, and transparent facades revealed the interior activity to the outside world, reflecting the school&rsquo;s commitment to honesty in materials and structure. After the school&rsquo;s closure by the Nazis in 1933, the building survived wartime damage and remained largely intact, becoming a UNESCO World Heritage Site and enduring symbol of modernist architecture.</p>
+
+<h3>Fagus Factory, Alfeld — Walter Gropius and Adolf Meyer, 1911–1913</h3>
+<p>An early precursor to the Bauhaus aesthetic, this shoe-last factory in Lower Saxony demonstrates the geometric clarity and industrial honesty that would define Gropius&rsquo;s mature work. The building features a revolutionary all-glass corner — one of the first applications of a glass curtain wall in industrial architecture — that dissolves the boundary between interior workspace and exterior environment.</p>
+<p>The Fagus Factory established a model for modern factory design that integrated functional efficiency with visual refinement. Its influence extended far beyond Germany, proving that industrial buildings could achieve architectural significance without decorative excess. The clarity of its construction and legibility of its program became foundational principles for the Bauhaus.</p>
+
+<h3>Barcelona Pavilion — Mies van der Rohe, 1929</h3>
+<p>Created as the German Pavilion for the 1929 Barcelona International Exposition, this temporary structure represented the apotheosis of modernist simplicity and spatial fluidity. Mies designed an open platform with minimal walls arranged in a non-orthogonal geometry, supported by cruciform steel columns and enclosed by transparent and opaque planes of glass, steel, and travertine.</p>
+<p>Despite its small footprint, the pavilion suggested infinite spatial extension through the interplay of reflective surfaces, floating planes, and carefully proportioned voids. A single sculptural moment — a female form by Georg Kolbe — occupied the space without interrupting its flow. Though dismantled after the exposition, the Barcelona Pavilion became a canonical work of modernism, reconstructed in 1986 as a permanent memorial. Its influence on minimalism and high-modernist architecture cannot be overstated; Mies&rsquo;s dictum &ldquo;less is more&rdquo; found its fullest expression here.</p>
+
+<h3>Haus am Horn, Weimar — Georg Muche and Adolf Meyer, 1923</h3>
+<p>An experimental residential prototype built to demonstrate integrated Bauhaus design principles. This small single-family house synthesized architecture with furniture, ceramics, textiles, and metalwork designed by Bauhaus workshops. The interior featured built-in storage, efficient spatial planning, and custom furnishings that demonstrated how Bauhaus ideals could improve domestic life.</p>
+<p>Haus am Horn served as both a teaching laboratory and a popular attraction at the 1923 Bauhaus Exhibition in Weimar. It proved that modernist design principles could be applied to modest, functional living spaces, challenging the notion that modernism was only suitable for institutional buildings or the elite. The house&rsquo;s influence extended into postwar social housing and domestic modernism across Europe.</p>
+
+<h3>Masters&rsquo; Houses, Dessau — Walter Gropius, 1925–1926</h3>
+<p>A compound of semi-detached residences designed for Bauhaus faculty including Paul Klee, Wassily Kandinsky, László Moholy-Nagy, and Joost Schmidt. Each house maintained an identical exterior but allowed faculty flexibility in interior arrangement, reflecting Bauhaus philosophy: functional design providing a framework for individual expression.</p>
+<p>These houses represented a breakthrough in prefabricated residential design and industrial construction applied to domestic architecture. Their economic use of materials and space, combined with refined proportions and careful integration into landscape, demonstrated that modernist design could humanize rather than alienate domestic environments. Today they remain valuable documents of how pioneering modernist architects imagined the relationship between home, work, and community.</p>
+
+<hr />
+
+<h2 id="furniture">Furniture</h2>
+
+<h3>Wassily Chair (B3) — Marcel Breuer, 1925</h3>
+<figure style="margin:20px 0">
+  <img src="images/Bauhaus_building_-_Wassily_Chairs_by_Marcel_Breuer_(1925_26)_(3925088681).jpg" alt="Wassily Chairs by Marcel Breuer (1925/26) in the Bauhaus building" style="width:100%;border-radius:var(--radius)">
+  <figcaption style="font-size:.78rem;color:var(--text-dim);margin-top:6px;line-height:1.4">
+    Bauhaus building — Wassily Chairs by Marcel Breuer (1925/26). Photo: Kai 'Oswald' Seidler, Berlin (1 March 2008).
+    Licensed under <a href="https://creativecommons.org/licenses/by/2.0/" style="color:var(--accent-light)">Creative Commons Attribution 2.0 Generic (CC BY 2.0)</a>.
+    Free to share and adapt with attribution.
+  </figcaption>
+</figure>
+<p>Also known as the <em>Stahlrohr</em> (steel tube) chair, this cantilevered seat represents one of modernism&rsquo;s most elegant solutions to the problem of domestic seating. Breuer&rsquo;s insight — to bend seamless steel tubing into a frame supporting canvas or leather fabric — created a structure that was simultaneously industrial, minimal, and surprisingly comfortable.</p>
+<p>The chair&rsquo;s name derives from its resemblance to tubular bicycle frames, connecting it to contemporary machine aesthetics. Wassily Kandinsky immediately adopted the design for his residence at the Bauhaus, making it a symbol of the school&rsquo;s output. The B3 became one of the most-manufactured modernist furniture designs, produced by Thonet and later licensed to numerous manufacturers. Its influence on industrial design and furniture manufacturing remains foundational; the tubular steel frame became a standard language for mid-century modernism.</p>
+
+<h3>Cesca Chair (B32) — Marcel Breuer, 1928</h3>
+<p>An evolution of Breuer&rsquo;s tubular steel aesthetic, the Cesca chair introduced a curved, cantilevered base that eliminated the need for a rear leg while improving comfort. The design combined a bent-wood seat frame with woven rattan or plywood, further developing Breuer&rsquo;s synthesis of industrial materials with craft tradition.</p>
+<p>Named after Breuer&rsquo;s daughter Francesca, the Cesca became as iconic as the Wassily while offering a warmer, more accessible aesthetic through its use of natural materials. The chair demonstrates Bauhaus versatility: equally suited to a modernist home, institutional setting, or café environment. Its practical virtues — stackability, durability, ease of manufacture — ensured its continued production and relevance into the present day.</p>
+
+<h3>Barcelona Chair — Mies van der Rohe, 1929</h3>
+<p>Designed specifically for the Barcelona Pavilion as a seat for the German dignitary occupying the space, this leather-clad steel-frame chair represents luxury modernism. Mies created a frame of flat stainless-steel bars arranged in a modified X configuration, upholstered in butter-soft leather and suspended with brass fasteners. Despite its apparent simplicity, the form required meticulous engineering to achieve its elegant proportions.</p>
+<p>The Barcelona chair exists in fascinating tension: industrial in its metal construction, crafted in its leather tailoring, and monumental in its refined restraint. It became a status symbol of modernist sophistication, adopted by corporate boardrooms and luxury interiors, yet retaining intellectual honesty through structural clarity. The chair exemplifies Mies&rsquo;s philosophy that authentic beauty derives from the truthful expression of materials and purpose.</p>
+
+<h3>Brno Chair — Mies van der Rohe, 1930</h3>
+<p>A cantilevered chair with a stainless-steel flat-bar frame and cushioned seat and back, developed for the Tugendhat House in Brno, Czechoslovakia. The Brno demonstrates Mies&rsquo;s mastery of the cantilever principle, creating a chair that appears to float while providing exceptional comfort through precisely calculated proportions and high-quality upholstery.</p>
+<p>Less austere than the Barcelona chair but equally sophisticated, the Brno represented a pragmatic modernism suited to residential interiors. Its elegant proportions and refined engineering influenced countless mid-century lounge chairs. The design proved that modernist principles could address comfort and luxury without resorting to ornament, establishing a model for high-end modern furniture that remains influential today.</p>
+
+<hr />
+
+<h2 id="graphic-design-typography">Graphic Design &amp; Typography</h2>
+
+<h3>Herbert Bayer&rsquo;s Universal Alphabet — Herbert Bayer, 1925</h3>
+<p>Bayer&rsquo;s experimental sans-serif typeface represented an attempt to rationalize letterforms according to geometric principles. The Universal alphabet employed only straight lines and circular arcs, eliminating serifs and decorative complexity. Though too rigid for widespread practical use, the design demonstrated the Bauhaus commitment to systematic, logical design processes.</p>
+<p>More importantly, Bayer&rsquo;s exploration of typeface design as a modernist discipline influenced subsequent typographic development. His belief that design should be legible, economical, and universally understandable shaped how modernist designers approached communication. The lowercase-only concept he explored would resurface in later sans-serif designs, contributing to the minimalist typography of the postwar era.</p>
+<figure style="margin:20px 0">
+  <img src="images/ABayer.svg.png" alt="Specimen of the Architype Bayer typeface, based on Herbert Bayer's Universal alphabet (1925)" style="width:100%;border-radius:var(--radius)">
+  <figcaption style="font-size:.78rem;color:var(--text-dim);margin-top:6px;line-height:1.4">
+    Specimen of the Architype Bayer typeface, based on Herbert Bayer's Universal alphabet (1925). Created 4 October 2014. Author: Fred the Oyster.
+    Licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" style="color:var(--accent-light)">Creative Commons Attribution-Share Alike 4.0 International (CC BY-SA 4.0)</a>
+    and the <a href="https://www.gnu.org/licenses/fdl-1.2.html" style="color:var(--accent-light)">GNU Free Documentation License v1.2+</a>.
+    Free to share and adapt with attribution; derivatives must use a compatible license.
+  </figcaption>
+</figure>
+
+<h3>Bauhaus Exhibition Poster — Joost Schmidt, 1923</h3>
+<p>This announcement for the first major Bauhaus exhibition encapsulates the school&rsquo;s graphic language: geometric forms, bold sans-serif typography, and dynamic asymmetrical composition. Schmidt employed concentric circles, diagonal lines, and contrasting scale to create visual impact while maintaining clarity of information. The poster functioned both as advertisement and pedagogical statement about modernist design principles.</p>
+<p>The 1923 exhibition poster became iconic shorthand for Bauhaus visual identity. Its design demonstrated how geometric abstraction could serve communication without diminishing legibility. The work influenced graphic design education worldwide, establishing a model for how modernist principles could enhance rather than obscure functional typography.</p>
+<figure style="margin:20px 0">
+  <img src="images/Joost_Schmidt_Bauhausausstellung_1923.jpg" alt="Bauhaus Exhibition poster, Joost Schmidt, 1923 — geometric forms in primary colors announcing the first major Bauhaus exhibition in Weimar" style="width:100%;border-radius:var(--radius)">
+  <figcaption style="font-size:.78rem;color:var(--text-dim);margin-top:6px;line-height:1.4">
+    <em>Bauhausausstellung</em> (Bauhaus Exhibition) poster. Joost Schmidt, 1923.
+    This work is in the <strong style="color:var(--text)">public domain</strong> — the copyright term (author&rsquo;s life plus 70 years) has expired in its country of origin and most other jurisdictions.
+  </figcaption>
+</figure>
+
+<h3>Bauhaus Magazine Covers — Various Designers, 1919–1933</h3>
+<p>The school&rsquo;s official publication featured covers by faculty and students including Herbert Bayer, Joost Schmidt, László Moholy-Nagy, and others. Each cover experiment with photomontage, bold typography, geometric composition, and integration of photography with graphic design. The magazine served as laboratory for new visual approaches while simultaneously publicizing the school&rsquo;s work.</p>
+<p>The Bauhaus magazine covers developed photomontage as a modernist technique, combining photographic imagery with drawn and typographic elements in surprising juxtapositions. This strategy influenced avant-garde graphic design across Europe and established photography as a primary tool for modernist visual communication. The experimental covers demonstrated that design journals could be vehicles for aesthetic innovation as well as information dissemination.</p>
+
+<h3>&ldquo;Staatliches Bauhaus in Weimar 1919–1923&rdquo; Catalog</h3>
+<p>This comprehensive documentation of the Bauhaus school&rsquo;s first four years featured an innovative visual design by László Moholy-Nagy and Herbert Bayer. The catalog employed photomontage, dynamic layouts, and integrated typography to create a visual argument for the school&rsquo;s pedagogical and aesthetic significance. Rather than a passive record, the catalog became a manifesto, presenting Bauhaus work as coherent, forward-looking, and revolutionary.</p>
+<p>The Weimar Bauhaus catalog established the graphic language for how modernist institutions would present their work. Its influence extended far beyond the Bauhaus itself; the catalogue&rsquo;s integration of photography, layout dynamism, and conceptual clarity became foundational to modern exhibition and publication design. The work demonstrated that catalog design could embody institutional values through its formal strategies.</p>
+
+<hr />
+
+<h2 id="industrial-product-design">Industrial and Product Design</h2>
+
+<h3>MT 49 Tea Infuser — Marianne Brandt, 1924</h3>
+<p>A small domestic object that exemplifies Bauhaus metalwork principles: minimal material, pure geometric form, and elegant functionality. Brandt&rsquo;s design reduced the tea infuser to essential elements — a perforated sphere suspended by a thin rod and ring handle — achieving maximum utility with minimal visual complexity.</p>
+<p>The MT 49 demonstrates how the Bauhaus metal workshop elevated ordinary domestic objects to the status of design art. Brandt&rsquo;s geometric purity and material honesty showed that industrial production could yield objects of beauty and intelligence. The infuser&rsquo;s influence extends into contemporary product design, where simplicity and functional clarity remain aspirational virtues.</p>
+<figure style="margin:20px 0">
+  <img src="images/Marianne_brandt,_teiere,_1924_(cropped).jpeg" alt="Marianne Brandt, MT 49 Tea Infuser, 1924 — silver-plated brass sphere with ebony handle" style="width:100%;border-radius:var(--radius)">
+  <figcaption style="font-size:.78rem;color:var(--text-dim);margin-top:6px;line-height:1.4">
+    Marianne Brandt, tea infuser (teiere), 1924. Photo: Sailko (5 November 2011).
+    Licensed under <a href="https://creativecommons.org/licenses/by-sa/3.0/" style="color:var(--accent-light)">Creative Commons Attribution-Share Alike 3.0 Unported (CC BY-SA 3.0)</a>
+    and the <a href="https://www.gnu.org/licenses/fdl-1.2.html" style="color:var(--accent-light)">GNU Free Documentation License v1.2+</a>.
+    Free to share and adapt with attribution; derivatives must use a compatible license.
+  </figcaption>
+</figure>
+
+<h3>Kandem Bedside Lamp — Marianne Brandt and Hin Bredendieck, 1928</h3>
+<p>A cylindrical table lamp with a flexible gooseneck and adjustable shade, designed for functional reading light. The Kandem lamp integrated industrial materials — tubular metal, bakelite, and opal glass — into a form that prioritized user need over decorative ambition. The design influenced numerous task-lighting solutions throughout the twentieth century.</p>
+<p>The lamp exemplified Bauhaus pragmatism: beautiful because functional, not despite it. Its influence on industrial lighting design cannot be overstated; the adjustable gooseneck became a universal feature of modernist task lamps. The Kandem demonstrated that utilitarian objects could achieve elegant proportions through disciplined design thinking.</p>
+
+<h3>WG 24 Table Lamp — Wilhelm Wagenfeld and Carl Jakob Jucker, 1924</h3>
+<p>This elegant modernist lamp combined a tubular metal base with a spherical glass shade, creating a design of essential simplicity. Wagenfeld and Jucker&rsquo;s solution subordinated decorative impulse to structural logic, allowing the materials themselves — the transparency of glass and the reflectivity of metal — to create visual interest.</p>
+<p>The WG 24 became one of the most-reproduced modernist table lamps, establishing formal principles that influenced mid-century lighting design. Its success demonstrated that geometric simplicity and material honesty could achieve both visual and commercial appeal. The lamp remains in production, testament to the timelessness of well-reasoned modernist form.</p>
+<figure style="margin:20px 0">
+  <img src="images/Tischlampe_di_Carl_Jakob_Jucker_(left,_1923-24)_e_di_Wilhelm_Wagenfeld_(right,_1924).JPG" alt="Table lamps by Carl Jakob Jucker (left, 1923–24) and Wilhelm Wagenfeld (right, 1924), Bauhaus metal workshop" style="width:100%;border-radius:var(--radius)">
+  <figcaption style="font-size:.78rem;color:var(--text-dim);margin-top:6px;line-height:1.4">
+    Table lamps (Tischlampe): Carl Jakob Jucker (left, 1923–24) and Wilhelm Wagenfeld (right, 1924). Photo: Sailko (5 November 2011).
+    Licensed under <a href="https://creativecommons.org/licenses/by-sa/3.0/" style="color:var(--accent-light)">Creative Commons Attribution-Share Alike 3.0 Unported (CC BY-SA 3.0)</a>
+    and the <a href="https://www.gnu.org/licenses/fdl-1.2.html" style="color:var(--accent-light)">GNU Free Documentation License v1.2+</a>.
+    Free to share and adapt with attribution; derivatives must use a compatible license.
+  </figcaption>
+</figure>
+
+<h3>MT 8 Ashtray — Marianne Brandt, 1924</h3>
+<p>A small cylindrical brass ashtray with a minimal flange and handle, Brandt&rsquo;s design reduced the object to essential components while maintaining tactile and visual refinement. The ashtray demonstrates the Bauhaus principle that even the humblest domestic object deserved disciplined, intelligent design.</p>
+<p>The MT 8 exemplifies how Bauhaus metalwork elevated functional objects through geometric clarity and material sensitivity. Though humble, the ashtray embodies professional design thinking applied to mass production. Its influence appears in countless subsequent Modernist metalwork designs, proving that sophistication need not derive from complexity.</p>
+
+<hr />
+
+<h2 id="textiles">Textiles</h2>
+
+<h3>Wall Hangings and Fabric Designs — Anni Albers</h3>
+<p>Albers&rsquo;s woven textiles represent the Bauhaus textile workshop at its most experimental. Her geometric designs explored the structural possibilities of the loom itself — how threads of different colors and thicknesses could create optical effects and spatial illusions. Albers approached weaving as a rigorous formal practice, analyzing how pattern, color, and material interact.</p>
+<p>Albers&rsquo;s influence on modern textile design extended beyond functional fabrics into fine art; her weavings achieved recognition as artworks rather than craft. She developed a systematic approach to color and form that informed her post-Bauhaus career as an artist. Her work established weaving as a legitimate vehicle for modernist abstraction, influencing generations of fiber artists and textile designers.</p>
+
+<h3>Woven Textiles — Gunta Stölzl</h3>
+<p>As director of the Bauhaus textile workshop, Stölzl oversaw production of innovative fabrics that integrated abstract geometric patterns with practical functionality. Her own designs explored color theory, pattern repetition, and the expressive potential of industrial looms. Stölzl&rsquo;s work demonstrated how traditional craft could embrace modernist aesthetics and mechanized production.</p>
+<p>Stölzl&rsquo;s textiles balanced artistic ambition with commercial viability, producing designs suitable for furniture upholstery, wall coverings, and apparel. Her leadership of the textile workshop established weaving as central to Bauhaus pedagogy, proving that traditional media could embrace modernist principles. Her influence on pattern design and textile modernism remains significant in contemporary practice.</p>
+
+<h3>Bauhaus Wallpapers — Produced with Rasch Brothers</h3>
+<p>The Bauhaus collaborated with the Rasch wallpaper company to produce commercially available designs that brought modernist aesthetics into domestic interiors. These geometric patterns, derived from Bauhaus graphic design and textile exploration, offered abstraction and contemporary styling to middle-class consumers. The wallpapers provided an affordable route to modernist interior design.</p>
+<p>The Rasch collaboration demonstrated Bauhaus commitment to bringing modern design to mass markets, not merely elite collectors. The wallpapers functioned as democratic modernism, allowing working families to inhabit contemporary aesthetic environments. This collaboration exemplified the Bauhaus philosophy that good design should be accessible, functional, and universally distributed through industrial production.</p>
+
+<hr />
+
+<h2 id="painting-theory">Painting &amp; Theory</h2>
+
+<h3>Composition VIII — Wassily Kandinsky, 1923</h3>
+<p>A monumental abstract painting from Kandinsky&rsquo;s Bauhaus period, Composition VIII demonstrates his systematic approach to abstract form. The canvas combines geometric and organic shapes — circles, triangles, lines, and curves — arranged in compositional relationships he believed expressed spiritual and emotional truths. Kandinsky saw abstraction as a universal language transcending cultural and linguistic barriers.</p>
+<p>As a Bauhaus faculty member, Kandinsky developed pedagogical approaches to color theory and formal relationships that shaped modernist design education. His paintings served as theoretical models for how abstract forms could communicate meaning and emotion without representational imagery. Kandinsky&rsquo;s synthesis of art practice and design theory established abstraction as foundational to modernist design thinking.</p>
+
+<h3>Twittering Machine — Paul Klee, 1922</h3>
+<p>A mixed-media work on paper combining ink drawing with watercolor, this enigmatic composition suggests whimsy, mechanization, and the intersection of nature and technology. A mysterious crank mechanism appears to operate four bird-like creatures, oscillating between the mechanical and the organic. Klee&rsquo;s delicate draftsmanship and experimental media—including collage and printmaking techniques—expanded possibilities for modernist visual language.</p>
+<p>Klee&rsquo;s work at the Bauhaus emphasized the artist as researcher and experimenter, constantly questioning materials and processes. His paintings and drawings, though rooted in expressionist tradition, demonstrated how modernist discipline could coexist with poetic imagination and humor. Klee&rsquo;s influence on twentieth-century art and design extended into surrealism, kinetic art, and contemporary practice, proving that modernism encompassed psychological complexity as well as rational order.</p>
+
+<h3>Homage to the Square Series — Josef Albers, begun 1949</h3>
+<p>Though initiated after Albers&rsquo;s departure from the Bauhaus, this monumental series of paintings epitomizes principles developed during his teaching tenure. Albers systematically explored how nested squares of different hues and values interact optically, creating illusions of movement and depth through color relationships alone. The series represents rigorous formal investigation pursued across hundreds of variations.</p>
+<p>Albers&rsquo;s <em>Homage to the Square</em> established color theory as central modernist practice, influencing the development of Minimalism and Color Field painting. His work proved that profound aesthetic experience could emerge from systematic repetition and subtle variation. The series has influenced contemporary art, design, and color science, demonstrating the enduring significance of his Bauhaus-informed approach to visual investigation.</p>
+
+<hr />
+
+</div>
+
+<footer>
+  <p>DSGN 230 — Survey of Design History</p>
+</footer>
+
+</body>
+</html>
