@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Art Deco — Key Examples — DSGN 230</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#111;--surface:#1a1a1a;--surface2:#222;--border:#333;
+  --text:#e8e8e8;--text-dim:#999;--accent:#669BBC;--accent-light:#89b4d4;
+  --white:#FDF0D5;--gold:#c9a84c;
+  --font-body:'Segoe UI',system-ui,-apple-system,sans-serif;
+  --font-display:'Georgia',serif;
+  --radius:10px;
+}
+html.light{
+  --bg:#f4f3f0;--surface:#fff;--surface2:#eae9e5;--border:#d5d3cd;
+  --text:#222;--text-dim:#555;--accent:#780000;--accent-light:#C1121F;
+  --white:#003049;--gold:#8a6d1b;
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.8;margin:0}
+a{color:var(--accent-light);text-decoration:none}
+a:hover{text-decoration:underline}
+img{max-width:100%;max-height:80vh;height:auto;border-radius:var(--radius);margin:20px 0;display:block;object-fit:contain}
+
+.toolbar{
+  position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);
+  padding:12px 24px;display:flex;align-items:center;justify-content:space-between;
+}
+.toolbar a{font-size:.85rem;color:var(--text-dim)}
+.toolbar a:hover{color:var(--accent-light)}
+.tool-btn{
+  width:34px;height:34px;border-radius:50%;border:1px solid var(--border);
+  background:var(--surface);color:var(--text-dim);display:flex;align-items:center;
+  justify-content:center;font-size:1rem;cursor:pointer;transition:.2s;padding:0;
+}
+.tool-btn:hover{border-color:var(--accent);color:var(--accent-light)}
+.tool-btn svg{width:16px;height:16px;fill:currentColor}
+
+.hero{
+  padding:60px 24px 40px;text-align:center;
+  background:radial-gradient(ellipse at 50% 30%,#1a1a1a 0%,var(--bg) 70%);
+}
+html.light .hero{background:radial-gradient(ellipse at 50% 30%,#e8e6e0 0%,var(--bg) 70%)}
+.hero h1{font-family:var(--font-display);font-size:clamp(1.8rem,4.5vw,3rem);color:var(--white);margin-bottom:8px;letter-spacing:-.02em;line-height:1.2}
+.hero .subtitle{font-size:1.05rem;color:var(--gold);font-style:italic;margin-bottom:4px}
+.hero .dates{font-size:.95rem;color:var(--text-dim)}
+
+.container{max-width:760px;margin:0 auto;padding:40px 24px 80px}
+
+.container h2{
+  font-family:var(--font-display);font-size:clamp(1.4rem,3vw,1.9rem);color:var(--white);
+  margin:48px 0 20px;padding-top:20px;border-top:1px solid var(--border);line-height:1.3;
+}
+.container h2:first-child{border-top:none;margin-top:0;padding-top:0}
+.container h3{
+  font-family:var(--font-display);font-size:1.15rem;color:var(--white);
+  margin:32px 0 12px;font-weight:700;
+}
+.container p{margin-bottom:16px;color:var(--text)}
+.container strong{color:var(--white)}
+.container em{color:var(--accent-light);font-style:italic}
+.container hr{border:none;border-top:1px solid var(--border);margin:40px 0}
+.container ul,.container ol{margin:0 0 20px 24px;color:var(--text)}
+.container li{margin-bottom:8px}
+
+footer{padding:40px 24px;text-align:center;border-top:1px solid var(--border)}
+footer p{font-size:.8rem;color:var(--text-dim)}
+
+@media(max-width:640px){
+  .container{padding:24px 16px 60px}
+}
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <a href="../../index.html">&larr; Back to Index</a>
+  <button class="tool-btn" onclick="document.documentElement.classList.toggle('light')" title="Toggle theme" aria-label="Toggle theme">
+    <svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zm0 16V5a7 7 0 1 1 0 14z"/></svg>
+  </button>
+</div>
+
+<div class="hero">
+  <h1>Art Deco — Key Examples</h1>
+  <div class='subtitle'>Visual Reference Guide</div>
+  <div class="dates">DSGN 230 — Survey of Design History</div>
+</div>
+
+<div class="container">
+<h2 id="architecture">Architecture</h2>
+<div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;margin:20px 0">
+  <figure style="flex:0 0 280px;margin:0">
+    <img alt="The Chrysler Building in New York City, showing its iconic stainless steel sunburst crown and Art Deco setback massing rising against the sky" src="images/Chrysler_Building_by_David_Shankbone_Retouched.jpg" style="width:100%;border-radius:6px" />
+    <figcaption style="font-size:.78rem;color:var(--text-dim);margin-top:6px;text-align:center">Photo: David Shankbone, retouched by Overand. CC BY-SA 3.0.</figcaption>
+  </figure>
+  <div style="flex:1;min-width:200px">
+    <p><strong>Chrysler Building</strong> — William Van Alen, 1928–1930, New York, USA</p>
+    <p style="margin-top:8px">The quintessential Art Deco skyscraper. Stainless steel sunburst crown with triangular windows, eagle gargoyles modeled on Chrysler radiator caps, and a lobby sheathed in African marble with painted ceiling murals by Edward Trumbull celebrating transportation and human endeavor. 1,046 feet tall — briefly the world's tallest building before the Empire State Building surpassed it.</p>
+  </div>
+</div>
+
+<div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;margin:20px 0">
+  <figure style="flex:0 0 280px;margin:0">
+    <img alt="The Empire State Building at sunset, illuminated in green for Climate Week NYC, viewed from the Top of the Rock at Rockefeller Center with the Manhattan skyline stretching behind it" src="images/Empire_State_Building_sunset.jpg" style="width:100%;border-radius:6px" />
+    <figcaption style="font-size:.78rem;color:var(--text-dim);margin-top:6px;text-align:center">Photo: Dllu, 2021. CC BY-SA 4.0.</figcaption>
+  </figure>
+  <div style="flex:1;min-width:200px">
+    <p><strong>Empire State Building</strong> — Shreve, Lamb &amp; Harmon, 1930–1931, New York, USA</p>
+    <p style="margin-top:8px">Setback massing in limestone and granite, crowned by a mooring mast (originally intended for dirigibles) that became the building's iconic spire. The Art Deco lobby features marble walls, aluminum ceiling reliefs, and a backlit mural of the building itself. 1,454 feet to antenna tip. The world's tallest building for 39 years.</p>
+  </div>
+</div>
+
+<p><strong>Rockefeller Center</strong> — Associated Architects (Raymond Hood, lead), 1930–1939, New York, USA
+A 14-building Art Deco complex covering 22 acres in midtown Manhattan. Key features include Lee Lawrie's <em>Atlas</em> and <em>Wisdom</em> sculptures, the sunken plaza, the Channel Gardens, and Radio City Music Hall — whose interior, designed by Donald Deskey, is one of the most complete Art Deco environments in existence.</p>
+
+<p><strong>Radio City Music Hall</strong> — Edward Durell Stone &amp; Donald Deskey, 1932, New York, USA
+The world's largest indoor theater at its opening (5,960 seats). Deskey's interior is a masterwork of Streamline Moderne: sweeping arches, geometric carpet patterns, aluminum and Bakelite fixtures, Ezra Winter's enormous lobby mural <em>The Fountain of Youth</em>, and the "sunrise" proscenium arch — concentric bands of light radiating outward from the stage.</p>
+<figure style="margin:16px 0 24px">
+  <img src="images/Radio_City_Music_Hall_1932.jpg" alt="Interior of Radio City Music Hall in 1932, showing the grand auditorium with its distinctive Art Deco arched ceiling, sweeping rows of seats, and dramatic stage proscenium" style="width:100%;border-radius:6px">
+  <figcaption style="font-size:.78rem;color:var(--text-dim);margin-top:6px;text-align:center">Radio City Music Hall interior, 1932. Photo: Samuel H. Gottscho, Library of Congress. Public domain.</figcaption>
+</figure>
+
+<p><strong>Eastern Columbia Building</strong> — Claud Beelman, 1929, Los Angeles, USA
+A 13-story clock tower clad in turquoise and gold terra cotta tile with sunburst, zigzag, and chevron motifs. One of the finest examples of Art Deco polychrome architecture. Now residential lofts.</p>
+
+<p><strong>Palais de Chaillot</strong> — Boileau, Carlu &amp; Azéma, 1937, Paris, France
+Twin curving wings with monumental sculpture and gold-inscribed poetry, facing the Eiffel Tower across the Trocadéro gardens. Built for the 1937 International Exposition, replacing an earlier Moorish-style palace.</p>
+
+<p><strong>Hoover Building</strong> — Wallis, Gilbert and Partners, 1931–1935, London, England
+A factory and headquarters building in white concrete with bold geometric ornamentation in green, blue, and orange faience tiles. Originally built for the Hoover Company, now a Tesco supermarket with the preserved Art Deco facade.</p>
+
+<p><strong>Marine Building</strong> — McCarter Nairne and Partners, 1930, Vancouver, Canada
+A 22-story office tower whose exterior and interior are encrusted with marine and transportation motifs — seahorses, crabs, ships, locomotives, aircraft — rendered in terra cotta, brass, and inlaid wood. Often called the best Art Deco building in Canada.</p>
+
+<p><strong>Bacardí Building</strong> — Esteban Rodríguez-Castells &amp; Rafael Fernández Ruenes, 1930, Havana, Cuba
+Headquarters for the Bacardí rum company, featuring a stepped tower clad in local limestone and Swedish granite with terra cotta ornamentation, a bat motif (the Bacardí logo), and an interior of polychrome tiles and marble.</p>
+
+<p><strong>Miami Beach Art Deco District</strong> — Multiple architects (Hohauser, Dixon, Anis, et al.), 1923–1943, Miami Beach, USA
+Over 800 Art Deco and Streamline Moderne buildings forming the largest concentration of Art Deco architecture in the world. Characterized by pastel colors, nautical motifs, eyebrow overhangs, neon signage, and tropical adaptations. National Historic Landmark since 1979.</p>
+
+<hr />
+<h2 id="decorative-arts">Decorative Arts &amp; Design</h2>
+<p><strong>Hôtel du Collectionneur</strong> — Émile-Jacques Ruhlmann (interior), Pierre Patout (architecture), 1925, Paris Exposition
+Ruhlmann's showcase pavilion at the 1925 Exposition. A complete Art Deco interior: macassar ebony furniture, Aubusson carpets, Jean Dupas murals, Edgar Brandt metalwork, and Jean Dunand lacquer panels, all unified by Ruhlmann's vision of refined geometric luxury.</p>
+
+<p><strong>Ruhlmann "Tardieu" Desk</strong> — Émile-Jacques Ruhlmann, c. 1929, Paris
+A kidney-shaped desk in macassar ebony veneer with ivory sabots (feet caps), silver-plated bronze mounts, and a single sweeping curve. Demonstrates Ruhlmann's synthesis of classical furniture-making tradition with Art Deco geometry.</p>
+
+<p><strong>Lalique "Bacchantes" Vase</strong> — René Lalique, 1927, Paris
+A molded opalescent glass vase featuring a frieze of nude female figures in relief, their bodies rendered in stylized, geometric repetition. One of Lalique's most iconic Art Deco designs, still produced by the Lalique company.</p>
+
+<p><strong>Lalique Glass Columns, SS Normandie</strong> — René Lalique, 1935
+Twelve illuminated glass columns lining the first-class dining room of the ocean liner <em>Normandie</em>. Each column contained internally lit Lalique glass panels with geometric and floral motifs, creating a cathedral-like effect in the 305-foot-long room.</p>
+<figure style="margin:16px 0 24px">
+  <img src="images/SS_Normandie_grand_dining_room.jpg" alt="Grand dining room of the SS Normandie ocean liner, c. 1935. An enormous, cathedral-like interior with rows of tables set for dinner, illuminated by tall Lalique glass columns lining both sides and an ornate ceiling stretching the full 305-foot length of the room." style="width:100%;border-radius:6px">
+  <figcaption style="font-size:.78rem;color:var(--text-dim);margin-top:6px;text-align:center">Grand dining room of the SS <em>Normandie</em>, c. 1935. Public domain image via Wikimedia Commons.</figcaption>
+</figure>
+
+<p><strong>Jean Dunand Lacquer Panels, SS Normandie</strong> — Jean Dunand, 1935
+Monumental lacquer panels in the <em>Normandie</em>'s smoking room and other spaces, depicting stylized figures, landscapes, and geometric patterns in gold, silver, and eggshell on black lacquer. Among the most ambitious Art Deco decorative commissions ever executed.</p>
+
+<p><strong>Edgar Brandt "L'Oasis" Screen</strong> — Edgar Brandt, c. 1924, Paris
+A five-panel wrought-iron and bronze screen depicting a stylized fountain surrounded by flowers, scrolls, and geometric sunburst patterns. Brandt's masterpiece, bridging Art Nouveau's metalwork tradition with Art Deco's geometric vocabulary.</p>
+
+<p><strong>Cartier "Tutti Frutti" Jewelry</strong> — Cartier, 1920s–1930s, Paris
+Bracelets, brooches, and necklaces combining carved rubies, emeralds, and sapphires (often sourced from India) with diamonds in geometric platinum settings. The Tutti Frutti pieces epitomize Art Deco's fusion of Eastern and Western decorative traditions and its appetite for bold color contrast.</p>
+
+<p><strong>Coldspot Refrigerator</strong> — Raymond Loewy for Sears, 1934, USA
+A streamlined household refrigerator with chrome hardware, rounded edges, and clean horizontal lines. One of the first consumer products to be "styled" by an industrial designer, it tripled Sears' refrigerator sales and demonstrated that Art Deco aesthetics could sell mass-market goods.</p>
+
+<hr />
+<h2 id="graphic-design">Graphic Design &amp; Posters</h2>
+<p><strong>Étoile du Nord</strong> — A.M. Cassandre, 1927, Paris
+Poster for the Paris–Amsterdam express railway. Railway tracks converge in dramatic one-point perspective toward a glowing star, simplified to pure geometry. Bold typography, limited color palette (blue, black, gold). Among the most influential travel posters ever made.</p>
+
+<p><strong>Normandie</strong> — A.M. Cassandre, 1935, Paris
+The ocean liner's black prow towers above the viewer in extreme low-angle perspective, rendered as a monolithic geometric form. Dramatic scale, stark contrast, and minimal palette create an image of overwhelming industrial power and luxury.</p>
+
+<p><strong>Dubonnet</strong> — A.M. Cassandre, 1932, Paris
+A three-panel sequential poster showing a figure progressively drinking Dubonnet as the word gradually fills with color. Innovative narrative structure, bold geometric figure, and witty integration of text and image. A landmark in advertising design.</p>
+
+<p><strong>Harper's Bazaar Covers</strong> — Erté, 1915–1937, Paris/New York
+Over 200 covers featuring Erté's impossibly elegant, elongated female figures in elaborate costumes and settings. Metallic gouache on black backgrounds, geometric compositions, and an Art Deco sensibility that defined the magazine's visual identity for two decades.</p>
+
+<div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;margin-bottom:24px">
+  <figure style="margin:0;flex:0 0 280px">
+    <img src="images/Metropolis_poster_1927.jpg" alt="Three-sheet poster for the 1927 German film Metropolis by Heinz Schulz-Neudamm, depicting the Maschinenmensch — a stylized Art Deco robot figure — before a futuristic geometric cityscape." style="width:100%;border-radius:6px">
+    <figcaption style="font-size:.72rem;color:var(--text-dim);margin-top:6px">Heinz Schulz-Neudamm, 1926. Public domain in the U.S.</figcaption>
+  </figure>
+  <div style="flex:1;min-width:200px">
+    <p style="margin-top:0"><strong>Metropolis Film Poster</strong> — Heinz Schulz-Neudamm, 1927, Berlin
+    Poster for Fritz Lang's expressionist film, featuring the Maschinenmensch (Machine-Human) against a geometric cityscape of towering skyscrapers. One of the most valuable film posters in existence (a copy sold for $690,000 in 2005), its fusion of technology, geometry, and futurism is pure Art Deco.</p>
+  </div>
+</div>
+
+<hr />
+<h2 id="painting-sculpture-murals">Painting, Sculpture &amp; Murals</h2>
+<div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;margin-bottom:24px">
+  <figure style="margin:0;flex:0 0 280px">
+    <img src="images/Tamara_de_Lempicka_Autoportrait.jpeg" alt="Autoportrait (Tamara in a Green Bugatti) by Tamara de Lempicka, 1929. The artist at the wheel of a green Bugatti, painted in sleek Cubist-Art Deco style with gleaming geometric forms." style="width:100%;border-radius:6px">
+    <figcaption style="font-size:.72rem;color:var(--text-dim);margin-top:6px">Tamara de Lempicka, 1929. Public domain in the U.S.</figcaption>
+  </figure>
+  <div style="flex:1;min-width:200px">
+    <p style="margin-top:0"><strong>Autoportrait (Tamara in the Green Bugatti)</strong> — Tamara de Lempicka, 1929
+    Self-portrait at the wheel of a green Bugatti racing car, rendered in polished Cubist geometry. Originally commissioned as a cover for the German fashion magazine <em>Die Dame</em>. De Lempicka's helmet and scarf stream in the wind; every surface gleams. The defining image of Art Deco painting.</p>
+  </div>
+</div>
+
+<p><strong>Aspects of Negro Life</strong> — Aaron Douglas, 1934, Schomburg Center, New York
+Four monumental oil-on-canvas murals: <em>The Negro in an African Setting</em>, <em>An Idyll of the Deep South</em>, <em>From Slavery Through Reconstruction</em>, and <em>Song of the Towers</em>. Flat geometric silhouettes, concentric arcs of light, muted palette. The visual masterpiece of the Harlem Renaissance and one of Art Deco's most important mural cycles.</p>
+
+<p><strong>Atlas</strong> — Lee Lawrie, 1937, Rockefeller Center, New York
+A 15-foot bronze statue of the Titan Atlas supporting an armillary sphere (celestial rings) on his shoulders. Geometric musculature, stylized features, and an open-frame sphere that plays dramatically with light and sky. One of Art Deco's most photographed sculptures.</p>
+
+<p><strong>Prometheus</strong> — Paul Manship, 1934, Rockefeller Center, New York
+A gilded bronze Titan descending with fire, set in the sunken plaza against a backdrop of gold leaf and a quotation from Aeschylus. Manship's sleek, stylized figuration — muscular but geometricized — exemplifies Art Deco sculpture's balance between classicism and modernism.</p>
+
+<p><strong>Spirit of Transportation</strong> — Edward Trumbull, 1930, Chrysler Building, New York
+Painted ceiling mural in the Chrysler Building lobby, approximately 110 by 76 feet, depicting the Assembly Line, airplane propellers, the Chrysler Building itself, and heroic figures of labor and industry — all in the compressed, angular perspective characteristic of Art Deco muralism.</p>
+
+<p><strong>The Conquest of the Sky</strong> — Jean Dupas, 1935, SS Normandie
+Large-scale lacquer and gold-leaf panel in the <em>Normandie</em>'s first-class grand salon, depicting mythological and historical scenes of flight and navigation in a flat, highly stylized Art Deco manner. Among the most important decorative commissions of the 1930s.</p>
+
+<hr />
+<h2 id="industrial-design">Industrial &amp; Product Design</h2>
+<p><strong>Pennsylvania Railroad S1 Locomotive</strong> — Raymond Loewy, 1939, USA
+A streamlined steam locomotive with a bullet-shaped nose shroud, horizontal speed lines, and a smooth, aerodynamic shell concealing the mechanical works beneath. Exhibited at the 1939 New York World's Fair. A monument to Streamline Moderne industrial design.</p>
+
+<p><strong>Chrysler Airflow</strong> — Carl Breer, 1934, USA
+One of the first mass-produced cars designed using wind-tunnel testing and aerodynamic principles. Its rounded, streamlined body — a radical departure from the boxy cars of the period — was commercially unsuccessful but enormously influential, pointing toward the future of automotive design.</p>
+
+<p><strong>Normandie Ocean Liner</strong> — Vladimir Yourkevitch (hull), multiple designers (interiors), 1935, France
+The most lavish ocean liner ever built: 1,028 feet long, Art Deco interiors by Lalique, Dunand, Dupas, Ruhlmann, and others. The first-class dining room was longer than the Hall of Mirrors at Versailles. The ship itself was a floating museum of Art Deco design at its most ambitious.</p>
+
+<p><strong>Walter Dorwin Teague Kodak Bantam Special Camera</strong> — Walter Dorwin Teague, 1936, USA
+A compact camera with a black enamel body, chrome speed lines, and geometric stepped detailing. A consumer product designed as a miniature Art Deco object, demonstrating that Streamline Moderne could operate at pocket scale.</p>
+<figure style="margin:16px 0 24px">
+  <img src="images/Bantam_Special_Camera_1936.jpg" alt="Kodak Bantam Special camera designed by Walter Dorwin Teague, 1936. A compact black enamel and chrome camera with Art Deco geometric stepped detailing and horizontal speed lines, displayed in the Museum für Angewandte Kunst, Cologne." style="width:100%;max-width:600px;border-radius:6px">
+  <figcaption style="font-size:.72rem;color:var(--text-dim);margin-top:6px">Photo: Daderot, 2015. CC0 / Public Domain Dedication, via Wikimedia Commons.</figcaption>
+</figure>
+<hr />
+</div>
+
+<footer>
+  <p>DSGN 230 — Survey of Design History</p>
+</footer>
+
+</body>
+</html>

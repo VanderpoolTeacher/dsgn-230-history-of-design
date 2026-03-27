@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Art Deco Deep Dive — DSGN 230</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#111111;--surface:#1a1a1a;--surface2:#222222;--border:#333;
+  --text:#e8e8e8;--text-dim:#999;--accent:#669BBC;--accent-light:#89b4d4;
+  --success:#2ecc71;--fail:#e74c3c;--white:#FDF0D5;--gold:#c9a84c;
+  --font-body:'Segoe UI',system-ui,-apple-system,sans-serif;
+  --font-display:'Georgia',serif;
+  --radius:10px;--shadow:0 4px 24px rgba(0,0,0,.5);
+}
+html.light{
+  --bg:#f4f3f0;--surface:#ffffff;--surface2:#eae9e5;--border:#d5d3cd;
+  --text:#222;--text-dim:#555;--accent:#780000;--accent-light:#C1121F;
+  --success:#1fa85a;--fail:#C1121F;--white:#003049;--gold:#8a6d1b;
+  --shadow:0 4px 24px rgba(0,0,0,.08);
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.7;margin:0}
+a{color:var(--accent-light);text-decoration:none}
+img{max-width:100%;display:block}
+button{cursor:pointer;font-family:var(--font-body)}
+
+.container{max-width:960px;margin:0 auto;padding:0 24px}
+
+/* HERO */
+.hero{
+  min-height:75vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:60px 24px;
+  background:radial-gradient(ellipse at 50% 30%,#1a1a1a 0%,var(--bg) 70%);
+}
+html.light .hero{background:radial-gradient(ellipse at 50% 30%,#e8e6e0 0%,var(--bg) 70%)}
+.hero h1{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.2rem);color:var(--white);margin-bottom:8px;letter-spacing:-.02em;line-height:1.2}
+.hero .subtitle{font-size:1.1rem;color:var(--gold);margin-bottom:8px;font-style:italic}
+.hero p{font-size:1.05rem;color:var(--text-dim);max-width:600px;margin-bottom:36px}
+.btn-start{
+  display:inline-block;padding:14px 40px;background:var(--accent);color:var(--white);
+  border:none;border-radius:var(--radius);font-size:1rem;font-weight:500;
+  transition:all .3s;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.3)
+}
+.btn-start:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,.4)}
+
+/* TOOLBAR */
+.toolbar{display:none;position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:1px solid var(--border);padding:12px 0}
+html.light .toolbar{background:var(--surface)}
+.toolbar-content{display:flex;justify-content:space-between;align-items:center}
+.toolbar-left{display:flex;gap:16px;align-items:center}
+.back-link{font-size:.9rem;color:var(--accent-light);text-decoration:none;transition:color .2s}
+.back-link:hover{color:var(--accent)}
+.progress-bar{height:3px;background:var(--surface2);border-radius:2px;min-width:150px;overflow:hidden}
+.progress-fill{height:100%;background:var(--accent);transition:width .3s}
+.progress-label{font-size:.8rem;color:var(--text-dim);margin-left:12px;white-space:nowrap}
+.toolbar-right{display:flex;gap:12px;align-items:center}
+.theme-toggle{background:var(--surface2);border:1px solid var(--border);padding:6px 12px;border-radius:var(--radius);color:var(--text);font-size:.9rem;transition:all .2s}
+.theme-toggle:hover{border-color:var(--accent);color:var(--accent)}
+
+/* TAB NAV */
+.tab-nav{display:none;background:var(--surface);border-bottom:1px solid var(--border);overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab-nav-content{display:flex;padding:0 24px}
+.tab-btn{flex:0 0 auto;padding:16px 20px;background:0;border:0;color:var(--text-dim);cursor:pointer;transition:all .3s;font-size:.95rem;border-bottom:2px solid transparent;white-space:nowrap}
+.tab-btn:hover{color:var(--text);border-bottom-color:var(--accent-light)}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
+
+/* MAIN & SECTIONS */
+main{background:var(--bg)}
+.section{display:none;opacity:0;transition:opacity .3s;padding:60px 24px;max-width:960px;margin:0 auto}
+.section.active{display:block;opacity:1}
+.section-header{text-align:center;margin-bottom:48px}
+.period-label{display:inline-block;font-size:.75rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;font-weight:500}
+.section h2{font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.6rem);margin-bottom:8px;line-height:1.2}
+.dates{color:var(--text-dim);font-style:italic;font-size:.95rem;margin-top:8px}
+
+.content-block{max-width:700px;margin:24px auto;padding:24px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);line-height:1.8}
+.content-block p+p{margin-top:16px}
+
+/* CHIPS */
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:24px 0}
+.chip{display:inline-block;padding:6px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:20px;font-size:.85rem;color:var(--text-dim)}
+
+/* TIMELINE */
+.hist-timeline{max-width:700px;margin:32px auto;padding:24px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)}
+.timeline-item{position:relative;padding-left:32px;margin-bottom:24px}
+.timeline-item:last-child{margin-bottom:0}
+.timeline-item::before{content:'';position:absolute;left:6px;top:0;width:8px;height:8px;background:var(--accent);border-radius:50%}
+.timeline-item::after{content:'';position:absolute;left:10px;top:8px;width:0;height:calc(100% + 24px);border-left:1px solid var(--border)}
+.timeline-item:last-child::after{display:none}
+.timeline-year{font-weight:500;color:var(--accent);font-size:.9rem;margin-bottom:4px}
+.timeline-event{color:var(--text-dim);font-size:.9rem}
+
+/* THINK QUESTION */
+.think-question{max-width:700px;margin:32px auto;padding:24px;background:var(--surface2);border-left:3px solid var(--accent);border-radius:var(--radius)}
+.tq-label{display:inline-block;font-size:.75rem;letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;font-weight:500}
+.think-question p{color:var(--text-dim);font-style:italic;margin:0}
+
+/* GALLERY */
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin:32px 0}
+.gallery-item{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:all .3s;background:var(--surface)}
+.gallery-item:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(0,0,0,.3)}
+.g-info{padding:16px}
+.g-title{font-weight:500;margin-bottom:4px}
+.g-meta{font-size:.85rem;color:var(--text-dim)}
+
+/* FLIP CARDS */
+.flip-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin:32px 0}
+.flip-card{perspective:1000px;height:280px}
+.flip-card-inner{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d}
+.flip-card.flipped .flip-card-inner{transform:rotateY(180deg)}
+.flip-front,.flip-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;display:flex;flex-direction:column;justify-content:center;padding:20px;text-align:center;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface)}
+.flip-front{background:var(--surface)}
+.flip-back{background:var(--surface2);transform:rotateY(180deg);overflow-y:auto}
+.flip-name{font-weight:500;font-size:1.05rem;margin-bottom:8px;color:var(--white)}
+.flip-dates{font-size:.85rem;color:var(--text-dim);margin-bottom:12px}
+.flip-hint{font-size:.75rem;color:var(--accent);margin-top:12px;font-style:italic}
+.flip-role{font-weight:500;color:var(--accent);margin-bottom:12px;font-size:.9rem}
+.flip-back p{font-size:.85rem;line-height:1.6;color:var(--text-dim);margin-bottom:12px}
+.flip-works{font-size:.8rem;color:var(--text-dim);margin-top:12px;font-style:italic}
+
+/* MATCH ACTIVITY */
+.match-instructions{text-align:center;color:var(--text-dim);margin-bottom:24px;font-size:.95rem}
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin:32px auto;max-width:700px}
+.match-col-label{text-align:center;font-weight:500;margin-bottom:16px;font-size:.9rem;text-transform:uppercase;letter-spacing:1px;color:var(--accent)}
+#matchLeft,#matchRight,#matchLeft2,#matchRight2{display:flex;flex-direction:column;gap:12px}
+.match-item{padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:all .2s;text-align:center;font-size:.9rem;user-select:none}
+.match-item:hover{border-color:var(--accent)}
+.match-item.selected{background:var(--accent);color:var(--white);border-color:var(--accent)}
+.match-item.matched{background:var(--success);color:var(--white);border-color:var(--success);cursor:default}
+.match-item.wrong{background:var(--fail);border-color:var(--fail);animation:shake .4s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.match-score{text-align:center;margin:16px 0;font-size:.95rem;color:var(--text-dim)}
+.match-feedback{text-align:center;margin-top:16px;padding:12px;border-radius:var(--radius);display:none;font-size:.9rem}
+.match-feedback.show{display:block}
+.match-feedback.success{background:rgba(46,204,113,.1);color:var(--success);border:1px solid var(--success)}
+.match-reset{display:none;margin:16px auto;padding:10px 24px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-size:.9rem;transition:all .2s}
+.match-reset:hover{border-color:var(--accent);color:var(--accent)}
+
+/* QUIZ */
+.quiz-wrap{margin:32px 0}
+.q-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;margin-bottom:24px}
+.q-num{font-size:.85rem;color:var(--text-dim);margin-bottom:12px;text-transform:uppercase;letter-spacing:1px}
+.q-img{margin-bottom:20px;max-height:200px;overflow:hidden;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;background:var(--surface2)}
+.q-img img{width:100%;height:100%;object-fit:cover}
+.q-text{font-size:1.05rem;margin-bottom:20px;font-weight:500;line-height:1.5}
+.q-options{display:grid;grid-template-columns:1fr;gap:12px}
+.q-opt{padding:14px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:12px;font-size:.95rem}
+.q-opt:hover{border-color:var(--accent)}
+.q-opt.selected{background:var(--accent);color:var(--white);border-color:var(--accent)}
+.q-opt.correct{background:var(--success);color:var(--white);border-color:var(--success)}
+.q-opt.wrong{background:var(--fail);color:var(--white);border-color:var(--fail)}
+.letter{display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;background:var(--border);border-radius:50%;font-size:.8rem;font-weight:500}
+.q-opt.selected .letter,.q-opt.correct .letter,.q-opt.wrong .letter{background:currentColor;color:var(--white);opacity:.8}
+.q-feedback{padding:14px;background:var(--surface2);border-left:3px solid transparent;border-radius:var(--radius);margin-top:12px;display:none;font-size:.9rem;line-height:1.5}
+.q-feedback.show{display:block}
+.q-feedback.right{border-left-color:var(--success);color:var(--success)}
+.q-feedback.wrong{border-left-color:var(--fail);color:var(--fail)}
+
+/* RESULTS */
+.results-card{display:none;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:40px 28px;max-width:500px;margin:40px auto;text-align:center}
+.results-card.show{display:block}
+.score-ring{width:120px;height:120px;border-radius:50%;margin:0 auto 24px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:500;position:relative;background:var(--surface2)}
+.score-ring.pass{color:var(--success);border:3px solid var(--success)}
+.score-ring.fail{color:var(--fail);border:3px solid var(--fail)}
+.score-num{font-size:2.2rem;line-height:1}
+.score-lbl{font-size:.75rem;text-transform:uppercase;letter-spacing:1px;margin-top:4px;opacity:.7}
+.results-card h3{margin-bottom:12px;font-size:1.3rem}
+.results-card p{color:var(--text-dim);margin-bottom:24px}
+.btn-retry{padding:12px 32px;background:var(--accent);color:var(--white);border:none;border-radius:var(--radius);font-size:.95rem;font-weight:500;cursor:pointer;transition:all .2s}
+.btn-retry:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.3)}
+
+/* SECTION NAV */
+.section-nav{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border)}
+.nav-btn{padding:12px 24px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);color:var(--text-dim);font-size:.95rem;cursor:pointer;transition:all .2s}
+.nav-btn:hover{border-color:var(--accent);color:var(--accent)}
+.nav-btn.primary{background:var(--accent);color:var(--white);border-color:var(--accent)}
+.nav-btn.primary:hover{box-shadow:0 4px 12px rgba(0,0,0,.3)}
+
+/* FOOTER */
+.footer{background:var(--surface);border-top:1px solid var(--border);padding:32px 24px;text-align:center;color:var(--text-dim);font-size:.9rem;margin-top:60px}
+.footer p{margin:0}
+
+/* LIGHTBOX */
+.lightbox{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.85);z-index:1000;align-items:center;justify-content:center;padding:20px}
+.lightbox.show{display:flex}
+.lightbox-content{background:var(--surface);border-radius:var(--radius);max-width:960px;max-height:90vh;overflow:auto;position:relative;box-shadow:0 10px 40px rgba(0,0,0,.8);display:flex;align-items:flex-start;gap:0}
+.lightbox-close{position:absolute;top:12px;right:12px;background:var(--surface2);border:1px solid var(--border);width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text);transition:all .2s;z-index:10}
+.lightbox-close:hover{border-color:var(--accent);color:var(--accent)}
+.lightbox-img{max-width:55%;max-height:80vh;object-fit:contain;display:block;margin:0;border-radius:var(--radius) 0 0 var(--radius)}
+.lightbox-caption{padding:24px;color:var(--text-dim);font-size:.9rem;line-height:1.7;flex:1;min-width:240px;align-self:center}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .match-grid{grid-template-columns:1fr;gap:20px}
+  .toolbar-content{flex-direction:column;gap:12px;align-items:flex-start}
+  .gallery-grid{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+  .flip-grid{grid-template-columns:1fr}
+  .lightbox-content{flex-direction:column}
+  .lightbox-img{max-width:100%;border-radius:var(--radius) var(--radius) 0 0}
+}
+</style>
+</head>
+<body>
+
+<div class="toolbar" id="toolbar">
+  <div class="container">
+    <div class="toolbar-content">
+      <div class="toolbar-left">
+        <a href="../../index.html" class="back-link">← Back to Index</a>
+        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="progress-label" id="progressLabel">Section 1 / 6</div>
+      </div>
+      <div class="toolbar-right">
+        <button class="theme-toggle" onclick="toggleTheme()">🌙 Theme</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<nav class="tab-nav" id="tabNav">
+  <div class="container" style="padding:0">
+    <div class="tab-nav-content">
+      <button class="tab-btn active" onclick="goSection(0)">Context</button>
+      <button class="tab-btn" onclick="goSection(1)">Gallery</button>
+      <button class="tab-btn" onclick="goSection(2)">People</button>
+      <button class="tab-btn" onclick="goSection(3)">Regions</button>
+      <button class="tab-btn" onclick="goSection(4)">Matching</button>
+      <button class="tab-btn" onclick="goSection(5)">Quiz</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+<div class="hero" id="hero">
+  <h1>Art Deco Deep Dive</h1>
+  <div class="subtitle">c. 1920–1940</div>
+  <p>From the Machine Age and 1925 Paris to Streamline Moderne and the Harlem Renaissance, explore the geometric precision, luxury, and cultural energy of the Art Deco era.</p>
+  <button class="btn-start" onclick="startLesson()">Start Lesson</button>
+</div>
+
+<!-- ===== SECTION 0: CONTEXT ===== -->
+<div class="section" data-idx="0">
+  <div class="section-header">
+    <div class="period-label">History</div>
+    <h2>Historical Context</h2>
+    <div class="dates">1920–1940: From War to Modernity</div>
+  </div>
+
+  <div class="content-block" style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap">
+    <figure style="flex:0 0 260px;margin:0">
+      <img src="images/Chrysler_Building_by_David_Shankbone_Retouched.jpg"
+           alt="The Chrysler Building in New York City, showing its iconic stainless steel sunburst crown and Art Deco setback massing"
+           loading="lazy" style="width:100%;border-radius:6px">
+      <figcaption style="font-size:.75rem;color:var(--text-dim);margin-top:6px;text-align:center">Chrysler Building, New York. Photo: David Shankbone, CC BY-SA 3.0.</figcaption>
+    </figure>
+    <div style="flex:1;min-width:200px">
+      <p><strong>Chrysler Building, New York.</strong> William Van Alen, 1928–1930. Stainless steel sunburst crown, eagle gargoyles modeled on Chrysler radiator caps, African marble lobby. Often called the most beautiful skyscraper ever built.</p>
+      <p style="margin-top:16px">Art Deco emerged in the aftermath of World War I, a style that celebrated modernity, optimism, and the Machine Age. Unlike the organic, nature-inspired curves of Art Nouveau, Deco embraced geometry, symmetry, and glamour. It was the aesthetic of speed, luxury, and the future — born from jazz clubs and skyscrapers, yet also from industrial efficiency and streamlined design.</p>
+      <p style="margin-top:16px">The 1925 Exposition Internationale des Arts Décoratifs et Industriels Modernes in Paris was the movement's defining moment. The term "Art Deco" itself comes from this expo, which introduced a global audience to a unified, modern design language.</p>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-bottom:8px">
+    <div class="period-label">Defining Traits</div>
+    <h3 style="font-family:var(--font-display);font-size:1.4rem;margin-bottom:4px">Key Ideas</h3>
+    <p style="font-size:.85rem;color:var(--text-dim)">Click each card to reveal an example</p>
+  </div>
+
+  <div class="flip-grid">
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Geometry &amp; Symmetry</div>
+          <div class="flip-dates">Zigzags, chevrons, sunbursts, stepped forms</div>
+          <div class="flip-hint">Click to see example &rarr;</div>
+        </div>
+        <div class="flip-back"><div class="flip-role">Example</div><p>The Chrysler Building's crown — stainless steel arches radiating outward in perfect symmetry, with triangular windows creating a sunburst pattern visible across the Manhattan skyline.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Luxury &amp; Glamour</div>
+          <div class="flip-dates">Opulent materials, rich surfaces, elite craft</div>
+          <div class="flip-hint">Click to see example &rarr;</div>
+        </div>
+        <div class="flip-back"><div class="flip-role">Example</div><p>Émile-Jacques Ruhlmann's furniture — desks in Macassar ebony with ivory-tipped legs and amboyna burl cabinets. Each piece cost more than a Parisian apartment.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Machine Age</div>
+          <div class="flip-dates">Industry, engineering, mass production</div>
+          <div class="flip-hint">Click to see example &rarr;</div>
+        </div>
+        <div class="flip-back"><div class="flip-role">Example</div><p>René Lalique's molded glass — combining luxury aesthetics with industrial production methods. His Bacchantes vase was produced in limited editions from a single mold, bridging craft and factory.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Speed &amp; Streamlining</div>
+          <div class="flip-dates">Aerodynamic forms, horizontal lines, motion</div>
+          <div class="flip-hint">Click to see example &rarr;</div>
+        </div>
+        <div class="flip-back"><div class="flip-role">Example</div><p>Raymond Loewy's locomotive designs — shrouding steam engines in smooth, aerodynamic shells that expressed speed even when standing still. The S1 for the Pennsylvania Railroad became an icon of Streamline Moderne.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Bright Colors</div>
+          <div class="flip-dates">Bold contrast, jewel tones, metallic accents</div>
+          <div class="flip-hint">Click to see example &rarr;</div>
+        </div>
+        <div class="flip-back"><div class="flip-role">Example</div><p>Cartier's "Tutti Frutti" jewelry — carved rubies, emeralds, and sapphires from India set in geometric platinum mounts with diamonds. Explosive color contrast against white metal and stone.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Exotic Materials</div>
+          <div class="flip-dates">Shagreen, lacquer, ivory, African marble</div>
+          <div class="flip-hint">Click to see example &rarr;</div>
+        </div>
+        <div class="flip-back"><div class="flip-role">Example</div><p>Jean Dunand's lacquer panels aboard the SS <em>Normandie</em> — gold, silver, and crushed eggshell inlaid on black lacquer, a technique adapted from East Asian traditions and scaled to monumental proportions.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Setbacks &amp; Verticality</div>
+          <div class="flip-dates">Stepped towers, wedding-cake silhouettes</div>
+          <div class="flip-hint">Click to see example &rarr;</div>
+        </div>
+        <div class="flip-back"><div class="flip-role">Example</div><p>The Empire State Building — limestone and granite setbacks stepping inward as it rises, shaped by New York's 1916 Zoning Resolution. The "wedding cake" profile became the defining silhouette of the Deco skyline.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Jazz &amp; Modernity</div>
+          <div class="flip-dates">Rhythm, cultural energy, the Harlem Renaissance</div>
+          <div class="flip-hint">Click to see example &rarr;</div>
+        </div>
+        <div class="flip-back"><div class="flip-role">Example</div><p>Aaron Douglas's <em>Aspects of Negro Life</em> murals — geometric silhouettes, concentric arcs of light, and a muted palette tracing the African American journey from Africa through slavery to Harlem. Art Deco geometry fused with cultural identity.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div style="margin-bottom:16px"><strong>Historical Timeline</strong></div>
+    <div class="hist-timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">1918</div>
+        <div class="timeline-event">World War I ends; optimism for modernity, technology, and progress rises globally.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1920s</div>
+        <div class="timeline-event">Jazz Age and Harlem Renaissance flourish in America; African and Asian art influences design; radio and cinema reshape culture.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1925</div>
+        <div class="timeline-event">Exposition Internationale des Arts Décoratifs et Industriels Modernes in Paris. Le Corbusier's Pavilion de l'Esprit Nouveau, Ruhlmann's Hôtel du Collectionneur debut.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1928–1930</div>
+        <div class="timeline-event">Chrysler Building and Empire State Building rise in New York, epitomizing Deco skyscraper style.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1929</div>
+        <div class="timeline-event">Stock market crash; Great Depression begins. Design shifts toward Streamline Moderne (cheaper, sleeker).</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1930s–40s</div>
+        <div class="timeline-event">Streamline Moderne dominates (trains, cars, appliances). Art Deco persists in luxury goods. WWII ends the era's dominance.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="think-question">
+    <div class="tq-label">Think About It</div>
+    <p>Why do you think a style born from post-war optimism about technology would have been so appealing during the Great Depression? Did the style's message change?</p>
+  </div>
+
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(0)" style="visibility:hidden">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(1)">Next: Gallery &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 1: GALLERY ===== -->
+<div class="section" data-idx="1">
+  <div class="section-header">
+    <div class="period-label">Landmarks</div>
+    <h2>Iconic Works</h2>
+    <div class="dates">Architecture, design, and applied arts</div>
+  </div>
+
+  <div class="content-block">
+    <p>Art Deco's reach extended from towering skyscrapers to intimate jewelry. Below are six defining works that show the style's range: monumental architecture, graphic design, fine art, and decorative objects.</p>
+  </div>
+
+  <div class="gallery-grid">
+    <div class="gallery-item" onclick="openLightbox('images/Chrysler_Building_by_David_Shankbone_Retouched.jpg','Chrysler Building — William Van Alen, 1928–1930, New York. Stainless steel crown, setbacks, triangular windows, and Art Deco ornamentation. 77 floors, 1,046 feet; briefly the world\'s tallest building. Photo: David Shankbone, CC BY-SA 3.0.')">
+      <img src="images/Chrysler_Building_by_David_Shankbone_Retouched.jpg" alt="The Chrysler Building in New York City showing its iconic stainless steel sunburst crown and Art Deco setback massing" loading="lazy" style="width:100%;height:180px;object-fit:cover">
+      <div class="g-info"><div class="g-title">Chrysler Building</div><div class="g-meta">William Van Alen, 1930 · New York</div></div>
+    </div>
+
+    <div class="gallery-item" onclick="openLightbox('images/Empire_State_Building_sunset.jpg','Empire State Building — Shreve, Lamb & Harmon, 1930–1931, New York. 102 floors, 1,454 feet. Limestone and granite exterior with setbacks, speed lines, and Art Deco detailing. Viewed at sunset from Top of the Rock, Rockefeller Center. Photo: Dllu, CC BY-SA 4.0.')">
+      <img src="images/Empire_State_Building_sunset.jpg" alt="The Empire State Building at sunset, illuminated in green, viewed from the Top of the Rock at Rockefeller Center" style="width:100%;height:180px;object-fit:cover;border-bottom:1px solid var(--border)">
+      <div class="g-info"><div class="g-title">Empire State Building</div><div class="g-meta">Shreve, Lamb & Harmon, 1931 · New York</div></div>
+    </div>
+
+    <div class="gallery-item" onclick="openLightbox('images/Radio_City_Music_Hall_1932.jpg','Radio City Music Hall — Edward Durell Stone & Donald Deskey, 1932, New York. The world\'s largest indoor theater at opening (5,960 seats). Sweeping arches, geometric carpet patterns, aluminum and Bakelite fixtures, and the iconic sunrise proscenium arch. Photo: Samuel H. Gottscho, Library of Congress. Public domain.')">
+      <img src="images/Radio_City_Music_Hall_1932.jpg" alt="Interior of Radio City Music Hall in 1932, showing the grand auditorium with its distinctive Art Deco arched ceiling and dramatic stage" style="width:100%;height:180px;object-fit:cover;border-bottom:1px solid var(--border)">
+      <div class="g-info"><div class="g-title">Radio City Music Hall</div><div class="g-meta">Stone & Deskey, 1932 · New York</div></div>
+    </div>
+
+    <div class="gallery-item" onclick="openLightbox('images/Metropolis_poster_1927.jpg','Metropolis Film Poster — Heinz Schulz-Neudamm, 1926. Three-sheet poster for Fritz Lang\'s expressionist film depicting the Maschinenmensch (Machine-Human) against a geometric cityscape of towering skyscrapers. One of the most valuable and iconic film posters ever created — a copy sold for $690,000 in 2005.')">
+      <img src="images/Metropolis_poster_1927.jpg" alt="Three-sheet poster for the 1927 German film Metropolis by Heinz Schulz-Neudamm, depicting the Maschinenmensch — a stylized Art Deco robot figure — before a futuristic geometric cityscape." style="width:100%;height:180px;object-fit:cover;border-bottom:1px solid var(--border)">
+      <div class="g-info"><div class="g-title">Metropolis Film Poster</div><div class="g-meta">Heinz Schulz-Neudamm, 1927 · Graphic Design</div></div>
+    </div>
+
+    <div class="gallery-item" onclick="openLightbox('images/Tamara_de_Lempicka_Autoportrait.jpeg','Autoportrait in Green Bugatti — Tamara de Lempicka, 1929. Oil on wood panel. Sleek, geometric figurative style; the artist in profile against a racing car, chrome and lacquer-like surfaces. Epitomizes Deco luxury and speed.')">
+      <img src="images/Tamara_de_Lempicka_Autoportrait.jpeg" alt="Autoportrait (Tamara in a Green Bugatti) by Tamara de Lempicka, 1929. The artist at the wheel of a green Bugatti, painted in sleek Cubist-Art Deco style." style="width:100%;height:180px;object-fit:cover;object-position:top;border-bottom:1px solid var(--border)">
+      <div class="g-info"><div class="g-title">Autoportrait in Green Bugatti</div><div class="g-meta">Tamara de Lempicka, 1929 · Fine Art</div></div>
+    </div>
+
+    <div class="gallery-item" onclick="openLightbox('images/SS_Normandie_grand_dining_room.jpg','SS Normandie Grand Dining Room — c. 1935. The 305-foot-long first-class dining room of the ocean liner Normandie, with Lalique glass columns, Dunand lacquer panels, and Dupas murals. The most spectacular Art Deco interior ever created — longer than the Hall of Mirrors at Versailles.')">
+      <img src="images/SS_Normandie_grand_dining_room.jpg" alt="Grand dining room of the SS Normandie ocean liner, c. 1935. An enormous, cathedral-like interior with rows of tables set for dinner, illuminated by tall Lalique glass columns lining both sides." style="width:100%;height:180px;object-fit:cover;border-bottom:1px solid var(--border)">
+      <div class="g-info"><div class="g-title">SS Normandie Dining Room</div><div class="g-meta">Multiple designers, 1935 · Interior Design</div></div>
+    </div>
+
+    <div class="gallery-item" onclick="openLightbox('images/Bantam_Special_Camera_1936.jpg','Kodak Bantam Special Camera — Walter Dorwin Teague, 1936. Compact black enamel and chrome camera with Art Deco geometric stepped detailing and horizontal speed lines. A consumer product designed as a miniature Streamline Moderne object, proving that Art Deco aesthetics could operate at pocket scale.')">
+      <img src="images/Bantam_Special_Camera_1936.jpg" alt="Kodak Bantam Special camera designed by Walter Dorwin Teague, 1936. Black enamel and chrome with Art Deco geometric stepped detailing." style="width:100%;height:180px;object-fit:cover;border-bottom:1px solid var(--border)">
+      <div class="g-info"><div class="g-title">Kodak Bantam Special</div><div class="g-meta">Walter Dorwin Teague, 1936 · Industrial Design</div></div>
+    </div>
+  </div>
+
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(0)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(2)">Next: People &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 2: PEOPLE ===== -->
+<div class="section" data-idx="2">
+  <div class="section-header">
+    <div class="period-label">Designers</div>
+    <h2>Key Figures</h2>
+    <div class="dates">Artists, architects, and craftspeople who shaped the era</div>
+  </div>
+
+  <div class="content-block">
+    <p>Art Deco was a global movement defined by visionary individuals. From furniture designers to architects, from glass artists to graphic designers, these creators shaped the aesthetic and philosophy of an age.</p>
+  </div>
+
+  <div class="flip-grid">
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Émile-Jacques Ruhlmann</div>
+          <div class="flip-dates">1879–1933 · Paris</div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Furniture Designer & Master Craftsman</div>
+          <p>Defined luxury Deco furniture with refined proportions and exotic materials (macassar ebony, shagreen, ivory). His Hôtel du Collectionneur pavilion at the 1925 Exposition was a triumph of restrained elegance. Worked with the finest artisans.</p>
+          <div class="flip-works"><strong>Key works:</strong> Hôtel du Collectionneur (1925), Cabinet en Macassar Ebony, Ruhlmann Chairs</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">René Lalique</div>
+          <div class="flip-dates">1860–1945 · Paris</div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Glass Artist & Designer</div>
+          <p>Pioneer of molded opalescent glass. Created iconic perfume bottles, vases, and architectural glass panels. Used industrial molding techniques to achieve luxurious aesthetic. His work blended Art Nouveau organic sensibility with Deco geometry and mass production.</p>
+          <div class="flip-works"><strong>Key works:</strong> Bacchantes Vase, Coty Perfume Bottles, Architectural Glass Panels</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Tamara de Lempicka</div>
+          <div class="flip-dates">1898–1980 · Paris / Beverly Hills</div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Painter & Artist</div>
+          <p>Defined Deco portraiture and figure painting with sleek, geometric style. Celebrated modernity, luxury, eroticism, and speed in oil paintings and murals. Her work epitomized Deco's fascination with glamour and the human form rendered as smooth, polished surfaces.</p>
+          <div class="flip-works"><strong>Key works:</strong> Autoportrait in Green Bugatti (1929), The Three Graces, Androgyne series</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">William Van Alen</div>
+          <div class="flip-dates">1883–1954 · New York</div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Architect</div>
+          <p>Designed the Chrysler Building, a pinnacle of Deco architecture. Pioneered setback massing and ornamental crown design in skyscrapers. His work synthesized Art Deco decoration with modernist structural logic and urban verticality.</p>
+          <div class="flip-works"><strong>Key works:</strong> Chrysler Building (1930), Van Alen Institute</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Erté</div>
+          <div class="flip-dates">1892–1990 · Paris / New York</div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Costume & Set Designer, Illustrator</div>
+          <p>Master of theatrical Deco. Designed costumes and sets for Ziegfeld Follies, Ballets Russes, and opera. His elongated figures and intricate geometric patterns brought Art Deco's luxury aesthetic to the stage. Prolific in fashion illustration.</p>
+          <div class="flip-works"><strong>Key works:</strong> Ziegfeld Follies costumes, Ballets Russes sets, Fashion illustrations</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Aaron Douglas</div>
+          <div class="flip-dates">1899–1979 · New York</div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Painter, Illustrator & Muralist</div>
+          <p>Leading figure of the Harlem Renaissance, Douglas synthesized African art and Art Deco in his bold graphic paintings and book illustrations. Used geometric abstraction, silhouettes, and angular forms to depict African-American experience with modernist visual language.</p>
+          <div class="flip-works"><strong>Key works:</strong> Aspects of Negro Life series (1934), The Crucifixion, Illustrations for Fire!!</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Raymond Loewy</div>
+          <div class="flip-dates">1893–1986 · Paris / New York</div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Industrial Designer</div>
+          <p>Pioneer of streamline design and industrial aesthetics. Designed locomotives, refrigerators, cars, and consumer goods using Deco and Streamline Moderne principles. Believed "beauty sells" and brought Art Deco sensibility to mass manufacturing.</p>
+          <div class="flip-works"><strong>Key works:</strong> S1 Locomotive (1937), Coldspot Refrigerator, Studebaker automobiles</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">A.M. Cassandre</div>
+          <div class="flip-dates">1901–1968 · Paris</div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Graphic Designer &amp; Poster Artist</div>
+          <p>Master of Deco poster design. Used bold geometry, speed lines, and limited color to advertise trains, ships, and products. His work bridged commercial advertising and fine art, defining visual language of transportation and modern leisure.</p>
+          <div class="flip-works"><strong>Key works:</strong> Étoile du Nord (1927), L'Atlantique (1931), Dubonnet advertisements</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(1)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(3)">Next: Regions &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 3: REGIONS ===== -->
+<div class="section" data-idx="3">
+  <div class="section-header">
+    <div class="period-label">Geography</div>
+    <h2>Global Variations</h2>
+    <div class="dates">One impulse, many interpretations across continents</div>
+  </div>
+
+  <div class="content-block">
+    <p>Art Deco was a truly global phenomenon. While it emanated from the 1925 Paris Exposition, it was adapted and reinterpreted by architects, designers, and artists worldwide — from Manhattan's skyscrapers to Bombay's Art Deco apartment buildings, Shanghai's hotels, and even remote Napier, New Zealand.</p>
+  </div>
+
+  <div class="flip-grid">
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-name">Paris, France</div><div class="flip-dates">The Capital</div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">Center of Innovation</div><p>Home to the 1925 Exposition Internationale. Ruhlmann's luxurious furniture, Lalique's glass, Cassandre's posters, and Parisian art deco cafés and theaters defined the style's elegance and refinement.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-name">New York, USA</div><div class="flip-dates">Urban Ambition</div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">Skyscraper Capital</div><p>Chrysler Building, Empire State Building, Rockefeller Center, Radio City Music Hall. American Deco embraced verticality, setbacks, and ornamental crowns on towers. Art Deco became synonymous with modernity and American optimism.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-name">Miami Beach, USA</div><div class="flip-dates">Tropical Deco</div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">Resort Modernism</div><p>Developed as a resort destination in the 1920s–30s with pastel-colored Deco hotels (Betsy Hotel, Edison Hotel). Adapted European Deco to tropical climate with stucco, chrome, neon, and pastels — creating a distinctive American variant.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-name">Mumbai (Bombay), India</div><div class="flip-dates">Colonial Modernity</div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">Urban Transformation</div><p>Marine Drive's curved Art Deco apartment buildings (c. 1932–50s) epitomize Indo-Deco. Synthesized Art Deco with local materials and climate. Museums, cinemas, and residential buildings showcase a distinctive Indian interpretation.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-name">Shanghai, China</div><div class="flip-dates">East Meets West</div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">Colonial Cosmopolitan</div><p>International concessions hosted luxury Deco hotels (Cathay Hotel, c. 1929; Peace Hotel). Represented Shanghai's cosmopolitan aspirations and link to global modernism during the Republican era.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-name">Napier, New Zealand</div><div class="flip-dates">Earthquake Rebuild</div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">Modernist Revival</div><p>Devastated by earthquake in 1931, Napier was rebuilt (1931–33) entirely in Deco and Streamline Moderne. One of the world's most coherent Art Deco towns, largely preserved today as a living archive of the era.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="think-question">
+    <div class="tq-label">Think About It</div>
+    <p>Art Deco adapted to each region while maintaining core principles (geometry, luxury, modernity). How do geographic, climatic, and cultural factors shape the interpretation of a global style?</p>
+  </div>
+
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(2)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(4)">Next: Matching Activity &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 4: MATCHING ===== -->
+<div class="section" data-idx="4">
+  <div class="section-header">
+    <div class="period-label">Activity</div>
+    <h2>Match the Artist to Their Work</h2>
+    <div class="dates">Select one item from each column to form a pair</div>
+  </div>
+
+  <p class="match-instructions">Click an artist on the left, then click their work on the right. Correct matches will lock in place.</p>
+
+  <div class="match-grid">
+    <div>
+      <div class="match-col-label">Artists</div>
+      <div id="matchLeft"></div>
+    </div>
+    <div>
+      <div class="match-col-label">Works</div>
+      <div id="matchRight"></div>
+    </div>
+  </div>
+  <div class="match-score" id="matchScore"></div>
+  <div class="match-feedback" id="matchFeedback"></div>
+  <button class="match-reset" id="matchResetBtn" onclick="resetMatch()" style="display:none">Try Again</button>
+
+  <div style="margin-top:40px"></div>
+
+  <div class="section-header">
+    <div class="period-label">Activity</div>
+    <h2>Match the City to Its Landmark</h2>
+    <div class="dates">Connect each city to its iconic Art Deco building or district</div>
+  </div>
+
+  <p class="match-instructions">Click a city on the left, then its landmark on the right.</p>
+
+  <div class="match-grid">
+    <div>
+      <div class="match-col-label">City</div>
+      <div id="matchLeft2"></div>
+    </div>
+    <div>
+      <div class="match-col-label">Landmark</div>
+      <div id="matchRight2"></div>
+    </div>
+  </div>
+  <div class="match-score" id="matchScore2"></div>
+  <div class="match-feedback" id="matchFeedback2"></div>
+  <button class="match-reset" id="matchResetBtn2" onclick="resetMatch2()" style="display:none">Try Again</button>
+
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(3)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(5)">Next: Quiz &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 5: QUIZ ===== -->
+<div class="section" data-idx="5">
+  <div class="section-header">
+    <div class="period-label">Knowledge Check</div>
+    <h2>Art Deco Quiz</h2>
+    <div class="dates">Test what you've learned</div>
+  </div>
+
+  <div class="quiz-wrap" id="quizWrap"></div>
+
+  <div class="results-card" id="resultsCard">
+    <div class="score-ring" id="scoreRing">
+      <div class="score-num" id="scoreNum">0%</div>
+      <div class="score-lbl">Score</div>
+    </div>
+    <h3 id="resultsTitle">Results</h3>
+    <p id="resultsMsg"></p>
+    <button class="btn-retry" onclick="retryQuiz()">Try Again</button>
+  </div>
+
+  <div class="section-nav" id="quizNav">
+    <button class="nav-btn" onclick="goSection(4)">&larr; Previous</button>
+    <span></span>
+  </div>
+</div>
+
+</main>
+
+<footer class="footer">
+  <p>DSGN 230 — Survey of Design History<br>Art Deco Deep Dive Interactive</p>
+</footer>
+
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-content">
+    <div class="lightbox-close" onclick="closeLightbox()">&times;</div>
+    <img id="lbImg" src="" alt="Lightbox image" class="lightbox-img" style="display:none">
+    <div id="lbCaption" class="lightbox-caption"></div>
+  </div>
+</div>
+
+<script>
+/* ============ GLOBALS ============ */
+const TOTAL_SECTIONS = 6;
+let currentSection = 0;
+
+/* ============ NAVIGATION ============ */
+function startLesson(){
+  document.getElementById('hero').style.display='none';
+  document.getElementById('toolbar').style.display='block';
+  document.getElementById('tabNav').style.display='block';
+  goSection(0);
+}
+
+function goSection(idx){
+  currentSection=idx;
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.section')[idx].classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>{b.classList.toggle('active',i===idx)});
+  document.getElementById('progressLabel').textContent=`Section ${idx+1} / ${TOTAL_SECTIONS}`;
+  document.getElementById('progressFill').style.width=((idx+1)/TOTAL_SECTIONS*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleTheme(){document.documentElement.classList.toggle('light')}
+
+/* ============ LIGHTBOX ============ */
+function openLightbox(src,cap){
+  const lb=document.getElementById('lightbox');
+  const img=document.getElementById('lbImg');
+  document.getElementById('lbCaption').textContent=cap;
+  if(src){img.src=src;img.style.display='block';}else{img.style.display='none';}
+  lb.classList.add('show');
+}
+function closeLightbox(){document.getElementById('lightbox').classList.remove('show')}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox()});
+
+/* ============ MATCHING 1: Artist → Work ============ */
+const matchPairs=[
+  {left:'Émile-Jacques Ruhlmann',right:'Hôtel du Collectionneur'},
+  {left:'René Lalique',right:'Bacchantes Vase'},
+  {left:'William Van Alen',right:'Chrysler Building'},
+  {left:'A.M. Cassandre',right:'Étoile du Nord poster'},
+  {left:'Tamara de Lempicka',right:'Autoportrait in Green Bugatti'},
+  {left:'Aaron Douglas',right:'Aspects of Negro Life'},
+  {left:'Raymond Loewy',right:'S1 Locomotive'},
+  {left:'Erté',right:'Ziegfeld Follies designs'},
+];
+let m1Left=null,m1Matched=0;
+
+function initMatch(){
+  const lC=document.getElementById('matchLeft'),rC=document.getElementById('matchRight');
+  const shuffledL=[...matchPairs].sort(()=>Math.random()-.5);
+  const shuffledR=[...matchPairs].sort(()=>Math.random()-.5);
+  lC.innerHTML='';rC.innerHTML='';
+  shuffledL.forEach(p=>{
+    const d=document.createElement('div');d.className='match-item';d.textContent=p.left;
+    d.dataset.key=p.left;d.onclick=()=>selectMatchLeft(d);lC.appendChild(d);
+  });
+  shuffledR.forEach(p=>{
+    const d=document.createElement('div');d.className='match-item';d.textContent=p.right;
+    d.dataset.key=p.left;d.onclick=()=>selectMatchRight(d);rC.appendChild(d);
+  });
+  m1Left=null;m1Matched=0;
+  document.getElementById('matchScore').textContent='';
+  document.getElementById('matchFeedback').className='match-feedback';
+  document.getElementById('matchResetBtn').style.display='none';
+}
+
+function selectMatchLeft(el){
+  if(el.classList.contains('matched'))return;
+  document.querySelectorAll('#matchLeft .match-item').forEach(e=>e.classList.remove('selected'));
+  el.classList.add('selected');m1Left=el;
+}
+
+function selectMatchRight(el){
+  if(!m1Left||el.classList.contains('matched'))return;
+  if(m1Left.dataset.key===el.dataset.key){
+    m1Left.classList.remove('selected');m1Left.classList.add('matched');
+    el.classList.add('matched');m1Matched++;
+    document.getElementById('matchScore').textContent=`${m1Matched} / ${matchPairs.length} matched`;
+    if(m1Matched===matchPairs.length){
+      const fb=document.getElementById('matchFeedback');
+      fb.className='match-feedback show success';fb.textContent='All matched! Excellent work.';
+    }
+  } else {
+    el.classList.add('wrong');m1Left.classList.add('wrong');
+    setTimeout(()=>{el.classList.remove('wrong');m1Left.classList.remove('wrong','selected');m1Left=null},800);
+    document.getElementById('matchResetBtn').style.display='inline-block';
+    return;
+  }
+  m1Left=null;
+}
+
+function resetMatch(){initMatch()}
+
+/* ============ MATCHING 2: City → Landmark ============ */
+const matchPairs2=[
+  {left:'New York',right:'Chrysler Building'},
+  {left:'Paris',right:'Palais de Chaillot'},
+  {left:'Miami Beach',right:'Art Deco Historic District'},
+  {left:'Mumbai',right:'Marine Drive Ensemble'},
+  {left:'Shanghai',right:'Cathay Hotel'},
+  {left:'Napier, New Zealand',right:'Earthquake Rebuild District'},
+];
+let m2Left=null,m2Matched=0;
+
+function initMatch2(){
+  const lC=document.getElementById('matchLeft2'),rC=document.getElementById('matchRight2');
+  const shuffledL=[...matchPairs2].sort(()=>Math.random()-.5);
+  const shuffledR=[...matchPairs2].sort(()=>Math.random()-.5);
+  lC.innerHTML='';rC.innerHTML='';
+  shuffledL.forEach(p=>{
+    const d=document.createElement('div');d.className='match-item';d.textContent=p.left;
+    d.dataset.key=p.left;d.onclick=()=>selectM2Left(d);lC.appendChild(d);
+  });
+  shuffledR.forEach(p=>{
+    const d=document.createElement('div');d.className='match-item';d.textContent=p.right;
+    d.dataset.key=p.left;d.onclick=()=>selectM2Right(d);rC.appendChild(d);
+  });
+  m2Left=null;m2Matched=0;
+  document.getElementById('matchScore2').textContent='';
+  document.getElementById('matchFeedback2').className='match-feedback';
+  document.getElementById('matchResetBtn2').style.display='none';
+}
+
+function selectM2Left(el){
+  if(el.classList.contains('matched'))return;
+  document.querySelectorAll('#matchLeft2 .match-item').forEach(e=>e.classList.remove('selected'));
+  el.classList.add('selected');m2Left=el;
+}
+
+function selectM2Right(el){
+  if(!m2Left||el.classList.contains('matched'))return;
+  if(m2Left.dataset.key===el.dataset.key){
+    m2Left.classList.remove('selected');m2Left.classList.add('matched');
+    el.classList.add('matched');m2Matched++;
+    document.getElementById('matchScore2').textContent=`${m2Matched} / ${matchPairs2.length} matched`;
+    if(m2Matched===matchPairs2.length){
+      const fb=document.getElementById('matchFeedback2');
+      fb.className='match-feedback show success';fb.textContent='All matched! You know your Deco cities!';
+    }
+  } else {
+    el.classList.add('wrong');m2Left.classList.add('wrong');
+    setTimeout(()=>{el.classList.remove('wrong');m2Left.classList.remove('wrong','selected');m2Left=null},800);
+    document.getElementById('matchResetBtn2').style.display='inline-block';
+    return;
+  }
+  m2Left=null;
+}
+
+function resetMatch2(){initMatch2()}
+
+/* ============ QUIZ ============ */
+const quizData=[
+  {q:'What major international event in 1925 gave the "Art Deco" style its name and global platform?',
+   opts:['The 1925 Paris Exposition Internationale des Arts Décoratifs et Industriels Modernes','The 1925 German Werkbund Exhibition in Stuttgart','The 1925 London Design Council launch','The 1925 Tokyo Modern Design Conference'],
+   ans:0,
+   explain:'The 1925 Exposition in Paris showcased the new decorative style to 50 million visitors and became the defining moment for Art Deco.'},
+  {q:'Which architectural feature is NOT characteristic of Art Deco design?',
+   opts:['Setbacks and vertical emphasis','Geometric ornament and chevron patterns','Organic, flowing curves inspired by nature','Speed lines and streamlined forms'],
+   ans:2,
+   explain:'Organic, flowing curves are characteristic of Art Nouveau, not Art Deco. Deco favors geometry, symmetry, and precision.'},
+  {q:'The Chrysler Building\'s distinctive feature is its crown of what material?',
+   opts:['Gilded limestone','Stainless steel triangular windows and arches','Chrome and glass','Polished granite blocks'],
+   ans:1,
+   explain:'The Chrysler Building\'s iconic crown features stainless steel and triangular windows, creating a shimmering, gleaming cap symbolic of industrial optimism.'},
+  {q:'What machine-age influence did Art Deco embrace that Art Nouveau rejected?',
+   opts:['Industrial mass production and geometric efficiency','Natural organic forms','Asymmetrical balance','Handcrafted ornament'],
+   ans:0,
+   explain:'Art Deco celebrated the machine age, industry, and geometry, while Art Nouveau emphasized organic nature and handcraft.'},
+  {q:'Aaron Douglas is known for merging Art Deco with which cultural movement?',
+   opts:['Art Nouveau revival','The Bauhaus movement','The Harlem Renaissance','The Vienna Secession'],
+   ans:2,
+   explain:'Aaron Douglas was a leading artist of the Harlem Renaissance, synthesizing African art, African-American experience, and Art Deco geometric abstraction.'},
+  {q:'What term describes the sleeker, more aerodynamic evolution of Deco from the 1930s onward?',
+   opts:['Art Moderne','Streamline Moderne','Cubism','Constructivism'],
+   ans:1,
+   explain:'Streamline Moderne emerged in the 1930s, emphasizing aerodynamics, curves, and speed inspired by trains, ships, and cars. It evolved from the geometric Deco of the 1920s.'},
+  {q:'Which city was almost entirely rebuilt in Art Deco and Streamline Moderne after a 1931 earthquake?',
+   opts:['Miami Beach, Florida','Napier, New Zealand','Shanghai, China','Mumbai, India'],
+   ans:1,
+   explain:'Napier, New Zealand was devastated by an earthquake in 1931 and rebuilt from 1931–33 in Deco, making it one of the world\'s most intact Deco towns.'},
+  {q:'René Lalique revolutionized luxury glass production by using what technique?',
+   opts:['Blowing and free-forming molten glass','Molded opalescent glass with industrial processes','Painting enamel onto clear crystal','Etching designs into pre-formed vessels'],
+   ans:1,
+   explain:'Lalique pioneered molded, opalescent glass production — combining luxury aesthetic with industrial molding, making his designs both exclusive and producible in limited editions.'},
+  {q:'The Harlem Renaissance and Art Deco are connected through which principle?',
+   opts:['Both rejected Western influence','Both celebrated modernity, cultural identity, and global exchange','Both were rooted in natural, organic forms','Both rejected color and used only black and white'],
+   ans:1,
+   explain:'Both movements celebrated modernity, cultural pride, and international influences — the Harlem Renaissance in African-American culture, Art Deco in global visual design.'},
+  {q:'Art Deco declined as a dominant style partly due to which historical event?',
+   opts:['The rise of Modernism and the Bauhaus','The Great Depression followed by World War II','The invention of television','The post-war popularity of Mid-Century Modern design'],
+   ans:1,
+   explain:'The Great Depression (1929+) and World War II ended the era of luxury and optimism that Art Deco embodied, though the style persisted and influenced later movements.'},
+];
+
+let quizAnswers=[], quizLocked=[];
+
+function initQuiz(){
+  const wrap=document.getElementById('quizWrap');wrap.innerHTML='';
+  quizAnswers=new Array(quizData.length).fill(-1);
+  quizLocked=new Array(quizData.length).fill(false);
+  document.getElementById('resultsCard').classList.remove('show');
+
+  quizData.forEach((q,qi)=>{
+    let imgHtml=q.img?`<div class="q-img"><img src="${q.img}" alt="Quiz image" loading="lazy"></div>`:'';
+    let optsHtml=q.opts.map((o,oi)=>`
+      <div class="q-opt" data-qi="${qi}" data-oi="${oi}" onclick="selectQuizOpt(${qi},${oi})">
+        <span class="letter">${String.fromCharCode(65+oi)}</span><span>${o}</span>
+      </div>`).join('');
+    wrap.innerHTML+=`
+      <div class="q-card">
+        <div class="q-num">Question ${qi+1} of ${quizData.length}</div>
+        ${imgHtml}
+        <div class="q-text">${q.q}</div>
+        <div class="q-options">${optsHtml}</div>
+        <div class="q-feedback" id="qfb${qi}"></div>
+      </div>`;
+  });
+
+  wrap.innerHTML+=`<div style="text-align:center;margin-top:24px"><button class="btn-start" onclick="submitQuiz()">Submit Answers</button></div>`;
+}
+
+function selectQuizOpt(qi,oi){
+  if(quizLocked[qi])return;
+  quizAnswers[qi]=oi;
+  document.querySelectorAll(`.q-opt[data-qi="${qi}"]`).forEach(e=>{
+    e.classList.remove('selected');
+    if(parseInt(e.dataset.oi)===oi)e.classList.add('selected');
+  });
+}
+
+function submitQuiz(){
+  let score=0;
+  quizData.forEach((q,qi)=>{
+    quizLocked[qi]=true;
+    const opts=document.querySelectorAll(`.q-opt[data-qi="${qi}"]`);
+    opts.forEach(o=>{
+      o.classList.remove('selected');
+      const oi=parseInt(o.dataset.oi);
+      if(oi===q.ans)o.classList.add('correct');
+      else if(oi===quizAnswers[qi])o.classList.add('wrong');
+    });
+    const fb=document.getElementById('qfb'+qi);
+    if(quizAnswers[qi]===q.ans){score++;fb.className='q-feedback show right';fb.textContent='Correct! '+q.explain;}
+    else{fb.className='q-feedback show wrong';fb.textContent='Not quite. '+q.explain;}
+  });
+
+  const pct=Math.round(score/quizData.length*100);
+  const rc=document.getElementById('resultsCard');rc.classList.add('show');
+  const ring=document.getElementById('scoreRing');
+  ring.className='score-ring '+(pct>=70?'pass':'fail');
+  document.getElementById('scoreNum').textContent=pct+'%';
+  document.getElementById('resultsTitle').textContent=pct>=70?'Well Done!':'Keep Studying';
+  document.getElementById('resultsMsg').textContent=`You got ${score} out of ${quizData.length} correct.`+(pct>=70?' You have a solid understanding of Art Deco.':' Review the lesson sections and try again.');
+}
+
+function retryQuiz(){initQuiz();window.scrollTo({top:document.getElementById('quizWrap').offsetTop-100,behavior:'smooth'})}
+
+/* ============ INIT ============ */
+initMatch();
+initMatch2();
+initQuiz();
+</script>
+</body>
+</html>

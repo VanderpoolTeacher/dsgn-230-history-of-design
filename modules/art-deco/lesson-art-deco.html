@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Art Deco: Glamour, Geometry, and the Machine Age — DSGN 230</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#111;--surface:#1a1a1a;--surface2:#222;--border:#333;
+  --text:#e8e8e8;--text-dim:#999;--accent:#669BBC;--accent-light:#89b4d4;
+  --white:#FDF0D5;--gold:#c9a84c;
+  --font-body:'Segoe UI',system-ui,-apple-system,sans-serif;
+  --font-display:'Georgia',serif;
+  --radius:10px;
+}
+html.light{
+  --bg:#f4f3f0;--surface:#fff;--surface2:#eae9e5;--border:#d5d3cd;
+  --text:#222;--text-dim:#555;--accent:#780000;--accent-light:#C1121F;
+  --white:#003049;--gold:#8a6d1b;
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.8;margin:0}
+a{color:var(--accent-light);text-decoration:none}
+a:hover{text-decoration:underline}
+img{max-width:100%;max-height:80vh;height:auto;border-radius:var(--radius);margin:20px 0;display:block;object-fit:contain}
+
+.toolbar{
+  position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);
+  padding:12px 24px;display:flex;align-items:center;justify-content:space-between;
+}
+.toolbar a{font-size:.85rem;color:var(--text-dim)}
+.toolbar a:hover{color:var(--accent-light)}
+.tool-btn{
+  width:34px;height:34px;border-radius:50%;border:1px solid var(--border);
+  background:var(--surface);color:var(--text-dim);display:flex;align-items:center;
+  justify-content:center;font-size:1rem;cursor:pointer;transition:.2s;padding:0;
+}
+.tool-btn:hover{border-color:var(--accent);color:var(--accent-light)}
+.tool-btn svg{width:16px;height:16px;fill:currentColor}
+
+.hero{
+  padding:60px 24px 40px;text-align:center;
+  background:radial-gradient(ellipse at 50% 30%,#1a1a1a 0%,var(--bg) 70%);
+}
+html.light .hero{background:radial-gradient(ellipse at 50% 30%,#e8e6e0 0%,var(--bg) 70%)}
+.hero h1{font-family:var(--font-display);font-size:clamp(1.8rem,4.5vw,3rem);color:var(--white);margin-bottom:8px;letter-spacing:-.02em;line-height:1.2}
+.hero .subtitle{font-size:1.05rem;color:var(--gold);font-style:italic;margin-bottom:4px}
+.hero .dates{font-size:.95rem;color:var(--text-dim)}
+
+.container{max-width:760px;margin:0 auto;padding:40px 24px 80px}
+
+.container h2{
+  font-family:var(--font-display);font-size:clamp(1.4rem,3vw,1.9rem);color:var(--white);
+  margin:48px 0 20px;padding-top:20px;border-top:1px solid var(--border);line-height:1.3;
+}
+.container h2:first-child{border-top:none;margin-top:0;padding-top:0}
+.container h3{
+  font-family:var(--font-display);font-size:1.15rem;color:var(--white);
+  margin:32px 0 12px;font-weight:700;
+}
+.container p{margin-bottom:16px;color:var(--text)}
+.container strong{color:var(--white)}
+.container em{color:var(--accent-light);font-style:italic}
+.container hr{border:none;border-top:1px solid var(--border);margin:40px 0}
+.container ul,.container ol{margin:0 0 20px 24px;color:var(--text)}
+.container li{margin-bottom:8px}
+
+footer{padding:40px 24px;text-align:center;border-top:1px solid var(--border)}
+footer p{font-size:.8rem;color:var(--text-dim)}
+
+@media(max-width:640px){
+  .container{padding:24px 16px 60px}
+}
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <a href="../../index.html">&larr; Back to Index</a>
+  <button class="tool-btn" onclick="document.documentElement.classList.toggle('light')" title="Toggle theme" aria-label="Toggle theme">
+    <svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zm0 16V5a7 7 0 1 1 0 14z"/></svg>
+  </button>
+</div>
+
+<div class="hero">
+  <h1>Art Deco: Glamour, Geometry, and the Machine Age</h1>
+  <div class='subtitle'>c. 1920–1940</div>
+  <div class="dates">DSGN 230 — Survey of Design History</div>
+</div>
+
+<div class="container">
+<h2 id="introduction-the-style-of-the-century">Introduction — The Style of the Century</h2>
+<p>Art Deco was not born in a manifesto. It had no founding school, no theoretical journal, no single visionary demanding a break with the past. It emerged, instead, as a mood — a collective appetite for luxury, speed, geometry, and confidence that crystallized across architecture, fashion, graphic design, furniture, jewelry, cinema, and industrial products in the years between the two World Wars. If Art Nouveau had wanted to bring nature indoors, Art Deco wanted to bring the future to the present.</p>
+<p>The name itself came late. The style coalesced in the early 1920s and reached its peak at the <em>Exposition Internationale des Arts Décoratifs et Industriels Modernes</em> in Paris in 1925 — the event from which it would eventually take its name, though the abbreviation "Art Deco" was not widely used until historian Bevis Hillier popularized it in the 1960s. During its heyday, it was simply <em>the modern style</em>, or <em>le style moderne</em>.</p>
+<p>What made Art Deco distinctive was its willingness to absorb contradictions. It was luxurious <em>and</em> industrial, ornamental <em>and</em> geometric, backward-looking in its references to ancient Egypt and Mesoamerica <em>and</em> forward-looking in its celebration of skyscrapers, automobiles, ocean liners, and aviation. It borrowed freely from Cubism, Futurism, and Constructivism while rejecting their ideological severity. Art Deco was modernism with its evening clothes on.</p>
+<hr />
+<h2 id="part-1-historical-context">Part 1 — Historical Context: The World That Made Art Deco</h2>
+<h3 id="the-aftermath-of-war">The Aftermath of War</h3>
+<p>World War I (1914–1918) shattered the cultural assumptions of the Belle Époque. Ten million soldiers dead, empires dissolved, economies wrecked. The prewar world of Art Nouveau — with its organic curves, handcrafted luxury, and fin-de-siècle melancholy — felt impossibly distant. The postwar generation wanted something harder, faster, and more decisively modern.</p>
+<p>But they also wanted pleasure. The 1920s, particularly in Paris, New York, and Berlin, were marked by a ferocious appetite for nightlife, fashion, jazz, cocktails, and spectacle. Art Deco captured this tension between trauma and hedonism — its sharp geometry hinted at the machine and the weapon, while its rich materials and lavish ornament spoke to a refusal to be defeated by austerity.</p>
+<h3 id="the-machine-age">The Machine Age</h3>
+<p>The interwar period was intoxicated with technology. Commercial aviation expanded rapidly. Automobiles went from luxury curiosities to mass-produced necessities (Ford's Model T was followed by the streamlined designs of the 1930s). Ocean liners like the <em>Île de France</em> (1927) and the <em>Normandie</em> (1935) were floating Art Deco palaces. Radio broadcasting began in the early 1920s and was ubiquitous by 1930. Cinema, still a young medium, was building picture palaces that were themselves Art Deco masterpieces.</p>
+<p>Art Deco embraced the machine not as a philosophical principle (as the Bauhaus would) but as a source of glamour and imagery. Sunbursts, lightning bolts, chevrons, and streamlined curves entered the decorative vocabulary as symbols of speed, energy, and progress.</p>
+<h3 id="the-1925-paris-exposition">The 1925 Paris Exposition</h3>
+<p>The <em>Exposition Internationale des Arts Décoratifs et Industriels Modernes</em> opened in Paris on April 28, 1925, and ran for six months. Spread along both banks of the Seine, it was France's deliberate reassertion of its leadership in the decorative arts after the disruption of the war. The exposition's rules explicitly banned historical pastiche — everything had to be "modern."</p>
+<p>The results were spectacular and contradictory. Émile-Jacques Ruhlmann showed furniture of breathtaking luxury in rare woods and ivory. René Lalique — who had been a leading Art Nouveau jeweler — exhibited glass fountains and architectural panels in a sleek geometric vocabulary. The Soviet pavilion, designed by Konstantin Melnikov in aggressive Constructivist style, sat alongside pavilions dripping with French luxury. Le Corbusier's austere <em>Pavillon de l'Esprit Nouveau</em> was deliberately tucked away behind a fence, its stark functionalism an implicit rebuke to the decorative extravagance surrounding it.</p>
+<p>The United States, notably, declined to participate, with Secretary of Commerce Herbert Hoover concluding that America had no "modern" decorative arts to show. This absence, paradoxically, spurred American designers and manufacturers to catch up — and within a decade, New York would become the greatest Art Deco city in the world.</p>
+<h3 id="jazz-age-and-harlem-renaissance">The Jazz Age and the Harlem Renaissance</h3>
+<p>Art Deco and jazz were born at the same moment and shared a sensibility. Both were syncopated — mixing rhythms, cultures, and traditions into something new. The Harlem Renaissance, the extraordinary flowering of African American art, literature, and music centered in New York in the 1920s and 1930s, deeply influenced Art Deco's visual culture. Aaron Douglas's paintings and illustrations, with their geometric silhouettes and radiating concentric circles, are among the most powerful Art Deco images produced in America. The Cotton Club, the Savoy Ballroom, and the Apollo Theater were Art Deco environments animated by Black musicians and performers whose work defined the era's sound.</p>
+<h3 id="the-depression-and-streamlining">The Depression and Streamlining</h3>
+<p>The stock market crash of 1929 and the Great Depression that followed did not kill Art Deco — they transformed it. The extravagant luxury of the 1920s gave way to a sleeker, more populist aesthetic in the 1930s. Expensive materials like ivory, shagreen, and lacquer were replaced by chrome, Bakelite, and Vitrolite (pigmented structural glass). The <em>Streamline Moderne</em> variant emerged — characterized by smooth, aerodynamic curves, horizontal lines, and a machine-finished look that celebrated industrial production rather than handcraft. Raymond Loewy, Norman Bel Geddes, and Henry Dreyfuss became celebrity industrial designers, applying streamlined Art Deco principles to everything from locomotives to pencil sharpeners.</p>
+<hr />
+<h2 id="part-2-defining-characteristics">Part 2 — Defining Characteristics: How to Recognize Art Deco</h2>
+<h3 id="geometry-and-symmetry">Geometry and Symmetry</h3>
+<p>Where Art Nouveau favored the asymmetric, organic whiplash curve, Art Deco was emphatically geometric. Zigzags, chevrons, sunbursts, stepped forms, concentric circles, and angular patterns dominate its visual vocabulary. Symmetry — often strict bilateral symmetry — was a hallmark, giving Art Deco compositions a sense of order, power, and ceremony that Art Nouveau deliberately avoided.</p>
+<h3 id="rich-materials-bold-contrast">Rich Materials, Bold Contrast</h3>
+<p>Art Deco loved luxurious and exotic materials: macassar ebony, amboyna burl, shagreen (shark or ray skin), lacquer, ivory, chrome, silver, gold leaf, marble, onyx, and semi-precious stones. Colors were bold and saturated — black and gold, emerald green, cobalt blue, vermillion red — often used in dramatic contrast. Even in its later, more economical phase, Art Deco retained this commitment to visual richness, substituting chrome and Bakelite for silver and ivory but maintaining the same sense of polished glamour.</p>
+<h3 id="the-setback-and-the-skyscraper-silhouette">The Setback and the Skyscraper Silhouette</h3>
+<p>Art Deco architecture is inseparable from the skyscraper. New York's 1916 Zoning Resolution required buildings above a certain height to "set back" — step inward — to allow light to reach the street. Architects turned this legal constraint into an aesthetic opportunity, creating the stepped, pyramidal silhouettes that became Art Deco's most recognizable architectural motif. The ziggurat-like profiles of the Chrysler Building, the Empire State Building, and Rockefeller Center are as much products of zoning law as of artistic vision.</p>
+<h3 id="stylized-figuration">Stylized Figuration</h3>
+<p>Unlike the Bauhaus and other purist modernist movements, Art Deco did not reject the human figure or representational imagery. Instead, it stylized them. Female figures were rendered as elongated, angular, idealized forms — athletic, modern, liberated. Animals — greyhounds, gazelles, eagles, panthers — appeared as sleek, aerodynamic symbols of speed and power. These figures were not naturalistic (as in Art Nouveau) but geometricized, reduced to essential contours.</p>
+<h3 id="eclecticism-and-exoticism">Eclecticism and Exoticism</h3>
+<p>Art Deco was an omnivorous style. It drew freely from ancient Egyptian art (particularly after the 1922 discovery of Tutankhamun's tomb), Mesoamerican architecture (Aztec and Maya stepped pyramids), African sculpture and textiles, Japanese lacquerwork, Chinese motifs, and Ballets Russes set designs. This eclecticism gave Art Deco its visual richness and cosmopolitan character, though it also raised questions — still debated — about cultural appropriation and the exoticizing gaze of Western designers.</p>
+<h3 id="streamline-moderne">Streamline Moderne</h3>
+<p>By the 1930s, a distinct sub-style emerged within Art Deco. <em>Streamline Moderne</em> replaced angular geometry with smooth, flowing, aerodynamic curves inspired by advances in automotive and aviation design. Teardrop shapes, horizontal "speed lines," porthole windows, chrome trim, and rounded corners characterized this later phase. It was more populist and industrial than the luxurious Deco of the 1920s — the style of diners, movie theaters, gas stations, and consumer products rather than Parisian salons.</p>
+<hr />
+<h2 id="part-3-people-key-figures">Part 3 — People: The Key Figures</h2>
+<h3 id="emile-jacques-ruhlmann">Émile-Jacques Ruhlmann (1879–1933) — Paris</h3>
+<p>Ruhlmann was Art Deco's supreme furniture maker — and, arguably, the last great ébéniste (master cabinetmaker) in the French tradition stretching back to André-Charles Boulle. His pieces combined classical proportions and exquisite craftsmanship with the geometric vocabulary of the new style. A Ruhlmann desk or cabinet typically featured tapering, fluted legs, surfaces veneered in rare woods (macassar ebony, amboyna, violet wood), and restrained ivory or silver accents. His <em>Hôtel du Collectionneur</em> pavilion at the 1925 Exposition was the event's most celebrated interior — a complete Art Deco environment of furniture, textiles, metalwork, and paintings.</p>
+<p>Ruhlmann's work was unapologetically elitist. He believed the finest design required the finest materials and the most skilled hands, and his prices reflected it. His furniture was for the wealthiest collectors and institutions, and he made no apology for this. "A clientele of kings," he declared, was what the arts needed to flourish.</p>
+<h3 id="rene-lalique">René Lalique (1860–1945) — Paris</h3>
+<p>Lalique's career spanned both Art Nouveau and Art Deco, making him a living bridge between the two movements. In the 1890s, he had been the era's most celebrated jeweler, working in enamel, glass, and horn with organic, naturalistic forms. Beginning around 1907 with commissions for perfumer François Coty, Lalique pivoted to glass production. By the 1920s, he had fully embraced Art Deco's geometric vocabulary, producing vases, perfume bottles, car mascots, clocks, lighting fixtures, and architectural glass panels in frosted, opalescent, and colored glass with motifs of stylized birds, fish, flowers, and female figures. His glass panels adorned the dining room of the <em>Normandie</em> ocean liner and the interiors of Pullman railway cars. Lalique demonstrated that Art Deco could be simultaneously industrial and exquisite.</p>
+<h3 id="tamara-de-lempicka">Tamara de Lempicka (1898–1980) — Warsaw, Paris, New York</h3>
+<p>De Lempicka was Art Deco's most iconic painter. Born to a wealthy Polish family, she fled the Russian Revolution, settled in Paris, and developed a painting style that fused Cubist geometry with a sensuous, hyper-polished realism. Her portraits of aristocrats, socialites, and herself — <em>Autoportrait (Tamara in the Green Bugatti)</em> (1929) is perhaps the single most recognizable Art Deco painting — captured the era's glamour, speed, and sexual confidence. Her figures are sculpted in clean geometric planes, lips gleaming, draped in silk and chrome, inhabiting a world of unambiguous luxury. De Lempicka embodied Art Deco as a lifestyle as much as an aesthetic.</p>
+<h3 id="william-van-alen">William Van Alen (1883–1954) — New York</h3>
+<p>Van Alen designed the Chrysler Building (1928–1930), arguably the most beloved Art Deco structure ever built. Its stainless steel crown — a series of radiating arcs pierced by triangular windows — is a sunburst rendered in architecture. The lobby features African marble, chrome, and murals celebrating transportation and industry. The building's ornamental program draws on automotive imagery (hubcaps, hood ornaments, eagle gargoyles modeled on Chrysler radiator caps), making it a monument to the machine age. Van Alen's career was shadowed by a fee dispute with Walter Chrysler, and he built little afterward, but the Chrysler Building alone secured his legacy.</p>
+<h3 id="erte">Erté (Romain de Tirtoff, 1892–1990) — St. Petersburg, Paris, Hollywood</h3>
+<p>Erté was Art Deco's defining fashion illustrator and costume designer. Born to a Russian aristocratic family, he moved to Paris in 1912 and began producing cover illustrations for <em>Harper's Bazaar</em> in 1915, a relationship that lasted over twenty years. His elongated, impossibly elegant female figures — rendered in gouache with metallic paints — defined the Art Deco silhouette: angular, sinuous, lavishly costumed, and supremely self-possessed. Erté also designed costumes for the Folies Bergère, Hollywood films, and Broadway productions. His <em>Alphabet</em> series (1927), in which each letter is formed by a contorted human figure, remains one of Art Deco's most inventive graphic achievements.</p>
+<h3 id="aaron-douglas">Aaron Douglas (1899–1979) — Topeka, New York, Nashville</h3>
+<p>Douglas was the visual artist most closely associated with the Harlem Renaissance, and his work represents one of Art Deco's most powerful and distinctive variants. His paintings and murals — including the monumental <em>Aspects of Negro Life</em> series (1934) at the New York Public Library's Schomburg Center — used flat, geometric silhouettes, concentric circles of light, and a muted palette of earth tones and lavenders to depict the African American experience from Africa through slavery to modern urban life. Douglas synthesized Art Deco's geometric vocabulary with African sculptural forms and Egyptian profile conventions, creating a visual language that was simultaneously modern, historical, and politically charged.</p>
+<h3 id="raymond-loewy">Raymond Loewy (1893–1986) — Paris, New York</h3>
+<p>Loewy was the pioneer of American industrial design and the leading practitioner of Streamline Moderne. A French émigré who arrived in New York in 1919, he applied streamlined Art Deco principles to an astonishing range of products: the Pennsylvania Railroad's S1 locomotive (1939), the Studebaker Avanti automobile (1962), the Coldspot refrigerator for Sears (1934), the Lucky Strike cigarette package (1940), the Greyhound Scenicruiser bus (1954), and — decades later — the interior of NASA's Skylab space station. Loewy understood that design was a commercial force, and his career demonstrated that Art Deco's aesthetic ambitions could operate at industrial scale.</p>
+<h3 id="a-m-cassandre">A.M. Cassandre (Adolphe Jean-Marie Mouron, 1901–1968) — Kharkov, Paris</h3>
+<p>Cassandre was Art Deco's greatest poster designer. His lithographic posters for the <em>Étoile du Nord</em> railway (1927), the <em>Normandie</em> ocean liner (1935), and Dubonnet aperitif (1932) combined bold geometric simplification, dramatic perspective, and a limited palette of saturated color to create images of extraordinary graphic power. His work drew on Cubism, Constructivism, and Futurism but distilled their formal innovations into commercial communication that was immediately legible and emotionally compelling. Cassandre also designed the Yves Saint Laurent logo (1961) and the typeface Peignot (1937).</p>
+<h3 id="other-essential-figures">Other Essential Figures</h3>
+<p><strong>Jean Dunand</strong> (1877–1942), a Swiss-born lacquer artist and metalworker based in Paris, created some of Art Deco's most extraordinary surfaces — monumental lacquer panels for the <em>Normandie</em> ocean liner, furniture, vases, and portraits in lacquer inlaid with eggshell, gold, and silver.</p>
+<p><strong>Edgar Brandt</strong> (1880–1960) was Art Deco's master ironworker. His gates, screens, and radiator covers — particularly the iconic <em>L'Oasis</em> five-panel screen with its stylized fountain and flowers — translated Art Nouveau's wrought-iron tradition into the geometric vocabulary of the new style.</p>
+<p><strong>Paul Poiret</strong> (1879–1944), the Parisian couturier, liberated women from the corset before World War I and was an early champion of Art Deco aesthetics in fashion and interior design. His 1925 Exposition barges, <em>Amours</em>, <em>Délices</em>, and <em>Orgues</em>, were floating Art Deco showcases.</p>
+<p><strong>Shreve, Lamb &amp; Harmon</strong> — the architectural firm that designed the Empire State Building (1930–1931), the tallest building in the world for nearly forty years and an enduring symbol of Art Deco's ambition to merge engineering with ornamental elegance.</p>
+<hr />
+<h2 id="part-4-places-geography-of-art-deco">Part 4 — Places: The Geography of Art Deco</h2>
+<h3 id="paris-the-birthplace">Paris — The Birthplace</h3>
+<p>Paris was Art Deco's intellectual and commercial capital. The 1925 Exposition made this explicit, but the infrastructure was already in place: the city's tradition of luxury craftsmanship (ébénisterie, couture, jewelry, glassmaking), its network of galleries and ateliers, and its cultural magnetism for artists from around the world. Parisian Art Deco tended toward the luxurious — rare woods, lacquer, ivory, hand-wrought metal — reflecting the city's artisanal heritage. Key sites include the Palais de Chaillot (rebuilt 1937), the Palais de Tokyo, and the interiors of department stores like Galeries Lafayette and Le Bon Marché.</p>
+<h3 id="new-york-the-apotheosis">New York — The Apotheosis</h3>
+<p>New York took Art Deco further than any other city. The skyscraper boom of the late 1920s and early 1930s produced the style's most spectacular architectural achievements: the Chrysler Building (1930), the Empire State Building (1931), 30 Rockefeller Plaza (1933), and the Waldorf-Astoria Hotel (1931). Radio City Music Hall (1932), with its vast auditorium and Roxy Rotunda, was Art Deco as total interior environment. The 1939 New York World's Fair — themed "The World of Tomorrow" — marked Art Deco's final grand spectacle, its Streamline Moderne pavilions pointing toward the postwar future.</p>
+<h3 id="miami-beach-tropical-deco">Miami Beach — Tropical Deco</h3>
+<p>The Miami Beach Architectural District (South Beach) contains the largest concentration of Art Deco buildings in the world — over 800 structures built primarily between 1923 and 1943. Designed by architects like Henry Hohauser, L. Murray Dixon, and Albert Anis, these hotels and apartment buildings adapted Art Deco and Streamline Moderne to the tropical climate with pastel color palettes, nautical motifs, eyebrow overhangs for shade, neon signage, and relief ornamentation drawn from local flora and fauna. The district was designated a National Historic Landmark in 1979, one of the first twentieth-century neighborhoods to receive such protection.</p>
+<h3 id="mumbai-colonial-deco">Mumbai (Bombay) — Colonial Deco</h3>
+<p>Mumbai possesses the world's second-largest collection of Art Deco buildings after Miami, concentrated along Marine Drive and the Oval Maidan area. Built during the 1930s, these residential and commercial buildings blend European Art Deco with Indian decorative traditions — lotus motifs, local stone, tropical adaptations. In 2018, the ensemble was inscribed as a UNESCO World Heritage Site alongside the city's Victorian Gothic buildings, recognizing Art Deco as a globally significant architectural heritage.</p>
+<h3 id="shanghai-haipai-deco">Shanghai — Haipai Deco</h3>
+<p>Shanghai's Bund and the former French Concession contain remarkable Art Deco buildings from the 1920s and 1930s, when the city was a cosmopolitan treaty port. The Cathay Hotel (now Fairmont Peace Hotel, 1929), designed by Palmer &amp; Turner, and the Park Hotel (1934), designed by the Hungarian-Slovak architect László Hudec, are masterpieces of the style. Shanghai's Art Deco blended Western geometric forms with Chinese decorative motifs, producing a distinctive hybrid that reflected the city's position between cultures.</p>
+<h3 id="other-key-locations">Other Key Locations</h3>
+<p><strong>London</strong> — Broadcasting House (BBC headquarters, 1932), the Hoover Building (1933), Battersea Power Station (1933), and numerous cinemas and Underground stations.</p>
+<p><strong>Los Angeles</strong> — The Eastern Columbia Building (1929), Bullocks Wilshire (1929), the Griffith Observatory (1935), and dozens of theaters and commercial buildings along Wilshire Boulevard and in downtown.</p>
+<p><strong>Napier, New Zealand</strong> — Rebuilt almost entirely in Art Deco style after a devastating 1931 earthquake, Napier is one of the most complete Art Deco towns in the world.</p>
+<p><strong>Havana, Cuba</strong> — The Bacardí Building (1930) and the López Serrano apartment building (1932) are among the finest Art Deco structures in Latin America.</p>
+<hr />
+<h2 id="part-5-things-landmark-works">Part 5 — Things: Landmark Works</h2>
+<h3 id="architecture">Architecture</h3>
+<div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;margin:20px 0">
+  <figure style="flex:0 0 280px;margin:0">
+    <img alt="The Chrysler Building in New York City, showing its iconic stainless steel sunburst crown and Art Deco setback massing rising against the sky" src="images/Chrysler_Building_by_David_Shankbone_Retouched.jpg" style="width:100%;border-radius:6px" />
+    <figcaption style="font-size:.78rem;color:var(--text-dim);margin-top:6px;text-align:center">Photo: David Shankbone, retouched by Overand. CC BY-SA 3.0.</figcaption>
+  </figure>
+  <div style="flex:1;min-width:200px">
+    <p><strong>Chrysler Building</strong> (New York, 1928–1930) — William Van Alen. Stainless steel sunburst crown, automotive-themed ornament, African marble lobby. Often called the most beautiful skyscraper ever built.</p>
+  </div>
+</div>
+<div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;margin:20px 0">
+  <figure style="flex:0 0 280px;margin:0">
+    <img alt="The Empire State Building at sunset, illuminated in green for Climate Week NYC, viewed from the Top of the Rock at Rockefeller Center with the Manhattan skyline stretching behind it" src="images/Empire_State_Building_sunset.jpg" style="width:100%;border-radius:6px" />
+    <figcaption style="font-size:.78rem;color:var(--text-dim);margin-top:6px;text-align:center">Photo: Dllu, 2021. CC BY-SA 4.0.</figcaption>
+  </figure>
+  <div style="flex:1;min-width:200px">
+    <p><strong>Empire State Building</strong> (New York, 1930–1931) — Shreve, Lamb &amp; Harmon. Setback massing, limestone and granite facade, Art Deco lobby and elevator doors. The world's tallest building for 39 years.</p>
+  </div>
+</div>
+<p><strong>Rockefeller Center</strong> (New York, 1930–1939) — Associated Architects (Raymond Hood, lead designer). An Art Deco city-within-a-city: 14 buildings, sunken plaza, Radio City Music Hall, and Lee Lawrie's iconic <em>Atlas</em> and <em>Wisdom</em> sculptures.</p>
+<figure style="margin:24px 0">
+  <img src="images/Radio_City_Music_Hall_1932.jpg" alt="Interior of Radio City Music Hall in 1932, showing the grand auditorium with its distinctive Art Deco arched ceiling, sweeping rows of seats, and dramatic stage proscenium" style="width:100%;border-radius:6px">
+  <figcaption style="font-size:.78rem;color:var(--text-dim);margin-top:8px;text-align:center">Radio City Music Hall interior, 1932. Photo: Samuel H. Gottscho, Gottscho-Schleisner Collection, Library of Congress. Public domain.</figcaption>
+</figure>
+<p><strong>Palais de Chaillot</strong> (Paris, 1937) — Louis-Hippolyte Boileau, Jacques Carlu, Léon Azéma. Sweeping curved wings flanking the Trocadéro gardens, monumental sculpture, and gold inscriptions. Built for the 1937 International Exposition.</p>
+<h3 id="decorative-arts">Decorative Arts and Design</h3>
+<p><strong>Ruhlmann Furniture</strong> (Paris, 1920s–1930s) — Émile-Jacques Ruhlmann. Macassar ebony desks, ivory-tipped legs, amboyna cabinets — the pinnacle of Art Deco luxury cabinetmaking.</p>
+<p><strong>Lalique Glass</strong> (Paris, 1920s–1930s) — René Lalique. Frosted, opalescent glass vases, perfume bottles, car mascots, and architectural panels with stylized flora and fauna.</p>
+<p><strong>Normandie Ocean Liner Interiors</strong> (1935) — Multiple designers including Lalique, Dunand, Dupas, and Ruhlmann. The first-class dining room — 305 feet long, lit by Lalique glass columns — was considered the most spectacular Art Deco interior ever created.</p>
+<figure style="margin:24px 0">
+  <img src="images/SS_Normandie_grand_dining_room.jpg" alt="Grand dining room of the SS Normandie ocean liner, c. 1935. An enormous, cathedral-like interior with rows of tables set for dinner, illuminated by tall Lalique glass columns lining both sides and an ornate ceiling stretching the full 305-foot length of the room." style="width:100%;border-radius:6px">
+  <figcaption style="font-size:.8rem;color:var(--text-dim);margin-top:8px;text-align:center">Grand dining room of the SS <em>Normandie</em>, c. 1935. Public domain image via Wikimedia Commons.</figcaption>
+</figure>
+<h3 id="graphic-design">Graphic Design</h3>
+<p><strong>Étoile du Nord Poster</strong> (1927) — A.M. Cassandre. Converging railway tracks in dramatic perspective, reduced to geometric abstraction. One of the greatest travel posters ever made.</p>
+<p><strong>Normandie Poster</strong> (1935) — A.M. Cassandre. The liner's bow viewed from below, rendered as a towering black geometric form against a dark sky. Monumental scale and minimal palette.</p>
+<div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;margin:24px 0">
+  <figure style="margin:0;flex:0 0 280px">
+    <img src="images/Metropolis_poster_1927.jpg" alt="Three-sheet poster for the 1927 German film Metropolis by Heinz Schulz-Neudamm, depicting the Maschinenmensch — a stylized Art Deco robot figure — before a futuristic geometric cityscape." style="width:100%;border-radius:6px">
+    <figcaption style="font-size:.78rem;color:var(--text-dim);margin-top:6px">Heinz Schulz-Neudamm, 1926. Public domain in the U.S.</figcaption>
+  </figure>
+  <div style="flex:1;min-width:200px">
+    <p style="margin-top:0"><strong>Metropolis Film Poster</strong> (1927) — Heinz Schulz-Neudamm. Three-sheet poster for Fritz Lang's expressionist film, depicting the Maschinenmensch (Machine-Human) against a geometric cityscape of towering skyscrapers. One of the most valuable and iconic film posters ever created.</p>
+  </div>
+</div>
+<h3 id="painting-and-sculpture">Painting and Sculpture</h3>
+<div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;margin:24px 0">
+  <figure style="margin:0;flex:0 0 280px">
+    <img src="images/Tamara_de_Lempicka_Autoportrait.jpeg" alt="Autoportrait (Tamara in a Green Bugatti) by Tamara de Lempicka, 1929. The artist at the wheel of a green Bugatti, painted in sleek Cubist-Art Deco style with gleaming geometric forms." style="width:100%;border-radius:6px">
+    <figcaption style="font-size:.78rem;color:var(--text-dim);margin-top:6px">Tamara de Lempicka, 1929. Public domain in the U.S.</figcaption>
+  </figure>
+  <div style="flex:1;min-width:200px">
+    <p style="margin-top:0"><strong>Autoportrait (Tamara in the Green Bugatti)</strong> (1929) — Tamara de Lempicka. De Lempicka at the wheel, helmet and scarf streaming, painted in polished Cubist geometry. Originally a cover for the German fashion magazine <em>Die Dame</em>.</p>
+  </div>
+</div>
+<p><strong>Aspects of Negro Life</strong> (1934) — Aaron Douglas. Four monumental murals at the Schomburg Center, New York Public Library. Geometric silhouettes, concentric arcs of light, and a muted palette tracing the African American journey from Africa to Harlem.</p>
+<p><strong>Atlas</strong> (1937) — Lee Lawrie. Bronze statue at Rockefeller Center, 15 feet tall, depicting the Titan holding the celestial spheres. Geometric musculature, stylized hair, and armillary sphere combine classical mythology with Art Deco geometry.</p>
+<h3 id="industrial-design">Industrial Design</h3>
+<p><strong>Kodak Bantam Special Camera</strong> (1936) — Walter Dorwin Teague. A compact camera with a black enamel body, chrome speed lines, and geometric stepped detailing. A consumer product designed as a miniature Art Deco object, demonstrating that Streamline Moderne aesthetics could operate at pocket scale.</p>
+<figure style="margin:24px 0">
+  <img src="images/Bantam_Special_Camera_1936.jpg" alt="Kodak Bantam Special camera designed by Walter Dorwin Teague, 1936. A compact black enamel and chrome camera with Art Deco geometric stepped detailing and horizontal speed lines, displayed in the Museum für Angewandte Kunst, Cologne." style="width:100%;max-width:600px;border-radius:6px">
+  <figcaption style="font-size:.8rem;color:var(--text-dim);margin-top:8px">Kodak Bantam Special, Walter Dorwin Teague, 1936. Photo: Daderot, 2015. CC0 / Public Domain Dedication, via Wikimedia Commons.</figcaption>
+</figure>
+<hr />
+<h2 id="part-6-decline-and-legacy">Part 6 — Decline and Legacy</h2>
+<h3 id="why-art-deco-faded">Why Art Deco Faded</h3>
+<p>Art Deco's decline was gradual rather than sudden. Several forces converged to push it from the cultural center.</p>
+<p>The International Style — the ascetic, functionalist modernism championed by Le Corbusier, Mies van der Rohe, and the Bauhaus — gained institutional dominance through the 1930s and especially after World War II. The Museum of Modern Art's 1932 <em>International Style</em> exhibition in New York framed ornament as backward-looking and promoted the glass-and-steel curtain wall as the only legitimate modern architecture. Art Deco's decorative richness was dismissed as frivolous, bourgeois, and historically regressive.</p>
+<p>World War II (1939–1945) delivered the cultural blow. The war's devastation made Art Deco's glamour seem inappropriate, just as World War I had made Art Nouveau's organic sensuality feel naive. The postwar world demanded austerity, reconstruction, and efficiency. Mid-Century Modernism — clean-lined, democratic, mass-producible — replaced Art Deco's luxury with a different vision of the modern.</p>
+<p>The association of some Art Deco monumental architecture with fascist and authoritarian regimes (Albert Speer's designs for Nazi Berlin, Mussolini's EUR district in Rome) further tainted the style in postwar critical opinion, though this association was reductive — Art Deco was equally the style of Roosevelt's New Deal public buildings, Harlem's cultural renaissance, and democratic commerce.</p>
+<h3 id="the-revival">The Revival</h3>
+<p>Art Deco's critical rehabilitation began in the 1960s, led by Bevis Hillier's book <em>Art Deco of the 20s and 30s</em> (1968), which gave the movement its now-standard name. The 1970s preservation movement — particularly the successful campaign to protect the Miami Beach Art Deco district — brought the style back into public consciousness. By the 1980s, postmodernist architects and designers, rejecting the austerity of the International Style, were openly borrowing Art Deco motifs.</p>
+<h3 id="contemporary-echoes">Contemporary Echoes</h3>
+<p>Art Deco's influence persists in contemporary design. The style's geometric patterns, metallic palettes, and sense of polished luxury regularly appear in interior design, fashion, product design, and branding. Films like <em>The Great Gatsby</em> (2013), <em>Fantastic Beasts</em> (2016), and video games like <em>BioShock</em> (2007) have revived Art Deco aesthetics for new audiences. The movement's core insight — that modernity can be glamorous, that geometry can be sensuous, that industrial production and aesthetic richness are not opposed — continues to resonate.</p>
+<hr />
+<h2 id="part-7-art-deco-vs-bauhaus">Part 7 — Art Deco and the Bauhaus: A Crucial Distinction</h2>
+<p>Art Deco and the Bauhaus were contemporaries — both active in the 1920s and 1930s, both committed to "modern" design — but their philosophies were fundamentally opposed. The Bauhaus sought to eliminate ornament, celebrate function, and democratize design through industrial standardization. Art Deco sought to celebrate ornament, embrace luxury (alongside function), and express cultural confidence through decorative richness.</p>
+<p>The Bauhaus was ideological; Art Deco was pragmatic. The Bauhaus had manifestos; Art Deco had department stores. The Bauhaus believed the designer's job was to transform society; Art Deco believed the designer's job was to make the modern world beautiful.</p>
+<p>Neither was "right." Both addressed real needs. But the critical establishment — particularly after World War II — overwhelmingly favored the Bauhaus narrative, which cast Art Deco as a superficial, reactionary indulgence. Only in recent decades has a more balanced view emerged, recognizing Art Deco as a sophisticated design movement with its own coherent logic, its own formal innovations, and its own enduring contributions to visual culture.</p>
+<hr />
+<h2 id="discussion-questions">Discussion Questions</h2>
+<ol>
+<li>
+<p>Art Deco borrowed extensively from Egyptian, African, Mesoamerican, and Asian visual traditions. How should we evaluate this eclecticism today? Where does "inspiration" become "appropriation," and does it matter whether the borrowing is formal or contextual?</p>
+</li>
+<li>
+<p>Art Deco thrived in both democratic and authoritarian contexts — it was simultaneously the style of Harlem jazz clubs and fascist state architecture. What does this ideological flexibility tell us about the relationship between aesthetics and politics?</p>
+</li>
+<li>
+<p>The Bauhaus and Art Deco offered competing visions of modernity. Which vision do you find more compelling, and why? Can you identify echoes of both in contemporary design?</p>
+</li>
+<li>
+<p>Art Deco's Streamline Moderne phase made the style more accessible and populist. Does accessibility strengthen or dilute a design movement? Compare to similar tensions in a contemporary context.</p>
+</li>
+<li>
+<p>Art Deco has experienced repeated revivals — in the 1960s, 1980s, and again in the 2010s–2020s. Why does this particular style keep coming back? What needs does it fulfill that other modernisms do not?</p>
+</li>
+</ol>
+<hr />
+</div>
+
+<footer>
+  <p>DSGN 230 — Survey of Design History</p>
+</footer>
+
+</body>
+</html>
