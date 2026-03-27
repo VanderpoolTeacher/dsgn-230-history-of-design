@@ -82,15 +82,92 @@ main{background:var(--bg)}
 .chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:24px 0}
 .chip{display:inline-block;padding:6px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:20px;font-size:.85rem;color:var(--text-dim)}
 
-/* TIMELINE */
-.hist-timeline{max-width:700px;margin:32px auto;padding:24px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)}
-.timeline-item{position:relative;padding-left:32px;margin-bottom:24px}
-.timeline-item:last-child{margin-bottom:0}
-.timeline-item::before{content:'';position:absolute;left:6px;top:0;width:8px;height:8px;background:var(--accent);border-radius:50%}
-.timeline-item::after{content:'';position:absolute;left:10px;top:8px;width:0;height:calc(100% + 24px);border-left:1px solid var(--border)}
-.timeline-item:last-child::after{display:none}
-.timeline-year{font-weight:500;color:var(--accent);font-size:.9rem;margin-bottom:4px}
-.timeline-event{color:var(--text-dim);font-size:.9rem}
+/* TIMELINE — Art Deco inspired */
+.hist-timeline{max-width:760px;margin:32px auto;position:relative;padding:0}
+.hist-timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,transparent,var(--gold) 5%,var(--gold) 95%,transparent);transform:translateX(-50%)}
+/* Decorative diamond at top */
+.hist-timeline::after{content:'';position:absolute;left:50%;top:-10px;width:16px;height:16px;background:var(--gold);transform:translateX(-50%) rotate(45deg);z-index:2}
+
+.timeline-item{
+  position:relative;margin-bottom:0;padding:32px 0;
+  display:grid;grid-template-columns:1fr 60px 1fr;align-items:start;gap:0;
+  opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease;
+}
+.timeline-item.tl-visible{opacity:1;transform:translateY(0)}
+
+/* Alternating sides */
+.timeline-item .tl-content{
+  padding:24px 28px;background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);transition:all .4s;position:relative;
+}
+.timeline-item .tl-content::before{
+  content:'';position:absolute;top:20px;width:16px;height:16px;
+  background:var(--surface);border:1px solid var(--border);
+  transform:rotate(45deg);z-index:-1;
+}
+.timeline-item:nth-child(odd) .tl-content{grid-column:1;text-align:right}
+.timeline-item:nth-child(odd) .tl-content::before{right:-9px;border-left:0;border-bottom:0}
+.timeline-item:nth-child(even) .tl-content{grid-column:3;text-align:left}
+.timeline-item:nth-child(even) .tl-content::before{left:-9px;border-right:0;border-top:0}
+
+.timeline-item .tl-content:hover{
+  border-color:var(--gold);box-shadow:0 4px 24px rgba(201,168,76,.15);transform:translateY(-2px);
+}
+
+/* Center node */
+.timeline-item .tl-node{
+  grid-column:2;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:16px;position:relative;z-index:2;
+}
+.tl-diamond{
+  width:18px;height:18px;background:var(--bg);border:2px solid var(--gold);
+  transform:rotate(45deg);transition:all .4s;flex-shrink:0;
+}
+.timeline-item:hover .tl-diamond{background:var(--gold);box-shadow:0 0 12px rgba(201,168,76,.5)}
+.tl-connector{width:2px;flex:1;background:transparent}
+
+.timeline-year{
+  font-family:var(--font-display);font-weight:700;color:var(--gold);font-size:1.15rem;
+  margin-bottom:10px;letter-spacing:1px;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.timeline-year::before,.timeline-year::after{
+  content:'';display:inline-block;width:20px;height:1px;background:var(--gold);opacity:.5;
+}
+.timeline-item:nth-child(odd) .timeline-year{justify-content:flex-end}
+.timeline-item:nth-child(odd) .timeline-year::before{display:none}
+.timeline-item:nth-child(even) .timeline-year{justify-content:flex-start}
+.timeline-item:nth-child(even) .timeline-year::after{display:none}
+
+.timeline-event{color:var(--text);font-size:.9rem;line-height:1.7}
+.timeline-event strong{color:var(--white);font-weight:600}
+
+/* Expand/collapse detail */
+.tl-detail{
+  max-height:0;overflow:hidden;transition:max-height .5s ease,margin .3s ease,opacity .3s ease;
+  opacity:0;margin-top:0;font-size:.85rem;color:var(--text-dim);line-height:1.6;
+}
+.tl-detail.open{max-height:200px;opacity:1;margin-top:12px}
+.tl-toggle{
+  display:inline-block;margin-top:10px;font-size:.78rem;color:var(--accent-light);
+  cursor:pointer;letter-spacing:.5px;text-transform:uppercase;font-weight:500;
+  transition:color .2s;border:none;background:none;padding:0;
+}
+.tl-toggle:hover{color:var(--gold)}
+
+/* Responsive: stack on mobile */
+@media(max-width:640px){
+  .timeline-item{grid-template-columns:24px 1fr;gap:16px}
+  .hist-timeline::before{left:11px;transform:none}
+  .hist-timeline::after{left:11px;transform:rotate(45deg);top:-10px}
+  .timeline-item .tl-node{grid-column:1;padding-top:18px}
+  .timeline-item:nth-child(odd) .tl-content,
+  .timeline-item:nth-child(even) .tl-content{grid-column:2;text-align:left}
+  .timeline-item:nth-child(odd) .tl-content::before,
+  .timeline-item:nth-child(even) .tl-content::before{left:-9px;right:auto;border:1px solid var(--border);border-right:0;border-top:0}
+  .timeline-item:nth-child(odd) .timeline-year{justify-content:flex-start}
+  .timeline-item:nth-child(odd) .timeline-year::before{display:inline-block}
+  .timeline-item:nth-child(odd) .timeline-year::after{display:none}
+}
 
 /* THINK QUESTION */
 .think-question{max-width:700px;margin:32px auto;padding:24px;background:var(--surface2);border-left:3px solid var(--accent);border-radius:var(--radius)}
@@ -359,34 +436,80 @@ main{background:var(--bg)}
     </div>
   </div>
 
-  <div class="content-block">
-    <div style="margin-bottom:16px"><strong>Historical Timeline</strong></div>
-    <div class="hist-timeline">
+  <div style="text-align:center;margin:48px 0 8px">
+    <div class="period-label">Chronology</div>
+    <h3 style="font-family:var(--font-display);font-size:1.4rem;margin-bottom:4px">Historical Timeline</h3>
+    <p style="font-size:.85rem;color:var(--text-dim)">The rise and evolution of Art Deco</p>
+  </div>
+
+  <div class="hist-timeline" id="histTimeline">
+
       <div class="timeline-item">
-        <div class="timeline-year">1918</div>
-        <div class="timeline-event">World War I ends; optimism for modernity, technology, and progress rises globally.</div>
+        <div class="tl-content">
+          <div class="timeline-year">1918</div>
+          <div class="timeline-event"><strong>Armistice &amp; a New World.</strong> World War I ends — optimism for modernity, technology, and progress rises globally.</div>
+          <div class="tl-detail" id="tlDetail0">After four years of mechanized destruction, European and American culture pivoted sharply toward the future. New materials (reinforced concrete, stainless steel), new transportation (automobiles, ocean liners), and new media (radio, cinema) fueled a hunger for a visual language that felt modern, precise, and unshackled from the past.</div>
+          <button class="tl-toggle" onclick="toggleTlDetail(0)">Read more</button>
+        </div>
+        <div class="tl-node"><div class="tl-diamond"></div><div class="tl-connector"></div></div>
+        <div></div>
       </div>
+
       <div class="timeline-item">
-        <div class="timeline-year">1920s</div>
-        <div class="timeline-event">Jazz Age and Harlem Renaissance flourish in America; African and Asian art influences design; radio and cinema reshape culture.</div>
+        <div></div>
+        <div class="tl-node"><div class="tl-diamond"></div><div class="tl-connector"></div></div>
+        <div class="tl-content">
+          <div class="timeline-year">1920s</div>
+          <div class="timeline-event"><strong>The Jazz Age.</strong> The Harlem Renaissance, African and Asian art influences, radio, and cinema reshape global culture.</div>
+          <div class="tl-detail" id="tlDetail1">Jazz music, with its syncopation and improvisation, became the soundtrack of Art Deco's exuberance. Aaron Douglas fused African art with geometric abstraction. Josephine Baker took Paris by storm. Meanwhile, Tutankhamun's tomb (discovered 1922) ignited an Egyptian Revival craze that fed directly into Deco's love of bold geometry and exotic motifs.</div>
+          <button class="tl-toggle" onclick="toggleTlDetail(1)">Read more</button>
+        </div>
       </div>
+
       <div class="timeline-item">
-        <div class="timeline-year">1925</div>
-        <div class="timeline-event">Exposition Internationale des Arts Décoratifs et Industriels Modernes in Paris. Le Corbusier's Pavilion de l'Esprit Nouveau, Ruhlmann's Hôtel du Collectionneur debut.</div>
+        <div class="tl-content">
+          <div class="timeline-year">1925</div>
+          <div class="timeline-event"><strong>The Paris Exposition.</strong> The Exposition Internationale des Arts Décoratifs et Industriels Modernes names and launches the movement worldwide.</div>
+          <div class="tl-detail" id="tlDetail2">Over 15 million visitors saw Ruhlmann's Hôtel du Collectionneur, Le Corbusier's radical Pavilion de l'Esprit Nouveau, and Lalique's glass fountains. The exposition proved that a modern decorative style — geometric, luxurious, machine-inspired — could unify architecture, furniture, fashion, and graphic design under one aesthetic vision.</div>
+          <button class="tl-toggle" onclick="toggleTlDetail(2)">Read more</button>
+        </div>
+        <div class="tl-node"><div class="tl-diamond"></div><div class="tl-connector"></div></div>
+        <div></div>
       </div>
+
       <div class="timeline-item">
-        <div class="timeline-year">1928–1930</div>
-        <div class="timeline-event">Chrysler Building and Empire State Building rise in New York, epitomizing Deco skyscraper style.</div>
+        <div></div>
+        <div class="tl-node"><div class="tl-diamond"></div><div class="tl-connector"></div></div>
+        <div class="tl-content">
+          <div class="timeline-year">1928–1930</div>
+          <div class="timeline-event"><strong>The Skyscraper Race.</strong> The Chrysler Building and Empire State Building rise in New York, epitomizing Deco verticality.</div>
+          <div class="tl-detail" id="tlDetail3">William Van Alen's Chrysler Building (1,046 ft) and Shreve, Lamb &amp; Harmon's Empire State Building (1,454 ft) transformed the Manhattan skyline into a monument to Art Deco ambition. Their setback massing — required by the 1916 Zoning Resolution — became an iconic design feature, turning legal constraint into aesthetic triumph.</div>
+          <button class="tl-toggle" onclick="toggleTlDetail(3)">Read more</button>
+        </div>
       </div>
+
       <div class="timeline-item">
-        <div class="timeline-year">1929</div>
-        <div class="timeline-event">Stock market crash; Great Depression begins. Design shifts toward Streamline Moderne (cheaper, sleeker).</div>
+        <div class="tl-content">
+          <div class="timeline-year">1929</div>
+          <div class="timeline-event"><strong>The Crash.</strong> The stock market collapses; the Great Depression begins. Design pivots toward Streamline Moderne.</div>
+          <div class="tl-detail" id="tlDetail4">Economic devastation didn't kill Art Deco — it transformed it. The opulent materials and handcraft of 1920s Deco gave way to cheaper, mass-producible forms: smooth curves, chrome plating, and aerodynamic silhouettes. Raymond Loewy, Norman Bel Geddes, and Henry Dreyfuss redesigned everything from locomotives to pencil sharpeners in the new "streamlined" idiom.</div>
+          <button class="tl-toggle" onclick="toggleTlDetail(4)">Read more</button>
+        </div>
+        <div class="tl-node"><div class="tl-diamond"></div><div class="tl-connector"></div></div>
+        <div></div>
       </div>
+
       <div class="timeline-item">
-        <div class="timeline-year">1930s–40s</div>
-        <div class="timeline-event">Streamline Moderne dominates (trains, cars, appliances). Art Deco persists in luxury goods. WWII ends the era's dominance.</div>
+        <div></div>
+        <div class="tl-node"><div class="tl-diamond"></div><div class="tl-connector"></div></div>
+        <div class="tl-content">
+          <div class="timeline-year">1930s–40s</div>
+          <div class="timeline-event"><strong>Streamline &amp; Twilight.</strong> Streamline Moderne dominates trains, cars, and appliances. WWII ends Art Deco's reign.</div>
+          <div class="tl-detail" id="tlDetail5">The 1939 New York World's Fair ("The World of Tomorrow") marked Streamline Moderne's apex — and effectively Art Deco's swan song. The war that followed demanded function over form. When peace returned, the world had moved on to the International Style and Mid-Century Modern. Yet Deco's DNA persists in everything from cinema typography to Miami Beach's pastel hotels.</div>
+          <button class="tl-toggle" onclick="toggleTlDetail(5)">Read more</button>
+        </div>
       </div>
-    </div>
+
   </div>
 
   <div class="think-question">
@@ -1014,6 +1137,20 @@ function submitQuiz(){
 }
 
 function retryQuiz(){initQuiz();window.scrollTo({top:document.getElementById('quizWrap').offsetTop-100,behavior:'smooth'})}
+
+/* ============ TIMELINE INTERACTIONS ============ */
+function toggleTlDetail(idx){
+  const d=document.getElementById('tlDetail'+idx);
+  const btn=d.nextElementSibling;
+  if(d.classList.contains('open')){d.classList.remove('open');btn.textContent='Read more';}
+  else{d.classList.add('open');btn.textContent='Read less';}
+}
+
+/* Scroll-reveal for timeline items */
+const tlObserver=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('tl-visible');tlObserver.unobserve(e.target);}});
+},{threshold:0.15,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.timeline-item').forEach(el=>tlObserver.observe(el));
 
 /* ============ INIT ============ */
 initMatch();
