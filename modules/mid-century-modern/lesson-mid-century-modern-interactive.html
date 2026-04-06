@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mid-Century Modern Deep Dive — DSGN 230</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#111111;--surface:#1a1a1a;--surface2:#222222;--border:#333;
+  --text:#e8e8e8;--text-dim:#999;--accent:#669BBC;--accent-light:#89b4d4;
+  --success:#2ecc71;--fail:#e74c3c;--white:#FDF0D5;--gold:#c9a84c;
+  --font-body:'Segoe UI',system-ui,-apple-system,sans-serif;
+  --font-display:'Georgia',serif;
+  --radius:10px;--shadow:0 4px 24px rgba(0,0,0,.5);
+}
+html.light{
+  --bg:#f4f3f0;--surface:#ffffff;--surface2:#eae9e5;--border:#d5d3cd;
+  --text:#222;--text-dim:#555;--accent:#780000;--accent-light:#C1121F;
+  --success:#1fa85a;--fail:#C1121F;--white:#003049;--gold:#8a6d1b;
+  --shadow:0 4px 24px rgba(0,0,0,.08);
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.7;margin:0}
+a{color:var(--accent-light);text-decoration:none}
+img{max-width:100%;display:block}
+button{cursor:pointer;font-family:var(--font-body)}
+
+.container{max-width:960px;margin:0 auto;padding:0 24px}
+
+/* HERO */
+.hero{
+  min-height:75vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:60px 24px;
+  background:radial-gradient(ellipse at 50% 30%,#1a1a1a 0%,var(--bg) 70%);
+}
+html.light .hero{background:radial-gradient(ellipse at 50% 30%,#e8e6e0 0%,var(--bg) 70%)}
+.hero h1{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.2rem);color:var(--white);margin-bottom:8px;letter-spacing:-.02em;line-height:1.2}
+.hero .subtitle{font-size:1.1rem;color:var(--gold);margin-bottom:8px;font-style:italic}
+.hero p{font-size:1.05rem;color:var(--text-dim);max-width:600px;margin-bottom:36px}
+.btn-start{
+  display:inline-block;padding:14px 40px;background:var(--accent);color:var(--white);
+  border:none;border-radius:50px;font-size:1.05rem;font-weight:600;transition:.2s;
+}
+.btn-start:hover{background:var(--accent-light);transform:translateY(-2px)}
+
+/* TOOLBAR */
+.toolbar{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:12px 0}
+.toolbar-inner{display:flex;align-items:center;gap:12px;padding:0 24px;max-width:960px;margin:0 auto}
+.progress-label{font-size:.8rem;color:var(--text-dim);min-width:90px}
+.progress-bar{flex:1;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-light));width:0;transition:width .4s ease;border-radius:3px}
+.tool-btn{
+  width:34px;height:34px;border-radius:50%;border:1px solid var(--border);
+  background:var(--surface);color:var(--text-dim);display:flex;align-items:center;
+  justify-content:center;font-size:1rem;transition:.2s;padding:0;
+}
+.tool-btn:hover{border-color:var(--accent);color:var(--accent-light)}
+.tool-btn svg{width:16px;height:16px;fill:currentColor}
+
+/* TAB NAV */
+.tab-nav{display:flex;gap:4px;overflow-x:auto;padding:20px 24px 0;max-width:960px;margin:0 auto}
+.tab-btn{
+  padding:10px 18px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius) var(--radius) 0 0;
+  color:var(--text-dim);font-size:.82rem;font-weight:600;white-space:nowrap;transition:.2s;border-bottom:none;
+}
+.tab-btn:hover{color:var(--text);border-color:var(--accent)}
+.tab-btn.active{background:var(--surface2);color:var(--accent-light);border-color:var(--accent)}
+.tab-btn.completed{color:var(--success)}
+
+/* SECTIONS */
+.section{display:none;padding:40px 0 60px;animation:fadeUp .5s ease}
+.section.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+
+.section-header{margin-bottom:32px}
+.section-header .period-label{font-size:.8rem;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px}
+.section-header h2{font-family:var(--font-display);font-size:clamp(1.6rem,3.5vw,2.2rem);color:var(--white);line-height:1.2;font-weight:700}
+.section-header .dates{font-size:.9rem;color:var(--text-dim);margin-top:4px}
+
+/* IMAGE CARDS */
+.img-card{
+  margin:28px 0;border-radius:var(--radius);overflow:hidden;
+  background:var(--surface);border:1px solid var(--border);
+}
+.img-card img{width:100%;height:auto;max-height:70vh;object-fit:contain;background:#0a0a0a}
+.img-card .caption{padding:14px 18px;font-size:.82rem;color:var(--text-dim);line-height:1.5}
+.img-card .caption strong{color:var(--text)}
+
+/* CONTENT */
+.content-block{margin-bottom:28px}
+.content-block h3{font-size:1.15rem;color:var(--white);margin-bottom:10px;font-weight:700}
+.content-block p{color:var(--text);margin-bottom:14px}
+
+.key-ideas{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:24px 0}
+.idea-chip{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;font-size:.9rem;line-height:1.5}
+.idea-chip .chip-label{font-size:.95rem;color:var(--accent);letter-spacing:.02em;margin-bottom:6px;font-weight:700}
+
+.key-figures{margin:20px 0;padding:18px;background:var(--surface2);border-left:3px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0}
+.key-figures h4{font-size:.85rem;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;font-weight:700}
+.key-figures ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+.key-figures li{font-size:.92rem;padding-left:16px;position:relative;line-height:1.5}
+.key-figures li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+
+/* TIMELINE */
+.hist-timeline{margin:28px 0;padding:0 0 0 24px;border-left:2px solid var(--accent);position:relative}
+.hist-timeline .ht-title{font-size:.95rem;color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px;margin-left:-24px;padding-left:24px}
+.ht-event{position:relative;padding:0 0 20px 16px;font-size:.88rem;line-height:1.5}
+.ht-event:last-child{padding-bottom:0}
+.ht-event::before{content:"";position:absolute;left:-29px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--accent);border:2px solid var(--bg)}
+.ht-event .ht-year{font-weight:700;color:var(--accent-light);margin-right:6px}
+
+/* THINK QUESTION */
+.think-question{margin:28px 0;padding:20px 22px;background:rgba(102,155,188,.08);border:1px solid rgba(102,155,188,.25);border-radius:var(--radius)}
+html.light .think-question{background:rgba(120,0,0,.05);border-color:rgba(120,0,0,.18)}
+.think-question .tq-label{font-size:.95rem;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;font-weight:700}
+.think-question p{font-size:1rem;color:var(--white);line-height:1.6;margin:0}
+
+/* NAV */
+.section-nav{display:flex;justify-content:space-between;gap:16px;margin-top:40px;padding-top:20px;border-top:1px solid var(--border)}
+.nav-btn{
+  padding:12px 28px;border-radius:50px;font-size:.92rem;font-weight:600;border:1px solid var(--border);
+  background:var(--surface);color:var(--text);transition:.2s;
+}
+.nav-btn:hover{border-color:var(--accent);color:var(--accent-light)}
+.nav-btn.primary{background:var(--accent);border-color:var(--accent);color:var(--white)}
+.nav-btn.primary:hover{background:var(--accent-light)}
+html.light .nav-btn.primary{color:#FDF0D5}
+
+/* ============ FLIP CARDS ============ */
+.flip-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin:28px 0}
+.flip-card{perspective:800px;height:360px;cursor:pointer}
+.flip-card-inner{
+  position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d;
+}
+.flip-card.flipped .flip-card-inner{transform:rotateY(180deg)}
+.flip-front,.flip-back{
+  position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:var(--radius);
+  border:1px solid var(--border);padding:24px;display:flex;flex-direction:column;justify-content:center;
+}
+.flip-front{background:var(--surface);text-align:center;justify-content:stretch;position:relative}
+.flip-front .flip-name{font-family:var(--font-display);font-size:1.2rem;color:var(--white);margin-bottom:8px}
+.flip-front .flip-dates{font-size:.85rem;color:var(--accent)}
+.flip-front .flip-center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.flip-front .flip-hint{font-size:.75rem;color:var(--text-dim);padding-top:12px}
+.flip-back{background:var(--surface2);transform:rotateY(180deg);overflow-y:auto;font-size:.88rem;line-height:1.6}
+.flip-back .flip-role{font-size:.8rem;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;font-weight:700}
+.flip-back p{margin-bottom:8px}
+.flip-back .flip-works{font-size:.82rem;color:var(--text-dim);margin-top:auto;padding-top:8px;border-top:1px solid var(--border)}
+
+/* ============ MATCHING ============ */
+.match-activity{margin:28px 0}
+.match-instructions{font-size:.9rem;color:var(--text-dim);margin-bottom:16px}
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.match-col-label{font-size:.8rem;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:10px}
+.match-item{
+  padding:14px 16px;background:var(--surface);border:2px solid var(--border);border-radius:var(--radius);
+  font-size:.9rem;cursor:pointer;transition:.2s;margin-bottom:8px;
+}
+.match-item:hover{border-color:var(--accent)}
+.match-item.selected{border-color:var(--accent);background:rgba(102,155,188,.1);box-shadow:0 0 0 1px var(--accent)}
+html.light .match-item.selected{background:rgba(120,0,0,.06)}
+.match-item.correct{border-color:var(--success);background:rgba(46,204,113,.1)}
+.match-item.wrong{border-color:var(--fail);background:rgba(231,76,60,.1)}
+.match-item.matched{opacity:.5;pointer-events:none;border-color:var(--success)}
+.match-feedback{margin-top:16px;padding:14px;border-radius:8px;font-size:.9rem;display:none}
+.match-feedback.show{display:block}
+.match-feedback.success{background:rgba(46,204,113,.1);border:1px solid rgba(46,204,113,.3);color:var(--success)}
+.match-score{font-size:.85rem;color:var(--text-dim);margin-top:8px}
+.match-reset{margin-top:12px;padding:8px 20px;border:1px solid var(--border);border-radius:50px;background:var(--surface);color:var(--text);font-size:.85rem}
+.match-reset:hover{border-color:var(--accent);color:var(--accent-light)}
+
+/* ============ QUIZ ============ */
+.quiz-wrap{margin:28px 0}
+.q-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;margin-bottom:20px}
+.q-card .q-num{font-size:.75rem;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.q-card .q-text{font-size:1.05rem;color:var(--white);margin-bottom:18px;line-height:1.5}
+.q-card .q-img{margin-bottom:16px;border-radius:8px;overflow:hidden}
+.q-card .q-img img{width:100%;max-height:260px;object-fit:contain;background:#0a0a0a}
+.q-options{display:flex;flex-direction:column;gap:10px}
+.q-opt{
+  display:flex;align-items:center;gap:12px;padding:14px 18px;
+  background:var(--surface2);border:2px solid var(--border);border-radius:var(--radius);
+  cursor:pointer;transition:.2s;font-size:.95rem;
+}
+.q-opt:hover{border-color:var(--accent)}
+.q-opt.selected{border-color:var(--accent);background:rgba(102,155,188,.1)}
+html.light .q-opt.selected{background:rgba(120,0,0,.06)}
+.q-opt.correct{border-color:var(--success);background:rgba(46,204,113,.1)}
+.q-opt.wrong{border-color:var(--fail);background:rgba(231,76,60,.1)}
+.q-opt .letter{
+  width:30px;height:30px;border-radius:50%;background:var(--surface);display:flex;
+  align-items:center;justify-content:center;font-weight:700;font-size:.8rem;flex-shrink:0;border:1px solid var(--border);
+}
+.q-opt.selected .letter{background:var(--accent);color:var(--white);border-color:var(--accent)}
+.q-opt.correct .letter{background:var(--success);color:var(--white);border-color:var(--success)}
+.q-opt.wrong .letter{background:var(--fail);color:var(--white);border-color:var(--fail)}
+html.light .q-opt.selected .letter,html.light .q-opt.correct .letter,html.light .q-opt.wrong .letter{color:#FDF0D5}
+.q-feedback{margin-top:14px;padding:14px;border-radius:8px;font-size:.9rem;display:none;line-height:1.5}
+.q-feedback.show{display:block}
+.q-feedback.right{background:rgba(46,204,113,.1);border:1px solid rgba(46,204,113,.3);color:var(--success)}
+html.light .q-feedback.right{background:rgba(46,204,113,.08);border-color:rgba(46,204,113,.25)}
+.q-feedback.wrong{background:rgba(231,76,60,.1);border:1px solid rgba(231,76,60,.3);color:var(--fail)}
+html.light .q-feedback.wrong{background:rgba(193,18,31,.08);border-color:rgba(193,18,31,.25)}
+
+/* RESULTS */
+.results-card{
+  display:none;text-align:center;padding:40px;margin:28px 0;
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+}
+.results-card.show{display:block;animation:fadeUp .5s ease}
+.score-ring{
+  width:140px;height:140px;border-radius:50%;margin:0 auto 20px;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  border:5px solid var(--border);
+}
+.score-ring.pass{border-color:var(--success)}
+.score-ring.fail{border-color:var(--fail)}
+.score-num{font-size:2.5rem;font-weight:700;color:var(--white);line-height:1}
+.score-lbl{font-size:.8rem;color:var(--text-dim)}
+.results-card h3{font-family:var(--font-display);font-size:1.4rem;color:var(--white);margin-bottom:8px}
+.results-card p{color:var(--text-dim);margin-bottom:20px}
+.btn-retry{
+  padding:12px 32px;background:var(--accent);color:var(--white);border:none;
+  border-radius:50px;font-size:.95rem;font-weight:600;transition:.2s;
+}
+html.light .btn-retry{color:#FDF0D5}
+.btn-retry:hover{background:var(--accent-light)}
+
+/* IMAGE GALLERY */
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin:28px 0}
+.gallery-item{
+  border-radius:var(--radius);overflow:hidden;background:var(--surface);border:1px solid var(--border);
+  cursor:pointer;transition:.2s;
+}
+.gallery-item:hover{border-color:var(--accent);transform:translateY(-2px)}
+.gallery-item img{width:100%;height:180px;object-fit:cover;background:#0a0a0a}
+.gallery-item .g-info{padding:12px 14px}
+.gallery-item .g-title{font-size:.88rem;color:var(--white);font-weight:600;margin-bottom:2px}
+.gallery-item .g-meta{font-size:.78rem;color:var(--text-dim)}
+
+/* LIGHTBOX */
+.lightbox{
+  display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.92);
+  align-items:center;justify-content:center;padding:24px;
+}
+.lightbox.show{display:flex}
+.lightbox img{max-width:90vw;max-height:80vh;object-fit:contain;border-radius:var(--radius)}
+.lightbox .lb-caption{
+  position:absolute;bottom:24px;left:50%;transform:translateX(-50%);
+  color:#ccc;font-size:.9rem;text-align:center;max-width:600px;
+}
+.lightbox .lb-close{
+  position:absolute;top:20px;right:24px;width:40px;height:40px;border-radius:50%;
+  background:rgba(255,255,255,.1);border:none;color:#fff;font-size:1.4rem;
+  display:flex;align-items:center;justify-content:center;
+}
+.lightbox .lb-close:hover{background:rgba(255,255,255,.2)}
+
+/* FOOTER */
+.footer{padding:40px 24px;text-align:center;border-top:1px solid var(--border);margin-top:60px}
+.footer p{font-size:.8rem;color:var(--text-dim);line-height:1.8}
+
+@media(max-width:640px){
+  .key-ideas{grid-template-columns:1fr}
+  .flip-grid{grid-template-columns:1fr}
+  .match-grid{grid-template-columns:1fr}
+  .gallery-grid{grid-template-columns:1fr 1fr}
+  .section-nav{flex-direction:column}
+  .nav-btn{width:100%;text-align:center}
+  .tab-nav{gap:2px}
+  .tab-btn{padding:8px 12px;font-size:.75rem}
+}
+</style>
+</head>
+<body>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lb-close" onclick="closeLightbox()">&times;</button>
+  <img id="lbImg" src="" alt="Lightbox image">
+  <div class="lb-caption" id="lbCaption"></div>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <h1>Mid-Century Modern</h1>
+  <div class="subtitle">c. 1945–1970</div>
+  <p>An interactive deep-dive into the postwar design revolution — democratic materials, organic forms, and the belief that good design should be accessible to everyone.</p>
+  <button class="btn-start" onclick="startLesson()">Begin Exploring</button>
+</section>
+
+<!-- TOOLBAR -->
+<div class="toolbar" id="toolbar" style="display:none">
+  <div class="toolbar-inner">
+    <span class="progress-label" id="progressLabel">Section 1 / 6</span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <button class="tool-btn" onclick="toggleTheme()" title="Toggle light/dark" aria-label="Toggle theme">
+      <svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zm0 16V5a7 7 0 1 1 0 14z"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- TAB NAV -->
+<nav class="tab-nav" id="tabNav" style="display:none">
+  <button class="tab-btn active" onclick="goSection(0)">Context</button>
+  <button class="tab-btn" onclick="goSection(1)">Gallery</button>
+  <button class="tab-btn" onclick="goSection(2)">People</button>
+  <button class="tab-btn" onclick="goSection(3)">Principles</button>
+  <button class="tab-btn" onclick="goSection(4)">Matching</button>
+  <button class="tab-btn" onclick="goSection(5)">Quiz</button>
+</nav>
+
+<!-- MAIN -->
+<main class="container" id="lessonMain">
+
+<!-- ===== SECTION 0: CONTEXT ===== -->
+<div class="section" data-idx="0">
+  <div class="section-header">
+    <div class="period-label">Historical Context</div>
+    <h2>The World That Made Mid-Century Modern</h2>
+    <div class="dates">Postwar Optimism &middot; Baby Boom &middot; Space Age</div>
+  </div>
+
+  <div class="img-card">
+    <img src="images/Eames_Lounge_Chair.jpg"
+         alt="Eames Lounge Chair and Ottoman"
+         loading="lazy">
+    <div class="caption"><strong>Eames Lounge Chair and Ottoman.</strong> Charles and Ray Eames, 1956. Molded plywood shells, die-cast aluminum, and leather upholstery — a fusion of industrial process and warm domesticity that epitomizes mid-century design. Manufactured by Herman Miller. Photo: Wikimedia Commons.</div>
+  </div>
+
+  <div class="content-block">
+    <h3>A New World After the War</h3>
+    <p>Mid-Century Modern emerged from the collision of wartime technology and postwar optimism. World War II had driven massive advances in materials science — molded plywood for leg splints, fiberglass for radar domes, aluminum for aircraft — and a generation of designers saw the opportunity to turn military innovation into affordable, beautiful objects for everyday life.</p>
+    <p>The GI Bill sent millions to college and into new suburban homes. Levittown and its imitators created vast demand for furniture, and manufacturers like Herman Miller and Knoll realized that modern design could be mass-produced without sacrificing quality. For the first time, "good design" was not just for the wealthy — it was a democratic project.</p>
+  </div>
+
+  <div class="key-ideas">
+    <div class="idea-chip"><div class="chip-label">Wartime Materials</div>Plywood molding, fiberglass, bent steel, and aluminum — technologies refined for the military were repurposed for domestic furniture and architecture at unprecedented scale.</div>
+    <div class="idea-chip"><div class="chip-label">Suburban Expansion</div>The baby boom and new suburbs created massive demand for affordable, modern furniture. Open-plan homes needed pieces that were light, flexible, and visually clean.</div>
+    <div class="idea-chip"><div class="chip-label">Bauhaus Diaspora</div>Émigré designers fleeing Europe — Mies van der Rohe, Marcel Breuer, Walter Gropius — brought Bauhaus principles to American institutions, where they merged with native pragmatism.</div>
+  </div>
+
+  <div class="content-block">
+    <h3>Defining Characteristics</h3>
+    <p><strong>Organic forms</strong>: gentle curves, biomorphic shapes inspired by nature rather than rigid geometry. <strong>Clean lines</strong>: minimal ornamentation, honest expression of materials and structure. <strong>New materials</strong>: molded plywood, fiberglass, bent wire, plate glass — industrial processes made graceful. <strong>Indoor-outdoor connection</strong>: floor-to-ceiling glass, open plans, flat or low-slope roofs that blur the boundary between house and landscape. <strong>Democratic ideals</strong>: the conviction that good design should be accessible and affordable, not exclusive.</p>
+  </div>
+
+  <div class="hist-timeline">
+    <div class="ht-title">Key Dates</div>
+    <div class="ht-event"><span class="ht-year">1941</span><span class="ht-desc">Charles and Ray Eames develop molded plywood splints for the U.S. Navy</span></div>
+    <div class="ht-event"><span class="ht-year">1945</span><span class="ht-desc">War ends; Case Study House Program launches in Los Angeles under Arts &amp; Architecture magazine</span></div>
+    <div class="ht-event"><span class="ht-year">1948</span><span class="ht-desc">Eames fiberglass shell chairs enter production — first mass-produced plastic chairs</span></div>
+    <div class="ht-event"><span class="ht-year">1949</span><span class="ht-desc">Eames House (Case Study House #8) completed in Pacific Palisades</span></div>
+    <div class="ht-event"><span class="ht-year">1951</span><span class="ht-desc">Eero Saarinen's Womb Chair produced by Knoll; Noguchi coffee table in production</span></div>
+    <div class="ht-event"><span class="ht-year">1956</span><span class="ht-desc">Eames Lounge Chair debuts on NBC's Home show</span></div>
+    <div class="ht-event"><span class="ht-year">1958</span><span class="ht-desc">Mies van der Rohe's Seagram Building completed in New York</span></div>
+    <div class="ht-event"><span class="ht-year">1962</span><span class="ht-desc">Saarinen's TWA Flight Center opens at JFK Airport</span></div>
+    <div class="ht-event"><span class="ht-year">c. 1970</span><span class="ht-desc">Postmodernism and Pop Art begin to challenge mid-century orthodoxy</span></div>
+  </div>
+
+  <div class="think-question">
+    <div class="tq-label">Think About It</div>
+    <p>Mid-Century Modern designers believed wartime technology could improve everyday life. Today, technologies like AI, 3D printing, and carbon fiber composites are emerging from specialized fields. Which of these do you think has the most potential to transform domestic design — and why?</p>
+  </div>
+
+  <div class="section-nav">
+    <span></span>
+    <button class="nav-btn primary" onclick="goSection(1)">Next: Image Gallery &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 1: GALLERY ===== -->
+<div class="section" data-idx="1">
+  <div class="section-header">
+    <div class="period-label">Visual Examples</div>
+    <h2>Image Gallery</h2>
+    <div class="dates">Click any image to enlarge</div>
+  </div>
+
+  <div class="gallery-grid">
+    <div class="gallery-item" onclick="openLightbox('images/Eames_Lounge_Chair.jpg','Eames Lounge Chair and Ottoman — Charles and Ray Eames, 1956. Molded rosewood plywood, die-cast aluminum, leather. Herman Miller. The most iconic piece of mid-century furniture.')">
+      <img src="images/Eames_Lounge_Chair.jpg" alt="Eames Lounge Chair" loading="lazy">
+      <div class="g-info"><div class="g-title">Eames Lounge Chair</div><div class="g-meta">Charles &amp; Ray Eames, 1956</div></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox('images/Tulip_Chair.jpg','Tulip Chair — Eero Saarinen, 1956. Fiberglass shell on a cast aluminum pedestal base. Designed to eliminate the &quot;ugly, confusing, unrestful world&quot; of chair legs. Photo: Knoll, Inc. Fair use.')">
+      <img src="images/Tulip_Chair.jpg" alt="Saarinen Tulip Chair" loading="lazy">
+      <div class="g-info"><div class="g-title">Tulip Chair</div><div class="g-meta">Eero Saarinen, 1956 &middot; Knoll</div></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox('images/Noguchi_Table.jpg','Noguchi Coffee Table — Isamu Noguchi, 1947. Biomorphic glass top on two interlocking curved walnut bases. Herman Miller. Photo: lartnouveauenfrance, CC BY 2.0.')">
+      <img src="images/Noguchi_Table.jpg" alt="Noguchi Coffee Table" loading="lazy">
+      <div class="g-info"><div class="g-title">Noguchi Coffee Table</div><div class="g-meta">Isamu Noguchi, 1947</div></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox('images/Case_Study_8.jpg','Case Study House #8 (Eames House) — Charles and Ray Eames, 1949, Pacific Palisades, CA. Steel frame, glass panels, and industrial materials arranged with the warmth and color of a Japanese screen. Photo: pmorgan, CC BY 2.0.')">
+      <img src="images/Case_Study_8.jpg" alt="Eames House exterior" loading="lazy">
+      <div class="g-info"><div class="g-title">Eames House (CSH #8)</div><div class="g-meta">Charles &amp; Ray Eames, 1949</div></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox('images/TWA_Terminal.jpg','TWA Flight Center — Eero Saarinen, 1962, JFK Airport, New York. Reinforced concrete swooping into wing-like forms. Expressionist architecture that captures the romance of jet-age travel. Photo: Roland Arhelger, CC BY-SA 4.0.')">
+      <img src="images/TWA_Terminal.jpg" alt="TWA Flight Center" loading="lazy">
+      <div class="g-info"><div class="g-title">TWA Flight Center</div><div class="g-meta">Eero Saarinen, 1962 &middot; JFK</div></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox('images/PH_Artichoke.jpg','PH Artichoke Lamp — Poul Henningsen, 1958. 72 copper leaves arranged in 12 rows to provide glare-free light from every angle. Louis Poulsen. Photo: Kri, CC BY-SA 3.0.')">
+      <img src="images/PH_Artichoke.jpg" alt="PH Artichoke Lamp" loading="lazy">
+      <div class="g-info"><div class="g-title">PH Artichoke Lamp</div><div class="g-meta">Poul Henningsen, 1958</div></div>
+    </div>
+  </div>
+
+  <div class="think-question">
+    <div class="tq-label">Observe</div>
+    <p>These works span furniture, lighting, and architecture, yet share a visual language. What connects them? Look for organic curves, honest materials, and the interplay of industrial process with warmth. How does each piece balance function and sculptural form?</p>
+  </div>
+
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(0)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(2)">Next: Key People &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 2: FLIP CARDS — PEOPLE ===== -->
+<div class="section" data-idx="2">
+  <div class="section-header">
+    <div class="period-label">Key Figures</div>
+    <h2>The People of Mid-Century Modern</h2>
+    <div class="dates">Click a card to reveal details</div>
+  </div>
+
+  <div class="flip-grid">
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-center"><div class="flip-name">Charles &amp; Ray Eames</div>
+          <div class="flip-dates">1907–1978 &amp; 1912–1988 &middot; Los Angeles</div></div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Designers &amp; Filmmakers</div>
+          <p>The most influential design partnership of the 20th century. Pioneered molded plywood and fiberglass furniture, designed the Eames House, and produced over 100 short films. Their philosophy: "The best for the most for the least."</p>
+          <div class="flip-works"><strong>Key works:</strong> Eames Lounge Chair (1956), DCW/LCW chairs (1946), Eames House (1949), Powers of Ten (1977)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-center"><div class="flip-name">Eero Saarinen</div>
+          <div class="flip-dates">1910–1961 &middot; Finland / USA</div></div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Architect &amp; Furniture Designer</div>
+          <p>Son of Eliel Saarinen. Sought a single expressive form for each project — the swooping TWA Terminal, the soaring Gateway Arch, the pedestal-base Tulip series. Died at 51 with major commissions still under construction.</p>
+          <div class="flip-works"><strong>Key works:</strong> TWA Flight Center (1962), Gateway Arch (1965), Tulip Chair (1956), Womb Chair (1948)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-center"><div class="flip-name">Ludwig Mies van der Rohe</div>
+          <div class="flip-dates">1886–1969 &middot; Germany / Chicago</div></div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Architect</div>
+          <p>Last Bauhaus director, emigrated to Chicago in 1938. His maxim "Less is more" defined postwar architectural minimalism. Perfected the steel-and-glass curtain wall in buildings of austere precision.</p>
+          <div class="flip-works"><strong>Key works:</strong> Farnsworth House (1951), Seagram Building (1958), Barcelona Chair (1929), IIT Campus (1940s–50s)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-center"><div class="flip-name">Isamu Noguchi</div>
+          <div class="flip-dates">1904–1988 &middot; Los Angeles / New York / Japan</div></div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Sculptor &amp; Designer</div>
+          <p>Bridged sculpture and design, East and West. His biomorphic coffee table (1947) is an icon. Also designed Akari light sculptures inspired by Japanese paper lanterns, playgrounds, and large-scale public gardens.</p>
+          <div class="flip-works"><strong>Key works:</strong> Noguchi Coffee Table (1947), Akari Light Sculptures (1951–), Red Cube (1968), UNESCO Garden (1958)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-center"><div class="flip-name">Arne Jacobsen</div>
+          <div class="flip-dates">1902–1971 &middot; Copenhagen</div></div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Architect &amp; Designer</div>
+          <p>Denmark's leading modernist. The Ant Chair (1952) — bent plywood on slender steel legs — sold in the millions. His SAS Royal Hotel (1960) was a total design project: building, furniture, cutlery, textiles, even the door handles.</p>
+          <div class="flip-works"><strong>Key works:</strong> Ant Chair (1952), Egg Chair (1958), Swan Chair (1958), SAS Royal Hotel (1960)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-center"><div class="flip-name">Florence Knoll</div>
+          <div class="flip-dates">1917–2019 &middot; USA</div></div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Designer &amp; Entrepreneur</div>
+          <p>Transformed Knoll Associates into the leading modern furniture company and invented the modern corporate interior. Her "paste-up" planning method and "the meat and potatoes" approach to fill pieces created cohesive office environments.</p>
+          <div class="flip-works"><strong>Key works:</strong> Knoll Planning Unit, Florence Knoll Sofa (1954), CBS Building interiors (1965)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-center"><div class="flip-name">Hans Wegner</div>
+          <div class="flip-dates">1914–2007 &middot; Denmark</div></div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Furniture Designer</div>
+          <p>Designed over 500 chairs and is considered the master of the Danish Modern chair. His Wishbone Chair (1949) and "The Chair" (1949) — which appeared on the Kennedy-Nixon debate stage — exemplify sculptural simplicity in wood.</p>
+          <div class="flip-works"><strong>Key works:</strong> The Chair / Round Chair (1949), Wishbone Chair (1949), Shell Chair (1963), Papa Bear Chair (1951)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-center"><div class="flip-name">George Nelson</div>
+          <div class="flip-dates">1908–1986 &middot; USA</div></div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Designer &amp; Design Director</div>
+          <p>As Herman Miller's design director from 1945, he recruited Eames and Noguchi and shaped the company's identity. His own designs — the Ball Clock, Bubble Lamps, Marshmallow Sofa — are playful, witty, and inventive.</p>
+          <div class="flip-works"><strong>Key works:</strong> Ball Clock (1949), Bubble Lamps (1952), Marshmallow Sofa (1956), Storagewall (1945)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-center"><div class="flip-name">Alvar Aalto</div>
+          <div class="flip-dates">1898–1976 &middot; Finland</div></div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Architect &amp; Designer</div>
+          <p>Pioneered bent birch plywood furniture and a humanist modernism that favored natural materials and organic forms over steel and glass. Founded Artek (1935) to produce and sell his designs. His architecture balanced functionalism with warmth.</p>
+          <div class="flip-works"><strong>Key works:</strong> Paimio Sanatorium (1933), Stool 60 (1933), Savoy Vase (1936), Finlandia Hall (1971)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-center"><div class="flip-name">Alexander Girard</div>
+          <div class="flip-dates">1907–1993 &middot; USA</div></div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Textile &amp; Interior Designer</div>
+          <p>Herman Miller's textile director, bringing bold color and pattern to mid-century interiors. His folk-art-inspired designs added warmth and personality to the movement's clean-lined furniture. Also designed the legendary La Fonda del Sol restaurant.</p>
+          <div class="flip-works"><strong>Key works:</strong> Herman Miller textile collection (1952–73), Environmental Enrichment Panels, La Fonda del Sol (1960)</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(1)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(3)">Next: Design Principles &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 3: DESIGN PRINCIPLES ===== -->
+<div class="section" data-idx="3">
+  <div class="section-header">
+    <div class="period-label">Ideas &amp; Principles</div>
+    <h2>What Made It "Mid-Century Modern"</h2>
+    <div class="dates">Form, function, democracy, and delight</div>
+  </div>
+
+  <div class="content-block">
+    <p>Mid-Century Modern was never a single manifesto. It was a convergence of ideas — Bauhaus functionalism softened by Scandinavian warmth, American optimism channeled through industrial processes, and an overriding belief that design shapes how people live. These principles animated the movement across furniture, architecture, graphics, and interiors.</p>
+  </div>
+
+  <div class="flip-grid">
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-center"><div class="flip-name">Organic Modernism</div><div class="flip-dates">Form follows nature</div></div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">Design Approach</div><p>Where the Bauhaus favored geometric purity, MCM designers softened modernism with curves drawn from nature — the shell of a chair echoing an egg, a table base like a tree trunk, a lamp like a cocoon. Eero Saarinen, Isamu Noguchi, and Alvar Aalto led this shift.</p></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-center"><div class="flip-name">Democratic Design</div><div class="flip-dates">"The best for the most for the least"</div></div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">Core Philosophy</div><p>The Eameses' credo. Mass production wasn't a compromise — it was the point. Molded plywood and fiberglass made great design affordable. Herman Miller and Knoll brought modern furniture to offices and middle-class homes, not just museums.</p></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-center"><div class="flip-name">Indoor–Outdoor Living</div><div class="flip-dates">Glass walls &amp; open plans</div></div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">Architectural Principle</div><p>Floor-to-ceiling glass, post-and-beam construction, flat roofs, and open floor plans dissolved the barrier between interior and landscape. The Case Study Houses in Los Angeles were the laboratory. Richard Neutra's and Craig Ellwood's houses made the garden part of the living room.</p></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-center"><div class="flip-name">Scandinavian Warmth</div><div class="flip-dates">Humanizing modernism</div></div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">Regional Influence</div><p>Danish, Finnish, and Swedish designers — Wegner, Jacobsen, Aalto, Juhl — insisted on natural materials (teak, oak, birch), handcraft traditions, and human comfort. Their work softened International Style austerity and became hugely popular in postwar America.</p></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-center"><div class="flip-name">Total Design</div><div class="flip-dates">From the building to the ashtray</div></div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">Practice</div><p>Like Art Nouveau's Gesamtkunstwerk, MCM designers often controlled every detail. Saarinen designed the TWA Terminal's furniture and signage. Jacobsen designed the SAS Hotel down to the cutlery. Florence Knoll planned entire corporate environments as unified compositions.</p></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-center"><div class="flip-name">Case Study Houses</div><div class="flip-dates">1945–1966 &middot; Los Angeles</div></div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">Program</div><p>Sponsored by Arts &amp; Architecture magazine, 36 prototype homes by leading architects (Eames, Ellwood, Koenig, Neutra, Saarinen) demonstrated that modern, affordable, well-designed housing was possible using industrial materials. Case Study House #22 (Stahl House) became a symbol of the California dream.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="think-question">
+    <div class="tq-label">Think About It</div>
+    <p>Mid-Century Modern championed "democratic design" — good design for everyone. IKEA later took this idea even further. Do you think mass-production inevitably dilutes design quality, or can it genuinely deliver on the promise of beauty and function for all? What examples support your view?</p>
+  </div>
+
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(2)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(4)">Next: Matching Activity &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 4: MATCHING ===== -->
+<div class="section" data-idx="4">
+  <div class="section-header">
+    <div class="period-label">Activity</div>
+    <h2>Match the Designer to Their Work</h2>
+    <div class="dates">Select one item from each column to form a pair</div>
+  </div>
+
+  <p class="match-instructions">Click a designer on the left, then click their work on the right. Correct matches will lock in place.</p>
+
+  <div class="match-grid">
+    <div>
+      <div class="match-col-label">Designers</div>
+      <div id="matchLeft"></div>
+    </div>
+    <div>
+      <div class="match-col-label">Works</div>
+      <div id="matchRight"></div>
+    </div>
+  </div>
+  <div class="match-score" id="matchScore"></div>
+  <div class="match-feedback" id="matchFeedback"></div>
+  <button class="match-reset" id="matchResetBtn" onclick="resetMatch()" style="display:none">Try Again</button>
+
+  <div style="margin-top:40px"></div>
+
+  <div class="section-header">
+    <div class="period-label">Activity</div>
+    <h2>Match the Material to Its Innovation</h2>
+    <div class="dates">Connect each material to how it was used in mid-century design</div>
+  </div>
+
+  <p class="match-instructions">Click a material on the left, then its mid-century application on the right.</p>
+
+  <div class="match-grid">
+    <div>
+      <div class="match-col-label">Material</div>
+      <div id="matchLeft2"></div>
+    </div>
+    <div>
+      <div class="match-col-label">Application</div>
+      <div id="matchRight2"></div>
+    </div>
+  </div>
+  <div class="match-score" id="matchScore2"></div>
+  <div class="match-feedback" id="matchFeedback2"></div>
+  <button class="match-reset" id="matchResetBtn2" onclick="resetMatch2()" style="display:none">Try Again</button>
+
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(3)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(5)">Next: Quiz &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 5: QUIZ ===== -->
+<div class="section" data-idx="5">
+  <div class="section-header">
+    <div class="period-label">Knowledge Check</div>
+    <h2>Mid-Century Modern Quiz</h2>
+    <div class="dates">Test what you've learned</div>
+  </div>
+
+  <div class="quiz-wrap" id="quizWrap"></div>
+
+  <div class="results-card" id="resultsCard">
+    <div class="score-ring" id="scoreRing">
+      <div class="score-num" id="scoreNum">0%</div>
+      <div class="score-lbl">Score</div>
+    </div>
+    <h3 id="resultsTitle">Results</h3>
+    <p id="resultsMsg"></p>
+    <button class="btn-retry" onclick="retryQuiz()">Try Again</button>
+  </div>
+
+  <div class="section-nav" id="quizNav">
+    <button class="nav-btn" onclick="goSection(4)">&larr; Previous</button>
+    <span></span>
+  </div>
+</div>
+
+</main>
+
+<footer class="footer">
+  <p>DSGN 230 — Survey of Design History<br>Mid-Century Modern Deep Dive Interactive</p>
+  <p style="margin-top:8px">Image credits: Eames House photo by pmorgan, <a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener">CC BY 2.0</a>. Noguchi Coffee Table photo by lartnouveauenfrance, <a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener">CC BY 2.0</a>. TWA Flight Center photo by Roland Arhelger, <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>. PH Artichoke Lamp photo by Kri, <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC BY-SA 3.0</a>. Tulip Chair photo courtesy Knoll, Inc. (fair use). Eames Lounge Chair via Wikimedia Commons.</p>
+</footer>
+
+<script>
+/* ============ GLOBALS ============ */
+const TOTAL_SECTIONS = 6;
+let currentSection = 0;
+
+/* ============ NAVIGATION ============ */
+function startLesson(){
+  document.getElementById('hero').style.display='none';
+  document.getElementById('toolbar').style.display='block';
+  document.getElementById('tabNav').style.display='flex';
+  goSection(0);
+}
+
+function goSection(idx){
+  currentSection=idx;
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.section')[idx].classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>{b.classList.toggle('active',i===idx)});
+  document.getElementById('progressLabel').textContent=`Section ${idx+1} / ${TOTAL_SECTIONS}`;
+  document.getElementById('progressFill').style.width=((idx+1)/TOTAL_SECTIONS*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleTheme(){document.documentElement.classList.toggle('light')}
+
+/* ============ LIGHTBOX ============ */
+function openLightbox(src,cap){
+  const lb=document.getElementById('lightbox');
+  document.getElementById('lbImg').src=src;
+  document.getElementById('lbCaption').textContent=cap;
+  lb.classList.add('show');
+}
+function closeLightbox(){document.getElementById('lightbox').classList.remove('show')}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox()});
+
+/* ============ MATCHING 1: Designer → Work ============ */
+const matchPairs=[
+  {left:'Charles & Ray Eames',right:'Eames Lounge Chair'},
+  {left:'Eero Saarinen',right:'TWA Flight Center'},
+  {left:'Isamu Noguchi',right:'Biomorphic Coffee Table'},
+  {left:'Arne Jacobsen',right:'Egg Chair'},
+  {left:'Hans Wegner',right:'The Chair (Round Chair)'},
+  {left:'Florence Knoll',right:'Knoll Planning Unit'},
+  {left:'George Nelson',right:'Ball Clock'},
+  {left:'Alvar Aalto',right:'Stool 60'},
+];
+let m1Left=null,m1Matched=0;
+
+function initMatch(){
+  const lC=document.getElementById('matchLeft'),rC=document.getElementById('matchRight');
+  const shuffledL=[...matchPairs].sort(()=>Math.random()-.5);
+  const shuffledR=[...matchPairs].sort(()=>Math.random()-.5);
+  lC.innerHTML='';rC.innerHTML='';
+  shuffledL.forEach(p=>{
+    const d=document.createElement('div');d.className='match-item';d.textContent=p.left;
+    d.dataset.key=p.left;d.onclick=()=>selectMatchLeft(d);lC.appendChild(d);
+  });
+  shuffledR.forEach(p=>{
+    const d=document.createElement('div');d.className='match-item';d.textContent=p.right;
+    d.dataset.key=p.left;d.onclick=()=>selectMatchRight(d);rC.appendChild(d);
+  });
+  m1Left=null;m1Matched=0;
+  document.getElementById('matchScore').textContent='';
+  document.getElementById('matchFeedback').className='match-feedback';
+  document.getElementById('matchResetBtn').style.display='none';
+}
+
+function selectMatchLeft(el){
+  if(el.classList.contains('matched'))return;
+  document.querySelectorAll('#matchLeft .match-item').forEach(e=>e.classList.remove('selected'));
+  el.classList.add('selected');m1Left=el;
+}
+
+function selectMatchRight(el){
+  if(!m1Left||el.classList.contains('matched'))return;
+  if(m1Left.dataset.key===el.dataset.key){
+    m1Left.classList.remove('selected');m1Left.classList.add('matched');
+    el.classList.add('matched');m1Matched++;
+    document.getElementById('matchScore').textContent=`${m1Matched} / ${matchPairs.length} matched`;
+    if(m1Matched===matchPairs.length){
+      const fb=document.getElementById('matchFeedback');
+      fb.className='match-feedback show success';fb.textContent='All matched! Great work.';
+    }
+  } else {
+    el.classList.add('wrong');m1Left.classList.add('wrong');
+    setTimeout(()=>{el.classList.remove('wrong');m1Left.classList.remove('wrong','selected');m1Left=null},800);
+    document.getElementById('matchResetBtn').style.display='inline-block';
+    return;
+  }
+  m1Left=null;
+}
+
+function resetMatch(){initMatch()}
+
+/* ============ MATCHING 2: Material → Application ============ */
+const matchPairs2=[
+  {left:'Molded Plywood',right:'Eames DCW & LCW chairs'},
+  {left:'Fiberglass',right:'First mass-produced plastic chairs'},
+  {left:'Bent Steel Wire',right:'Bertoia Diamond Chair'},
+  {left:'Plate Glass',right:'Case Study House curtain walls'},
+  {left:'Cast Aluminum',right:'Tulip Chair pedestal base'},
+  {left:'Bent Birch',right:'Aalto Stool 60 & Paimio Chair'},
+];
+let m2Left=null,m2Matched=0;
+
+function initMatch2(){
+  const lC=document.getElementById('matchLeft2'),rC=document.getElementById('matchRight2');
+  const shuffledL=[...matchPairs2].sort(()=>Math.random()-.5);
+  const shuffledR=[...matchPairs2].sort(()=>Math.random()-.5);
+  lC.innerHTML='';rC.innerHTML='';
+  shuffledL.forEach(p=>{
+    const d=document.createElement('div');d.className='match-item';d.textContent=p.left;
+    d.dataset.key=p.left;d.onclick=()=>selectM2Left(d);lC.appendChild(d);
+  });
+  shuffledR.forEach(p=>{
+    const d=document.createElement('div');d.className='match-item';d.textContent=p.right;
+    d.dataset.key=p.left;d.onclick=()=>selectM2Right(d);rC.appendChild(d);
+  });
+  m2Left=null;m2Matched=0;
+  document.getElementById('matchScore2').textContent='';
+  document.getElementById('matchFeedback2').className='match-feedback';
+  document.getElementById('matchResetBtn2').style.display='none';
+}
+
+function selectM2Left(el){
+  if(el.classList.contains('matched'))return;
+  document.querySelectorAll('#matchLeft2 .match-item').forEach(e=>e.classList.remove('selected'));
+  el.classList.add('selected');m2Left=el;
+}
+
+function selectM2Right(el){
+  if(!m2Left||el.classList.contains('matched'))return;
+  if(m2Left.dataset.key===el.dataset.key){
+    m2Left.classList.remove('selected');m2Left.classList.add('matched');
+    el.classList.add('matched');m2Matched++;
+    document.getElementById('matchScore2').textContent=`${m2Matched} / ${matchPairs2.length} matched`;
+    if(m2Matched===matchPairs2.length){
+      const fb=document.getElementById('matchFeedback2');
+      fb.className='match-feedback show success';fb.textContent='All matched! You know your mid-century materials.';
+    }
+  } else {
+    el.classList.add('wrong');m2Left.classList.add('wrong');
+    setTimeout(()=>{el.classList.remove('wrong');m2Left.classList.remove('wrong','selected');m2Left=null},800);
+    document.getElementById('matchResetBtn2').style.display='inline-block';
+    return;
+  }
+  m2Left=null;
+}
+
+function resetMatch2(){initMatch2()}
+
+/* ============ QUIZ ============ */
+const quizData=[
+  {q:'Which wartime technology most directly led to the Eames\' breakthrough furniture designs?',
+   img:'images/Eames_Lounge_Chair.jpg',
+   opts:['Radar-absorbing fiberglass','Molded plywood for Navy leg splints','Aluminum aircraft fuselages','Synthetic rubber compounds'],
+   ans:1,
+   explain:'Charles and Ray Eames developed their plywood-molding techniques while producing leg splints for the U.S. Navy during WWII, which directly led to their iconic LCW and DCW chairs.'},
+  {q:'What was the Case Study House Program?',
+   opts:['A government housing initiative for returning GIs','A series of prototype modern homes sponsored by Arts & Architecture magazine','An MIT research project on prefabricated housing','A Herman Miller showroom program'],
+   ans:1,
+   explain:'Arts & Architecture magazine sponsored 36 prototype homes (1945–1966) by leading architects to demonstrate that modern, affordable housing was achievable with industrial materials.'},
+  {q:'Eero Saarinen designed the Tulip Chair to solve what problem?',
+   opts:['The high cost of upholstered seating','The visual clutter of traditional chair legs','The weight of solid wood furniture','The difficulty of stacking chairs'],
+   ans:1,
+   explain:'Saarinen wanted to eliminate what he called "the ugly, confusing, unrestful world" under chairs and tables — the tangle of legs. His pedestal base was his solution.'},
+  {q:'Which phrase best captures the Eames design philosophy?',
+   opts:['"Less is more"','"Form follows function"','"The best for the most for the least"','"Ornament is crime"'],
+   ans:2,
+   explain:'"The best for the most for the least" — Charles Eames\' summary of their democratic design ideal: the highest quality, for the widest audience, at the lowest cost.'},
+  {q:'Which designer served as Herman Miller\'s design director and recruited Charles Eames and Isamu Noguchi?',
+   opts:['Florence Knoll','Alexander Girard','George Nelson','Eliot Noyes'],
+   ans:2,
+   explain:'George Nelson became Herman Miller\'s design director in 1945 and was instrumental in recruiting both Charles Eames and Isamu Noguchi, transforming the company into a modern design powerhouse.'},
+  {q:'Hans Wegner\'s "The Chair" became famous in 1960 when it appeared on television during what event?',
+   opts:['The Tonight Show with Johnny Carson','The Kennedy–Nixon presidential debates','The 1960 Olympic opening ceremony','Edward R. Murrow\'s Person to Person'],
+   ans:1,
+   explain:'Wegner\'s Round Chair (1949) was used in the first televised Kennedy–Nixon presidential debate in 1960, introducing Danish Modern design to millions of American viewers.'},
+  {q:'What architectural feature most distinguishes mid-century modern homes from earlier styles?',
+   opts:['Ornamental columns and pediments','Floor-to-ceiling glass and open floor plans','Steeply pitched roofs with dormers','Heavy masonry walls and small windows'],
+   ans:1,
+   explain:'MCM architecture is defined by its dissolution of the boundary between indoors and outdoors through large glass walls, post-and-beam construction, and open floor plans.'},
+  {q:'Florence Knoll is credited with essentially inventing what?',
+   opts:['The ergonomic office chair','The modern corporate interior','Modular shelving systems','Open-plan residential design'],
+   ans:1,
+   explain:'Florence Knoll\'s Planning Unit at Knoll Associates created the concept of the total corporate interior — unified, modern environments where furniture, textiles, and spatial layout were designed as a coherent whole.'},
+  {q:'Which Scandinavian designer pioneered bent birch plywood furniture and founded Artek?',
+   opts:['Arne Jacobsen','Hans Wegner','Alvar Aalto','Finn Juhl'],
+   ans:2,
+   explain:'Finnish architect Alvar Aalto developed techniques for bending birch plywood and co-founded Artek in 1935 to manufacture and distribute his furniture designs, including the iconic Stool 60.'},
+  {q:'Ludwig Mies van der Rohe\'s famous maxim that defined postwar architectural minimalism was:',
+   opts:['"God is in the details"','"Make no little plans"','"Less is more"','"A house is a machine for living in"'],
+   ans:2,
+   explain:'"Less is more" became the mantra of postwar minimalism. Mies used it to justify his austere, precisely detailed steel-and-glass buildings like the Seagram Building and Farnsworth House.'},
+];
+
+let quizAnswers=[], quizLocked=[];
+
+function initQuiz(){
+  const wrap=document.getElementById('quizWrap');wrap.innerHTML='';
+  quizAnswers=new Array(quizData.length).fill(-1);
+  quizLocked=new Array(quizData.length).fill(false);
+  document.getElementById('resultsCard').classList.remove('show');
+
+  quizData.forEach((q,qi)=>{
+    let imgHtml=q.img?`<div class="q-img"><img src="${q.img}" alt="Quiz image" loading="lazy"></div>`:'';
+    let optsHtml=q.opts.map((o,oi)=>`
+      <div class="q-opt" data-qi="${qi}" data-oi="${oi}" onclick="selectQuizOpt(${qi},${oi})">
+        <span class="letter">${String.fromCharCode(65+oi)}</span><span>${o}</span>
+      </div>`).join('');
+    wrap.innerHTML+=`
+      <div class="q-card">
+        <div class="q-num">Question ${qi+1} of ${quizData.length}</div>
+        ${imgHtml}
+        <div class="q-text">${q.q}</div>
+        <div class="q-options">${optsHtml}</div>
+        <div class="q-feedback" id="qfb${qi}"></div>
+      </div>`;
+  });
+
+  wrap.innerHTML+=`<div style="text-align:center;margin-top:24px"><button class="btn-start" onclick="submitQuiz()">Submit Answers</button></div>`;
+}
+
+function selectQuizOpt(qi,oi){
+  if(quizLocked[qi])return;
+  quizAnswers[qi]=oi;
+  document.querySelectorAll(`.q-opt[data-qi="${qi}"]`).forEach(e=>{
+    e.classList.remove('selected');
+    if(parseInt(e.dataset.oi)===oi)e.classList.add('selected');
+  });
+}
+
+function submitQuiz(){
+  let score=0;
+  quizData.forEach((q,qi)=>{
+    quizLocked[qi]=true;
+    const opts=document.querySelectorAll(`.q-opt[data-qi="${qi}"]`);
+    opts.forEach(o=>{
+      o.classList.remove('selected');
+      const oi=parseInt(o.dataset.oi);
+      if(oi===q.ans)o.classList.add('correct');
+      else if(oi===quizAnswers[qi])o.classList.add('wrong');
+    });
+    const fb=document.getElementById('qfb'+qi);
+    if(quizAnswers[qi]===q.ans){score++;fb.className='q-feedback show right';fb.textContent='Correct! '+q.explain;}
+    else{fb.className='q-feedback show wrong';fb.textContent='Not quite. '+q.explain;}
+  });
+
+  const pct=Math.round(score/quizData.length*100);
+  const rc=document.getElementById('resultsCard');rc.classList.add('show');
+  const ring=document.getElementById('scoreRing');
+  ring.className='score-ring '+(pct>=70?'pass':'fail');
+  document.getElementById('scoreNum').textContent=pct+'%';
+  document.getElementById('resultsTitle').textContent=pct>=70?'Well Done!':'Keep Studying';
+  document.getElementById('resultsMsg').textContent=`You got ${score} out of ${quizData.length} correct.`+(pct>=70?' You have a solid understanding of Mid-Century Modern design.':' Review the lesson sections and try again.');
+}
+
+function retryQuiz(){initQuiz();window.scrollTo({top:document.getElementById('quizWrap').offsetTop-100,behavior:'smooth'})}
+
+/* ============ INIT ============ */
+initMatch();
+initMatch2();
+initQuiz();
+</script>
+</body>
+</html>
