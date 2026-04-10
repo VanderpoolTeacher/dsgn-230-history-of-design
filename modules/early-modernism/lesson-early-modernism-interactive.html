@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Early Modernism &amp; the Avant-Garde Deep Dive &mdash; DSGN 230</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#111111;--surface:#1a1a1a;--surface2:#222222;--border:#333;
+  --text:#e8e8e8;--text-dim:#999;--accent:#669BBC;--accent-light:#89b4d4;
+  --success:#2ecc71;--fail:#e74c3c;--white:#FDF0D5;--gold:#c9a84c;
+  --font-body:'Segoe UI',system-ui,-apple-system,sans-serif;
+  --font-display:'Georgia',serif;
+  --radius:10px;--shadow:0 4px 24px rgba(0,0,0,.5);
+}
+html.light{
+  --bg:#f4f3f0;--surface:#ffffff;--surface2:#eae9e5;--border:#d5d3cd;
+  --text:#222;--text-dim:#555;--accent:#780000;--accent-light:#C1121F;
+  --success:#1fa85a;--fail:#C1121F;--white:#003049;--gold:#8a6d1b;
+  --shadow:0 4px 24px rgba(0,0,0,.08);
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.7;margin:0}
+a{color:var(--accent-light);text-decoration:none}
+img{max-width:100%;display:block}
+button{cursor:pointer;font-family:var(--font-body)}
+
+.container{max-width:960px;margin:0 auto;padding:0 24px}
+
+/* HERO */
+.hero{
+  min-height:75vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:60px 24px;
+  background:radial-gradient(ellipse at 50% 30%,#1a1a1a 0%,var(--bg) 70%);
+}
+html.light .hero{background:radial-gradient(ellipse at 50% 30%,#e8e6e0 0%,var(--bg) 70%)}
+.hero h1{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.2rem);color:var(--white);margin-bottom:8px;letter-spacing:-.02em;line-height:1.2}
+.hero .subtitle{font-size:1.1rem;color:var(--gold);margin-bottom:8px;font-style:italic}
+.hero p{font-size:1.05rem;color:var(--text-dim);max-width:600px;margin-bottom:36px}
+.btn-start{
+  display:inline-block;padding:14px 40px;background:var(--accent);color:var(--white);
+  border:none;border-radius:var(--radius);font-size:1rem;font-weight:500;
+  transition:all .3s;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.3)
+}
+.btn-start:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,.4)}
+
+/* TOOLBAR */
+.toolbar{display:none;position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:1px solid var(--border);padding:12px 0}
+.toolbar-content{display:flex;justify-content:space-between;align-items:center}
+.toolbar-left{display:flex;gap:16px;align-items:center}
+.back-link{font-size:.9rem;color:var(--accent-light);text-decoration:none;transition:color .2s}
+.back-link:hover{color:var(--accent)}
+.progress-bar{height:3px;background:var(--surface2);border-radius:2px;min-width:150px;overflow:hidden}
+.progress-fill{height:100%;background:var(--accent);transition:width .3s}
+.progress-label{font-size:.8rem;color:var(--text-dim);margin-left:12px;white-space:nowrap}
+.toolbar-right{display:flex;gap:12px;align-items:center}
+.theme-toggle{background:var(--surface2);border:1px solid var(--border);padding:6px 12px;border-radius:var(--radius);color:var(--text);font-size:.9rem;transition:all .2s}
+.theme-toggle:hover{border-color:var(--accent);color:var(--accent)}
+
+/* TAB NAV */
+.tab-nav{display:none;background:var(--surface);border-bottom:1px solid var(--border);overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab-nav-content{display:flex;padding:0 24px}
+.tab-btn{flex:0 0 auto;padding:16px 20px;background:0;border:0;color:var(--text-dim);cursor:pointer;transition:all .3s;font-size:.95rem;border-bottom:2px solid transparent;white-space:nowrap}
+.tab-btn:hover{color:var(--text);border-bottom-color:var(--accent-light)}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
+
+/* MAIN & SECTIONS */
+main{background:var(--bg)}
+.section{display:none;opacity:0;transition:opacity .3s;padding:60px 24px;max-width:960px;margin:0 auto}
+.section.active{display:block;opacity:1}
+.section-header{text-align:center;margin-bottom:48px}
+.period-label{display:inline-block;font-size:.75rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;font-weight:500}
+.section h2{font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.6rem);margin-bottom:8px;line-height:1.2}
+.dates{color:var(--text-dim);font-style:italic;font-size:.95rem;margin-top:8px}
+
+.content-block{max-width:700px;margin:24px auto;padding:24px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);line-height:1.8}
+.content-block p+p{margin-top:16px}
+
+/* TIMELINE */
+.hist-timeline{max-width:760px;margin:32px auto;position:relative;padding:0}
+.hist-timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,transparent,var(--gold) 5%,var(--gold) 95%,transparent);transform:translateX(-50%)}
+.hist-timeline::after{content:'';position:absolute;left:50%;top:-10px;width:16px;height:16px;background:var(--gold);transform:translateX(-50%) rotate(45deg);z-index:2}
+.timeline-item{position:relative;margin-bottom:0;padding:32px 0;display:grid;grid-template-columns:1fr 60px 1fr;align-items:start;gap:0;opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.timeline-item.tl-visible{opacity:1;transform:translateY(0)}
+.timeline-item .tl-content{padding:24px 28px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);transition:all .4s;position:relative}
+.timeline-item:nth-child(odd) .tl-content{grid-column:1;text-align:right}
+.timeline-item:nth-child(even) .tl-content{grid-column:3;text-align:left}
+.timeline-item .tl-content:hover{border-color:var(--gold);box-shadow:0 4px 24px rgba(201,168,76,.15);transform:translateY(-2px)}
+.timeline-item .tl-node{grid-column:2;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:16px;position:relative;z-index:2}
+.tl-diamond{width:18px;height:18px;background:var(--bg);border:2px solid var(--gold);transform:rotate(45deg);transition:all .4s;flex-shrink:0}
+.timeline-item:hover .tl-diamond{background:var(--gold);box-shadow:0 0 12px rgba(201,168,76,.5)}
+.tl-connector{width:2px;flex:1;background:transparent}
+.timeline-year{font-family:var(--font-display);font-weight:700;color:var(--gold);font-size:1.15rem;margin-bottom:10px;letter-spacing:1px;display:inline-flex;align-items:center;gap:8px}
+.timeline-item:nth-child(odd) .timeline-year{justify-content:flex-end}
+.timeline-item:nth-child(even) .timeline-year{justify-content:flex-start}
+.timeline-event{color:var(--text);font-size:.9rem;line-height:1.7}
+.timeline-event strong{color:var(--white);font-weight:600}
+.tl-detail{max-height:0;overflow:hidden;transition:max-height .5s ease,margin .3s ease,opacity .3s ease;opacity:0;margin-top:0;font-size:.85rem;color:var(--text-dim);line-height:1.6}
+.tl-detail.open{max-height:400px;opacity:1;margin-top:12px}
+.tl-toggle{display:inline-block;margin-top:10px;font-size:.78rem;color:var(--accent-light);cursor:pointer;letter-spacing:.5px;text-transform:uppercase;font-weight:500;transition:color .2s;border:none;background:none;padding:0}
+.tl-toggle:hover{color:var(--gold)}
+@media(max-width:640px){
+  .timeline-item{grid-template-columns:24px 1fr;gap:16px}
+  .hist-timeline::before{left:11px;transform:none}
+  .hist-timeline::after{left:11px;transform:rotate(45deg);top:-10px}
+  .timeline-item .tl-node{grid-column:1;padding-top:18px}
+  .timeline-item:nth-child(odd) .tl-content,
+  .timeline-item:nth-child(even) .tl-content{grid-column:2;text-align:left}
+  .timeline-item:nth-child(odd) .timeline-year{justify-content:flex-start}
+}
+
+/* THINK QUESTION */
+.think-question{max-width:700px;margin:32px auto;padding:24px;background:var(--surface2);border-left:3px solid var(--accent);border-radius:var(--radius)}
+.tq-label{display:inline-block;font-size:.75rem;letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;font-weight:500}
+.think-question p{color:var(--text-dim);font-style:italic;margin:0}
+
+/* GALLERY */
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin:32px 0}
+.gallery-card{border:1px solid var(--border);border-radius:var(--radius);padding:20px;background:var(--surface);transition:all .3s}
+.gallery-card:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(0,0,0,.3);transform:translateY(-2px)}
+.gc-label{font-size:.72rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;font-weight:500}
+.gc-title{font-family:var(--font-display);font-size:1.1rem;color:var(--white);margin-bottom:4px;line-height:1.3}
+.gc-meta{font-size:.85rem;color:var(--text-dim);margin-bottom:12px;font-style:italic}
+.gc-desc{font-size:.88rem;line-height:1.6;color:var(--text)}
+
+/* FLIP CARDS */
+.flip-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin:32px 0}
+.flip-card{perspective:1000px;height:280px}
+.flip-card-inner{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d}
+.flip-card.flipped .flip-card-inner{transform:rotateY(180deg)}
+.flip-front,.flip-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;display:flex;flex-direction:column;justify-content:center;padding:20px;text-align:center;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface)}
+.flip-front{background:var(--surface)}
+.flip-back{background:var(--surface2);transform:rotateY(180deg);overflow-y:auto}
+.flip-name{font-weight:500;font-size:1.05rem;margin-bottom:8px;color:var(--white)}
+.flip-dates{font-size:.85rem;color:var(--text-dim);margin-bottom:12px}
+.flip-hint{font-size:.75rem;color:var(--accent);margin-top:12px;font-style:italic}
+.flip-role{font-weight:500;color:var(--accent);margin-bottom:12px;font-size:.9rem}
+.flip-back p{font-size:.85rem;line-height:1.6;color:var(--text-dim);margin-bottom:12px}
+.flip-works{font-size:.8rem;color:var(--text-dim);margin-top:12px;font-style:italic}
+
+/* MATCH */
+.match-instructions{text-align:center;color:var(--text-dim);margin-bottom:24px;font-size:.95rem}
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin:32px auto;max-width:700px}
+.match-col-label{text-align:center;font-weight:500;margin-bottom:16px;font-size:.9rem;text-transform:uppercase;letter-spacing:1px;color:var(--accent)}
+#matchLeft,#matchRight,#matchLeft2,#matchRight2{display:flex;flex-direction:column;gap:12px}
+.match-item{padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:all .2s;text-align:center;font-size:.9rem;user-select:none}
+.match-item:hover{border-color:var(--accent)}
+.match-item.selected{background:var(--accent);color:var(--white);border-color:var(--accent)}
+.match-item.matched{background:var(--success);color:var(--white);border-color:var(--success);cursor:default}
+.match-item.wrong{background:var(--fail);border-color:var(--fail);animation:shake .4s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.match-score{text-align:center;margin:16px 0;font-size:.95rem;color:var(--text-dim)}
+.match-feedback{text-align:center;margin-top:16px;padding:12px;border-radius:var(--radius);display:none;font-size:.9rem}
+.match-feedback.show{display:block}
+.match-feedback.success{background:rgba(46,204,113,.1);color:var(--success);border:1px solid var(--success)}
+.match-reset{display:none;margin:16px auto;padding:10px 24px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-size:.9rem;transition:all .2s}
+.match-reset:hover{border-color:var(--accent);color:var(--accent)}
+
+/* QUIZ */
+.quiz-wrap{margin:32px 0}
+.q-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;margin-bottom:24px}
+.q-num{font-size:.85rem;color:var(--text-dim);margin-bottom:12px;text-transform:uppercase;letter-spacing:1px}
+.q-text{font-size:1.05rem;margin-bottom:20px;font-weight:500;line-height:1.5}
+.q-options{display:grid;grid-template-columns:1fr;gap:12px}
+.q-opt{padding:14px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:12px;font-size:.95rem}
+.q-opt:hover{border-color:var(--accent)}
+.q-opt.selected{background:var(--accent);color:var(--white);border-color:var(--accent)}
+.q-opt.correct{background:var(--success);color:var(--white);border-color:var(--success)}
+.q-opt.wrong{background:var(--fail);color:var(--white);border-color:var(--fail)}
+.letter{display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;background:var(--border);border-radius:50%;font-size:.8rem;font-weight:500}
+.q-opt.selected .letter,.q-opt.correct .letter,.q-opt.wrong .letter{background:currentColor;color:var(--white);opacity:.8}
+.q-feedback{padding:14px;background:var(--surface2);border-left:3px solid transparent;border-radius:var(--radius);margin-top:12px;display:none;font-size:.9rem;line-height:1.5}
+.q-feedback.show{display:block}
+.q-feedback.right{border-left-color:var(--success);color:var(--success)}
+.q-feedback.wrong{border-left-color:var(--fail);color:var(--fail)}
+
+/* RESULTS */
+.results-card{display:none;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:40px 28px;max-width:500px;margin:40px auto;text-align:center}
+.results-card.show{display:block}
+.score-ring{width:120px;height:120px;border-radius:50%;margin:0 auto 24px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:500;position:relative;background:var(--surface2)}
+.score-ring.pass{color:var(--success);border:3px solid var(--success)}
+.score-ring.fail{color:var(--fail);border:3px solid var(--fail)}
+.score-num{font-size:2.2rem;line-height:1}
+.score-lbl{font-size:.75rem;text-transform:uppercase;letter-spacing:1px;margin-top:4px;opacity:.7}
+.results-card h3{margin-bottom:12px;font-size:1.3rem}
+.results-card p{color:var(--text-dim);margin-bottom:24px}
+.btn-retry{padding:12px 32px;background:var(--accent);color:var(--white);border:none;border-radius:var(--radius);font-size:.95rem;font-weight:500;cursor:pointer;transition:all .2s}
+.btn-retry:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.3)}
+
+/* SECTION NAV */
+.section-nav{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border)}
+.nav-btn{padding:12px 24px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);color:var(--text-dim);font-size:.95rem;cursor:pointer;transition:all .2s}
+.nav-btn:hover{border-color:var(--accent);color:var(--accent)}
+.nav-btn.primary{background:var(--accent);color:var(--white);border-color:var(--accent)}
+.nav-btn.primary:hover{box-shadow:0 4px 12px rgba(0,0,0,.3)}
+
+/* FOOTER */
+.footer{background:var(--surface);border-top:1px solid var(--border);padding:32px 24px;text-align:center;color:var(--text-dim);font-size:.9rem;margin-top:60px}
+.footer p{margin:0}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .match-grid{grid-template-columns:1fr;gap:20px}
+  .toolbar-content{flex-direction:column;gap:12px;align-items:flex-start}
+  .flip-grid{grid-template-columns:1fr}
+}
+@media(min-width:769px) and (max-width:1024px){
+  .flip-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<div class="toolbar" id="toolbar">
+  <div class="container">
+    <div class="toolbar-content">
+      <div class="toolbar-left">
+        <a href="../../index.html" class="back-link">&larr; Back to Index</a>
+        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="progress-label" id="progressLabel">Section 1 / 6</div>
+      </div>
+      <div class="toolbar-right">
+        <button class="theme-toggle" onclick="toggleTheme()">Theme</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<nav class="tab-nav" id="tabNav">
+  <div class="container" style="padding:0">
+    <div class="tab-nav-content">
+      <button class="tab-btn active" onclick="goSection(0)">Context</button>
+      <button class="tab-btn" onclick="goSection(1)">Gallery</button>
+      <button class="tab-btn" onclick="goSection(2)">People</button>
+      <button class="tab-btn" onclick="goSection(3)">Movements</button>
+      <button class="tab-btn" onclick="goSection(4)">Matching</button>
+      <button class="tab-btn" onclick="goSection(5)">Quiz</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+<div class="hero" id="hero">
+  <h1>Early Modernism &amp; the Avant-Garde</h1>
+  <div class="subtitle">c. 1910&ndash;1930</div>
+  <p>From Cubism and Futurism to Constructivism, Dada, and Surrealism &mdash; the generation that broke the visual rules of the nineteenth century and built the vocabulary of modern design.</p>
+  <button class="btn-start" onclick="startLesson()">Start Lesson</button>
+</div>
+
+<!-- ===== SECTION 0: CONTEXT ===== -->
+<div class="section" data-idx="0">
+  <div class="section-header">
+    <div class="period-label">History</div>
+    <h2>Historical Context</h2>
+    <div class="dates">1910&ndash;1930: Breaking Everything Open</div>
+  </div>
+
+  <div class="content-block" style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap">
+    <figure style="flex:0 0 260px;margin:0">
+      <img src="images/El_Lissitzky_Red_Wedge.jpg"
+           alt="El Lissitzky's 1919 poster Beat the Whites with the Red Wedge, showing a red triangle piercing a white circle against a field of geometric black and red shapes"
+           loading="lazy" style="width:100%;border-radius:6px">
+      <figcaption style="font-size:.75rem;color:var(--text-dim);margin-top:6px;text-align:center"><em>Beat the Whites with the Red Wedge</em> &mdash; El Lissitzky, 1919. Public domain.</figcaption>
+    </figure>
+    <div style="flex:1;min-width:200px">
+      <p><strong>An avant-garde, not a style.</strong> Early Modernism isn't a single look — it's a generation of overlapping movements that all, in different ways, refused the inherited assumption that a picture should depict a scene, a sculpture should depict a person, or a building should wear ornament borrowed from the past.</p>
+      <p style="margin-top:16px">Between 1907 and 1930, Picasso shattered the picture plane into facets; Marinetti declared a museum equal to a cemetery; Tatlin welded steel into spiraling unbuilt monuments; Duchamp submitted a urinal to an art exhibition; Malevich painted a black square and called it zero; Rodchenko built graphic design into a political tool. These moves were not isolated gestures. They were the intellectual raw material the Bauhaus, the International Typographic Style, and most of twentieth-century design would draw from.</p>
+      <p style="margin-top:16px">What unites them is a shared appetite for abstraction, fragmentation, and provocation &mdash; and a shared conviction that <em>the work should look like the century it was made in</em>.</p>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin:48px 0 8px">
+    <div class="period-label">Defining Traits</div>
+    <h3 style="font-family:var(--font-display);font-size:1.4rem;margin-bottom:4px">Key Ideas</h3>
+    <p style="font-size:.85rem;color:var(--text-dim)">Click each card to reveal an example</p>
+  </div>
+
+  <div class="flip-grid">
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Fragmentation</div>
+          <div class="flip-dates">Multiple viewpoints, broken planes</div>
+          <div class="flip-hint">Click to see example &rarr;</div>
+        </div>
+        <div class="flip-back"><div class="flip-role">Example</div><p>Picasso and Braque's Analytic Cubism (1909&ndash;1912) dissolved a single object into overlapping, tilted planes that refuse to resolve into a coherent view &mdash; forcing the eye to assemble the image over time.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Abstraction</div>
+          <div class="flip-dates">Form, not representation</div>
+          <div class="flip-hint">Click to see example &rarr;</div>
+        </div>
+        <div class="flip-back"><div class="flip-role">Example</div><p>Malevich's <em>Black Square</em> (1915). A flat black square on a white field. Malevich called it &ldquo;the zero of form&rdquo; &mdash; the point at which painting stops being a picture of something else and becomes an object in its own right.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">The Machine</div>
+          <div class="flip-dates">Industry, speed, engineering</div>
+          <div class="flip-hint">Click to see example &rarr;</div>
+        </div>
+        <div class="flip-back"><div class="flip-role">Example</div><p>The Italian Futurists celebrated speed, machines, and the modern city. Marinetti's 1909 <em>Manifesto of Futurism</em> declared that a racing car was more beautiful than the Winged Victory of Samothrace.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Design as Politics</div>
+          <div class="flip-dates">Art in service of a new society</div>
+          <div class="flip-hint">Click to see example &rarr;</div>
+        </div>
+        <div class="flip-back"><div class="flip-role">Example</div><p>Russian Constructivism after 1917: Rodchenko, Lissitzky, and Stepanova treated graphic design, textiles, and furniture as tools for building a socialist society. Ornament was bourgeois; structure was revolutionary.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Provocation</div>
+          <div class="flip-dates">Shock, absurdity, anti-art</div>
+          <div class="flip-hint">Click to see example &rarr;</div>
+        </div>
+        <div class="flip-back"><div class="flip-role">Example</div><p>Duchamp's <em>Fountain</em> (1917) &mdash; a porcelain urinal signed &ldquo;R. Mutt&rdquo; and submitted to an exhibition. The readymade insisted that the artist's decision, not the artist's hand, was what made something art.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Collage &amp; Montage</div>
+          <div class="flip-dates">Assembled, not composed</div>
+          <div class="flip-hint">Click to see example &rarr;</div>
+        </div>
+        <div class="flip-back"><div class="flip-role">Example</div><p>Hannah H&ouml;ch's Dada photomontages (Berlin, 1919&ndash;1920) cut apart newspapers and magazines and reassembled them into ferociously political images. The technique became a foundation of twentieth-century graphic design.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Geometric Reduction</div>
+          <div class="flip-dates">Primary forms, primary colors</div>
+          <div class="flip-hint">Click to see example &rarr;</div>
+        </div>
+        <div class="flip-back"><div class="flip-role">Example</div><p>De Stijl (1917&ndash;1931) reduced painting, furniture, and architecture to horizontal and vertical lines and the primary colors red, yellow, blue plus black, white, and grey. Mondrian's grids and Rietveld's Red and Blue Chair are its clearest statements.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">The Unconscious</div>
+          <div class="flip-dates">Dreams, chance, the uncanny</div>
+          <div class="flip-hint">Click to see example &rarr;</div>
+        </div>
+        <div class="flip-back"><div class="flip-role">Example</div><p>Meret Oppenheim's <em>Object (Le D&eacute;jeuner en fourrure)</em> (1936) &mdash; a teacup, saucer, and spoon covered in gazelle fur. Surrealism took ordinary things and made them strange by combining them in ways a dream might.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin:48px 0 8px">
+    <div class="period-label">Chronology</div>
+    <h3 style="font-family:var(--font-display);font-size:1.4rem;margin-bottom:4px">Historical Timeline</h3>
+    <p style="font-size:.85rem;color:var(--text-dim)">Key moments of the avant-garde</p>
+  </div>
+
+  <div class="hist-timeline" id="histTimeline">
+
+      <div class="timeline-item">
+        <div class="tl-content">
+          <div class="timeline-year">1907</div>
+          <div class="timeline-event"><strong>Les Demoiselles d'Avignon.</strong> Picasso paints the picture that inaugurates Cubism.</div>
+          <div class="tl-detail" id="tlDetail0">Five female figures painted in harsh, angular planes, with faces borrowed from Iberian sculpture and African masks. It was so radical that Picasso kept it in his studio for years before showing it. When Braque saw it in 1908, he began painting the same way, and the two spent the next five years working almost indistinguishably.</div>
+          <button class="tl-toggle" onclick="toggleTlDetail(0)">Read more</button>
+        </div>
+        <div class="tl-node"><div class="tl-diamond"></div><div class="tl-connector"></div></div>
+        <div></div>
+      </div>
+
+      <div class="timeline-item">
+        <div></div>
+        <div class="tl-node"><div class="tl-diamond"></div><div class="tl-connector"></div></div>
+        <div class="tl-content">
+          <div class="timeline-year">1909</div>
+          <div class="timeline-event"><strong>Marinetti publishes the <em>Manifesto of Futurism</em>.</strong> On the front page of <em>Le Figaro</em>.</div>
+          <div class="tl-detail" id="tlDetail1">F. T. Marinetti launches Italian Futurism with a manifesto that praises speed, machines, youth, and war, and calls for the destruction of museums and libraries. Futurism is the first avant-garde movement to deliberately use mass media (the Paris newspaper <em>Le Figaro</em>) as a venue for its founding text.</div>
+          <button class="tl-toggle" onclick="toggleTlDetail(1)">Read more</button>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="tl-content">
+          <div class="timeline-year">1915</div>
+          <div class="timeline-event"><strong>Malevich's <em>Black Square</em>.</strong> Exhibited in Petrograd at the exhibition &ldquo;0.10.&rdquo;</div>
+          <div class="tl-detail" id="tlDetail2">Kazimir Malevich hangs <em>Black Square</em> high in a corner of the exhibition hall &mdash; the traditional placement of a Russian Orthodox icon. The gesture announces Suprematism: a painting is no longer a window onto the world, it is a flat, self-contained object. This is the birthmark of geometric abstraction as we now know it.</div>
+          <button class="tl-toggle" onclick="toggleTlDetail(2)">Read more</button>
+        </div>
+        <div class="tl-node"><div class="tl-diamond"></div><div class="tl-connector"></div></div>
+        <div></div>
+      </div>
+
+      <div class="timeline-item">
+        <div></div>
+        <div class="tl-node"><div class="tl-diamond"></div><div class="tl-connector"></div></div>
+        <div class="tl-content">
+          <div class="timeline-year">1916</div>
+          <div class="timeline-event"><strong>Dada is born at Cabaret Voltaire.</strong> Z&uuml;rich, February 1916.</div>
+          <div class="tl-detail" id="tlDetail3">In the middle of the First World War, a group of exiles in neutral Switzerland &mdash; Hugo Ball, Emmy Hennings, Tristan Tzara, Jean Arp &mdash; open Cabaret Voltaire and begin performing sound poetry, chance poetry, and deliberately nonsensical works. Dada is the avant-garde's response to a war it holds rational European culture responsible for.</div>
+          <button class="tl-toggle" onclick="toggleTlDetail(3)">Read more</button>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="tl-content">
+          <div class="timeline-year">1917</div>
+          <div class="timeline-event"><strong>Duchamp's <em>Fountain</em> &amp; the founding of De Stijl.</strong> Two very different Aprils.</div>
+          <div class="tl-detail" id="tlDetail4">In New York, Marcel Duchamp submits a porcelain urinal signed &ldquo;R. Mutt&rdquo; to the Society of Independent Artists exhibition. It is rejected. In Leiden, Theo van Doesburg founds the journal <em>De Stijl</em> with Piet Mondrian, Bart van der Leck, and others &mdash; a manifesto for geometric abstraction in primary colors, horizontal and vertical lines. The same month produces the twentieth century's most scandalous object and its most disciplined grid.</div>
+          <button class="tl-toggle" onclick="toggleTlDetail(4)">Read more</button>
+        </div>
+        <div class="tl-node"><div class="tl-diamond"></div><div class="tl-connector"></div></div>
+        <div></div>
+      </div>
+
+      <div class="timeline-item">
+        <div></div>
+        <div class="tl-node"><div class="tl-diamond"></div><div class="tl-connector"></div></div>
+        <div class="tl-content">
+          <div class="timeline-year">1919&ndash;1920</div>
+          <div class="timeline-event"><strong>Tatlin's Monument to the Third International.</strong> The most influential unbuilt building of the century.</div>
+          <div class="tl-detail" id="tlDetail5">Vladimir Tatlin designs a spiraling steel and glass tower intended for Petrograd, taller than the Eiffel Tower, containing rotating chambers for the Comintern's legislative, executive, and informational functions. It was never built, but the wooden model made Tatlin (and Constructivism) famous internationally. Sculpture, architecture, engineering, and political statement became, in one gesture, a single activity.</div>
+          <button class="tl-toggle" onclick="toggleTlDetail(5)">Read more</button>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="tl-content">
+          <div class="timeline-year">1924</div>
+          <div class="timeline-event"><strong>Andr&eacute; Breton publishes the <em>Surrealist Manifesto</em>.</strong> Paris.</div>
+          <div class="tl-detail" id="tlDetail6">Breton, a former Dadaist influenced by Freud, calls for &ldquo;pure psychic automatism&rdquo; &mdash; art that emerges directly from the unconscious without rational control. Surrealism absorbs much of the Dada circle and becomes the dominant Paris avant-garde of the late 1920s and 1930s. Where Dada used absurdity to destroy meaning, Surrealism uses it to reveal hidden meaning.</div>
+          <button class="tl-toggle" onclick="toggleTlDetail(6)">Read more</button>
+        </div>
+        <div class="tl-node"><div class="tl-diamond"></div><div class="tl-connector"></div></div>
+        <div></div>
+      </div>
+
+      <div class="timeline-item">
+        <div></div>
+        <div class="tl-node"><div class="tl-diamond"></div><div class="tl-connector"></div></div>
+        <div class="tl-content">
+          <div class="timeline-year">1928&ndash;1930</div>
+          <div class="timeline-event"><strong>The avant-garde enters the Bauhaus.</strong> Lissitzky, Moholy-Nagy, and Albers carry the vocabulary into a school.</div>
+          <div class="tl-detail" id="tlDetail7">By the late 1920s, the experimental vocabulary of Cubism, Constructivism, De Stijl, and Suprematism has been absorbed into the teaching of the Bauhaus in Dessau. What was radical provocation in 1915 is now a curriculum. Early Modernism is still alive, but from this point forward its descendants will be called &ldquo;design&rdquo; rather than &ldquo;avant-garde.&rdquo;</div>
+          <button class="tl-toggle" onclick="toggleTlDetail(7)">Read more</button>
+        </div>
+      </div>
+
+  </div>
+
+  <div class="think-question">
+    <div class="tq-label">Think About It</div>
+    <p>Early Modernism is often described as a series of &ldquo;breaks&rdquo; with the past. But each movement also built on the previous one. What's an example of a later movement borrowing directly from an earlier one it claimed to oppose?</p>
+  </div>
+
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(0)" style="visibility:hidden">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(1)">Next: Gallery &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 1: GALLERY ===== -->
+<div class="section" data-idx="1">
+  <div class="section-header">
+    <div class="period-label">Landmarks</div>
+    <h2>Iconic Works</h2>
+    <div class="dates">The objects that redefined what design could be</div>
+  </div>
+
+  <div class="content-block">
+    <p>Early Modernism produced a remarkable density of landmark works in a short period. Below are eight that together sketch the full range of the avant-garde: paintings, sculptures, architecture, a readymade, a manifesto in typographic form, a piece of furniture, a photomontage, and an unbuilt tower.</p>
+  </div>
+
+  <div class="gallery-grid">
+
+    <div class="gallery-card">
+      <div class="gc-label">Cubism &middot; 1907</div>
+      <div class="gc-title">Les Demoiselles d'Avignon</div>
+      <div class="gc-meta">Pablo Picasso &middot; Paris</div>
+      <div class="gc-desc">Five female figures dismembered into angular planes, with faces borrowed from Iberian carving and African masks. The painting that opens Cubism &mdash; and with it, twentieth-century art.</div>
+    </div>
+
+    <div class="gallery-card">
+      <div class="gc-label">Futurism &middot; 1913</div>
+      <div class="gc-title">Unique Forms of Continuity in Space</div>
+      <div class="gc-meta">Umberto Boccioni &middot; Milan</div>
+      <div class="gc-desc">A striding bronze figure whose body seems to be dissolving into its own forward motion. Futurism's most famous sculpture and a declaration that speed itself could be made visible in three dimensions.</div>
+    </div>
+
+    <div class="gallery-card">
+      <div class="gc-label">Suprematism &middot; 1915</div>
+      <div class="gc-title">Black Square</div>
+      <div class="gc-meta">Kazimir Malevich &middot; Petrograd</div>
+      <div class="gc-desc">A black square on a white field. Malevich called it &ldquo;the zero of form.&rdquo; Exhibited hung in the traditional corner position of a Russian icon &mdash; a painting that refuses to be a picture of anything.</div>
+    </div>
+
+    <div class="gallery-card">
+      <div class="gc-label">Dada Readymade &middot; 1917</div>
+      <div class="gc-title">Fountain</div>
+      <div class="gc-meta">Marcel Duchamp (as &ldquo;R. Mutt&rdquo;) &middot; New York</div>
+      <div class="gc-desc">A mass-produced porcelain urinal, rotated ninety degrees, signed, and submitted to an art exhibition. Rejected by the jury, it became the most discussed object of the twentieth century and the founding work of conceptual art.</div>
+    </div>
+
+    <div class="gallery-card">
+      <div class="gc-label">Constructivism &middot; 1919</div>
+      <div class="gc-title">Beat the Whites with the Red Wedge</div>
+      <div class="gc-meta">El Lissitzky &middot; Vitebsk</div>
+      <div class="gc-desc">A Russian Civil War propaganda poster in which a red triangle stabs into a white circle. Lissitzky treats geometry as political argument: the Reds (wedge) are driving into the Whites (circle).</div>
+    </div>
+
+    <div class="gallery-card">
+      <div class="gc-label">Constructivism &middot; 1919&ndash;1920</div>
+      <div class="gc-title">Monument to the Third International</div>
+      <div class="gc-meta">Vladimir Tatlin &middot; Petrograd</div>
+      <div class="gc-desc">A wooden model of an enormous spiraling tower of steel and glass, intended as headquarters for the Communist International. Never built. Still the most influential unbuilt structure in modern design.</div>
+    </div>
+
+    <div class="gallery-card">
+      <div class="gc-label">De Stijl &middot; 1923</div>
+      <div class="gc-title">Red and Blue Chair</div>
+      <div class="gc-meta">Gerrit Rietveld &middot; Utrecht</div>
+      <div class="gc-desc">A chair reduced to flat rectangular planes in red, blue, yellow, and black. Less a piece of furniture than a De Stijl painting you can sit in &mdash; and a demonstration that the movement's visual logic extended to every scale.</div>
+    </div>
+
+    <div class="gallery-card">
+      <div class="gc-label">Dada Photomontage &middot; 1919</div>
+      <div class="gc-title">Cut with the Kitchen Knife</div>
+      <div class="gc-meta">Hannah H&ouml;ch &middot; Berlin</div>
+      <div class="gc-desc">A chaotic photomontage of Weimar politicians, machinery, and dancers, assembled from cut-up newspapers. H&ouml;ch's technique &mdash; cut, layer, caption &mdash; became a foundation of twentieth-century graphic design.</div>
+    </div>
+
+  </div>
+
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(0)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(2)">Next: People &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 2: PEOPLE ===== -->
+<div class="section" data-idx="2">
+  <div class="section-header">
+    <div class="period-label">Figures</div>
+    <h2>Key People</h2>
+    <div class="dates">The artists, poets, and provocateurs who built the avant-garde</div>
+  </div>
+
+  <div class="content-block">
+    <p>Early Modernism was driven by a relatively small international network of artists who knew each other, argued with each other, and moved fluidly between cities, media, and movements. Below are twelve figures whose work sits at the center of the period.</p>
+  </div>
+
+  <div class="flip-grid">
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Pablo Picasso</div>
+          <div class="flip-dates">1881&ndash;1973 &middot; Spain / Paris</div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Painter, sculptor, co-founder of Cubism</div>
+          <p>With Braque, invented Cubism in 1907&ndash;1912. Shifted painting from depicting a single view to assembling many. Later took Cubism into sculpture and collage, breaking the boundary between picture and object.</p>
+          <div class="flip-works"><strong>Key works:</strong> Les Demoiselles d'Avignon (1907), Guitar (1912), Guernica (1937)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Georges Braque</div>
+          <div class="flip-dates">1882&ndash;1963 &middot; France</div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Painter, co-founder of Cubism</div>
+          <p>Picasso's equal partner in the invention of Cubism. Introduced collage into fine art in 1912 by pasting oilcloth into a painting &mdash; a small move that permanently blurred the line between picture-making and assembly.</p>
+          <div class="flip-works"><strong>Key works:</strong> Houses at L'Estaque (1908), Violin and Candlestick (1910), Fruit Dish and Glass (1912)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">F. T. Marinetti</div>
+          <div class="flip-dates">1876&ndash;1944 &middot; Italy</div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Poet, founder of Futurism</div>
+          <p>Wrote the 1909 <em>Manifesto of Futurism</em> and the 1914 typographic book <em>Zang Tumb Tumb</em> &mdash; &ldquo;words in freedom&rdquo; exploding across the page in varying sizes, weights, and orientations. A direct ancestor of twentieth-century experimental typography.</p>
+          <div class="flip-works"><strong>Key works:</strong> Manifesto of Futurism (1909), Zang Tumb Tumb (1914)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Kazimir Malevich</div>
+          <div class="flip-dates">1879&ndash;1935 &middot; Russia</div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Painter, founder of Suprematism</div>
+          <p>Pushed abstraction to its limit with <em>Black Square</em> (1915). Taught at Vitebsk alongside Lissitzky and Chagall. His &ldquo;zero of form&rdquo; argument &mdash; that painting should stop being a picture of anything and become a self-sufficient object &mdash; is the conceptual floor under all later geometric abstraction.</p>
+          <div class="flip-works"><strong>Key works:</strong> Black Square (1915), White on White (1918), Suprematist Composition (1916)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Vladimir Tatlin</div>
+          <div class="flip-dates">1885&ndash;1953 &middot; Russia</div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Sculptor, founder of Constructivism</div>
+          <p>Rejected easel painting in favor of &ldquo;constructions&rdquo; made from industrial materials: iron, glass, wood, wire. His unbuilt <em>Monument to the Third International</em> (1919&ndash;1920) collapsed sculpture, architecture, and political manifesto into a single spiraling tower.</p>
+          <div class="flip-works"><strong>Key works:</strong> Corner Counter-Reliefs (1915), Monument to the Third International (1919&ndash;20), Letatlin glider (1932)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">El Lissitzky</div>
+          <div class="flip-dates">1890&ndash;1941 &middot; Russia / Germany</div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Painter, graphic designer, architect</div>
+          <p>The avant-garde's most tireless connector. His <em>Proun</em> compositions moved fluidly between painting, print, and room-sized installation. His exhibition designs and typography carried Constructivist ideas to Germany and directly shaped the Bauhaus, De Stijl, and modern graphic design.</p>
+          <div class="flip-works"><strong>Key works:</strong> Beat the Whites with the Red Wedge (1919), Proun compositions (1919&ndash;27)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Alexander Rodchenko</div>
+          <div class="flip-dates">1891&ndash;1956 &middot; Russia</div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Graphic designer, photographer, painter</div>
+          <p>Moved fluidly between painting, sculpture, photography, and graphic design. His Soviet posters, book covers, and advertisements &mdash; built on diagonal axes, strong primaries, and photomontage &mdash; are the template every later modern graphic designer inherits.</p>
+          <div class="flip-works"><strong>Key works:</strong> Books (Please)! poster (1924), About This cover for Mayakovsky (1923), Workers' Club (1925)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Marcel Duchamp</div>
+          <div class="flip-dates">1887&ndash;1968 &middot; France / USA</div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Artist, chess player, Dada provocateur</div>
+          <p>Invented the readymade: an ordinary manufactured object declared art by the artist's decision, with no alteration beyond selection. <em>Fountain</em> (1917) is the case study. More than any other single figure, Duchamp set up the argument conceptual art would spend the next century working through.</p>
+          <div class="flip-works"><strong>Key works:</strong> Bicycle Wheel (1913), Fountain (1917), The Large Glass (1915&ndash;23)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Hannah H&ouml;ch</div>
+          <div class="flip-dates">1889&ndash;1978 &middot; Germany</div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Berlin Dada artist, photomontage pioneer</div>
+          <p>The only woman in the Berlin Dada circle. Cut images from mass-market magazines and reassembled them into politically ferocious photomontages. Her techniques became the vocabulary of twentieth-century graphic design, long after Dada itself was over.</p>
+          <div class="flip-works"><strong>Key works:</strong> Cut with the Kitchen Knife (1919), Dada Heads (1920), From an Ethnographic Museum series (1924&ndash;30)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Kurt Schwitters</div>
+          <div class="flip-dates">1887&ndash;1948 &middot; Germany</div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Artist, poet, editor of <em>Merz</em></div>
+          <p>Built assemblages from street garbage and trash he called &ldquo;Merz.&rdquo; His Hanover house became the <em>Merzbau</em> &mdash; a room-sized sculpture that grew for over a decade. Ran the journal <em>Merz</em>, which connected Dada, Constructivism, and De Stijl on the same pages.</p>
+          <div class="flip-works"><strong>Key works:</strong> Merzbild series (1919&ndash;), Merzbau (begun 1923), Ursonate (1922&ndash;32)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Piet Mondrian</div>
+          <div class="flip-dates">1872&ndash;1944 &middot; Netherlands</div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Painter, co-founder of De Stijl</div>
+          <p>Reduced painting to horizontal and vertical black lines on a white ground, filled with red, yellow, or blue rectangles. Spent decades refining this one vocabulary. His grids are one of the most quoted and imitated compositional systems in twentieth-century design.</p>
+          <div class="flip-works"><strong>Key works:</strong> Composition with Red, Blue and Yellow (1930), Broadway Boogie Woogie (1942&ndash;43)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Gerrit Rietveld</div>
+          <div class="flip-dates">1888&ndash;1964 &middot; Netherlands</div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Furniture maker, architect</div>
+          <p>A cabinetmaker who translated De Stijl's flat, primary-color vocabulary into three dimensions. The Red and Blue Chair (1923) and the Schr&ouml;der House (1924) in Utrecht are the clearest demonstrations that a painting system could become a house.</p>
+          <div class="flip-works"><strong>Key works:</strong> Red and Blue Chair (1923), Schr&ouml;der House (1924), Zig-Zag Chair (1934)</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(1)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(3)">Next: Movements &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 3: MOVEMENTS ===== -->
+<div class="section" data-idx="3">
+  <div class="section-header">
+    <div class="period-label">Map</div>
+    <h2>The Movements</h2>
+    <div class="dates">One avant-garde, many simultaneous experiments</div>
+  </div>
+
+  <div class="content-block">
+    <p>The early-modern avant-garde was not a single movement but an overlapping group of them, each with its own manifestos, its own cities, and its own quarrels. The seven below are the most important. Almost every designer working between 1910 and 1930 was touched by at least two of them.</p>
+  </div>
+
+  <div class="flip-grid">
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-name">Cubism</div><div class="flip-dates">c. 1907&ndash;1920 &middot; Paris</div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">Fragmentation of form</div><p>Picasso and Braque broke objects into facets seen from multiple angles at once. Analytic Cubism (1909&ndash;12) dissolved form into near-monochrome planes; Synthetic Cubism (1912&ndash;) added collage and brighter color. The parent movement of almost everything that follows.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-name">Futurism</div><div class="flip-dates">c. 1909&ndash;1920s &middot; Italy</div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">Speed, machines, the new century</div><p>Marinetti's manifesto movement celebrated cars, aeroplanes, electricity, and the modern city. In painting it used Cubist fragmentation to depict motion; in typography it shattered the page with &ldquo;words in freedom.&rdquo; Its politics grew uglier with time, but its visual vocabulary shaped everything from graphic design to cinema.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-name">Suprematism</div><div class="flip-dates">c. 1915&ndash;1920s &middot; Russia</div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">The zero of form</div><p>Malevich's argument that a painting should stop being a picture of something and become a self-sufficient object. Simple geometric forms &mdash; squares, circles, crosses &mdash; arranged on white fields. The clearest theoretical statement of geometric abstraction anywhere in the period.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-name">Constructivism</div><div class="flip-dates">c. 1919&ndash;1930s &middot; Russia</div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">Design as social practice</div><p>Art should be <em>constructed</em> from industrial materials using engineering logic, and should serve society. Tatlin, Rodchenko, Stepanova, and Lissitzky built graphic design, textiles, furniture, and architecture as tools for a new socialist world. Its DNA runs through the Bauhaus and the International Typographic Style.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-name">De Stijl</div><div class="flip-dates">c. 1917&ndash;1931 &middot; Netherlands</div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">Primary forms, primary colors</div><p>A discipline more than a style. Horizontal and vertical lines, the primary colors red, yellow, blue, plus black, white, and grey. Mondrian's paintings, van Doesburg's essays, Rietveld's furniture, and the Schr&ouml;der House were all worked out from the same austere vocabulary.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-name">Dada</div><div class="flip-dates">c. 1916&ndash;1924 &middot; Z&uuml;rich / Berlin / New York</div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">Anti-art, against the war</div><p>A revolt against the rationality that produced the First World War. Used absurdity, chance, readymades, sound poetry, and photomontage to attack the idea that art required skill, beauty, or even intention. Its subversive energy resurfaces whenever designers deliberately break the rules.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-name">Surrealism</div><div class="flip-dates">c. 1924&ndash;1940s &middot; Paris</div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">Dreams, desire, the uncanny</div><p>Where Dada used absurdity to destroy meaning, Surrealism used it to reveal hidden meaning. Breton, Dal&iacute;, Oppenheim, Ernst, and Magritte built dreamlike images and objects that treated the unconscious as a creative method. Shaped fashion, window display, advertising, and eventually film.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-name">Bauhaus (inheritor)</div><div class="flip-dates">1919&ndash;1933 &middot; Germany</div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">Avant-garde becomes a school</div><p>Not an avant-garde movement itself, but the school that absorbed the avant-garde and made it teachable. Lissitzky, Kandinsky, Klee, Moholy-Nagy, Albers, and others carried Cubism, Constructivism, De Stijl, and Suprematism into a curriculum that defined twentieth-century design education.</p></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="think-question">
+    <div class="tq-label">Think About It</div>
+    <p>Several of these movements (Constructivism, De Stijl, the Bauhaus) believed design could change society. Do you think that belief survives in contemporary design practice? If so, where?</p>
+  </div>
+
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(2)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(4)">Next: Matching Activity &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 4: MATCHING ===== -->
+<div class="section" data-idx="4">
+  <div class="section-header">
+    <div class="period-label">Activity</div>
+    <h2>Match the Artist to Their Work</h2>
+    <div class="dates">Select one item from each column to form a pair</div>
+  </div>
+
+  <p class="match-instructions">Click an artist on the left, then click their work on the right. Correct matches will lock in place.</p>
+
+  <div class="match-grid">
+    <div>
+      <div class="match-col-label">Artists</div>
+      <div id="matchLeft"></div>
+    </div>
+    <div>
+      <div class="match-col-label">Works</div>
+      <div id="matchRight"></div>
+    </div>
+  </div>
+  <div class="match-score" id="matchScore"></div>
+  <div class="match-feedback" id="matchFeedback"></div>
+  <button class="match-reset" id="matchResetBtn" onclick="resetMatch()" style="display:none">Try Again</button>
+
+  <div style="margin-top:40px"></div>
+
+  <div class="section-header">
+    <div class="period-label">Activity</div>
+    <h2>Match the Movement to Its Core Idea</h2>
+    <div class="dates">Each movement had a defining argument</div>
+  </div>
+
+  <p class="match-instructions">Click a movement on the left, then its core idea on the right.</p>
+
+  <div class="match-grid">
+    <div>
+      <div class="match-col-label">Movement</div>
+      <div id="matchLeft2"></div>
+    </div>
+    <div>
+      <div class="match-col-label">Core Idea</div>
+      <div id="matchRight2"></div>
+    </div>
+  </div>
+  <div class="match-score" id="matchScore2"></div>
+  <div class="match-feedback" id="matchFeedback2"></div>
+  <button class="match-reset" id="matchResetBtn2" onclick="resetMatch2()" style="display:none">Try Again</button>
+
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(3)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(5)">Next: Quiz &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 5: QUIZ ===== -->
+<div class="section" data-idx="5">
+  <div class="section-header">
+    <div class="period-label">Knowledge Check</div>
+    <h2>Early Modernism Quiz</h2>
+    <div class="dates">Test what you've learned</div>
+  </div>
+
+  <div class="quiz-wrap" id="quizWrap"></div>
+
+  <div class="results-card" id="resultsCard">
+    <div class="score-ring" id="scoreRing">
+      <div class="score-num" id="scoreNum">0%</div>
+      <div class="score-lbl">Score</div>
+    </div>
+    <h3 id="resultsTitle">Results</h3>
+    <p id="resultsMsg"></p>
+    <button class="btn-retry" onclick="retryQuiz()">Try Again</button>
+  </div>
+
+  <div class="section-nav" id="quizNav">
+    <button class="nav-btn" onclick="goSection(4)">&larr; Previous</button>
+    <span></span>
+  </div>
+</div>
+
+</main>
+
+<footer class="footer">
+  <p>DSGN 230 &mdash; Survey of Design History<br>Early Modernism &amp; the Avant-Garde Deep Dive</p>
+</footer>
+
+<script>
+/* ============ GLOBALS ============ */
+const TOTAL_SECTIONS = 6;
+let currentSection = 0;
+
+/* ============ NAVIGATION ============ */
+function startLesson(){
+  document.getElementById('hero').style.display='none';
+  document.getElementById('toolbar').style.display='block';
+  document.getElementById('tabNav').style.display='block';
+  goSection(0);
+}
+
+function goSection(idx){
+  currentSection=idx;
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.section')[idx].classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>{b.classList.toggle('active',i===idx)});
+  document.getElementById('progressLabel').textContent='Section '+(idx+1)+' / '+TOTAL_SECTIONS;
+  document.getElementById('progressFill').style.width=((idx+1)/TOTAL_SECTIONS*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleTheme(){document.documentElement.classList.toggle('light')}
+
+/* ============ MATCHING 1: Artist -> Work ============ */
+const matchPairs=[
+  {left:'Pablo Picasso',right:"Les Demoiselles d'Avignon"},
+  {left:'Kazimir Malevich',right:'Black Square'},
+  {left:'Marcel Duchamp',right:'Fountain'},
+  {left:'Vladimir Tatlin',right:'Monument to the Third International'},
+  {left:'El Lissitzky',right:'Beat the Whites with the Red Wedge'},
+  {left:'Gerrit Rietveld',right:'Red and Blue Chair'},
+  {left:'Hannah Hoch',right:'Cut with the Kitchen Knife'},
+  {left:'F. T. Marinetti',right:'Zang Tumb Tumb'},
+];
+let m1Left=null,m1Matched=0;
+
+function initMatch(){
+  const lC=document.getElementById('matchLeft'),rC=document.getElementById('matchRight');
+  const shuffledL=[...matchPairs].sort(()=>Math.random()-.5);
+  const shuffledR=[...matchPairs].sort(()=>Math.random()-.5);
+  lC.innerHTML='';rC.innerHTML='';
+  shuffledL.forEach(p=>{
+    const d=document.createElement('div');d.className='match-item';d.textContent=p.left;
+    d.dataset.key=p.left;d.onclick=()=>selectMatchLeft(d);lC.appendChild(d);
+  });
+  shuffledR.forEach(p=>{
+    const d=document.createElement('div');d.className='match-item';d.textContent=p.right;
+    d.dataset.key=p.left;d.onclick=()=>selectMatchRight(d);rC.appendChild(d);
+  });
+  m1Left=null;m1Matched=0;
+  document.getElementById('matchScore').textContent='';
+  document.getElementById('matchFeedback').className='match-feedback';
+  document.getElementById('matchResetBtn').style.display='none';
+}
+
+function selectMatchLeft(el){
+  if(el.classList.contains('matched'))return;
+  document.querySelectorAll('#matchLeft .match-item').forEach(e=>e.classList.remove('selected'));
+  el.classList.add('selected');m1Left=el;
+}
+
+function selectMatchRight(el){
+  if(!m1Left||el.classList.contains('matched'))return;
+  if(m1Left.dataset.key===el.dataset.key){
+    m1Left.classList.remove('selected');m1Left.classList.add('matched');
+    el.classList.add('matched');m1Matched++;
+    document.getElementById('matchScore').textContent=m1Matched+' / '+matchPairs.length+' matched';
+    if(m1Matched===matchPairs.length){
+      const fb=document.getElementById('matchFeedback');
+      fb.className='match-feedback show success';fb.textContent='All matched! Excellent work.';
+    }
+  } else {
+    el.classList.add('wrong');m1Left.classList.add('wrong');
+    setTimeout(()=>{el.classList.remove('wrong');m1Left.classList.remove('wrong','selected');m1Left=null},800);
+    document.getElementById('matchResetBtn').style.display='inline-block';
+    return;
+  }
+  m1Left=null;
+}
+
+function resetMatch(){initMatch()}
+
+/* ============ MATCHING 2: Movement -> Core Idea ============ */
+const matchPairs2=[
+  {left:'Cubism',right:'Fragmenting form into multiple simultaneous viewpoints'},
+  {left:'Futurism',right:'Celebrating speed, machines, and the modern city'},
+  {left:'Suprematism',right:'Pure geometric form as the "zero" of painting'},
+  {left:'Constructivism',right:'Design built from industry to serve society'},
+  {left:'De Stijl',right:'Primary colors, horizontal and vertical lines'},
+  {left:'Dada',right:'Absurdity and anti-art as a response to war'},
+  {left:'Surrealism',right:'The unconscious, dreams, and the uncanny'},
+];
+let m2Left=null,m2Matched=0;
+
+function initMatch2(){
+  const lC=document.getElementById('matchLeft2'),rC=document.getElementById('matchRight2');
+  const shuffledL=[...matchPairs2].sort(()=>Math.random()-.5);
+  const shuffledR=[...matchPairs2].sort(()=>Math.random()-.5);
+  lC.innerHTML='';rC.innerHTML='';
+  shuffledL.forEach(p=>{
+    const d=document.createElement('div');d.className='match-item';d.textContent=p.left;
+    d.dataset.key=p.left;d.onclick=()=>selectM2Left(d);lC.appendChild(d);
+  });
+  shuffledR.forEach(p=>{
+    const d=document.createElement('div');d.className='match-item';d.textContent=p.right;
+    d.dataset.key=p.left;d.onclick=()=>selectM2Right(d);rC.appendChild(d);
+  });
+  m2Left=null;m2Matched=0;
+  document.getElementById('matchScore2').textContent='';
+  document.getElementById('matchFeedback2').className='match-feedback';
+  document.getElementById('matchResetBtn2').style.display='none';
+}
+
+function selectM2Left(el){
+  if(el.classList.contains('matched'))return;
+  document.querySelectorAll('#matchLeft2 .match-item').forEach(e=>e.classList.remove('selected'));
+  el.classList.add('selected');m2Left=el;
+}
+
+function selectM2Right(el){
+  if(!m2Left||el.classList.contains('matched'))return;
+  if(m2Left.dataset.key===el.dataset.key){
+    m2Left.classList.remove('selected');m2Left.classList.add('matched');
+    el.classList.add('matched');m2Matched++;
+    document.getElementById('matchScore2').textContent=m2Matched+' / '+matchPairs2.length+' matched';
+    if(m2Matched===matchPairs2.length){
+      const fb=document.getElementById('matchFeedback2');
+      fb.className='match-feedback show success';fb.textContent='All matched! You know your avant-garde.';
+    }
+  } else {
+    el.classList.add('wrong');m2Left.classList.add('wrong');
+    setTimeout(()=>{el.classList.remove('wrong');m2Left.classList.remove('wrong','selected');m2Left=null},800);
+    document.getElementById('matchResetBtn2').style.display='inline-block';
+    return;
+  }
+  m2Left=null;
+}
+
+function resetMatch2(){initMatch2()}
+
+/* ============ QUIZ ============ */
+const quizData=[
+  {q:'Which painting is usually identified as the opening gesture of Cubism?',
+   opts:['Picasso, Les Demoiselles d\u0027Avignon (1907)','Matisse, The Dance (1910)','Monet, Water Lilies (1916)','Braque, Houses at L\u0027Estaque (1908)'],
+   ans:0,
+   explain:'Picasso\u0027s 1907 Les Demoiselles d\u0027Avignon, with its angular fragmentation and mask-like faces, is the painting every history of Cubism starts with.'},
+  {q:'Where was the Futurist Manifesto first published?',
+   opts:['In the Italian magazine Lacerba','On the front page of the Paris newspaper Le Figaro','In a self-published pamphlet in Milan','In a Zurich journal during the war'],
+   ans:1,
+   explain:'Marinetti published the 1909 Manifesto of Futurism on the front page of Le Figaro in Paris. From the start, Futurism treated mass media as its natural venue.'},
+  {q:'Malevich called Black Square (1915) "the zero of form." What did he mean?',
+   opts:['It was the first painting he made as a child','It was worth zero money','Painting should stop being a picture of something and become a self-sufficient object','It was painted in a room with no windows'],
+   ans:2,
+   explain:'For Malevich, Black Square marked the point at which painting stopped depicting the world and became a pure, self-contained object &mdash; the starting point of Suprematism.'},
+  {q:'Where and when did Dada begin?',
+   opts:['Berlin, 1918','Paris, 1920','Cabaret Voltaire in Zurich, 1916','New York, 1917'],
+   ans:2,
+   explain:'Dada began at the Cabaret Voltaire in Zurich in February 1916, founded by wartime exiles including Hugo Ball, Emmy Hennings, Tristan Tzara, and Jean Arp.'},
+  {q:'What is a "readymade"?',
+   opts:['A pre-mixed paint sold in tubes after 1870','An ordinary manufactured object declared art by the artist\u0027s decision alone','A sculpture cast in a pre-existing mold','A book printed with Futurist typography'],
+   ans:1,
+   explain:'Duchamp\u0027s readymade (Bicycle Wheel 1913, Fountain 1917) was an ordinary object presented as art with no alteration beyond the artist\u0027s act of selection.'},
+  {q:'Which statement best describes Russian Constructivism?',
+   opts:['Art should reflect the inner emotions of the artist','Art should be constructed from industrial materials and serve society','Art should imitate classical Greek and Roman forms','Art should be purely decorative and refuse any message'],
+   ans:1,
+   explain:'Constructivism (Tatlin, Rodchenko, Lissitzky, Stepanova) argued that art should be built from industrial materials using engineering logic and should serve the new Soviet society.'},
+  {q:'Who designed the unbuilt Monument to the Third International?',
+   opts:['Kazimir Malevich','El Lissitzky','Vladimir Tatlin','Alexander Rodchenko'],
+   ans:2,
+   explain:'Vladimir Tatlin designed the spiraling steel-and-glass monument in 1919&ndash;1920. It was never built, but its wooden model is one of the most influential objects in modern design.'},
+  {q:'De Stijl reduced its visual vocabulary to which elements?',
+   opts:['Curves, organic motifs, and earth tones','Horizontal and vertical lines; primary colors plus black, white, and grey','Diagonal axes and metallic gold','Photographic collage and typewriter text'],
+   ans:1,
+   explain:'De Stijl (Mondrian, van Doesburg, Rietveld) disciplined itself to horizontal and vertical lines and the primary colors red, yellow, and blue, plus black, white, and grey.'},
+  {q:'Who was the only woman in the Berlin Dada circle and the group\u0027s most radical photomontage artist?',
+   opts:['Sonia Delaunay','Hannah H\u00f6ch','Gabriele M\u00fcnter','Meret Oppenheim'],
+   ans:1,
+   explain:'Hannah H\u00f6ch was the only woman in Berlin Dada. Her photomontages, especially Cut with the Kitchen Knife (1919), helped invent a technique that shaped twentieth-century graphic design.'},
+  {q:'What is the most accurate statement about the relationship between Early Modernism and the Bauhaus?',
+   opts:['The Bauhaus rejected everything the avant-garde stood for','The Bauhaus had no contact with Russian or Dutch artists','The Bauhaus absorbed the avant-garde and turned it into a teachable curriculum','The Bauhaus predates Cubism and Futurism'],
+   ans:2,
+   explain:'Figures like Lissitzky, Moholy-Nagy, Kandinsky, Klee, and Albers carried Cubist, Constructivist, De Stijl, and Suprematist ideas directly into the Bauhaus curriculum, where they became foundational to twentieth-century design education.'},
+];
+
+let quizAnswers=[], quizLocked=[];
+
+function initQuiz(){
+  const wrap=document.getElementById('quizWrap');wrap.innerHTML='';
+  quizAnswers=new Array(quizData.length).fill(-1);
+  quizLocked=new Array(quizData.length).fill(false);
+  document.getElementById('resultsCard').classList.remove('show');
+
+  quizData.forEach((q,qi)=>{
+    let optsHtml=q.opts.map((o,oi)=>'<div class="q-opt" data-qi="'+qi+'" data-oi="'+oi+'" onclick="selectQuizOpt('+qi+','+oi+')"><span class="letter">'+String.fromCharCode(65+oi)+'</span><span>'+o+'</span></div>').join('');
+    wrap.innerHTML+='<div class="q-card"><div class="q-num">Question '+(qi+1)+' of '+quizData.length+'</div><div class="q-text">'+q.q+'</div><div class="q-options">'+optsHtml+'</div><div class="q-feedback" id="qfb'+qi+'"></div></div>';
+  });
+
+  wrap.innerHTML+='<div style="text-align:center;margin-top:24px"><button class="btn-start" onclick="submitQuiz()">Submit Answers</button></div>';
+}
+
+function selectQuizOpt(qi,oi){
+  if(quizLocked[qi])return;
+  quizAnswers[qi]=oi;
+  document.querySelectorAll('.q-opt[data-qi="'+qi+'"]').forEach(e=>{
+    e.classList.remove('selected');
+    if(parseInt(e.dataset.oi)===oi)e.classList.add('selected');
+  });
+}
+
+function submitQuiz(){
+  let score=0;
+  quizData.forEach((q,qi)=>{
+    quizLocked[qi]=true;
+    const opts=document.querySelectorAll('.q-opt[data-qi="'+qi+'"]');
+    opts.forEach(o=>{
+      o.classList.remove('selected');
+      const oi=parseInt(o.dataset.oi);
+      if(oi===q.ans)o.classList.add('correct');
+      else if(oi===quizAnswers[qi])o.classList.add('wrong');
+    });
+    const fb=document.getElementById('qfb'+qi);
+    if(quizAnswers[qi]===q.ans){score++;fb.className='q-feedback show right';fb.textContent='Correct! '+q.explain;}
+    else{fb.className='q-feedback show wrong';fb.textContent='Not quite. '+q.explain;}
+  });
+
+  const pct=Math.round(score/quizData.length*100);
+  const rc=document.getElementById('resultsCard');rc.classList.add('show');
+  const ring=document.getElementById('scoreRing');
+  ring.className='score-ring '+(pct>=70?'pass':'fail');
+  document.getElementById('scoreNum').textContent=pct+'%';
+  document.getElementById('resultsTitle').textContent=pct>=70?'Well Done!':'Keep Studying';
+  document.getElementById('resultsMsg').textContent='You got '+score+' out of '+quizData.length+' correct.'+(pct>=70?' You have a solid grasp of Early Modernism.':' Review the lesson sections and try again.');
+}
+
+function retryQuiz(){initQuiz();window.scrollTo({top:document.getElementById('quizWrap').offsetTop-100,behavior:'smooth'})}
+
+/* ============ TIMELINE INTERACTIONS ============ */
+function toggleTlDetail(idx){
+  const d=document.getElementById('tlDetail'+idx);
+  const btn=d.nextElementSibling;
+  if(d.classList.contains('open')){d.classList.remove('open');btn.textContent='Read more';}
+  else{d.classList.add('open');btn.textContent='Read less';}
+}
+
+/* Scroll-reveal for timeline items */
+const tlObserver=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('tl-visible');tlObserver.unobserve(e.target);}});
+},{threshold:0.15,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.timeline-item').forEach(el=>tlObserver.observe(el));
+
+/* ============ INIT ============ */
+initMatch();
+initMatch2();
+initQuiz();
+</script>
+</body>
+</html>
