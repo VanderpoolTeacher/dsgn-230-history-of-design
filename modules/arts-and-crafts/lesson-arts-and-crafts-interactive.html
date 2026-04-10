@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arts &amp; Crafts Movement Deep Dive &mdash; DSGN 230</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#111111;--surface:#1a1a1a;--surface2:#222222;--border:#333;
+  --text:#e8e8e8;--text-dim:#999;--accent:#669BBC;--accent-light:#89b4d4;
+  --success:#2ecc71;--fail:#e74c3c;--white:#FDF0D5;--gold:#c9a84c;
+  --font-body:'Segoe UI',system-ui,-apple-system,sans-serif;
+  --font-display:'Georgia',serif;
+  --radius:10px;--shadow:0 4px 24px rgba(0,0,0,.5);
+}
+html.light{
+  --bg:#f4f3f0;--surface:#ffffff;--surface2:#eae9e5;--border:#d5d3cd;
+  --text:#222;--text-dim:#555;--accent:#780000;--accent-light:#C1121F;
+  --success:#1fa85a;--fail:#C1121F;--white:#003049;--gold:#8a6d1b;
+  --shadow:0 4px 24px rgba(0,0,0,.08);
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.7;margin:0}
+a{color:var(--accent-light);text-decoration:none}
+img{max-width:100%;display:block}
+button{cursor:pointer;font-family:var(--font-body)}
+
+.container{max-width:960px;margin:0 auto;padding:0 24px}
+
+/* HERO */
+.hero{
+  min-height:75vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:60px 24px;
+  background:radial-gradient(ellipse at 50% 30%,#1a1a1a 0%,var(--bg) 70%);
+}
+html.light .hero{background:radial-gradient(ellipse at 50% 30%,#e8e6e0 0%,var(--bg) 70%)}
+.hero h1{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.2rem);color:var(--white);margin-bottom:8px;letter-spacing:-.02em;line-height:1.2}
+.hero .subtitle{font-size:1.1rem;color:var(--gold);margin-bottom:8px;font-style:italic}
+.hero p{font-size:1.05rem;color:var(--text-dim);max-width:620px;margin-bottom:36px}
+.btn-start{
+  display:inline-block;padding:14px 40px;background:var(--accent);color:var(--white);
+  border:none;border-radius:var(--radius);font-size:1rem;font-weight:500;
+  transition:all .3s;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.3)
+}
+.btn-start:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,.4)}
+
+/* TOOLBAR */
+.toolbar{display:none;position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:1px solid var(--border);padding:12px 0}
+.toolbar-content{display:flex;justify-content:space-between;align-items:center}
+.toolbar-left{display:flex;gap:16px;align-items:center}
+.back-link{font-size:.9rem;color:var(--accent-light);text-decoration:none;transition:color .2s}
+.back-link:hover{color:var(--accent)}
+.progress-bar{height:3px;background:var(--surface2);border-radius:2px;min-width:150px;overflow:hidden}
+.progress-fill{height:100%;background:var(--accent);transition:width .3s}
+.progress-label{font-size:.8rem;color:var(--text-dim);margin-left:12px;white-space:nowrap}
+.toolbar-right{display:flex;gap:12px;align-items:center}
+.theme-toggle{background:var(--surface2);border:1px solid var(--border);padding:6px 12px;border-radius:var(--radius);color:var(--text);font-size:.9rem;transition:all .2s}
+.theme-toggle:hover{border-color:var(--accent);color:var(--accent)}
+
+/* TAB NAV */
+.tab-nav{display:none;background:var(--surface);border-bottom:1px solid var(--border);overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab-nav-content{display:flex;padding:0 24px}
+.tab-btn{flex:0 0 auto;padding:16px 20px;background:0;border:0;color:var(--text-dim);cursor:pointer;transition:all .3s;font-size:.95rem;border-bottom:2px solid transparent;white-space:nowrap}
+.tab-btn:hover{color:var(--text);border-bottom-color:var(--accent-light)}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
+
+/* MAIN & SECTIONS */
+main{background:var(--bg)}
+.section{display:none;opacity:0;transition:opacity .3s;padding:60px 24px;max-width:960px;margin:0 auto}
+.section.active{display:block;opacity:1}
+.section-header{text-align:center;margin-bottom:48px}
+.period-label{display:inline-block;font-size:.75rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;font-weight:500}
+.section h2{font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.6rem);margin-bottom:8px;line-height:1.2}
+.dates{color:var(--text-dim);font-style:italic;font-size:.95rem;margin-top:8px}
+
+.content-block{max-width:760px;margin:24px auto;padding:28px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);line-height:1.8;text-align:left}
+.content-block p+p{margin-top:16px}
+
+/* TIMELINE */
+.hist-timeline{max-width:760px;margin:32px auto;position:relative;padding:0}
+.hist-timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,transparent,var(--gold) 5%,var(--gold) 95%,transparent);transform:translateX(-50%)}
+.hist-timeline::after{content:'';position:absolute;left:50%;top:-10px;width:16px;height:16px;background:var(--gold);transform:translateX(-50%) rotate(45deg);z-index:2}
+.timeline-item{position:relative;margin-bottom:0;padding:32px 0;display:grid;grid-template-columns:1fr 60px 1fr;align-items:start;gap:0;opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.timeline-item.tl-visible{opacity:1;transform:translateY(0)}
+.timeline-item .tl-content{padding:24px 28px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);transition:all .4s;position:relative}
+.timeline-item:nth-child(odd) .tl-content{grid-column:1;text-align:right}
+.timeline-item:nth-child(even) .tl-content{grid-column:3;text-align:left}
+.timeline-item .tl-content:hover{border-color:var(--gold);box-shadow:0 4px 24px rgba(201,168,76,.15);transform:translateY(-2px)}
+.timeline-item .tl-node{grid-column:2;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:16px;position:relative;z-index:2}
+.tl-diamond{width:18px;height:18px;background:var(--bg);border:2px solid var(--gold);transform:rotate(45deg);transition:all .4s;flex-shrink:0}
+.timeline-item:hover .tl-diamond{background:var(--gold);box-shadow:0 0 12px rgba(201,168,76,.5)}
+.tl-connector{width:2px;flex:1;background:transparent}
+.timeline-year{font-family:var(--font-display);font-weight:700;color:var(--gold);font-size:1.15rem;margin-bottom:10px;letter-spacing:1px;display:inline-flex;align-items:center;gap:8px}
+.timeline-item:nth-child(odd) .timeline-year{justify-content:flex-end}
+.timeline-item:nth-child(even) .timeline-year{justify-content:flex-start}
+.timeline-event{color:var(--text);font-size:.9rem;line-height:1.7}
+.timeline-event strong{color:var(--white);font-weight:600}
+.tl-detail{max-height:0;overflow:hidden;transition:max-height .5s ease,margin .3s ease,opacity .3s ease;opacity:0;margin-top:0;font-size:.85rem;color:var(--text-dim);line-height:1.6}
+.tl-detail.open{max-height:500px;opacity:1;margin-top:12px}
+.tl-toggle{display:inline-block;margin-top:10px;font-size:.78rem;color:var(--accent-light);cursor:pointer;letter-spacing:.5px;text-transform:uppercase;font-weight:500;transition:color .2s;border:none;background:none;padding:0}
+.tl-toggle:hover{color:var(--gold)}
+@media(max-width:640px){
+  .timeline-item{grid-template-columns:24px 1fr;gap:16px}
+  .hist-timeline::before{left:11px;transform:none}
+  .hist-timeline::after{left:11px;transform:rotate(45deg);top:-10px}
+  .timeline-item .tl-node{grid-column:1;padding-top:18px}
+  .timeline-item:nth-child(odd) .tl-content,
+  .timeline-item:nth-child(even) .tl-content{grid-column:2;text-align:left}
+  .timeline-item:nth-child(odd) .timeline-year{justify-content:flex-start}
+}
+
+/* GALLERY */
+.gallery-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;margin:32px auto;max-width:960px}
+.gallery-card{border:1px solid var(--border);border-radius:var(--radius);padding:32px;background:var(--surface);transition:all .3s;text-align:left}
+.gallery-card:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(0,0,0,.3);transform:translateY(-2px)}
+.gc-label{font-size:.78rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:10px;font-weight:500;text-align:left}
+.gc-title{font-family:var(--font-display);font-size:1.35rem;color:var(--white);margin-bottom:6px;line-height:1.3;text-align:left}
+.gc-meta{font-size:.95rem;color:var(--text-dim);margin-bottom:14px;font-style:italic;text-align:left}
+.gc-desc{font-size:1rem;line-height:1.65;color:var(--text);text-align:left}
+
+/* FLIP CARDS */
+.flip-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;margin:32px auto;max-width:960px}
+.flip-card{perspective:1400px;height:440px}
+.flip-card-inner{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d}
+.flip-card.flipped .flip-card-inner{transform:rotateY(180deg)}
+.flip-front,.flip-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;display:flex;flex-direction:column;justify-content:center;padding:32px;text-align:center;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface)}
+.flip-front{background:var(--surface)}
+.flip-back{background:var(--surface2);transform:rotateY(180deg);overflow-y:auto;justify-content:flex-start;text-align:left}
+.flip-name{font-weight:500;font-size:1.35rem;margin-bottom:10px;color:var(--white)}
+.flip-dates{font-size:.95rem;color:var(--text-dim);margin-bottom:14px}
+.flip-hint{font-size:.8rem;color:var(--accent);margin-top:16px;font-style:italic}
+.flip-role{font-weight:500;color:var(--accent);margin-bottom:14px;font-size:.95rem;text-transform:uppercase;letter-spacing:1px}
+.flip-back p{font-size:.95rem;line-height:1.65;color:var(--text);margin-bottom:14px}
+.flip-works{font-size:.88rem;color:var(--text-dim);margin-top:14px;font-style:italic;line-height:1.5}
+
+/* MATCH */
+.match-instructions{text-align:center;color:var(--text-dim);margin-bottom:24px;font-size:.95rem}
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin:32px auto;max-width:720px}
+.match-col-label{text-align:center;font-weight:500;margin-bottom:16px;font-size:.9rem;text-transform:uppercase;letter-spacing:1px;color:var(--accent)}
+#matchLeft,#matchRight,#matchLeft2,#matchRight2{display:flex;flex-direction:column;gap:12px}
+.match-item{padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:all .2s;text-align:center;font-size:.9rem;user-select:none}
+.match-item:hover{border-color:var(--accent)}
+.match-item.selected{background:var(--accent);color:var(--white);border-color:var(--accent)}
+.match-item.matched{background:var(--success);color:var(--white);border-color:var(--success);cursor:default}
+.match-item.wrong{background:var(--fail);border-color:var(--fail);animation:shake .4s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.match-score{text-align:center;margin:16px 0;font-size:.95rem;color:var(--text-dim)}
+.match-feedback{text-align:center;margin-top:16px;padding:12px;border-radius:var(--radius);display:none;font-size:.9rem}
+.match-feedback.show{display:block}
+.match-feedback.success{background:rgba(46,204,113,.1);color:var(--success);border:1px solid var(--success)}
+.match-reset{display:none;margin:16px auto;padding:10px 24px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-size:.9rem;transition:all .2s}
+.match-reset:hover{border-color:var(--accent);color:var(--accent)}
+
+/* QUIZ */
+.quiz-wrap{margin:32px 0}
+.q-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;margin-bottom:24px;text-align:left}
+.q-num{font-size:.85rem;color:var(--text-dim);margin-bottom:12px;text-transform:uppercase;letter-spacing:1px}
+.q-text{font-size:1.05rem;margin-bottom:20px;font-weight:500;line-height:1.5}
+.q-options{display:grid;grid-template-columns:1fr;gap:12px}
+.q-opt{padding:14px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:12px;font-size:.95rem}
+.q-opt:hover{border-color:var(--accent)}
+.q-opt.selected{background:var(--accent);color:var(--white);border-color:var(--accent)}
+.q-opt.correct{background:var(--success);color:var(--white);border-color:var(--success)}
+.q-opt.wrong{background:var(--fail);color:var(--white);border-color:var(--fail)}
+.letter{display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;background:var(--border);border-radius:50%;font-size:.8rem;font-weight:500}
+.q-opt.selected .letter,.q-opt.correct .letter,.q-opt.wrong .letter{background:currentColor;color:var(--white);opacity:.8}
+.q-feedback{padding:14px;background:var(--surface2);border-left:3px solid transparent;border-radius:var(--radius);margin-top:12px;display:none;font-size:.9rem;line-height:1.5}
+.q-feedback.show{display:block}
+.q-feedback.right{border-left-color:var(--success);color:var(--success)}
+.q-feedback.wrong{border-left-color:var(--fail);color:var(--fail)}
+
+/* RESULTS */
+.results-card{display:none;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:40px 28px;max-width:500px;margin:40px auto;text-align:center}
+.results-card.show{display:block}
+.score-ring{width:120px;height:120px;border-radius:50%;margin:0 auto 24px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:500;position:relative;background:var(--surface2)}
+.score-ring.pass{color:var(--success);border:3px solid var(--success)}
+.score-ring.fail{color:var(--fail);border:3px solid var(--fail)}
+.score-num{font-size:2.2rem;line-height:1}
+.score-lbl{font-size:.75rem;text-transform:uppercase;letter-spacing:1px;margin-top:4px;opacity:.7}
+.results-card h3{margin-bottom:12px;font-size:1.3rem}
+.results-card p{color:var(--text-dim);margin-bottom:24px}
+.btn-retry{padding:12px 32px;background:var(--accent);color:var(--white);border:none;border-radius:var(--radius);font-size:.95rem;font-weight:500;cursor:pointer;transition:all .2s}
+.btn-retry:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.3)}
+
+/* SECTION NAV */
+.section-nav{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border)}
+.nav-btn{padding:12px 24px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);color:var(--text-dim);font-size:.95rem;cursor:pointer;transition:all .2s}
+.nav-btn:hover{border-color:var(--accent);color:var(--accent)}
+.nav-btn.primary{background:var(--accent);color:var(--white);border-color:var(--accent)}
+.nav-btn.primary:hover{box-shadow:0 4px 12px rgba(0,0,0,.3)}
+
+/* FOOTER */
+.footer{background:var(--surface);border-top:1px solid var(--border);padding:32px 24px;text-align:center;color:var(--text-dim);font-size:.9rem;margin-top:60px}
+.footer p{margin:0}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .match-grid{grid-template-columns:1fr;gap:20px}
+  .toolbar-content{flex-direction:column;gap:12px;align-items:flex-start}
+  .flip-grid{grid-template-columns:1fr;max-width:100%}
+  .flip-card{height:auto;min-height:420px}
+  .gallery-grid{grid-template-columns:1fr;max-width:100%}
+}
+</style>
+</head>
+<body>
+
+<div class="toolbar" id="toolbar">
+  <div class="container">
+    <div class="toolbar-content">
+      <div class="toolbar-left">
+        <a href="../../index.html" class="back-link">&larr; Back to Index</a>
+        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="progress-label" id="progressLabel">Section 1 / 6</div>
+      </div>
+      <div class="toolbar-right">
+        <button class="theme-toggle" onclick="toggleTheme()">Theme</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<nav class="tab-nav" id="tabNav">
+  <div class="container" style="padding:0">
+    <div class="tab-nav-content">
+      <button class="tab-btn active" onclick="goSection(0)">Context</button>
+      <button class="tab-btn" onclick="goSection(1)">Gallery</button>
+      <button class="tab-btn" onclick="goSection(2)">People</button>
+      <button class="tab-btn" onclick="goSection(3)">Themes</button>
+      <button class="tab-btn" onclick="goSection(4)">Matching</button>
+      <button class="tab-btn" onclick="goSection(5)">Quiz</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+<div class="hero" id="hero">
+  <h1>The Arts &amp; Crafts Movement</h1>
+  <div class="subtitle">c. 1880&ndash;1910</div>
+  <p>William Morris, the Guild, the Kelmscott Press, and the argument that how something is made matters as much as what it looks like. The first modern design movement with a moral program.</p>
+  <button class="btn-start" onclick="startLesson()">Start Lesson</button>
+</div>
+
+<!-- ===== SECTION 0: CONTEXT ===== -->
+<div class="section" data-idx="0">
+  <div class="section-header">
+    <div class="period-label">History</div>
+    <h2>Historical Context</h2>
+    <div class="dates">1880&ndash;1910: Design with a Conscience</div>
+  </div>
+
+  <div class="content-block" style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap">
+    <figure style="flex:0 0 280px;margin:0">
+      <img src="images/Red_House.jpg"
+           alt="Philip Webb's Red House in Upton: red brick, steeply pitched tiled roofs, and Gothic details"
+           loading="lazy" style="width:100%;border-radius:6px">
+      <figcaption style="font-size:.75rem;color:var(--text-dim);margin-top:6px">Philip Webb, <em>Red House</em>, Bexleyheath, 1860. The first Arts and Crafts total environment. Image: Ethan Doyle White, CC BY-SA 4.0, via Wikimedia Commons.</figcaption>
+    </figure>
+    <div style="flex:1;min-width:220px">
+      <p><strong>Design as an argument about how to live.</strong> By the 1860s, Victorian design reform had built schools, museums, and institutions, but had not changed the everyday objects in most Victorian homes. Then a twenty-something Oxford graduate named William Morris read Ruskin&rsquo;s <em>Nature of Gothic</em> and decided to take it literally &mdash; to stop criticizing industrial production and start making an alternative.</p>
+      <p style="margin-top:16px">In 1861, Morris and six partners founded a firm to make furniture, stained glass, wallpaper, and textiles by hand under the designer&rsquo;s own supervision. Within thirty years they had launched one of the most influential design movements in history &mdash; a movement that would feed directly into Art Nouveau, the Wiener Werkst&auml;tte, the Werkbund, and the Bauhaus.</p>
+      <p style="margin-top:16px">This is where design stops being a purely visual problem and becomes an argument about ethics, labor, and how people should live.</p>
+    </div>
+  </div>
+
+  <div style="margin:48px 0 8px">
+    <div class="period-label" style="text-align:center;display:block">Defining Traits</div>
+    <h3 style="font-family:var(--font-display);font-size:1.4rem;margin:4px 0;text-align:center">Key Ideas</h3>
+    <p style="font-size:.85rem;color:var(--text-dim);text-align:center">Click each card to reveal an example</p>
+  </div>
+
+  <div class="flip-grid">
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">The Unity of Art and Labor</div>
+          <div class="flip-dates">Ruskin&rsquo;s central claim</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Idea</div>
+          <p>Designing and making cannot be separated without damaging both. A well-designed object is one whose maker enjoyed making it. Ugly objects, in this view, are usually evidence of unhappy work somewhere up the supply chain.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Honest Materials</div>
+          <div class="flip-dates">Truth to the medium</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Principle</div>
+          <p>Do not stain softwood to imitate hardwood. Do not machine-cut dovetails and pretend they were hand-cut. Do not make iron look like bronze. A signature of the movement is quartersawn oak with visible pegs, through-tenons, and exposed joinery.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">The Total Environment</div>
+          <div class="flip-dates">Every room, every object</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Practice</div>
+          <p>Walls, floors, ceilings, furniture, fabrics, cutlery, lighting, and gardens were treated as a single composition. This is why Morris &amp; Co. ended up making so many different products &mdash; once you commit to designing a whole environment, you need to control everything in it.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Medievalism as Method</div>
+          <div class="flip-dates">Looking backward to move forward</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Historical Source</div>
+          <p>The movement&rsquo;s favored sources were medieval &mdash; English parish churches, illuminated manuscripts, late-medieval houses &mdash; not out of nostalgia but as evidence of cultures where craft was respected, materials were honest, and ornament grew out of making rather than being applied to it.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Nature as Pattern</div>
+          <div class="flip-dates">Flattened, structural, repeating</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Ornament</div>
+          <p>Arts and Crafts ornament is obsessively botanical &mdash; willow, honeysuckle, acanthus, daisy, strawberry &mdash; but always flattened into repeating patterns that acknowledge the surface they decorate. Where Art Nouveau will later dissolve these forms into movement, Arts and Crafts keeps them woven into the grid of a weave or a print block.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Design as Ethics</div>
+          <div class="flip-dates">The moral weight of objects</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Core Claim</div>
+          <p>The movement&rsquo;s most durable contribution: the conviction that design decisions are moral decisions. Every later argument about sustainability, fair labor, ethical sourcing, or &ldquo;honest&rdquo; materials is speaking Morris&rsquo;s language, whether it knows it or not.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">The Guild Model</div>
+          <div class="flip-dates">Cooperative workshops</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Institution</div>
+          <p>The movement organized itself in &ldquo;guilds&rdquo; &mdash; small, semi-cooperative workshops modeled on medieval crafts. The Century Guild (1882), the Art Workers&rsquo; Guild (1884), and C. R. Ashbee&rsquo;s Guild of Handicraft (1888) were the templates for the Wiener Werkst&auml;tte and the early Bauhaus workshops.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Socialism as Context</div>
+          <div class="flip-dates">Morris&rsquo;s political turn</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Politics</div>
+          <p>By the 1880s Morris had joined the Socialist League, arguing that you could not have joyful labor inside capitalism, no matter how beautifully individual workshops behaved. The political dimension &mdash; that design reform required social reform &mdash; distinguishes Arts and Crafts from every earlier reform movement.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <h3 style="text-align:center;font-family:var(--font-display);font-size:1.4rem;margin:56px 0 24px">Historical Timeline</h3>
+  <p style="text-align:center;color:var(--text-dim);font-size:.9rem;margin-bottom:32px">Eight turning points that shaped the movement. Hover cards to expand, click "Read more" for context.</p>
+
+  <div class="hist-timeline">
+
+    <div class="timeline-item">
+      <div class="tl-content">
+        <div class="timeline-year">1853</div>
+        <div class="timeline-event"><strong>Ruskin publishes "The Nature of Gothic"</strong> &mdash; the second volume of <em>The Stones of Venice</em> contains the chapter that will become the movement&rsquo;s intellectual founding text.</div>
+        <div class="tl-detail" id="tlDetail0">Ruskin argues that Gothic architecture is humane because it lets ordinary masons make creative decisions. The imperfect, living marks of the hand are evidence that the worker is a human being rather than a tool. A twenty-year-old William Morris reads the chapter at Oxford and later says it redirected his life.</div>
+        <button class="tl-toggle" onclick="toggleTlDetail(0)">Read more</button>
+      </div>
+      <div class="tl-node"><div class="tl-diamond"></div><div class="tl-connector"></div></div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="tl-content">
+        <div class="timeline-year">1860</div>
+        <div class="timeline-event"><strong>Red House is completed</strong> at Bexleyheath for William and Jane Morris &mdash; designed by Philip Webb, decorated by the Pre-Raphaelite circle.</div>
+        <div class="tl-detail" id="tlDetail1">The first Arts and Crafts total environment. Brickwork is exposed and honest; the plan follows domestic needs rather than symmetry; every wall, tile, window, and cabinet is designed by Morris or his friends. The realization that such objects cannot be purchased commercially will directly produce the firm a year later.</div>
+        <button class="tl-toggle" onclick="toggleTlDetail(1)">Read more</button>
+      </div>
+      <div class="tl-node"><div class="tl-diamond"></div><div class="tl-connector"></div></div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="tl-content">
+        <div class="timeline-year">1861</div>
+        <div class="timeline-event"><strong>Morris, Marshall, Faulkner &amp; Co. is founded</strong> &mdash; "Fine Art Workmen in Painting, Carving, Furniture and the Metals."</div>
+        <div class="tl-detail" id="tlDetail2">Seven partners, including Webb, Rossetti, Burne-Jones, and Ford Madox Brown. Their debut at the 1862 International Exhibition wins two medals and much ridicule. Reorganized in 1875 as Morris &amp; Co., the firm will remain central to the movement for the rest of the century.</div>
+        <button class="tl-toggle" onclick="toggleTlDetail(2)">Read more</button>
+      </div>
+      <div class="tl-node"><div class="tl-diamond"></div><div class="tl-connector"></div></div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="tl-content">
+        <div class="timeline-year">1883</div>
+        <div class="timeline-event"><strong>Morris joins the Democratic Federation</strong> and begins his public career as a socialist, while his firm issues the <em>Strawberry Thief</em> printed cotton.</div>
+        <div class="tl-detail" id="tlDetail3">Morris had spent years developing the indigo-discharge technique used for <em>Strawberry Thief</em>. In the same year he commits publicly to socialism, arguing that the movement&rsquo;s ideals cannot be fulfilled inside capitalism. The two events &mdash; a new fabric and a new politics &mdash; happen in the same month.</div>
+        <button class="tl-toggle" onclick="toggleTlDetail(3)">Read more</button>
+      </div>
+      <div class="tl-node"><div class="tl-diamond"></div><div class="tl-connector"></div></div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="tl-content">
+        <div class="timeline-year">1888</div>
+        <div class="timeline-event"><strong>The first Arts and Crafts Exhibition</strong> opens at the New Gallery in London. C. R. Ashbee founds the Guild of Handicraft the same year in London&rsquo;s East End.</div>
+        <div class="tl-detail" id="tlDetail4">The exhibition lists more than 500 items by nearly 150 makers. In a committee meeting before opening, the bookbinder T. J. Cobden-Sanderson proposes the phrase "Arts and Crafts" and it sticks. Ashbee&rsquo;s guild will become the most famous of the movement&rsquo;s craft cooperatives.</div>
+        <button class="tl-toggle" onclick="toggleTlDetail(4)">Read more</button>
+      </div>
+      <div class="tl-node"><div class="tl-diamond"></div><div class="tl-connector"></div></div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="tl-content">
+        <div class="timeline-year">1890</div>
+        <div class="timeline-event"><strong>Morris publishes <em>News from Nowhere</em></strong> &mdash; a utopian novel in which a man falls asleep in Hammersmith and wakes up in a post-industrial England where people make things because they want to.</div>
+        <div class="tl-detail" id="tlDetail5">The book is the clearest statement of the political vision behind the design movement. In Morris&rsquo;s imagined future, factories are gone, the Thames is clean, Parliament has been converted into a storehouse for manure, and work has become a form of pleasure. The Kelmscott Press edition of 1892 is itself a beautiful object.</div>
+        <button class="tl-toggle" onclick="toggleTlDetail(5)">Read more</button>
+      </div>
+      <div class="tl-node"><div class="tl-diamond"></div><div class="tl-connector"></div></div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="tl-content">
+        <div class="timeline-year">1891</div>
+        <div class="timeline-event"><strong>Morris founds the Kelmscott Press</strong> in Hammersmith, London. Over seven years it will produce 53 books.</div>
+        <div class="tl-detail" id="tlDetail6">Morris designs three typefaces (Golden, Troy, Chaucer), oversees hand-made paper from Batchelor &amp; Sons, commissions wood engravings, and personally draws borders and initials. The press single-handedly launches the worldwide private-press revival.</div>
+        <button class="tl-toggle" onclick="toggleTlDetail(6)">Read more</button>
+      </div>
+      <div class="tl-node"><div class="tl-diamond"></div><div class="tl-connector"></div></div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="tl-content">
+        <div class="timeline-year">1896</div>
+        <div class="timeline-event"><strong>The Kelmscott Chaucer</strong> is completed; William Morris dies later the same year.</div>
+        <div class="tl-detail" id="tlDetail7">The Chaucer is 556 pages, 87 illustrations by Burne-Jones, 14 large borders, and 26 large initial words designed by Morris. It is the masterpiece of the private-press movement. Morris dies on 3 October 1896; his doctor reports that the cause was "simply being William Morris, and having done more work than most ten men."</div>
+        <button class="tl-toggle" onclick="toggleTlDetail(7)">Read more</button>
+      </div>
+      <div class="tl-node"><div class="tl-diamond"></div><div class="tl-connector"></div></div>
+    </div>
+
+  </div>
+
+  <div class="section-nav">
+    <button class="nav-btn" onclick="startLesson()">&larr; Intro</button>
+    <button class="nav-btn primary" onclick="goSection(1)">Next: Gallery &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 1: GALLERY ===== -->
+<div class="section" data-idx="1">
+  <div class="section-header">
+    <div class="period-label">Objects</div>
+    <h2>Iconic Works</h2>
+    <div class="dates">Eight landmarks of the movement</div>
+  </div>
+
+  <div class="content-block">
+    <p>The Arts and Crafts Movement produced an unusually wide range of iconic objects: houses, textiles, books, furniture, silverware, and whole workshops. The eight works below span its first generation &mdash; from Red House in 1860 to the Gamble House nearly fifty years later &mdash; and together sketch the reach of the movement across media, nations, and scales.</p>
+  </div>
+
+  <div class="gallery-grid">
+
+    <div class="gallery-card">
+      <div class="gc-label">Architecture &middot; 1860</div>
+      <div class="gc-title">Red House</div>
+      <div class="gc-meta">Philip Webb &middot; Bexleyheath, Kent</div>
+      <div class="gc-desc">Designed by Webb for William and Jane Morris, and decorated collaboratively by Morris, Webb, Burne-Jones, Rossetti, and Ford Madox Brown. The first Arts and Crafts total environment and the direct occasion for the founding of Morris &amp; Co.</div>
+    </div>
+
+    <div class="gallery-card">
+      <div class="gc-label">Textile &middot; 1883</div>
+      <div class="gc-title">Strawberry Thief</div>
+      <div class="gc-meta">William Morris &middot; Indigo-discharge cotton</div>
+      <div class="gc-desc">A printed cotton depicting the thrushes Morris watched robbing strawberries from the beds at Kelmscott Manor. Produced using an indigo-discharge technique Morris personally revived after years of experimentation. Still one of the most recognizable textile designs in history.</div>
+    </div>
+
+    <div class="gallery-card">
+      <div class="gc-label">Wallpaper &middot; 1887</div>
+      <div class="gc-title">Willow Bough</div>
+      <div class="gc-meta">William Morris &middot; Block-printed wallpaper</div>
+      <div class="gc-desc">A calm, all-over pattern of willow leaves on slender branches. The most popular of Morris&rsquo;s wallpapers and has never been out of production. Morris designed more than fifty wallpapers in total; this one has outlasted all the others in public affection.</div>
+    </div>
+
+    <div class="gallery-card">
+      <div class="gc-label">Book &middot; 1896</div>
+      <div class="gc-title">The Kelmscott Chaucer</div>
+      <div class="gc-meta">Morris, Burne-Jones, Kelmscott Press</div>
+      <div class="gc-desc">556 pages, 87 illustrations by Burne-Jones, fourteen large borders, eighteen frames, twenty-six large initial words designed by Morris. Printed on hand-made paper in Morris&rsquo;s own types. 425 paper copies and 13 on vellum. The masterpiece of the private-press movement.</div>
+    </div>
+
+    <div class="gallery-card">
+      <div class="gc-label">Furniture &middot; from 1860s</div>
+      <div class="gc-title">The Sussex Chair</div>
+      <div class="gc-meta">Morris &amp; Co. &middot; Ebonized beech with rush seat</div>
+      <div class="gc-desc">A simple country chair based on a traditional Sussex pattern, ebonized and rush-seated, sold for a few shillings through Morris &amp; Co. for forty years. The ubiquitous symbol of the unpretentious, honest craft furniture the movement wanted to produce.</div>
+    </div>
+
+    <div class="gallery-card">
+      <div class="gc-label">Metalwork &middot; c. 1904</div>
+      <div class="gc-title">Ashbee Decanter</div>
+      <div class="gc-meta">C. R. Ashbee, Guild of Handicraft &middot; Silver and glass</div>
+      <div class="gc-desc">Green glass with hand-chased silver mounts, coiled wire handles, and small turquoise cabochons. A signature object of the guild movement: quiet, un-showy, medieval in feeling but distinctly modern in proportion. Produced at Ashbee&rsquo;s workshops in Chipping Campden.</div>
+    </div>
+
+    <div class="gallery-card">
+      <div class="gc-label">Architecture &middot; 1897&ndash;1909</div>
+      <div class="gc-title">Glasgow School of Art</div>
+      <div class="gc-meta">Charles Rennie Mackintosh &middot; Glasgow, Scotland</div>
+      <div class="gc-desc">Stone, iron, and glass on a steep urban site, with an austere north elevation and a two-storey library carved in dark-stained pine. Pushes Arts and Crafts principles toward a haunting, proto-modernist register. Severely damaged by fires in 2014 and 2018.</div>
+    </div>
+
+    <div class="gallery-card">
+      <div class="gc-label">Architecture &middot; 1908&ndash;1909</div>
+      <div class="gc-title">The Gamble House</div>
+      <div class="gc-meta">Greene and Greene &middot; Pasadena, California</div>
+      <div class="gc-desc">A California bungalow designed for David and Mary Gamble of Procter &amp; Gamble. Extraordinary teak and redwood joinery, Japanese-influenced bracketing, and custom stained glass by the Sturdy-Lange studio. The masterpiece of American Arts and Crafts domestic architecture.</div>
+    </div>
+
+  </div>
+
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(0)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(2)">Next: People &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 2: PEOPLE ===== -->
+<div class="section" data-idx="2">
+  <div class="section-header">
+    <div class="period-label">Biography</div>
+    <h2>Key People</h2>
+    <div class="dates">The designers, writers, and organizers of the movement</div>
+  </div>
+
+  <div class="flip-grid">
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">William Morris</div>
+          <div class="flip-dates">1834&ndash;1896</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Designer, Writer, Manufacturer, Socialist</div>
+          <p>The indispensable figure. Poet, designer, manufacturer, translator, printer, socialist, lecturer. Founded Morris &amp; Co., wrote or translated more than forty books, delivered hundreds of political lectures, and designed the wallpapers and textiles that now stand for an entire decorative idiom.</p>
+          <div class="flip-works">Strawberry Thief (1883) &middot; Willow Bough (1887) &middot; News from Nowhere (1890) &middot; Kelmscott Chaucer (1896)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Philip Webb</div>
+          <div class="flip-dates">1831&ndash;1915</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Architect</div>
+          <p>Morris&rsquo;s closest collaborator and the architect of Red House. A rigorous, austere designer who pioneered the movement&rsquo;s emphasis on vernacular building, honest materials, and unshowy craftsmanship. His country houses shaped a whole generation of English domestic architecture.</p>
+          <div class="flip-works">Red House (1860) &middot; Standen (1894) &middot; Clouds (1891)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Edward Burne-Jones</div>
+          <div class="flip-dates">1833&ndash;1898</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Painter &amp; Stained-Glass Designer</div>
+          <p>Morris&rsquo;s closest friend from Oxford. His elongated, dreamy figures are the visual signature of high-Morris stained glass and tapestry. Collaborated with Morris on the Kelmscott Chaucer, designing its 87 illustrations &mdash; arguably the most ambitious book of the movement.</p>
+          <div class="flip-works">Kelmscott Chaucer illustrations &middot; Morris &amp; Co. stained glass &middot; Briar Rose tapestries</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Dante Gabriel Rossetti</div>
+          <div class="flip-dates">1828&ndash;1882</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Pre-Raphaelite Painter</div>
+          <p>Founding partner of the Morris firm and the link between the literary-artistic world of the Pre-Raphaelite Brotherhood and the decorative-arts world of the new firm. Less central to the movement after the 1870s but critical to its early reputation and romantic self-image.</p>
+          <div class="flip-works">Morris firm partnership &middot; Decorative painted cabinets &middot; Red House murals</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">C. R. Ashbee</div>
+          <div class="flip-dates">1863&ndash;1942</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Architect &amp; Founder of the Guild of Handicraft</div>
+          <p>Founded the Guild of Handicraft in London&rsquo;s East End in 1888 and moved it to the Cotswold village of Chipping Campden in 1902 in an attempt to recreate Ruskin&rsquo;s vision of a craft community. The Guild made silver, furniture, and metalwork of exceptional quality until it went bankrupt in 1907.</p>
+          <div class="flip-works">Guild of Handicraft (1888) &middot; Chipping Campden relocation (1902) &middot; Silver decanters and chalices</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Walter Crane</div>
+          <div class="flip-dates">1845&ndash;1915</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Illustrator, Designer, Organizer</div>
+          <p>Illustrator, wallpaper designer, teacher, and the movement&rsquo;s most effective publicist. First president of the Arts and Crafts Exhibition Society, author of several influential books on design theory, and one of the first artists to take children&rsquo;s book illustration seriously as a design problem.</p>
+          <div class="flip-works">Children&rsquo;s book illustrations &middot; The Claims of Decorative Art (1892) &middot; The Bases of Design (1898)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">May Morris</div>
+          <div class="flip-dates">1862&ndash;1938</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Embroiderer, Designer, Editor</div>
+          <p>William Morris&rsquo;s younger daughter. Took over the firm&rsquo;s embroidery department at twenty-three and became a major designer and theorist of needlework in her own right. Co-founded the Women&rsquo;s Guild of Arts in 1907 after being refused membership in the all-male Art Workers&rsquo; Guild.</p>
+          <div class="flip-works">Morris &amp; Co. embroidery &middot; Women&rsquo;s Guild of Arts (1907) &middot; Collected Works of William Morris editor</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">C. F. A. Voysey</div>
+          <div class="flip-dates">1857&ndash;1941</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Architect &amp; Designer</div>
+          <p>The most commercially successful Arts and Crafts architect. His compact, whitewashed houses with low eaves and horizontal windows were published widely in Europe and deeply influenced early modernism. Also designed wallpapers, fabrics, furniture, and hardware.</p>
+          <div class="flip-works">The Orchard, Chorleywood (1899) &middot; Broadleys &middot; Patterns for Liberty &amp; Co.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Charles Rennie Mackintosh</div>
+          <div class="flip-dates">1868&ndash;1928</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Architect &amp; Designer (Glasgow)</div>
+          <p>Glasgow architect and designer whose spare, geometric, slightly haunting interiors occupy the border between Arts and Crafts and early modernism. Deeply admired by the Vienna Secession. His interiors for Miss Cranston&rsquo;s tearooms pushed the movement into a distinctly Scottish register.</p>
+          <div class="flip-works">Glasgow School of Art (1897&ndash;1909) &middot; Hill House (1902) &middot; Willow Tearooms</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Gustav Stickley</div>
+          <div class="flip-dates">1858&ndash;1942</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">American Furniture Maker &amp; Publisher</div>
+          <p>American furniture maker from Syracuse, New York, whose firm Craftsman Workshops made the most recognizable American Arts and Crafts furniture: rectilinear, quartersawn oak, pinned through-tenons. Popularized the American bungalow as a modest, honest alternative to the Victorian mansion.</p>
+          <div class="flip-works">Craftsman Workshops &middot; <em>The Craftsman</em> magazine (1901&ndash;1916) &middot; Craftsman house plans</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Elbert Hubbard</div>
+          <div class="flip-dates">1856&ndash;1915</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Founder of the Roycroft Community</div>
+          <p>Soap salesman turned cultural entrepreneur who founded the Roycroft community at East Aurora, New York, in 1895 after visiting Morris&rsquo;s Kelmscott Press. The Roycroft made books, furniture, metalwork, and leather goods that carried Arts and Crafts ideas to a mass American audience.</p>
+          <div class="flip-works">Roycroft Community (1895) &middot; <em>The Philistine</em> magazine &middot; Roycroft books and copper</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Ernest Gimson</div>
+          <div class="flip-dates">1864&ndash;1919</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Furniture Maker, Cotswold School</div>
+          <p>The central figure of the Cotswold school of craft furniture. Moved with Ernest and Sidney Barnsley to Sapperton in Gloucestershire in 1893, where their workshops produced ladder-back chairs, pegged oak dressers, and inlaid cabinets of exceptional refinement. The quiet heart of the movement&rsquo;s furniture tradition.</p>
+          <div class="flip-works">Ladder-back chairs &middot; Daneway House workshops &middot; Inlaid oak cabinets</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(1)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(3)">Next: Themes &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 3: THEMES ===== -->
+<div class="section" data-idx="3">
+  <div class="section-header">
+    <div class="period-label">Ideas</div>
+    <h2>Themes &amp; Institutions</h2>
+    <div class="dates">The arguments and organizations that held the movement together</div>
+  </div>
+
+  <div class="content-block">
+    <p>Unlike earlier design-reform efforts, Arts and Crafts was a coherent <em>movement</em>: a set of arguments defended by a network of guilds, journals, and exhibitions across Britain, Europe, and the United States. Click each card to flip it.</p>
+  </div>
+
+  <div class="flip-grid">
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Morris &amp; Co.</div>
+          <div class="flip-dates">Founded 1861</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">The Founding Firm</div>
+          <p>Originally Morris, Marshall, Faulkner &amp; Co., reorganized in 1875 under Morris&rsquo;s sole ownership. Made furniture, stained glass, wallpapers, printed textiles, woven carpets, tapestries, tiles, ceramics, embroideries, and books. Still in existence as a wallpaper and textile firm more than 160 years later.</p>
+          <div class="flip-works">Red House decoration &middot; Merton Abbey Works &middot; 50+ wallpaper designs</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">The Guild Movement</div>
+          <div class="flip-dates">From 1882</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Workshop Organization</div>
+          <p>The movement organized itself in "guilds" patterned on medieval craft workshops: the Century Guild (1882), the Art Workers&rsquo; Guild (1884), the Guild of Handicraft (1888), the Birmingham Guild (1890), and many others. These were small cooperative businesses &mdash; usually financially precarious &mdash; that nonetheless produced an astonishing body of work.</p>
+          <div class="flip-works">Century Guild &middot; Art Workers&rsquo; Guild &middot; Guild of Handicraft &middot; Birmingham Guild</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">The Arts and Crafts Exhibitions</div>
+          <div class="flip-dates">1888 onward</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Public Events</div>
+          <p>The Arts and Crafts Exhibition Society, founded in 1887, held its first show at the New Gallery in London in 1888 with more than 500 items by nearly 150 makers. The phrase "Arts and Crafts" came out of a committee meeting for that exhibition. Further shows followed at roughly triennial intervals, spreading the visual language internationally.</p>
+          <div class="flip-works">New Gallery exhibitions &middot; International copies in Vienna, Paris, and the US</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">The Kelmscott Press</div>
+          <div class="flip-dates">1891&ndash;1898</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Private Press</div>
+          <p>Morris&rsquo;s private press at Hammersmith, London. Produced 53 books in seven years using hand-made paper, hand-set type in Morris&rsquo;s own designs, and wood-engraved illustrations. Closed after Morris&rsquo;s death and inspired a worldwide private-press revival that transformed modern book design.</p>
+          <div class="flip-works">Golden, Troy, and Chaucer types &middot; Kelmscott Chaucer &middot; News from Nowhere edition</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Merton Abbey Works</div>
+          <div class="flip-dates">From 1881</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Production Site</div>
+          <p>Morris &amp; Co.&rsquo;s main production complex, on the banks of the River Wandle south of London. Housed the firm&rsquo;s dyeing, weaving, tapestry, stained-glass, and carpet operations. Morris ran it as close to a medieval workshop as late-Victorian commercial pressures allowed: natural dyes, hand looms, and fair wages.</p>
+          <div class="flip-works">Natural dyeing &middot; Hand-loom weaving &middot; Hand-knotted carpets &middot; Tapestry workshop</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">The American Craftsman Movement</div>
+          <div class="flip-dates">1895&ndash;1916</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">American Adaptation</div>
+          <p>Centered on Gustav Stickley&rsquo;s Craftsman Workshops, his magazine <em>The Craftsman</em>, Elbert Hubbard&rsquo;s Roycroft community, and the California bungalow architecture of Greene and Greene. By 1910, Arts and Crafts had become in America less a radical critique of industry and more a middle-class aesthetic of simplicity and natural materials.</p>
+          <div class="flip-works">Craftsman Workshops &middot; Roycroft &middot; Gamble House &middot; Craftsman bungalows</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Wiener Werkst&auml;tte</div>
+          <div class="flip-dates">Vienna, founded 1903</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Direct Descendant</div>
+          <p>Founded by Josef Hoffmann and Koloman Moser, explicitly modeled on Ashbee&rsquo;s Guild of Handicraft. One of the most important direct descendants of the British movement on the Continent, and a key bridge between Arts and Crafts, the Vienna Secession, and early modernism.</p>
+          <div class="flip-works">Hoffmann silverware &middot; Moser graphics &middot; Palais Stoclet interiors (Brussels)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">From Morris to the Bauhaus</div>
+          <div class="flip-dates">Intellectual inheritance</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Legacy</div>
+          <p>The Bauhaus founding manifesto of 1919 &mdash; written by Walter Gropius under a Feininger woodcut of a Gothic cathedral &mdash; is a direct descendant of Morris. "Let us then create a new guild of craftsmen," Gropius wrote, "without the class-distinctions that raise an arrogant barrier between craftsman and artist." Ruskin, filtered through Morris, speaking in German.</p>
+          <div class="flip-works">Deutscher Werkbund (1907) &middot; Bauhaus manifesto (1919) &middot; Early Bauhaus workshops</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(2)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(4)">Next: Matching &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 4: MATCHING ===== -->
+<div class="section" data-idx="4">
+  <div class="section-header">
+    <div class="period-label">Practice</div>
+    <h2>Matching</h2>
+    <div class="dates">Match people to works, then events to years</div>
+  </div>
+
+  <p class="match-instructions">Click a person on the left, then their iconic work on the right.</p>
+
+  <div class="match-grid">
+    <div>
+      <div class="match-col-label">Person</div>
+      <div id="matchLeft"></div>
+    </div>
+    <div>
+      <div class="match-col-label">Iconic Work</div>
+      <div id="matchRight"></div>
+    </div>
+  </div>
+  <div class="match-score" id="matchScore"></div>
+  <div class="match-feedback" id="matchFeedback"></div>
+  <button class="match-reset" id="matchResetBtn" onclick="resetMatch()" style="display:none">Try Again</button>
+
+  <h3 style="text-align:center;font-family:var(--font-display);font-size:1.3rem;margin:64px 0 16px">Chronology</h3>
+  <p class="match-instructions">Click an event on the left, then its year on the right.</p>
+
+  <div class="match-grid">
+    <div>
+      <div class="match-col-label">Event</div>
+      <div id="matchLeft2"></div>
+    </div>
+    <div>
+      <div class="match-col-label">Year</div>
+      <div id="matchRight2"></div>
+    </div>
+  </div>
+  <div class="match-score" id="matchScore2"></div>
+  <div class="match-feedback" id="matchFeedback2"></div>
+  <button class="match-reset" id="matchResetBtn2" onclick="resetMatch2()" style="display:none">Try Again</button>
+
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(3)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(5)">Next: Quiz &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 5: QUIZ ===== -->
+<div class="section" data-idx="5">
+  <div class="section-header">
+    <div class="period-label">Knowledge Check</div>
+    <h2>Arts &amp; Crafts Quiz</h2>
+    <div class="dates">Test what you&rsquo;ve learned</div>
+  </div>
+
+  <div class="quiz-wrap" id="quizWrap"></div>
+
+  <div class="results-card" id="resultsCard">
+    <div class="score-ring" id="scoreRing">
+      <div class="score-num" id="scoreNum">0%</div>
+      <div class="score-lbl">Score</div>
+    </div>
+    <h3 id="resultsTitle">Results</h3>
+    <p id="resultsMsg"></p>
+    <button class="btn-retry" onclick="retryQuiz()">Try Again</button>
+  </div>
+
+  <div class="section-nav" id="quizNav">
+    <button class="nav-btn" onclick="goSection(4)">&larr; Previous</button>
+    <span></span>
+  </div>
+</div>
+
+</main>
+
+<footer class="footer">
+  <p>DSGN 230 &mdash; Survey of Design History<br>The Arts &amp; Crafts Movement Deep Dive</p>
+</footer>
+
+<script>
+/* ============ GLOBALS ============ */
+const TOTAL_SECTIONS = 6;
+let currentSection = 0;
+
+/* ============ NAVIGATION ============ */
+function startLesson(){
+  document.getElementById('hero').style.display='none';
+  document.getElementById('toolbar').style.display='block';
+  document.getElementById('tabNav').style.display='block';
+  goSection(0);
+}
+
+function goSection(idx){
+  currentSection=idx;
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.section')[idx].classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>{b.classList.toggle('active',i===idx)});
+  document.getElementById('progressLabel').textContent='Section '+(idx+1)+' / '+TOTAL_SECTIONS;
+  document.getElementById('progressFill').style.width=((idx+1)/TOTAL_SECTIONS*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleTheme(){document.documentElement.classList.toggle('light')}
+
+/* ============ MATCHING 1: Person -> Work ============ */
+const matchPairs=[
+  {left:'William Morris',right:'News from Nowhere'},
+  {left:'Philip Webb',right:'Red House'},
+  {left:'Edward Burne-Jones',right:'Kelmscott Chaucer illustrations'},
+  {left:'C. R. Ashbee',right:'Guild of Handicraft'},
+  {left:'Walter Crane',right:'The Claims of Decorative Art'},
+  {left:'May Morris',right:'Morris & Co. embroidery dept.'},
+  {left:'Charles Rennie Mackintosh',right:'Glasgow School of Art'},
+  {left:'Gustav Stickley',right:'The Craftsman magazine'},
+];
+let m1Left=null,m1Matched=0;
+
+function initMatch(){
+  const lC=document.getElementById('matchLeft'),rC=document.getElementById('matchRight');
+  const shuffledL=[...matchPairs].sort(()=>Math.random()-.5);
+  const shuffledR=[...matchPairs].sort(()=>Math.random()-.5);
+  lC.innerHTML='';rC.innerHTML='';
+  shuffledL.forEach(p=>{
+    const d=document.createElement('div');d.className='match-item';d.textContent=p.left;
+    d.dataset.key=p.left;d.onclick=()=>selectMatchLeft(d);lC.appendChild(d);
+  });
+  shuffledR.forEach(p=>{
+    const d=document.createElement('div');d.className='match-item';d.textContent=p.right;
+    d.dataset.key=p.left;d.onclick=()=>selectMatchRight(d);rC.appendChild(d);
+  });
+  m1Left=null;m1Matched=0;
+  document.getElementById('matchScore').textContent='';
+  document.getElementById('matchFeedback').className='match-feedback';
+  document.getElementById('matchResetBtn').style.display='none';
+}
+
+function selectMatchLeft(el){
+  if(el.classList.contains('matched'))return;
+  document.querySelectorAll('#matchLeft .match-item').forEach(e=>e.classList.remove('selected'));
+  el.classList.add('selected');m1Left=el;
+}
+
+function selectMatchRight(el){
+  if(!m1Left||el.classList.contains('matched'))return;
+  if(m1Left.dataset.key===el.dataset.key){
+    m1Left.classList.remove('selected');m1Left.classList.add('matched');
+    el.classList.add('matched');m1Matched++;
+    document.getElementById('matchScore').textContent=m1Matched+' / '+matchPairs.length+' matched';
+    if(m1Matched===matchPairs.length){
+      const fb=document.getElementById('matchFeedback');
+      fb.className='match-feedback show success';fb.textContent='All matched! Excellent work.';
+    }
+  } else {
+    el.classList.add('wrong');m1Left.classList.add('wrong');
+    setTimeout(()=>{el.classList.remove('wrong');m1Left.classList.remove('wrong','selected');m1Left=null},800);
+    document.getElementById('matchResetBtn').style.display='inline-block';
+    return;
+  }
+  m1Left=null;
+}
+
+function resetMatch(){initMatch()}
+
+/* ============ MATCHING 2: Event -> Year ============ */
+const matchPairs2=[
+  {left:'Red House completed',right:'1860'},
+  {left:'Morris, Marshall, Faulkner & Co. founded',right:'1861'},
+  {left:'First Arts and Crafts Exhibition, London',right:'1888'},
+  {left:'Morris publishes News from Nowhere',right:'1890'},
+  {left:'Kelmscott Press founded',right:'1891'},
+  {left:'Kelmscott Chaucer and Morris\u0027s death',right:'1896'},
+  {left:'Guild of Handicraft moves to Chipping Campden',right:'1902'},
+  {left:'Wiener Werkstätte founded',right:'1903'},
+];
+let m2Left=null,m2Matched=0;
+
+function initMatch2(){
+  const lC=document.getElementById('matchLeft2'),rC=document.getElementById('matchRight2');
+  const shuffledL=[...matchPairs2].sort(()=>Math.random()-.5);
+  const shuffledR=[...matchPairs2].sort(()=>Math.random()-.5);
+  lC.innerHTML='';rC.innerHTML='';
+  shuffledL.forEach(p=>{
+    const d=document.createElement('div');d.className='match-item';d.textContent=p.left;
+    d.dataset.key=p.left;d.onclick=()=>selectM2Left(d);lC.appendChild(d);
+  });
+  shuffledR.forEach(p=>{
+    const d=document.createElement('div');d.className='match-item';d.textContent=p.right;
+    d.dataset.key=p.left;d.onclick=()=>selectM2Right(d);rC.appendChild(d);
+  });
+  m2Left=null;m2Matched=0;
+  document.getElementById('matchScore2').textContent='';
+  document.getElementById('matchFeedback2').className='match-feedback';
+  document.getElementById('matchResetBtn2').style.display='none';
+}
+
+function selectM2Left(el){
+  if(el.classList.contains('matched'))return;
+  document.querySelectorAll('#matchLeft2 .match-item').forEach(e=>e.classList.remove('selected'));
+  el.classList.add('selected');m2Left=el;
+}
+
+function selectM2Right(el){
+  if(!m2Left||el.classList.contains('matched'))return;
+  if(m2Left.dataset.key===el.dataset.key){
+    m2Left.classList.remove('selected');m2Left.classList.add('matched');
+    el.classList.add('matched');m2Matched++;
+    document.getElementById('matchScore2').textContent=m2Matched+' / '+matchPairs2.length+' matched';
+    if(m2Matched===matchPairs2.length){
+      const fb=document.getElementById('matchFeedback2');
+      fb.className='match-feedback show success';fb.textContent='All matched! You know the Arts and Crafts chronology.';
+    }
+  } else {
+    el.classList.add('wrong');m2Left.classList.add('wrong');
+    setTimeout(()=>{el.classList.remove('wrong');m2Left.classList.remove('wrong','selected');m2Left=null},800);
+    document.getElementById('matchResetBtn2').style.display='inline-block';
+    return;
+  }
+  m2Left=null;
+}
+
+function resetMatch2(){initMatch2()}
+
+/* ============ QUIZ ============ */
+const quizData=[
+  {q:'Which Ruskin essay did Morris later call "one of the very few things necessary and inevitable utterances of our century"?',
+   opts:['The Lamp of Life','The Nature of Gothic','Unto This Last','Fors Clavigera'],
+   ans:1,
+   explain:'"The Nature of Gothic," the chapter in the second volume of The Stones of Venice (1853), argued that Gothic architecture was humane because it allowed masons creative freedom. Morris read it at Oxford, reprinted it at Kelmscott Press in 1892, and said it permanently redirected his life.'},
+  {q:'Who designed Red House, the 1860 home that effectively launched the movement?',
+   opts:['William Morris himself','Philip Webb','A.W.N. Pugin','Edward Burne-Jones'],
+   ans:1,
+   explain:'Philip Webb designed Red House at Bexleyheath for William and Jane Morris. The interiors were decorated collaboratively by Morris and his Pre-Raphaelite friends, and the difficulty of finding commercially available furnishings for it directly produced the founding of the firm a year later.'},
+  {q:'The Arts and Crafts Movement got its name at a committee meeting for which event?',
+   opts:['The first Kelmscott Press publication in 1891','The first Arts and Crafts Exhibition at the New Gallery in 1888','The 1862 International Exhibition in London','The founding of the Century Guild in 1882'],
+   ans:1,
+   explain:'At a planning meeting for the 1888 exhibition at the New Gallery, the bookbinder T. J. Cobden-Sanderson proposed the phrase "Arts and Crafts," and the name stuck &mdash; both for the show and for the movement as a whole.'},
+  {q:'What technique did Morris personally revive to print the Strawberry Thief cotton of 1883?',
+   opts:['Copper-plate engraving','Roller printing','Indigo-discharge printing','Jacquard weaving'],
+   ans:2,
+   explain:'Morris spent years mastering indigo-discharge printing, in which the fabric is dyed blue and then chemically bleached in the pattern areas. Strawberry Thief is one of the technique&rsquo;s triumphs and records the thrushes Morris watched stealing fruit at Kelmscott Manor.'},
+  {q:'Which of these is the masterpiece of the Kelmscott Press, completed just before Morris\u0027s death in 1896?',
+   opts:['The Golden Legend','A News from Nowhere edition','The Kelmscott Chaucer','The Earthly Paradise'],
+   ans:2,
+   explain:'The Kelmscott Chaucer is 556 pages, 87 illustrations by Burne-Jones, fourteen large borders, eighteen frames, and twenty-six large initial words designed by Morris. Only 425 paper copies and 13 on vellum were printed. It is generally considered the masterpiece of the entire private-press movement.'},
+  {q:'C. R. Ashbee\u0027s Guild of Handicraft made its best-known move in 1902 when it relocated from London to which village?',
+   opts:['Sapperton','Hammersmith','Chipping Campden','Bexleyheath'],
+   ans:2,
+   explain:'Ashbee moved the Guild from London&rsquo;s East End to the Cotswold market town of Chipping Campden, attempting to recreate a semi-rural craft community along Ruskinian lines. Beautiful work followed; the Guild was bankrupt within five years.'},
+  {q:'Which American publication, founded in 1901 by a Syracuse furniture maker, became the main channel for Arts and Crafts ideas in the United States?',
+   opts:['House Beautiful','The Philistine','The Craftsman','The Ladies\u0027 Home Journal'],
+   ans:2,
+   explain:'Gustav Stickley launched <em>The Craftsman</em> in 1901 to promote his Craftsman Workshops furniture and a broader philosophy of simple living. Published until 1916, it helped make the Craftsman bungalow the default American house for a generation.'},
+  {q:'Which Ruskin book on political economy did Morris and later Gandhi both credit with changing their lives?',
+   opts:['Unto This Last','Modern Painters','Fors Clavigera','Sesame and Lilies'],
+   ans:0,
+   explain:'Ruskin\u0027s Unto This Last (1860) is four essays on political economy that reframed design criticism as social criticism. Morris, Gandhi, and Tolstoy all said it changed their thinking. It is the direct ancestor of the movement&rsquo;s political dimension.'},
+  {q:'What was the name of the firm William Morris founded in 1861?',
+   opts:['The Guild of Handicraft','Morris, Marshall, Faulkner &amp; Co.','The Kelmscott Press','The Century Guild'],
+   ans:1,
+   explain:'Morris, Marshall, Faulkner &amp; Co. &mdash; "Fine Art Workmen in Painting, Carving, Furniture and the Metals" &mdash; was founded in April 1861 with seven partners including Webb, Rossetti, Burne-Jones, and Ford Madox Brown. It was reorganized as Morris &amp; Co. in 1875.'},
+  {q:'The Arts and Crafts Movement\u0027s most influential descendant, whose 1919 founding manifesto explicitly echoed Morris by calling for "a new guild of craftsmen," was:',
+   opts:['The Wiener Werkstätte','The Deutscher Werkbund','The Bauhaus','The Russian Constructivists'],
+   ans:2,
+   explain:'Walter Gropius&rsquo;s 1919 Bauhaus manifesto, printed under a Feininger woodcut of a Gothic cathedral, called for the abolition of class distinctions between craftsman and artist in language directly inherited from Morris. The Wiener Werkstätte (1903) was an earlier descendant, but the Bauhaus carried the argument furthest.'},
+];
+
+let quizAnswers=[], quizLocked=[];
+
+function initQuiz(){
+  const wrap=document.getElementById('quizWrap');wrap.innerHTML='';
+  quizAnswers=new Array(quizData.length).fill(-1);
+  quizLocked=new Array(quizData.length).fill(false);
+  document.getElementById('resultsCard').classList.remove('show');
+
+  quizData.forEach((q,qi)=>{
+    let optsHtml=q.opts.map((o,oi)=>'<div class="q-opt" data-qi="'+qi+'" data-oi="'+oi+'" onclick="selectQuizOpt('+qi+','+oi+')"><span class="letter">'+String.fromCharCode(65+oi)+'</span><span>'+o+'</span></div>').join('');
+    wrap.innerHTML+='<div class="q-card"><div class="q-num">Question '+(qi+1)+' of '+quizData.length+'</div><div class="q-text">'+q.q+'</div><div class="q-options">'+optsHtml+'</div><div class="q-feedback" id="qfb'+qi+'"></div></div>';
+  });
+
+  wrap.innerHTML+='<div style="text-align:center;margin-top:24px"><button class="btn-start" onclick="submitQuiz()">Submit Answers</button></div>';
+}
+
+function selectQuizOpt(qi,oi){
+  if(quizLocked[qi])return;
+  quizAnswers[qi]=oi;
+  document.querySelectorAll('.q-opt[data-qi="'+qi+'"]').forEach(e=>{
+    e.classList.remove('selected');
+    if(parseInt(e.dataset.oi)===oi)e.classList.add('selected');
+  });
+}
+
+function submitQuiz(){
+  let score=0;
+  quizData.forEach((q,qi)=>{
+    quizLocked[qi]=true;
+    const opts=document.querySelectorAll('.q-opt[data-qi="'+qi+'"]');
+    opts.forEach(o=>{
+      o.classList.remove('selected');
+      const oi=parseInt(o.dataset.oi);
+      if(oi===q.ans)o.classList.add('correct');
+      else if(oi===quizAnswers[qi])o.classList.add('wrong');
+    });
+    const fb=document.getElementById('qfb'+qi);
+    if(quizAnswers[qi]===q.ans){score++;fb.className='q-feedback show right';fb.innerHTML='Correct! '+q.explain;}
+    else{fb.className='q-feedback show wrong';fb.innerHTML='Not quite. '+q.explain;}
+  });
+
+  const pct=Math.round(score/quizData.length*100);
+  const rc=document.getElementById('resultsCard');rc.classList.add('show');
+  const ring=document.getElementById('scoreRing');
+  ring.className='score-ring '+(pct>=70?'pass':'fail');
+  document.getElementById('scoreNum').textContent=pct+'%';
+  document.getElementById('resultsTitle').textContent=pct>=70?'Well Done!':'Keep Studying';
+  document.getElementById('resultsMsg').textContent='You got '+score+' out of '+quizData.length+' correct.'+(pct>=70?' You have a solid grasp of the Arts and Crafts Movement.':' Review the lesson sections and try again.');
+}
+
+function retryQuiz(){initQuiz();window.scrollTo({top:document.getElementById('quizWrap').offsetTop-100,behavior:'smooth'})}
+
+/* ============ TIMELINE INTERACTIONS ============ */
+function toggleTlDetail(idx){
+  const d=document.getElementById('tlDetail'+idx);
+  const btn=d.nextElementSibling;
+  if(d.classList.contains('open')){d.classList.remove('open');btn.textContent='Read more';}
+  else{d.classList.add('open');btn.textContent='Read less';}
+}
+
+/* Scroll-reveal for timeline items */
+const tlObserver=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('tl-visible');tlObserver.unobserve(e.target);}});
+},{threshold:0.15,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.timeline-item').forEach(el=>tlObserver.observe(el));
+
+/* ============ INIT ============ */
+initMatch();
+initMatch2();
+initQuiz();
+</script>
+</body>
+</html>

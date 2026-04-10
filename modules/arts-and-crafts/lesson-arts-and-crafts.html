@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Arts &amp; Crafts Movement — DSGN 230</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#111;--surface:#1a1a1a;--surface2:#222;--border:#333;
+  --text:#e8e8e8;--text-dim:#999;--accent:#669BBC;--accent-light:#89b4d4;
+  --white:#FDF0D5;--gold:#c9a84c;
+  --font-body:'Segoe UI',system-ui,-apple-system,sans-serif;
+  --font-display:'Georgia',serif;
+  --radius:10px;
+}
+html.light{
+  --bg:#f4f3f0;--surface:#fff;--surface2:#eae9e5;--border:#d5d3cd;
+  --text:#222;--text-dim:#555;--accent:#780000;--accent-light:#C1121F;
+  --white:#003049;--gold:#8a6d1b;
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.8;margin:0}
+a{color:var(--accent-light);text-decoration:none}
+a:hover{text-decoration:underline}
+img{max-width:100%;height:auto;border-radius:var(--radius);margin:20px 0;display:block}
+figure{margin:24px 0}
+figure img{margin:0 0 8px}
+figcaption{font-size:.82rem;color:var(--text-dim);font-style:italic;line-height:1.5;padding:0 4px}
+figcaption .credit{display:block;margin-top:4px;font-size:.75rem;font-style:normal;color:var(--text-dim);opacity:.85}
+
+.toolbar{
+  position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);
+  padding:12px 24px;display:flex;align-items:center;justify-content:space-between;
+}
+.toolbar a{font-size:.85rem;color:var(--text-dim)}
+.toolbar a:hover{color:var(--accent-light)}
+.tool-btn{
+  width:34px;height:34px;border-radius:50%;border:1px solid var(--border);
+  background:var(--surface);color:var(--text-dim);display:flex;align-items:center;
+  justify-content:center;font-size:1rem;cursor:pointer;transition:.2s;padding:0;
+}
+.tool-btn:hover{border-color:var(--accent);color:var(--accent-light)}
+.tool-btn svg{width:16px;height:16px;fill:currentColor}
+
+.hero{
+  padding:60px 24px 40px;text-align:center;
+  background:radial-gradient(ellipse at 50% 30%,#1a1a1a 0%,var(--bg) 70%);
+}
+html.light .hero{background:radial-gradient(ellipse at 50% 30%,#e8e6e0 0%,var(--bg) 70%)}
+.hero h1{font-family:var(--font-display);font-size:clamp(1.8rem,4.5vw,3rem);color:var(--white);margin-bottom:8px;letter-spacing:-.02em;line-height:1.2}
+.hero .subtitle{font-size:1.05rem;color:var(--gold);font-style:italic;margin-bottom:4px}
+.hero .dates{font-size:.95rem;color:var(--text-dim)}
+
+.container{max-width:760px;margin:0 auto;padding:40px 24px 80px}
+
+.container h2{
+  font-family:var(--font-display);font-size:clamp(1.4rem,3vw,1.9rem);color:var(--white);
+  margin:48px 0 20px;padding-top:20px;border-top:1px solid var(--border);line-height:1.3;
+}
+.container h2:first-child{border-top:none;margin-top:0;padding-top:0}
+.container h3{
+  font-family:var(--font-display);font-size:1.15rem;color:var(--white);
+  margin:32px 0 12px;font-weight:700;
+}
+.container p{margin-bottom:16px;color:var(--text)}
+.container strong{color:var(--white)}
+.container em{color:var(--accent-light);font-style:italic}
+.container hr{border:none;border-top:1px solid var(--border);margin:40px 0}
+.container ul,.container ol{margin:0 0 20px 24px;color:var(--text)}
+.container li{margin-bottom:8px}
+.container blockquote{
+  margin:24px 0;padding:16px 24px;border-left:3px solid var(--accent);
+  background:var(--surface);color:var(--text-dim);font-style:italic;border-radius:0 var(--radius) var(--radius) 0;
+}
+
+footer{padding:40px 24px;text-align:center;border-top:1px solid var(--border)}
+footer p{font-size:.8rem;color:var(--text-dim)}
+
+@media(max-width:640px){
+  .container{padding:24px 16px 60px}
+}
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <a href="../../index.html">&larr; Back to Index</a>
+  <button class="tool-btn" onclick="document.documentElement.classList.toggle('light')" title="Toggle theme" aria-label="Toggle theme">
+    <svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zm0 16V5a7 7 0 1 1 0 14z"/></svg>
+  </button>
+</div>
+
+<div class="hero">
+  <h1>The Arts &amp; Crafts Movement</h1>
+  <div class="subtitle">c. 1880&ndash;1910</div>
+  <div class="dates">DSGN 230 &mdash; Survey of Design History</div>
+</div>
+
+<div class="container">
+
+<h2 id="introduction">Introduction &mdash; Design with a Conscience</h2>
+<p>By the 1860s, the reformers who had complained about industrial ugliness at the Great Exhibition had won most of their institutional battles. There were schools of design, a national museum of applied arts, a reform press, and a growing profession of people who drew for factories. What they had not managed to do was change the actual texture of ordinary life. Most Victorian homes were still furnished with the same showy, mass-produced, morally suspect objects the reformers had denounced. Pugin had died. Ruskin was turning increasingly to economics and prophecy. The design-reform establishment had settled into committee work.</p>
+<p>Into this half-finished revolution walked a twenty-something Oxford graduate named William Morris, who had read Ruskin&rsquo;s <em>Nature of Gothic</em> at university and decided to take it literally. If Ruskin was right that industrial labor was deadening, and that beauty and moral health required joyful work, then it was not enough to criticize factories &mdash; you had to build an alternative. In 1861 Morris and a handful of friends founded a firm to make things &mdash; furniture, stained glass, wallpaper, textiles, tile &mdash; by hand, under the designer&rsquo;s own supervision, in his own workshop. They did not quite know what they were doing. Within thirty years they had launched one of the most influential design movements in history.</p>
+<p>The Arts and Crafts Movement, as it came to be called by the end of the 1880s, was the first coherent design movement in the modern sense of the word. It had a name, a creed, a network of workshops and exhibitions, international followers, and an identifiable visual language. It argued that design was a form of ethics, that how something was made mattered as much as what it looked like, that the division between fine and applied arts was a historical mistake, and that the home &mdash; every room, every object, every surface &mdash; ought to be treated as a unified work of art.</p>
+<p>It was also full of contradictions. It preached handcraft but relied on paying customers wealthy enough to afford hand-made goods. It dreamed of socialist labor and sold to the Victorian bourgeoisie. It romanticized the Middle Ages in an era of electric telegraphs. And its influence on twentieth-century modernism &mdash; a style that often rejected ornament, handcraft, and nostalgia &mdash; was nevertheless so profound that without Morris there is probably no Bauhaus, no Werkbund, and no modern conversation about the ethics of making things.</p>
+<p>This is the module where design stops being just a visual problem and starts being an argument about how people should live.</p>
+
+<hr />
+
+<h2 id="part-1">Part 1 &mdash; Historical Context</h2>
+
+<h3>From Reform Establishment to Reform Movement</h3>
+<p>The generation that created Arts and Crafts inherited a design-reform argument but rejected the design-reform establishment. Henry Cole&rsquo;s South Kensington system &mdash; museum, school, journal, government committees &mdash; had been built to train better ornamentalists for British factories. Morris and his circle did not want better factory ornament. They wanted to abolish the factory as the site of design. Their quarrel with Cole was not about taste but about where objects should come from: a studio or a production line.</p>
+
+<h3>Ruskin&rsquo;s Shadow</h3>
+<p>John Ruskin is the indispensable background figure. Two chapters in particular &mdash; <em>The Nature of Gothic</em> (1853) and <em>The Lamp of Life</em> from <em>The Seven Lamps of Architecture</em> (1849) &mdash; provided the moral vocabulary the movement would use for fifty years. Ruskin argued that Gothic architecture was superior to classical not because of style but because it allowed ordinary masons creative freedom. The imperfect, living marks of the hand were, for him, evidence that the worker was a human being rather than a tool. A building full of identical machined ornaments was a building built on suffering. Morris read this as a young man at Oxford and said that it permanently redirected his life. Every Arts and Crafts designer after him cited Ruskin the way every modernist would cite Le Corbusier two generations later.</p>
+
+<figure>
+  <img src="images/Red_House.jpg"
+       alt="Philip Webb's Red House in Upton: a red-brick Victorian house with steeply pitched roofs, tall chimneys, and pointed Gothic arches">
+  <figcaption>Philip Webb, <em>Red House</em>, Bexleyheath (1860) &mdash; designed for William Morris and his new wife Jane. A pivotal early work: honest brick, visible construction, and interiors decorated entirely by Morris and his circle.
+    <span class="credit">Image: Ethan Doyle White, CC BY-SA 4.0, via Wikimedia Commons.</span>
+  </figcaption>
+</figure>
+
+<h3>Morris, Marshall, Faulkner &amp; Co., 1861</h3>
+<p>The movement&rsquo;s institutional starting point is a business. In April 1861 William Morris and six partners &mdash; including the architect Philip Webb, the painters Dante Gabriel Rossetti, Edward Burne-Jones, and Ford Madox Brown, the surveyor P. P. Marshall, and the accountant Charles Faulkner &mdash; opened a firm called Morris, Marshall, Faulkner &amp; Company, &ldquo;Fine Art Workmen in Painting, Carving, Furniture and the Metals.&rdquo; Their first public showing was at the 1862 International Exhibition in London, where they displayed stained glass, embroidered hangings, and a pair of painted cabinets. They won two medals and a fair amount of ridicule. Customers, mostly High Church clergymen ordering ecclesiastical work, began arriving anyway.</p>
+<p>Reorganized in 1875 as Morris &amp; Co., the firm would eventually make wallpaper, printed textiles, woven carpets, tapestries, tiles, ceramics, embroideries, stained glass, and furniture. Morris himself designed more than fifty wallpapers and dozens of textile patterns. He personally learned dyeing, weaving, and tapestry-making from first principles when no craftsman could be found who still practiced the older methods.</p>
+
+<h3>Red House and the Total Interior</h3>
+<p>Morris&rsquo;s own home was the movement&rsquo;s first manifesto. In 1859, about to be married, he asked his friend Philip Webb to design a house for him at Bexleyheath, in Kent. The result &mdash; Red House, completed in 1860 &mdash; was modest in scale, but it demonstrated a principle: every element of a building and its contents could be designed together as a unified whole. The brickwork was exposed and honest. The plan followed the needs of domestic life rather than axial symmetry. The furniture, wallpapers, tiles, stained glass, and murals were designed by Morris and his friends. It was the process of decorating Red House, and the realization that such objects were not commercially available, that directly produced the firm.</p>
+
+<h3>From Firm to Movement</h3>
+<p>For about twenty years, Arts and Crafts ideas circulated mainly through Morris &amp; Co. and a small network of painter-architects. The transformation from firm to movement happened in the 1880s. In 1884 a group of architects and designers led by Arthur Mackmurdo founded the Century Guild, the first English design guild explicitly patterned on medieval craft workshops. In 1887 a breakaway group of the Royal Academy founded the Art Workers&rsquo; Guild. In 1888 that guild mounted the first Arts and Crafts Exhibition at the New Gallery in London, and at a committee meeting in the run-up to that show the bookbinder T. J. Cobden-Sanderson is said to have proposed the phrase <em>Arts and Crafts</em> as a name. The phrase stuck. Within a few years there were guilds, journals, schools, and exhibitions across Britain, the Continent, and the United States.</p>
+
+<h3>Morris the Socialist</h3>
+<p>By the 1880s Morris had added politics to his craftwork. He joined the Democratic Federation in 1883, broke with it a year later to help found the Socialist League, and spent the rest of the decade lecturing on street corners and writing political tracts. He came to believe that the Arts and Crafts argument could not be fulfilled inside capitalism: you could not have joyful labor in a society organized around profit and wage-work, no matter how beautifully individual workshops behaved. His utopian novel <em>News from Nowhere</em> (1890) imagines a future London in which the factories are gone, the Thames is clean, and people make things because they enjoy making them. This political dimension &mdash; the insistence that design reform required social reform &mdash; is one of the things that distinguishes Arts and Crafts from every earlier reform movement, and from most later ones.</p>
+
+<h3>From England to the World</h3>
+<p>Arts and Crafts was an English invention but rapidly became international. In Scotland, a looser and more geometric dialect emerged around Charles Rennie Mackintosh and the Glasgow School in the 1890s. On the Continent, the movement fed directly into Art Nouveau, the Vienna Secession, and the German Werkbund. In the United States it became the Craftsman movement, shaped by Gustav Stickley&rsquo;s Syracuse furniture shops and his magazine <em>The Craftsman</em> (1901&ndash;1916), Elbert Hubbard&rsquo;s Roycroft community at East Aurora, New York, and the California bungalows of Greene and Greene. In Japan, where a version of the argument already existed in the mingei (&ldquo;folk craft&rdquo;) movement of the 1920s, Morris was read with great sympathy.</p>
+
+<hr />
+
+<h2 id="part-2">Part 2 &mdash; Defining Characteristics</h2>
+
+<h3>The Unity of Art and Labor</h3>
+<p>The central claim of Arts and Crafts is that designing and making cannot be separated without damaging both. Ruskin&rsquo;s reading of Gothic stonework underwrites this claim: if the mason is allowed no creative decisions, the building becomes lifeless, and the mason becomes miserable. Morris generalized the point from cathedrals to every category of made object. A well-designed object is one whose maker enjoyed making it. Conversely, a beautiful object produced by exhausted, unpaid, or spiritually deadened workers is, in the movement&rsquo;s view, corrupted at its source, no matter how polished its surface.</p>
+
+<h3>Honest Materials and Visible Construction</h3>
+<p>Arts and Crafts furniture is usually described by three features: quartersawn oak, visible joinery, and exposed peg and mortise work. The principle behind these choices came directly from Pugin&rsquo;s <em>True Principles</em> (1841): show the construction and respect the material. Do not stain soft wood to imitate hardwood. Do not machine-cut dovetails and then pretend they were handmade. Do not make iron look like bronze. In practice this produced a distinctive visual vocabulary of plain surfaces, strong verticals, generous through-tenons, and restrained ornament &mdash; a vocabulary that would feed directly into early modernism.</p>
+
+<h3>The Total Environment</h3>
+<p>Arts and Crafts designers treated rooms, houses, and even gardens as unified compositions. A wallpaper was designed to work with a specific carpet, which was designed to work with specific furniture, curtains, tiles, and lighting. This anticipates the <em>Gesamtkunstwerk</em> of Art Nouveau and the total interior of the Bauhaus, and it is why Morris&rsquo;s firm ended up making such a wide range of products: once you commit to designing a whole environment, you need to control everything in it.</p>
+
+<h3>Medieval Sources, Modern Ambitions</h3>
+<p>The movement&rsquo;s favored historical sources were medieval: English parish churches, Gothic manuscripts, late-medieval domestic buildings, and folk embroidery. These were chosen not for nostalgic reasons but because they were seen as evidence of cultures in which craft was respected, materials were used honestly, and ornament grew out of making rather than being applied to it. The movement&rsquo;s visual vocabulary &mdash; pointed arches, quatrefoils, vines, leaves, hand-lettered text, hand-woven cloth &mdash; was a deliberate archaism in service of a forward-looking argument.</p>
+
+<h3>Nature as Motif, Not Metaphor</h3>
+<p>Arts and Crafts ornament is almost obsessively botanical. Morris designed patterns of willow boughs, marigolds, honeysuckle, acanthus, pimpernel, daisy, strawberry, birds, and fish. But where Art Nouveau would eventually dissolve its forms into movement and eroticism, Arts and Crafts nature stays firmly structural: repeating, flattened, woven into grids, always aware that it is being printed on a surface or woven into a cloth. Ornament must be truthful about the medium carrying it.</p>
+
+<h3>Moral Weight</h3>
+<p>Of all the movement&rsquo;s characteristics, the most important is also the least visible: the conviction that design decisions are moral decisions. An ugly mass-produced carpet is not just an aesthetic failure; it is a document of exploitation. A hand-made one is not just beautiful; it is a small instance of the kind of labor a better society would sustain. This ethical framing is the movement&rsquo;s most durable contribution. Every subsequent design movement that talks about sustainability, fair labor, ethical sourcing, slow craft, or "honest" materials is speaking Morris&rsquo;s language, whether it knows it or not.</p>
+
+<hr />
+
+<h2 id="part-3">Part 3 &mdash; Key People</h2>
+
+<h3>William Morris (1834&ndash;1896)</h3>
+<p>The indispensable figure. Poet, designer, manufacturer, translator, socialist, printer, lecturer. Founded Morris &amp; Co., wrote or translated more than forty books, delivered hundreds of political lectures, and designed the wallpapers and textiles that now stand for an entire decorative idiom. Capable of extraordinary physical work: taught himself weaving, dyeing, tapestry, and printing in middle age and produced masterpieces in each.</p>
+
+<h3>Philip Webb (1831&ndash;1915)</h3>
+<p>Morris&rsquo;s closest collaborator and the architect of Red House. A rigorous, austere designer who pioneered the Arts and Crafts emphasis on vernacular building, honest materials, and unshowy craftsmanship. His later houses &mdash; Standen, Clouds, Coneyhurst &mdash; shaped a whole generation of English domestic architecture and fed directly into Lutyens and the Edwardian country-house tradition.</p>
+
+<h3>Edward Burne-Jones (1833&ndash;1898)</h3>
+<p>Painter, stained-glass designer, and Morris&rsquo;s closest friend from their Oxford days. His elongated, dreamy figures are the visual signature of high-Morris stained glass and tapestry. Collaborated on the Kelmscott Press Chaucer (1896), designing the illustrations for what is arguably the most ambitious book of the entire movement.</p>
+
+<h3>Dante Gabriel Rossetti (1828&ndash;1882)</h3>
+<p>Pre-Raphaelite painter and one of the founding partners of Morris&rsquo;s firm. Provided the link between the literary-artistic world of the Pre-Raphaelite Brotherhood and the decorative-arts world of the new firm. Less central to the movement after the 1870s but critical to its early reputation.</p>
+
+<h3>Ford Madox Brown (1821&ndash;1893)</h3>
+<p>Painter and designer, a founding partner of the firm, and the designer of some of its most ambitious early stained-glass cartoons. Contributed the famous Green Dining Room murals to the South Kensington Museum.</p>
+
+<h3>C. R. Ashbee (1863&ndash;1942)</h3>
+<p>Architect and designer who founded the Guild of Handicraft in London&rsquo;s East End in 1888 and eventually moved it to the Cotswold village of Chipping Campden in 1902 in an effort to recreate Ruskin&rsquo;s vision of a small, semi-rural craft community. The Guild made silver, furniture, and metalwork of exceptional quality. It went bankrupt in 1907, a telling early warning about the economics of craft in an industrial economy.</p>
+
+<h3>Walter Crane (1845&ndash;1915)</h3>
+<p>Illustrator, wallpaper designer, teacher, and the movement&rsquo;s most effective publicist. First president of the Arts and Crafts Exhibition Society, author of several influential books on design theory, and one of the first artists to take children&rsquo;s book illustration seriously as a design problem.</p>
+
+<h3>May Morris (1862&ndash;1938)</h3>
+<p>William Morris&rsquo;s younger daughter, who took over the firm&rsquo;s embroidery department at twenty-three and became a major designer, teacher, and theorist of needlework in her own right. Co-founded the Women&rsquo;s Guild of Arts in 1907 after she was refused membership in the all-male Art Workers&rsquo; Guild. Edited the authoritative twenty-four-volume edition of her father&rsquo;s collected works.</p>
+
+<h3>Charles Robert Ashbee and the Guilds</h3>
+<p>The guild model &mdash; a workshop organized as a quasi-medieval cooperative of designer-makers &mdash; spread rapidly after 1890. The Birmingham Guild of Handicraft (1890), the Haslemere Peasant Industries (1894), and the Cotswold School around Ernest Gimson and Sidney Barnsley all extended Ashbee&rsquo;s basic experiment. These were small businesses, usually financially precarious, that nonetheless produced an astonishing body of work.</p>
+
+<h3>Gustav Stickley (1858&ndash;1942)</h3>
+<p>American furniture maker from Syracuse, New York, whose firm Craftsman Workshops made the most recognizable American Arts and Crafts furniture: rectilinear, quartersawn oak, pinned through-tenons. His magazine <em>The Craftsman</em> (1901&ndash;1916) published house plans, essays on simple living, and Stickley&rsquo;s own design theory. He popularized the American bungalow as a modest, honest alternative to the Victorian mansion.</p>
+
+<h3>Elbert Hubbard (1856&ndash;1915)</h3>
+<p>Soap salesman turned cultural entrepreneur who founded the Roycroft community at East Aurora, New York, in 1895 after a visit to Morris&rsquo;s Kelmscott Press. The Roycroft made books, furniture, metalwork, and leather goods, and its magazine, <em>The Philistine</em>, spread Arts and Crafts ideas to a mass American audience. Died on the <em>Lusitania</em> in 1915.</p>
+
+<h3>Charles Rennie Mackintosh (1868&ndash;1928)</h3>
+<p>Glasgow architect and designer whose spare, geometric, slightly haunting interiors occupy the border between Arts and Crafts and early modernism. The Glasgow School of Art (1897&ndash;1909), Hill House (1902), and a series of tearooms for Miss Cranston brought the movement into a distinctly Scottish and proto-modern register. Deeply admired by the Vienna Secession.</p>
+
+<hr />
+
+<h2 id="part-4">Part 4 &mdash; Places &amp; Events</h2>
+
+<h3>Red House, Bexleyheath (1860)</h3>
+<p>The first Arts and Crafts total environment and the de facto birthplace of the movement. Designed by Philip Webb for William and Jane Morris, decorated collaboratively by the whole Pre-Raphaelite circle, and treated from the beginning as a demonstration of what a unified domestic interior could look like.</p>
+
+<h3>Merton Abbey Works (1881)</h3>
+<p>Morris &amp; Co.&rsquo;s main production site from 1881 onwards, on the banks of the River Wandle south of London. Housed the firm&rsquo;s dyeing, weaving, tapestry, stained-glass, and carpet operations. Morris ran it as close to a medieval workshop as late-Victorian commercial pressures allowed: natural dyes, hand looms, and fair wages.</p>
+
+<h3>Kelmscott Manor (from 1871)</h3>
+<p>Morris&rsquo;s beloved country house in the upper Thames valley. Not an Arts and Crafts building &mdash; it dates from the sixteenth century &mdash; but an Arts and Crafts shrine. Morris treated it as the embodiment of the vernacular English architecture he was trying to rescue, and lent its name to the press he founded in 1891.</p>
+
+<h3>The First Arts and Crafts Exhibition (1888)</h3>
+<p>Held at the New Gallery in London in October 1888. The catalogue listed more than 500 items by nearly 150 makers. It is the event that gave the movement its name. Further exhibitions followed in 1889, 1890, 1893, and at roughly triennial intervals thereafter, spreading the movement&rsquo;s visual language across Europe and America.</p>
+
+<h3>Kelmscott Press (1891&ndash;1898)</h3>
+<p>Morris&rsquo;s private press, founded in 1891 in Hammersmith, London. Produced 53 books in seven years, using hand-made paper, hand-set type in Morris&rsquo;s own designs (Golden, Troy, and Chaucer), hand-cut decorative borders, and wood-engraved illustrations. The press closed after Morris&rsquo;s death and inspired a worldwide private-press revival that transformed modern book design.</p>
+
+<h3>The Guild of Handicraft, Chipping Campden (1902)</h3>
+<p>Ashbee&rsquo;s attempt to relocate a London craft community to the Cotswolds. About 150 people, including the guild members and their families, moved from the East End to a small market town in Gloucestershire. The experiment produced beautiful work, collapsed financially within five years, and remains the movement&rsquo;s most vivid case study in the difficulty of practicing its ideals at commercial scale.</p>
+
+<h3>The American Craftsman Movement (1900&ndash;1916)</h3>
+<p>Centered on Gustav Stickley&rsquo;s workshops, his magazine <em>The Craftsman</em>, Elbert Hubbard&rsquo;s Roycroft, and the California bungalow architecture of Greene and Greene. By 1910 Arts and Crafts had become, in America, less a radical critique of industry and more a middle-class aesthetic of simplicity and natural materials. The Craftsman bungalow became the default American house for a generation.</p>
+
+<hr />
+
+<h2 id="part-5">Part 5 &mdash; Things (Iconic Works)</h2>
+
+<h3>Architecture and Interiors</h3>
+<p><strong>Red House, Bexleyheath</strong> (Webb, 1860) is the foundational object: a moderate-sized brick house designed as a total environment. <strong>Standen</strong> (Webb, 1894) near East Grinstead is the most complete surviving Philip Webb house, with Morris textiles and wallpapers throughout. <strong>The Glasgow School of Art</strong> (Mackintosh, 1897&ndash;1909) pushed the movement&rsquo;s principles towards an austere proto-modernism. In California, <strong>the Gamble House</strong> (Greene and Greene, 1908&ndash;1909) applied the same principles to West Coast domestic architecture, with extraordinary teak joinery and Japanese-influenced bracketing.</p>
+
+<h3>Furniture</h3>
+<p><strong>The Sussex chair</strong>, a simple rush-seated ebonized chair produced by Morris &amp; Co. from the 1860s, became a ubiquitous symbol of unpretentious craft furniture. <strong>Gustav Stickley&rsquo;s Morris chair</strong> (from c. 1901) adapted an English original into the signature piece of American Craftsman furniture. <strong>Ernest Gimson&rsquo;s ladder-back chairs</strong> and <strong>Sidney Barnsley&rsquo;s oak dressers</strong> represent the Cotswold school at its most accomplished.</p>
+
+<h3>Textiles and Wallpaper</h3>
+<p><strong>Morris&rsquo;s <em>Trellis</em> wallpaper</strong> (1864) was his first design, with birds by Philip Webb. <strong>Willow Bough</strong> (1887) remains the best-loved of Morris&rsquo;s patterns and has never been out of production. <strong>Strawberry Thief</strong> (1883) is a printed cotton that records the thrushes Morris watched robbing the strawberry beds at Kelmscott Manor; it used indigo-discharge printing that Morris had personally revived. <strong>May Morris&rsquo;s embroidered hangings</strong> for Morris &amp; Co. and private clients extended the firm&rsquo;s textile range into high-end needlework.</p>
+
+<h3>Books</h3>
+<p><strong>The Kelmscott Chaucer</strong> (1896) is the masterpiece of the private-press movement: 556 pages, 87 illustrations by Burne-Jones, 14 large borders, 18 frames, and 26 large initial words designed by Morris. Only 425 paper copies and 13 on vellum were printed. Morris also founded <strong>The Kelmscott Press edition of the works of John Ruskin</strong>, and his Kelmscott typefaces set the standard for a generation of revival typography.</p>
+
+<h3>Metalwork and Jewelry</h3>
+<p><strong>C. R. Ashbee&rsquo;s Guild of Handicraft silverware</strong> &mdash; bowls, cups, brooches, sconces &mdash; combines medieval forms with restrained, almost Japanese proportions. <strong>Liberty &amp; Co.&rsquo;s Cymric and Tudric ranges</strong> (from 1900, designed largely by Archibald Knox) translated the handcraft aesthetic into a commercially successful line of pewter and silver that reached a much wider audience than any single guild ever could.</p>
+
+<h3>Writings</h3>
+<p><strong><em>The Nature of Gothic</em></strong> (Ruskin, 1853) is the movement&rsquo;s founding text, reprinted by Morris at Kelmscott Press in 1892 with his own introduction. <strong><em>Hopes and Fears for Art</em></strong> (Morris, 1882) collects the lectures in which Morris worked out the movement&rsquo;s central arguments. <strong><em>News from Nowhere</em></strong> (Morris, 1890) dramatizes those arguments as utopian fiction. <strong><em>The Claims of Decorative Art</em></strong> (Crane, 1892) and <strong><em>The Bases of Design</em></strong> (Crane, 1898) provided the movement with textbooks.</p>
+
+<hr />
+
+<h2 id="part-6">Part 6 &mdash; What Came Next</h2>
+
+<p>Arts and Crafts dissolved as an organized movement around 1914, but its influence radiated outward in unexpected directions. In continental Europe, its ideas fed into Art Nouveau&rsquo;s insistence on unified interiors, into the Vienna Secession&rsquo;s workshops (the Wiener Werkst&auml;tte was explicitly modeled on the Guild of Handicraft), and into the German Werkbund&rsquo;s attempt in 1907 to reconcile craft values with industrial production. When the Bauhaus opened in Weimar in 1919, its founding manifesto &mdash; written by Walter Gropius under a Lyonel Feininger woodcut of a Gothic cathedral &mdash; read as a direct descendant of Morris. "Let us then create a new guild of craftsmen," Gropius wrote, "without the class-distinctions that raise an arrogant barrier between craftsman and artist." This is Ruskin, filtered through Morris, speaking in German.</p>
+
+<blockquote>
+"Have nothing in your house that you do not know to be useful or believe to be beautiful." &mdash; William Morris, <em>The Beauty of Life</em>, lecture delivered in Birmingham, 1880
+</blockquote>
+
+<p>At the same time, Arts and Crafts discovered an uncomfortable truth that every later honest-materials movement would also discover: hand-made objects are expensive, and reaching a wide public means coming to terms with the machine. Some designers, such as C. F. A. Voysey and Mackintosh, began designing for factory production while keeping the movement&rsquo;s visual vocabulary. Others, such as Ashbee, refused on principle and watched their workshops go bankrupt. This tension &mdash; craft ideals versus industrial reach &mdash; is the central unresolved problem the Arts and Crafts Movement handed down to the twentieth century.</p>
+
+<hr />
+
+<h2 id="part-7">Part 7 &mdash; Legacy</h2>
+
+<p>Arts and Crafts is probably the single most influential design movement of the modern era, despite producing relatively few objects by industrial standards. Its influence shows up in three durable ways.</p>
+
+<p>First, it created the model of the <em>designer-maker</em>: a single person who imagines and executes a work. Every studio potter, independent furniture maker, letterpress printer, hand-weaver, and small-batch product designer alive today operates inside a role that William Morris invented.</p>
+
+<p>Second, it established <em>ethics</em> as an inseparable part of design. The questions that Arts and Crafts first asked in the 1880s &mdash; Who made this? Under what conditions? With what materials? Did the maker enjoy the work? &mdash; are exactly the questions that sustainable and fair-trade design movements are asking today. Whenever someone argues that a design is "greenwashed" or "exploitative," they are drawing on vocabulary Morris built.</p>
+
+<p>Third, it passed on the idea that a home, a workplace, or a public building can be a <em>total work</em>, in which every object is thoughtfully chosen and everything belongs to everything else. Art Nouveau, the Wiener Werkst&auml;tte, the Bauhaus, mid-century modern, Apple retail, and the design-forward hospitality industry are all variations on that original idea.</p>
+
+<p>The contradictions remain. Morris&rsquo;s own wallpapers were sold mostly to wealthy Londoners whose homes were heated by coal dug by workers who would never own one. Handcraft is not, by itself, socialism. And there are limits to how much a society can be changed by the way its chairs are joined. But the movement established the possibility &mdash; the stubborn, hopeful, occasionally quixotic possibility &mdash; that design could be a way of arguing about how people should live. That argument is still going.</p>
+
+<hr />
+
+<h2 id="discussion">Discussion Questions</h2>
+<ol>
+  <li>Morris insisted that objects made under exploitative conditions could not be beautiful, no matter how skillful the execution. Do you find this argument persuasive? What would it look like to apply it today?</li>
+  <li>The Arts and Crafts Movement was accused from its beginnings of producing hand-made goods that only the rich could afford. Is this a fatal contradiction, or a temporary one? How have later movements tried to resolve it?</li>
+  <li>Compare the way Arts and Crafts used medieval sources with the way the Gothic Revival used them earlier in the nineteenth century. What is different about Morris&rsquo;s medievalism?</li>
+  <li>The Bauhaus explicitly named Arts and Crafts as an ancestor, but eventually rejected handcraft in favor of industrial production. Was this a betrayal of Morris&rsquo;s ideas or their logical next step?</li>
+  <li>Identify a contemporary product or brand that explicitly draws on Arts and Crafts values. What parts of the original argument does it keep? What parts does it quietly drop?</li>
+  <li>If the Arts and Crafts Movement were starting today instead of in 1880, what would its version of Red House look like?</li>
+</ol>
+
+</div>
+
+<footer>
+  <p>DSGN 230 &mdash; Survey of Design History &middot; The Arts &amp; Crafts Movement</p>
+</footer>
+
+</body>
+</html>
