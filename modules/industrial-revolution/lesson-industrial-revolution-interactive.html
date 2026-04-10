@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Industrial Revolution &amp; Early Design Reform Deep Dive &mdash; DSGN 230</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#111111;--surface:#1a1a1a;--surface2:#222222;--border:#333;
+  --text:#e8e8e8;--text-dim:#999;--accent:#669BBC;--accent-light:#89b4d4;
+  --success:#2ecc71;--fail:#e74c3c;--white:#FDF0D5;--gold:#c9a84c;
+  --font-body:'Segoe UI',system-ui,-apple-system,sans-serif;
+  --font-display:'Georgia',serif;
+  --radius:10px;--shadow:0 4px 24px rgba(0,0,0,.5);
+}
+html.light{
+  --bg:#f4f3f0;--surface:#ffffff;--surface2:#eae9e5;--border:#d5d3cd;
+  --text:#222;--text-dim:#555;--accent:#780000;--accent-light:#C1121F;
+  --success:#1fa85a;--fail:#C1121F;--white:#003049;--gold:#8a6d1b;
+  --shadow:0 4px 24px rgba(0,0,0,.08);
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.7;margin:0}
+a{color:var(--accent-light);text-decoration:none}
+img{max-width:100%;display:block}
+button{cursor:pointer;font-family:var(--font-body)}
+
+.container{max-width:960px;margin:0 auto;padding:0 24px}
+
+/* HERO */
+.hero{
+  min-height:75vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:60px 24px;
+  background:radial-gradient(ellipse at 50% 30%,#1a1a1a 0%,var(--bg) 70%);
+}
+html.light .hero{background:radial-gradient(ellipse at 50% 30%,#e8e6e0 0%,var(--bg) 70%)}
+.hero h1{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.2rem);color:var(--white);margin-bottom:8px;letter-spacing:-.02em;line-height:1.2}
+.hero .subtitle{font-size:1.1rem;color:var(--gold);margin-bottom:8px;font-style:italic}
+.hero p{font-size:1.05rem;color:var(--text-dim);max-width:620px;margin-bottom:36px}
+.btn-start{
+  display:inline-block;padding:14px 40px;background:var(--accent);color:var(--white);
+  border:none;border-radius:var(--radius);font-size:1rem;font-weight:500;
+  transition:all .3s;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.3)
+}
+.btn-start:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,.4)}
+
+/* TOOLBAR */
+.toolbar{display:none;position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:1px solid var(--border);padding:12px 0}
+.toolbar-content{display:flex;justify-content:space-between;align-items:center}
+.toolbar-left{display:flex;gap:16px;align-items:center}
+.back-link{font-size:.9rem;color:var(--accent-light);text-decoration:none;transition:color .2s}
+.back-link:hover{color:var(--accent)}
+.progress-bar{height:3px;background:var(--surface2);border-radius:2px;min-width:150px;overflow:hidden}
+.progress-fill{height:100%;background:var(--accent);transition:width .3s}
+.progress-label{font-size:.8rem;color:var(--text-dim);margin-left:12px;white-space:nowrap}
+.toolbar-right{display:flex;gap:12px;align-items:center}
+.theme-toggle{background:var(--surface2);border:1px solid var(--border);padding:6px 12px;border-radius:var(--radius);color:var(--text);font-size:.9rem;transition:all .2s}
+.theme-toggle:hover{border-color:var(--accent);color:var(--accent)}
+
+/* TAB NAV */
+.tab-nav{display:none;background:var(--surface);border-bottom:1px solid var(--border);overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab-nav-content{display:flex;padding:0 24px}
+.tab-btn{flex:0 0 auto;padding:16px 20px;background:0;border:0;color:var(--text-dim);cursor:pointer;transition:all .3s;font-size:.95rem;border-bottom:2px solid transparent;white-space:nowrap}
+.tab-btn:hover{color:var(--text);border-bottom-color:var(--accent-light)}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
+
+/* MAIN & SECTIONS */
+main{background:var(--bg)}
+.section{display:none;opacity:0;transition:opacity .3s;padding:60px 24px;max-width:960px;margin:0 auto}
+.section.active{display:block;opacity:1}
+.section-header{text-align:center;margin-bottom:48px}
+.period-label{display:inline-block;font-size:.75rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;font-weight:500}
+.section h2{font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.6rem);margin-bottom:8px;line-height:1.2}
+.dates{color:var(--text-dim);font-style:italic;font-size:.95rem;margin-top:8px}
+
+.content-block{max-width:700px;margin:24px auto;padding:24px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);line-height:1.8}
+.content-block p+p{margin-top:16px}
+
+/* TIMELINE */
+.hist-timeline{max-width:760px;margin:32px auto;position:relative;padding:0}
+.hist-timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,transparent,var(--gold) 5%,var(--gold) 95%,transparent);transform:translateX(-50%)}
+.hist-timeline::after{content:'';position:absolute;left:50%;top:-10px;width:16px;height:16px;background:var(--gold);transform:translateX(-50%) rotate(45deg);z-index:2}
+.timeline-item{position:relative;margin-bottom:0;padding:32px 0;display:grid;grid-template-columns:1fr 60px 1fr;align-items:start;gap:0;opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.timeline-item.tl-visible{opacity:1;transform:translateY(0)}
+.timeline-item .tl-content{padding:24px 28px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);transition:all .4s;position:relative}
+.timeline-item:nth-child(odd) .tl-content{grid-column:1;text-align:right}
+.timeline-item:nth-child(even) .tl-content{grid-column:3;text-align:left}
+.timeline-item .tl-content:hover{border-color:var(--gold);box-shadow:0 4px 24px rgba(201,168,76,.15);transform:translateY(-2px)}
+.timeline-item .tl-node{grid-column:2;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:16px;position:relative;z-index:2}
+.tl-diamond{width:18px;height:18px;background:var(--bg);border:2px solid var(--gold);transform:rotate(45deg);transition:all .4s;flex-shrink:0}
+.timeline-item:hover .tl-diamond{background:var(--gold);box-shadow:0 0 12px rgba(201,168,76,.5)}
+.tl-connector{width:2px;flex:1;background:transparent}
+.timeline-year{font-family:var(--font-display);font-weight:700;color:var(--gold);font-size:1.15rem;margin-bottom:10px;letter-spacing:1px;display:inline-flex;align-items:center;gap:8px}
+.timeline-item:nth-child(odd) .timeline-year{justify-content:flex-end}
+.timeline-item:nth-child(even) .timeline-year{justify-content:flex-start}
+.timeline-event{color:var(--text);font-size:.9rem;line-height:1.7}
+.timeline-event strong{color:var(--white);font-weight:600}
+.tl-detail{max-height:0;overflow:hidden;transition:max-height .5s ease,margin .3s ease,opacity .3s ease;opacity:0;margin-top:0;font-size:.85rem;color:var(--text-dim);line-height:1.6}
+.tl-detail.open{max-height:500px;opacity:1;margin-top:12px}
+.tl-toggle{display:inline-block;margin-top:10px;font-size:.78rem;color:var(--accent-light);cursor:pointer;letter-spacing:.5px;text-transform:uppercase;font-weight:500;transition:color .2s;border:none;background:none;padding:0}
+.tl-toggle:hover{color:var(--gold)}
+@media(max-width:640px){
+  .timeline-item{grid-template-columns:24px 1fr;gap:16px}
+  .hist-timeline::before{left:11px;transform:none}
+  .hist-timeline::after{left:11px;transform:rotate(45deg);top:-10px}
+  .timeline-item .tl-node{grid-column:1;padding-top:18px}
+  .timeline-item:nth-child(odd) .tl-content,
+  .timeline-item:nth-child(even) .tl-content{grid-column:2;text-align:left}
+  .timeline-item:nth-child(odd) .timeline-year{justify-content:flex-start}
+}
+
+/* THINK QUESTION */
+.think-question{max-width:700px;margin:32px auto;padding:24px;background:var(--surface2);border-left:3px solid var(--accent);border-radius:var(--radius)}
+.tq-label{display:inline-block;font-size:.75rem;letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;font-weight:500}
+.think-question p{color:var(--text-dim);font-style:italic;margin:0}
+
+/* GALLERY */
+.gallery-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;margin:32px auto;max-width:960px}
+.gallery-card{border:1px solid var(--border);border-radius:var(--radius);padding:32px;background:var(--surface);transition:all .3s;text-align:left}
+.gallery-card:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(0,0,0,.3);transform:translateY(-2px)}
+.gc-label{font-size:.78rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:10px;font-weight:500;text-align:left}
+.gc-title{font-family:var(--font-display);font-size:1.35rem;color:var(--white);margin-bottom:6px;line-height:1.3;text-align:left}
+.gc-meta{font-size:.95rem;color:var(--text-dim);margin-bottom:14px;font-style:italic;text-align:left}
+.gc-desc{font-size:1rem;line-height:1.65;color:var(--text);text-align:left}
+
+/* FLIP CARDS */
+.flip-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;margin:32px auto;max-width:960px}
+.flip-card{perspective:1400px;height:440px}
+.flip-card-inner{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d}
+.flip-card.flipped .flip-card-inner{transform:rotateY(180deg)}
+.flip-front,.flip-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;display:flex;flex-direction:column;justify-content:center;padding:32px;text-align:center;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface)}
+.flip-front{background:var(--surface)}
+.flip-back{background:var(--surface2);transform:rotateY(180deg);overflow-y:auto;justify-content:flex-start;text-align:left}
+.flip-name{font-weight:500;font-size:1.35rem;margin-bottom:10px;color:var(--white)}
+.flip-dates{font-size:.95rem;color:var(--text-dim);margin-bottom:14px}
+.flip-hint{font-size:.8rem;color:var(--accent);margin-top:16px;font-style:italic}
+.flip-role{font-weight:500;color:var(--accent);margin-bottom:14px;font-size:.95rem;text-transform:uppercase;letter-spacing:1px}
+.flip-back p{font-size:.95rem;line-height:1.65;color:var(--text);margin-bottom:14px}
+.flip-works{font-size:.88rem;color:var(--text-dim);margin-top:14px;font-style:italic;line-height:1.5}
+
+/* MATCH */
+.match-instructions{text-align:center;color:var(--text-dim);margin-bottom:24px;font-size:.95rem}
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin:32px auto;max-width:720px}
+.match-col-label{text-align:center;font-weight:500;margin-bottom:16px;font-size:.9rem;text-transform:uppercase;letter-spacing:1px;color:var(--accent)}
+#matchLeft,#matchRight,#matchLeft2,#matchRight2{display:flex;flex-direction:column;gap:12px}
+.match-item{padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:all .2s;text-align:center;font-size:.9rem;user-select:none}
+.match-item:hover{border-color:var(--accent)}
+.match-item.selected{background:var(--accent);color:var(--white);border-color:var(--accent)}
+.match-item.matched{background:var(--success);color:var(--white);border-color:var(--success);cursor:default}
+.match-item.wrong{background:var(--fail);border-color:var(--fail);animation:shake .4s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.match-score{text-align:center;margin:16px 0;font-size:.95rem;color:var(--text-dim)}
+.match-feedback{text-align:center;margin-top:16px;padding:12px;border-radius:var(--radius);display:none;font-size:.9rem}
+.match-feedback.show{display:block}
+.match-feedback.success{background:rgba(46,204,113,.1);color:var(--success);border:1px solid var(--success)}
+.match-reset{display:none;margin:16px auto;padding:10px 24px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-size:.9rem;transition:all .2s}
+.match-reset:hover{border-color:var(--accent);color:var(--accent)}
+
+/* QUIZ */
+.quiz-wrap{margin:32px 0}
+.q-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;margin-bottom:24px}
+.q-num{font-size:.85rem;color:var(--text-dim);margin-bottom:12px;text-transform:uppercase;letter-spacing:1px}
+.q-text{font-size:1.05rem;margin-bottom:20px;font-weight:500;line-height:1.5}
+.q-options{display:grid;grid-template-columns:1fr;gap:12px}
+.q-opt{padding:14px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:12px;font-size:.95rem}
+.q-opt:hover{border-color:var(--accent)}
+.q-opt.selected{background:var(--accent);color:var(--white);border-color:var(--accent)}
+.q-opt.correct{background:var(--success);color:var(--white);border-color:var(--success)}
+.q-opt.wrong{background:var(--fail);color:var(--white);border-color:var(--fail)}
+.letter{display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;background:var(--border);border-radius:50%;font-size:.8rem;font-weight:500}
+.q-opt.selected .letter,.q-opt.correct .letter,.q-opt.wrong .letter{background:currentColor;color:var(--white);opacity:.8}
+.q-feedback{padding:14px;background:var(--surface2);border-left:3px solid transparent;border-radius:var(--radius);margin-top:12px;display:none;font-size:.9rem;line-height:1.5}
+.q-feedback.show{display:block}
+.q-feedback.right{border-left-color:var(--success);color:var(--success)}
+.q-feedback.wrong{border-left-color:var(--fail);color:var(--fail)}
+
+/* RESULTS */
+.results-card{display:none;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:40px 28px;max-width:500px;margin:40px auto;text-align:center}
+.results-card.show{display:block}
+.score-ring{width:120px;height:120px;border-radius:50%;margin:0 auto 24px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:500;position:relative;background:var(--surface2)}
+.score-ring.pass{color:var(--success);border:3px solid var(--success)}
+.score-ring.fail{color:var(--fail);border:3px solid var(--fail)}
+.score-num{font-size:2.2rem;line-height:1}
+.score-lbl{font-size:.75rem;text-transform:uppercase;letter-spacing:1px;margin-top:4px;opacity:.7}
+.results-card h3{margin-bottom:12px;font-size:1.3rem}
+.results-card p{color:var(--text-dim);margin-bottom:24px}
+.btn-retry{padding:12px 32px;background:var(--accent);color:var(--white);border:none;border-radius:var(--radius);font-size:.95rem;font-weight:500;cursor:pointer;transition:all .2s}
+.btn-retry:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.3)}
+
+/* SECTION NAV */
+.section-nav{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border)}
+.nav-btn{padding:12px 24px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);color:var(--text-dim);font-size:.95rem;cursor:pointer;transition:all .2s}
+.nav-btn:hover{border-color:var(--accent);color:var(--accent)}
+.nav-btn.primary{background:var(--accent);color:var(--white);border-color:var(--accent)}
+.nav-btn.primary:hover{box-shadow:0 4px 12px rgba(0,0,0,.3)}
+
+/* FOOTER */
+.footer{background:var(--surface);border-top:1px solid var(--border);padding:32px 24px;text-align:center;color:var(--text-dim);font-size:.9rem;margin-top:60px}
+.footer p{margin:0}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .match-grid{grid-template-columns:1fr;gap:20px}
+  .toolbar-content{flex-direction:column;gap:12px;align-items:flex-start}
+  .flip-grid{grid-template-columns:1fr;max-width:100%}
+  .flip-card{height:auto;min-height:420px}
+  .gallery-grid{grid-template-columns:1fr;max-width:100%}
+}
+@media(min-width:769px) and (max-width:1024px){
+  .flip-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<div class="toolbar" id="toolbar">
+  <div class="container">
+    <div class="toolbar-content">
+      <div class="toolbar-left">
+        <a href="../../index.html" class="back-link">&larr; Back to Index</a>
+        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="progress-label" id="progressLabel">Section 1 / 6</div>
+      </div>
+      <div class="toolbar-right">
+        <button class="theme-toggle" onclick="toggleTheme()">Theme</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<nav class="tab-nav" id="tabNav">
+  <div class="container" style="padding:0">
+    <div class="tab-nav-content">
+      <button class="tab-btn active" onclick="goSection(0)">Context</button>
+      <button class="tab-btn" onclick="goSection(1)">Gallery</button>
+      <button class="tab-btn" onclick="goSection(2)">People</button>
+      <button class="tab-btn" onclick="goSection(3)">Themes</button>
+      <button class="tab-btn" onclick="goSection(4)">Matching</button>
+      <button class="tab-btn" onclick="goSection(5)">Quiz</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+<div class="hero" id="hero">
+  <h1>The Industrial Revolution &amp; Early Design Reform</h1>
+  <div class="subtitle">c. 1760&ndash;1880</div>
+  <p>Steam engines, factories, and the &ldquo;crisis of taste.&rdquo; The century in which mass production, design reform, and the designer as a profession were all invented at once.</p>
+  <button class="btn-start" onclick="startLesson()">Start Lesson</button>
+</div>
+
+<!-- ===== SECTION 0: CONTEXT ===== -->
+<div class="section" data-idx="0">
+  <div class="section-header">
+    <div class="period-label">History</div>
+    <h2>Historical Context</h2>
+    <div class="dates">1760&ndash;1880: When Design Became a Problem</div>
+  </div>
+
+  <div class="content-block" style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap">
+    <figure style="flex:0 0 280px;margin:0">
+      <img src="images/Crystal_Palace.png"
+           alt="Interior view of the Crystal Palace in Hyde Park during the Great Exhibition of 1851, showing the vast iron and glass hall with exhibits and visitors below"
+           loading="lazy" style="width:100%;border-radius:6px">
+      <figcaption style="font-size:.75rem;color:var(--text-dim);margin-top:6px">The Crystal Palace during the Great Exhibition &mdash; Hyde Park, 1851. Public domain.</figcaption>
+    </figure>
+    <div style="flex:1;min-width:220px">
+      <p><strong>A revolution, and a problem.</strong> Between 1760 and 1880, industrial production transformed what objects were made of, how they were made, how many of them existed, and who decided what they looked like. For the first time in history, the person who <em>designed</em> a thing and the person who <em>made</em> it were separated by factories, machines, and sometimes continents.</p>
+      <p style="margin-top:16px">Critics recoiled. Industrial goods, they argued, were ornamentally excessive, materially dishonest, and badly proportioned. A steam engine was dressed up as a Greek temple; cast iron was stamped to look like wrought iron; printed cotton imitated hand-loomed brocade. They called it the <em>crisis of taste</em>, and out of their complaints came something unexpected: a new profession (the designer), a new kind of institution (the applied-arts museum and the design school), and a new moral vocabulary (honesty, fitness for purpose, truth to materials) that would shape every design movement that followed.</p>
+      <p style="margin-top:16px">This is where modern design begins &mdash; not with a triumph, but with an argument about what things ought to look like in a world that could suddenly make too many of them.</p>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin:48px 0 8px">
+    <div class="period-label">Defining Traits</div>
+    <h3 style="font-family:var(--font-display);font-size:1.4rem;margin-bottom:4px">Key Ideas</h3>
+    <p style="font-size:.85rem;color:var(--text-dim)">Click each card to reveal an example</p>
+  </div>
+
+  <div class="flip-grid">
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Mass Production</div>
+          <div class="flip-dates">Factories, steam, division of labor</div>
+          <div class="flip-hint">Click to see example &rarr;</div>
+        </div>
+        <div class="flip-back"><div class="flip-role">Example</div><p>Matthew Boulton&rsquo;s Soho Manufactory (opened 1766) and Josiah Wedgwood&rsquo;s Etruria pottery (opened 1769) pioneered specialized workshops, mechanized tools, and company towns &mdash; the institutional ancestors of the modern factory.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">The Crisis of Taste</div>
+          <div class="flip-dates">Too much ornament, too little sense</div>
+          <div class="flip-hint">Click to see example &rarr;</div>
+        </div>
+        <div class="flip-back"><div class="flip-role">Example</div><p>The 1851 Great Exhibition displayed carved stoves shaped like medieval knights, hunting knives with silver stag handles, and chairs made of cast iron pretending to be bamboo. Reformers called the whole display &ldquo;debased&rdquo; and used it to launch a movement.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Honesty of Materials</div>
+          <div class="flip-dates">Iron should look like iron</div>
+          <div class="flip-hint">Click to see example &rarr;</div>
+        </div>
+        <div class="flip-back"><div class="flip-role">Example</div><p>A.W.N. Pugin&rsquo;s <em>True Principles of Pointed or Christian Architecture</em> (1841) argued that all features of a building should be necessary and all ornament should enrich construction, not disguise it. Modernism was born from this rule.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Fitness for Purpose</div>
+          <div class="flip-dates">Every feature should serve a function</div>
+          <div class="flip-hint">Click to see example &rarr;</div>
+        </div>
+        <div class="flip-back"><div class="flip-role">Example</div><p>Christopher Dresser&rsquo;s geometric teapots and cruet sets of the 1870s and 1880s openly exposed their tripod legs, wooden handles, and soldered joints. They looked like what they were: industrially manufactured objects designed for use.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">The Moral Critique</div>
+          <div class="flip-dates">Good design is ethical, not just pretty</div>
+          <div class="flip-hint">Click to see example &rarr;</div>
+        </div>
+        <div class="flip-back"><div class="flip-role">Example</div><p>John Ruskin&rsquo;s <em>The Nature of Gothic</em> (1853) argued that the degradation of industrial workers into living machines was inseparable from the ugliness of the goods they produced. Design quality, he insisted, begins with the dignity of labor.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Design as a Profession</div>
+          <div class="flip-dates">The drawing room splits from the workshop</div>
+          <div class="flip-hint">Click to see example &rarr;</div>
+        </div>
+        <div class="flip-back"><div class="flip-role">Example</div><p>Josiah Wedgwood hired the sculptor John Flaxman in the 1770s to supply drawings for his jasperware reliefs. For arguably the first time, a factory separated the act of <em>designing</em> an object from the act of <em>making</em> it &mdash; and the designer was born as a distinct professional role.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">State Institutions</div>
+          <div class="flip-dates">Schools, museums, and journals of design</div>
+          <div class="flip-hint">Click to see example &rarr;</div>
+        </div>
+        <div class="flip-back"><div class="flip-role">Example</div><p>Henry Cole used the profits of the 1851 Great Exhibition to build a South Kensington complex of design schools and museums, including the Museum of Manufactures (later the V&amp;A). The model was copied across Europe and the United States.</p></div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Engineering Aesthetics</div>
+          <div class="flip-dates">A hidden industrial modernism</div>
+          <div class="flip-hint">Click to see example &rarr;</div>
+        </div>
+        <div class="flip-back"><div class="flip-role">Example</div><p>Joseph Paxton&rsquo;s Crystal Palace (1851) was designed in weeks by a gardener, prefabricated from cast iron and plate glass, and assembled in under nine months. Later modernists would see it as the one Victorian building that took industrial materials seriously on their own terms.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin:48px 0 8px">
+    <div class="period-label">Chronology</div>
+    <h3 style="font-family:var(--font-display);font-size:1.4rem;margin-bottom:4px">Historical Timeline</h3>
+    <p style="font-size:.85rem;color:var(--text-dim)">Key moments of the reform era</p>
+  </div>
+
+  <div class="hist-timeline" id="histTimeline">
+
+      <div class="timeline-item">
+        <div class="tl-content">
+          <div class="timeline-year">1765&ndash;1769</div>
+          <div class="timeline-event"><strong>Wedgwood, Boulton, and Watt.</strong> The factories and engines that make industrial design possible.</div>
+          <div class="tl-detail" id="tlDetail0">Josiah Wedgwood opens his Etruria pottery in Staffordshire in 1769 and begins selling his Queen&rsquo;s Ware creamware after winning royal patronage in 1765. Matthew Boulton opens the Soho Manufactory in Birmingham in 1766. James Watt patents his improved steam engine in 1769. In a handful of years, the ingredients of the modern factory system are assembled in the English Midlands.</div>
+          <button class="tl-toggle" onclick="toggleTlDetail(0)">Read more</button>
+        </div>
+        <div class="tl-node"><div class="tl-diamond"></div><div class="tl-connector"></div></div>
+        <div></div>
+      </div>
+
+      <div class="timeline-item">
+        <div></div>
+        <div class="tl-node"><div class="tl-diamond"></div><div class="tl-connector"></div></div>
+        <div class="tl-content">
+          <div class="timeline-year">1779</div>
+          <div class="timeline-event"><strong>The Iron Bridge at Coalbrookdale.</strong> Abraham Darby III builds the world&rsquo;s first major cast-iron bridge.</div>
+          <div class="tl-detail" id="tlDetail1">A single 30-metre cast-iron arch spans the River Severn in Shropshire. It is the first major structure anywhere to be built of iron, and it proves that the new material can carry architectural loads. The Ironbridge Gorge is now a UNESCO World Heritage Site recognized as the birthplace of the Industrial Revolution.</div>
+          <button class="tl-toggle" onclick="toggleTlDetail(1)">Read more</button>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="tl-content">
+          <div class="timeline-year">1836</div>
+          <div class="timeline-event"><strong>Pugin publishes <em>Contrasts</em>.</strong> The first moral critique of industrial design.</div>
+          <div class="tl-detail" id="tlDetail2">A.W.N. Pugin pairs drawings of medieval and modern scenes to argue that industrial Britain has become visually, socially, and spiritually degraded. His later <em>True Principles</em> (1841) distills his program into two rules: no features that are not necessary, and all ornament should enrich construction. These principles echo through the next century of architectural theory.</div>
+          <button class="tl-toggle" onclick="toggleTlDetail(2)">Read more</button>
+        </div>
+        <div class="tl-node"><div class="tl-diamond"></div><div class="tl-connector"></div></div>
+        <div></div>
+      </div>
+
+      <div class="timeline-item">
+        <div></div>
+        <div class="tl-node"><div class="tl-diamond"></div><div class="tl-connector"></div></div>
+        <div class="tl-content">
+          <div class="timeline-year">1837</div>
+          <div class="timeline-event"><strong>The Government School of Design.</strong> Britain founds the first state-funded design school.</div>
+          <div class="tl-detail" id="tlDetail3">Parliament establishes a School of Design at Somerset House in London to train designers for manufacturing. It is the first time any European state officially recognizes that industrial design education is a national economic interest. Regional schools follow in Manchester, Birmingham, Glasgow, and other industrial cities through the 1840s.</div>
+          <button class="tl-toggle" onclick="toggleTlDetail(3)">Read more</button>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="tl-content">
+          <div class="timeline-year">1849</div>
+          <div class="timeline-event"><strong>Ruskin&rsquo;s <em>Seven Lamps</em> &amp; Cole&rsquo;s <em>Journal of Design</em>.</strong> The reform movement finds its voice.</div>
+          <div class="tl-detail" id="tlDetail4">John Ruskin publishes <em>The Seven Lamps of Architecture</em>, arguing that buildings should be judged by seven moral criteria. In the same year Henry Cole and Richard Redgrave launch the <em>Journal of Design and Manufactures</em>, the first magazine in the world devoted to serious criticism of industrial goods. The reformers now have both a canonical book and a regular publication.</div>
+          <button class="tl-toggle" onclick="toggleTlDetail(4)">Read more</button>
+        </div>
+        <div class="tl-node"><div class="tl-diamond"></div><div class="tl-connector"></div></div>
+        <div></div>
+      </div>
+
+      <div class="timeline-item">
+        <div></div>
+        <div class="tl-node"><div class="tl-diamond"></div><div class="tl-connector"></div></div>
+        <div class="tl-content">
+          <div class="timeline-year">1851</div>
+          <div class="timeline-event"><strong>The Great Exhibition and the Crystal Palace.</strong> A glass-and-iron manifesto in Hyde Park.</div>
+          <div class="tl-detail" id="tlDetail5">Joseph Paxton&rsquo;s 563-metre prefabricated shed houses the Great Exhibition, which draws six million visitors and over 14,000 exhibitors. The building becomes an argument for honest industrial architecture; the objects displayed inside it become a case study for everything the reformers had been complaining about. Every subsequent design reform movement descends in some measure from this summer in London.</div>
+          <button class="tl-toggle" onclick="toggleTlDetail(5)">Read more</button>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="tl-content">
+          <div class="timeline-year">1852</div>
+          <div class="timeline-event"><strong>The Museum of Manufactures.</strong> Henry Cole founds the institution that becomes the V&amp;A.</div>
+          <div class="tl-detail" id="tlDetail6">Using the &pound;186,000 surplus from the Great Exhibition, Cole founds the Museum of Manufactures at Marlborough House, London. In 1857 it moves to South Kensington and is renamed the South Kensington Museum; in 1899 it becomes the Victoria and Albert Museum. It is the world&rsquo;s first museum dedicated to the decorative and applied arts, and the model is copied on every continent.</div>
+          <button class="tl-toggle" onclick="toggleTlDetail(6)">Read more</button>
+        </div>
+        <div class="tl-node"><div class="tl-diamond"></div><div class="tl-connector"></div></div>
+        <div></div>
+      </div>
+
+      <div class="timeline-item">
+        <div></div>
+        <div class="tl-node"><div class="tl-diamond"></div><div class="tl-connector"></div></div>
+        <div class="tl-content">
+          <div class="timeline-year">1856</div>
+          <div class="timeline-event"><strong>Owen Jones&rsquo;s <em>Grammar of Ornament</em>.</strong> Twenty cultures, one hundred chromolithographed plates.</div>
+          <div class="tl-detail" id="tlDetail7">Owen Jones publishes a folio surveying the ornament of twenty decorative traditions &mdash; Egyptian, Greek, Moorish, Indian, Chinese, Medieval, Renaissance, and more &mdash; prefaced by thirty-seven &ldquo;general propositions&rdquo; on design and color. It is the most systematic codification of ornament principles in the nineteenth century and becomes a touchstone for designers from Morris to Frank Lloyd Wright.</div>
+          <button class="tl-toggle" onclick="toggleTlDetail(7)">Read more</button>
+        </div>
+      </div>
+
+  </div>
+
+  <div class="think-question">
+    <div class="tq-label">Think About It</div>
+    <p>The reformers thought industrial design had become a &ldquo;crisis.&rdquo; But many of their contemporaries loved the elaborate, machine-produced ornament the reformers attacked. Whose taste was the problem &mdash; the manufacturers&rsquo;, the consumers&rsquo;, or the critics&rsquo;?</p>
+  </div>
+
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(0)" style="visibility:hidden">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(1)">Next: Gallery &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 1: GALLERY ===== -->
+<div class="section" data-idx="1">
+  <div class="section-header">
+    <div class="period-label">Landmarks</div>
+    <h2>Iconic Works</h2>
+    <div class="dates">The objects and books that defined the era</div>
+  </div>
+
+  <div class="content-block">
+    <p>The Industrial Revolution&rsquo;s design legacy is uneven. Its most celebrated works are sometimes buildings, sometimes books, sometimes factory products, and sometimes steam engines. Below are eight landmarks that together sketch the full reach of the reform era &mdash; from a cast-iron bridge to a moral manifesto to a geometric teapot.</p>
+  </div>
+
+  <div class="gallery-grid">
+
+    <div class="gallery-card">
+      <div class="gc-label">Engineering &middot; 1779</div>
+      <div class="gc-title">The Iron Bridge at Coalbrookdale</div>
+      <div class="gc-meta">Abraham Darby III &middot; Shropshire, England</div>
+      <div class="gc-desc">The world&rsquo;s first major cast-iron bridge, spanning the River Severn in a single 30-metre arch. Proved that iron could carry architectural loads and announced a new era of industrial construction. Still standing today.</div>
+    </div>
+
+    <div class="gallery-card">
+      <div class="gc-label">Ceramics &middot; 1775</div>
+      <div class="gc-title">Wedgwood Jasperware</div>
+      <div class="gc-meta">Josiah Wedgwood &middot; Etruria, Staffordshire</div>
+      <div class="gc-desc">Pale-blue unglazed stoneware decorated with white classical reliefs, often modelled by artists like John Flaxman. The signature product of Wedgwood&rsquo;s factory and an emblem of Neoclassical industrial taste.</div>
+    </div>
+
+    <div class="gallery-card">
+      <div class="gc-label">Architecture &middot; 1840&ndash;1870</div>
+      <div class="gc-title">Houses of Parliament Interiors</div>
+      <div class="gc-meta">A.W.N. Pugin (with Charles Barry) &middot; London</div>
+      <div class="gc-desc">Pugin designed virtually every interior detail of the new Palace of Westminster &mdash; wallpapers, tiles, furniture, stained glass, ironwork &mdash; in a rigorous Gothic idiom. A total program of reform-minded design on a civic scale.</div>
+    </div>
+
+    <div class="gallery-card">
+      <div class="gc-label">Architecture &middot; 1851</div>
+      <div class="gc-title">The Crystal Palace</div>
+      <div class="gc-meta">Joseph Paxton &middot; Hyde Park, London</div>
+      <div class="gc-desc">A 563-metre prefabricated exhibition hall in cast iron and plate glass, assembled in nine months. Burned down in 1936. For later modernists, the one Victorian building that took industrial materials seriously on their own terms.</div>
+    </div>
+
+    <div class="gallery-card">
+      <div class="gc-label">Book &middot; 1853</div>
+      <div class="gc-title">The Nature of Gothic</div>
+      <div class="gc-meta">John Ruskin &middot; London</div>
+      <div class="gc-desc">The central chapter of <em>The Stones of Venice</em>, vol. II. Ruskin&rsquo;s argument that Gothic architecture was great because it let workers think &mdash; and that industrial production was ugly because it turned workers into machines. The founding text of the labor-centered critique of design.</div>
+    </div>
+
+    <div class="gallery-card">
+      <div class="gc-label">Book &middot; 1856</div>
+      <div class="gc-title">The Grammar of Ornament</div>
+      <div class="gc-meta">Owen Jones &middot; London (Day &amp; Son)</div>
+      <div class="gc-desc">A hundred chromolithographed plates surveying twenty decorative traditions, opened by thirty-seven &ldquo;general propositions&rdquo; on ornament and color. The most systematic design book of the nineteenth century and a landmark of color printing.</div>
+    </div>
+
+    <div class="gallery-card">
+      <div class="gc-label">Engineering &middot; 1858</div>
+      <div class="gc-title">The Great Eastern</div>
+      <div class="gc-meta">Isambard Kingdom Brunel &middot; Millwall, London</div>
+      <div class="gc-desc">A 211-metre iron-hulled steamship, nearly twice the length of any previous vessel. Six masts, five funnels, paddle wheels, and a screw propeller. A commercial failure but a design landmark &mdash; the largest ship in the world until 1899.</div>
+    </div>
+
+    <div class="gallery-card">
+      <div class="gc-label">Metalwork &middot; 1879</div>
+      <div class="gc-title">Dresser Teapot for Dixon &amp; Sons</div>
+      <div class="gc-meta">Christopher Dresser &middot; Sheffield</div>
+      <div class="gc-desc">An electroplated silver teapot on tripod legs with an ebonized wood handle. Its pared-down geometric form and honest revelation of its construction anticipated twentieth-century modernism by half a century.</div>
+    </div>
+
+  </div>
+
+  <div class="think-question">
+    <div class="tq-label">Think About It</div>
+    <p>Of the eight landmarks above, which would you show first to someone asking &ldquo;what did the Industrial Revolution contribute to design&rdquo; &mdash; and why?</p>
+  </div>
+
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(0)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(2)">Next: People &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 2: PEOPLE ===== -->
+<div class="section" data-idx="2">
+  <div class="section-header">
+    <div class="period-label">Figures</div>
+    <h2>Key People</h2>
+    <div class="dates">Inventors, reformers, and institution-builders</div>
+  </div>
+
+  <div class="content-block">
+    <p>The Industrial Revolution&rsquo;s design story is carried by three overlapping groups: the manufacturers and engineers who built the factories and machines, the critics and theorists who argued about the results, and the bureaucrats who translated those arguments into schools, museums, and institutions. Hover on or tap each card to flip it.</p>
+  </div>
+
+  <div class="flip-grid">
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Josiah Wedgwood</div>
+          <div class="flip-dates">1730&ndash;1795</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Potter &amp; Industrialist</div>
+          <p>Staffordshire potter who industrialized English ceramics, pioneered modern marketing, and hired artists like John Flaxman to supply drawings for his factory. Arguably the first industrial designer in the modern sense.</p>
+          <div class="flip-works">Queen&rsquo;s Ware (1765) &middot; Jasperware (1775) &middot; Etruria Factory (1769)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">James Watt</div>
+          <div class="flip-dates">1736&ndash;1819</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Engineer &amp; Inventor</div>
+          <p>Scottish instrument maker whose improvements to the Newcomen steam engine made steam power economically practical. The enabling technology of the entire Industrial Revolution.</p>
+          <div class="flip-works">Separate condenser (1765) &middot; Rotative engine (1781)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Matthew Boulton</div>
+          <div class="flip-dates">1728&ndash;1809</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Manufacturer</div>
+          <p>Birmingham manufacturer whose Soho Manufactory pioneered specialized production across multiple trades. Partner to James Watt; friend of Wedgwood; member of the Lunar Society. Understood that well-designed products were a competitive advantage.</p>
+          <div class="flip-works">Soho Manufactory (1766) &middot; Sheffield plate and silver</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">A.W.N. Pugin</div>
+          <div class="flip-dates">1812&ndash;1852</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Architect &amp; Reformer</div>
+          <p>Gothic Revival architect whose moral critique of industrial design laid the foundations for every later reform movement. Designed the interiors of the Houses of Parliament; codified the rules of honest, purposeful design.</p>
+          <div class="flip-works">Contrasts (1836) &middot; True Principles (1841) &middot; Houses of Parliament</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">John Ruskin</div>
+          <div class="flip-dates">1819&ndash;1900</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Critic &amp; Theorist</div>
+          <p>The towering art critic of Victorian Britain. Argued that design quality cannot be separated from the condition of workers. His books shaped William Morris, the Arts and Crafts movement, and every later labor-centered critique of design.</p>
+          <div class="flip-works">Seven Lamps (1849) &middot; The Nature of Gothic (1853) &middot; Unto This Last (1860)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Henry Cole</div>
+          <div class="flip-dates">1808&ndash;1882</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Civil Servant &amp; Organizer</div>
+          <p>The bureaucratic genius of Victorian design reform. Organized the Great Exhibition, founded the Museum of Manufactures (later the V&amp;A), ran the Department of Practical Art, and built the institutional infrastructure of modern design education.</p>
+          <div class="flip-works">Great Exhibition (1851) &middot; V&amp;A Museum (1852) &middot; Journal of Design (1849)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Owen Jones</div>
+          <div class="flip-dates">1809&ndash;1874</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Architect &amp; Theorist of Ornament</div>
+          <p>Welsh-born architect and colorist who made the systematic, cross-cultural study of ornament a serious discipline. Chose the bold primary color scheme for the Crystal Palace interior. Author of the most influential design book of the century.</p>
+          <div class="flip-works">Alhambra (1842&ndash;45) &middot; The Grammar of Ornament (1856)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Christopher Dresser</div>
+          <div class="flip-dates">1834&ndash;1904</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Designer &amp; Botanist</div>
+          <p>Trained as a botanist before turning to design. Arguably the first self-conscious industrial designer to work across ceramics, glass, metalwork, and textiles. His geometric silverware anticipated modernism by half a century. Travelled to Japan in 1876.</p>
+          <div class="flip-works">Dixon teapot (1879) &middot; Hukin &amp; Heath cruet sets &middot; Japan (1882)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Joseph Paxton</div>
+          <div class="flip-dates">1803&ndash;1865</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Gardener &amp; Engineer</div>
+          <p>A gardener who became an engineer by designing greenhouses. Sketched the Crystal Palace on a piece of blotting paper during a committee meeting after every other proposal had been rejected as too slow or too expensive. Knighted after the exhibition opened.</p>
+          <div class="flip-works">Chatsworth Great Conservatory (1841) &middot; The Crystal Palace (1851)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">I. K. Brunel</div>
+          <div class="flip-dates">1806&ndash;1859</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Engineer</div>
+          <p>The great engineer of the railway age. Designed the Great Western Railway, the Clifton Suspension Bridge, Paddington Station, and three transformative steamships including the <em>Great Eastern</em>. Later modernists treated his work as the hidden alternative tradition of industrial design.</p>
+          <div class="flip-works">Clifton Bridge (1831) &middot; Paddington (1854) &middot; Great Eastern (1858)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Richard Redgrave</div>
+          <div class="flip-dates">1804&ndash;1888</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Painter, Designer, Administrator</div>
+          <p>Henry Cole&rsquo;s closest collaborator at the Schools of Design. Co-edited the <em>Journal of Design and Manufactures</em>, taught ornament and design theory, and wrote extensively on the faults of industrial goods. One of the first writers to treat design criticism as a profession.</p>
+          <div class="flip-works">Journal of Design (1849) &middot; Reports on the Great Exhibition</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Prince Albert</div>
+          <div class="flip-dates">1819&ndash;1861</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Patron &amp; Conceiver of the Great Exhibition</div>
+          <p>Queen Victoria&rsquo;s consort and a serious patron of design and engineering. Proposed and championed the Great Exhibition of 1851 and used his royal influence to push its design-reform agenda through a skeptical establishment. The V&amp;A is named after him and the Queen.</p>
+          <div class="flip-works">Great Exhibition (1851) &middot; Royal Commission &middot; South Kensington complex</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(1)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(3)">Next: Themes &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 3: THEMES ===== -->
+<div class="section" data-idx="3">
+  <div class="section-header">
+    <div class="period-label">Structure</div>
+    <h2>Themes &amp; Institutions</h2>
+    <div class="dates">The systems that reshaped design</div>
+  </div>
+
+  <div class="content-block">
+    <p>The Industrial Revolution didn&rsquo;t produce named style movements in the way that Art Nouveau or Bauhaus did. What it produced instead were <em>systems</em>: factories, exhibitions, schools, museums, critical journals, and a handful of durable ideas about what design ought to be. Click each card to flip it.</p>
+  </div>
+
+  <div class="flip-grid">
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">The Factory System</div>
+          <div class="flip-dates">From 1760s onward</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Concept</div>
+          <p>The gathering of workers, machines, and materials into a single managed building, powered first by water and then by steam. Specialized tasks, divided labor, synchronized to the rhythm of machinery. Split the designer from the maker for the first time in history.</p>
+          <div class="flip-works">Boulton &middot; Wedgwood &middot; Arkwright &middot; Cartwright</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">The Great Exhibition</div>
+          <div class="flip-dates">London, 1851</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">World&rsquo;s Fair</div>
+          <p>The first international exhibition: 14,000 exhibitors, 100,000 objects, six million visitors over six months in Hyde Park. Organized by Prince Albert and Henry Cole and housed in Paxton&rsquo;s Crystal Palace. Turned a profit used to build the South Kensington museum complex.</p>
+          <div class="flip-works">Hyde Park &middot; Crystal Palace &middot; Prince Albert &middot; Henry Cole</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">The Crystal Palace</div>
+          <div class="flip-dates">1851 / rebuilt 1854, burned 1936</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Architecture</div>
+          <p>A prefabricated iron-and-glass shed, 563 metres long, assembled in under nine months by Joseph Paxton. The most important industrial-architectural argument of the century: that industrial materials, honestly used, could produce a new kind of beauty.</p>
+          <div class="flip-works">Paxton &middot; Hyde Park &middot; Sydenham &middot; Modular prefabrication</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Schools of Design</div>
+          <div class="flip-dates">From 1837 onward</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Institution</div>
+          <p>State-funded design schools founded to train designers for manufacturing, first in London (1837) and then across industrial Britain. The model eventually spread across Europe and the United States and became the ancestor of every modern art and design school.</p>
+          <div class="flip-works">Somerset House &middot; South Kensington &middot; Cole &amp; Redgrave</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">The V&amp;A Museum</div>
+          <div class="flip-dates">founded 1852</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Institution</div>
+          <p>Henry Cole&rsquo;s Museum of Manufactures &mdash; later the South Kensington Museum, then the Victoria and Albert Museum &mdash; was the world&rsquo;s first museum devoted to the decorative and applied arts. Built as a teaching tool for designers and the public.</p>
+          <div class="flip-works">South Kensington &middot; Cole &middot; The applied-arts model</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">The Gothic Revival</div>
+          <div class="flip-dates">1830s&ndash;1870s</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Movement</div>
+          <p>The historical revival most closely linked to design reform. Pugin&rsquo;s Gothic was not mere nostalgia: it was a claim that medieval architecture was structurally honest and morally serious in ways that nineteenth-century classical revivalism was not. Ruskin later extended the argument to labor.</p>
+          <div class="flip-works">Pugin &middot; Ruskin &middot; Houses of Parliament &middot; St Pancras</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">Engineering Architecture</div>
+          <div class="flip-dates">throughout the period</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Tradition</div>
+          <p>The parallel tradition of bridges, railway sheds, greenhouses, lighthouses, and steamships designed by engineers outside the art schools. Later modernists treated it as the hidden alternative to Victorian ornament and a direct precursor of the Bauhaus.</p>
+          <div class="flip-works">Telford &middot; Brunel &middot; Paxton &middot; Coalbrookdale</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-name">The Reform Vocabulary</div>
+          <div class="flip-dates">1830s&ndash;1880s</div>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Concept</div>
+          <p>The set of critical terms invented by Pugin, Ruskin, Jones, Cole, and Redgrave: honesty of materials, fitness for purpose, truth to construction, moral weight of design. These words outlived their inventors and became the foundation of modernist design thought.</p>
+          <div class="flip-works">True Principles &middot; Seven Lamps &middot; Grammar of Ornament</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(2)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(4)">Next: Matching &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 4: MATCHING ===== -->
+<div class="section" data-idx="4">
+  <div class="section-header">
+    <div class="period-label">Activity</div>
+    <h2>Match the Reformer to Their Work</h2>
+    <div class="dates">Pair each person with the landmark they produced</div>
+  </div>
+
+  <p class="match-instructions">Click a person on the left, then click the work on the right. Correct matches will lock in place.</p>
+
+  <div class="match-grid">
+    <div>
+      <div class="match-col-label">Person</div>
+      <div id="matchLeft"></div>
+    </div>
+    <div>
+      <div class="match-col-label">Landmark</div>
+      <div id="matchRight"></div>
+    </div>
+  </div>
+  <div class="match-score" id="matchScore"></div>
+  <div class="match-feedback" id="matchFeedback"></div>
+  <button class="match-reset" id="matchResetBtn" onclick="resetMatch()" style="display:none">Try Again</button>
+
+  <div style="margin-top:40px"></div>
+
+  <div class="section-header">
+    <div class="period-label">Activity</div>
+    <h2>Match the Event to Its Year</h2>
+    <div class="dates">A chronology of the reform movement</div>
+  </div>
+
+  <p class="match-instructions">Click an event on the left, then click the year on the right.</p>
+
+  <div class="match-grid">
+    <div>
+      <div class="match-col-label">Event</div>
+      <div id="matchLeft2"></div>
+    </div>
+    <div>
+      <div class="match-col-label">Year</div>
+      <div id="matchRight2"></div>
+    </div>
+  </div>
+  <div class="match-score" id="matchScore2"></div>
+  <div class="match-feedback" id="matchFeedback2"></div>
+  <button class="match-reset" id="matchResetBtn2" onclick="resetMatch2()" style="display:none">Try Again</button>
+
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(3)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(5)">Next: Quiz &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 5: QUIZ ===== -->
+<div class="section" data-idx="5">
+  <div class="section-header">
+    <div class="period-label">Knowledge Check</div>
+    <h2>Industrial Revolution Quiz</h2>
+    <div class="dates">Test what you&rsquo;ve learned</div>
+  </div>
+
+  <div class="quiz-wrap" id="quizWrap"></div>
+
+  <div class="results-card" id="resultsCard">
+    <div class="score-ring" id="scoreRing">
+      <div class="score-num" id="scoreNum">0%</div>
+      <div class="score-lbl">Score</div>
+    </div>
+    <h3 id="resultsTitle">Results</h3>
+    <p id="resultsMsg"></p>
+    <button class="btn-retry" onclick="retryQuiz()">Try Again</button>
+  </div>
+
+  <div class="section-nav" id="quizNav">
+    <button class="nav-btn" onclick="goSection(4)">&larr; Previous</button>
+    <span></span>
+  </div>
+</div>
+
+</main>
+
+<footer class="footer">
+  <p>DSGN 230 &mdash; Survey of Design History<br>The Industrial Revolution &amp; Early Design Reform Deep Dive</p>
+</footer>
+
+<script>
+/* ============ GLOBALS ============ */
+const TOTAL_SECTIONS = 6;
+let currentSection = 0;
+
+/* ============ NAVIGATION ============ */
+function startLesson(){
+  document.getElementById('hero').style.display='none';
+  document.getElementById('toolbar').style.display='block';
+  document.getElementById('tabNav').style.display='block';
+  goSection(0);
+}
+
+function goSection(idx){
+  currentSection=idx;
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.section')[idx].classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>{b.classList.toggle('active',i===idx)});
+  document.getElementById('progressLabel').textContent='Section '+(idx+1)+' / '+TOTAL_SECTIONS;
+  document.getElementById('progressFill').style.width=((idx+1)/TOTAL_SECTIONS*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleTheme(){document.documentElement.classList.toggle('light')}
+
+/* ============ MATCHING 1: Person -> Landmark ============ */
+const matchPairs=[
+  {left:'Josiah Wedgwood',right:'Jasperware'},
+  {left:'A.W.N. Pugin',right:'Contrasts (1836)'},
+  {left:'John Ruskin',right:'The Nature of Gothic'},
+  {left:'Henry Cole',right:'The V&A Museum'},
+  {left:'Owen Jones',right:'The Grammar of Ornament'},
+  {left:'Christopher Dresser',right:'Dixon teapot (1879)'},
+  {left:'Joseph Paxton',right:'The Crystal Palace'},
+  {left:'James Watt',right:'Rotative steam engine'},
+];
+let m1Left=null,m1Matched=0;
+
+function initMatch(){
+  const lC=document.getElementById('matchLeft'),rC=document.getElementById('matchRight');
+  const shuffledL=[...matchPairs].sort(()=>Math.random()-.5);
+  const shuffledR=[...matchPairs].sort(()=>Math.random()-.5);
+  lC.innerHTML='';rC.innerHTML='';
+  shuffledL.forEach(p=>{
+    const d=document.createElement('div');d.className='match-item';d.textContent=p.left;
+    d.dataset.key=p.left;d.onclick=()=>selectMatchLeft(d);lC.appendChild(d);
+  });
+  shuffledR.forEach(p=>{
+    const d=document.createElement('div');d.className='match-item';d.textContent=p.right;
+    d.dataset.key=p.left;d.onclick=()=>selectMatchRight(d);rC.appendChild(d);
+  });
+  m1Left=null;m1Matched=0;
+  document.getElementById('matchScore').textContent='';
+  document.getElementById('matchFeedback').className='match-feedback';
+  document.getElementById('matchResetBtn').style.display='none';
+}
+
+function selectMatchLeft(el){
+  if(el.classList.contains('matched'))return;
+  document.querySelectorAll('#matchLeft .match-item').forEach(e=>e.classList.remove('selected'));
+  el.classList.add('selected');m1Left=el;
+}
+
+function selectMatchRight(el){
+  if(!m1Left||el.classList.contains('matched'))return;
+  if(m1Left.dataset.key===el.dataset.key){
+    m1Left.classList.remove('selected');m1Left.classList.add('matched');
+    el.classList.add('matched');m1Matched++;
+    document.getElementById('matchScore').textContent=m1Matched+' / '+matchPairs.length+' matched';
+    if(m1Matched===matchPairs.length){
+      const fb=document.getElementById('matchFeedback');
+      fb.className='match-feedback show success';fb.textContent='All matched! Excellent work.';
+    }
+  } else {
+    el.classList.add('wrong');m1Left.classList.add('wrong');
+    setTimeout(()=>{el.classList.remove('wrong');m1Left.classList.remove('wrong','selected');m1Left=null},800);
+    document.getElementById('matchResetBtn').style.display='inline-block';
+    return;
+  }
+  m1Left=null;
+}
+
+function resetMatch(){initMatch()}
+
+/* ============ MATCHING 2: Event -> Year ============ */
+const matchPairs2=[
+  {left:'Iron Bridge at Coalbrookdale',right:'1779'},
+  {left:'Pugin publishes Contrasts',right:'1836'},
+  {left:'Government School of Design founded',right:'1837'},
+  {left:'Ruskin publishes Seven Lamps',right:'1849'},
+  {left:'The Great Exhibition in Hyde Park',right:'1851'},
+  {left:'Museum of Manufactures (V&A) founded',right:'1852'},
+  {left:'Owen Jones publishes Grammar of Ornament',right:'1856'},
+  {left:'Brunel launches the Great Eastern',right:'1858'},
+];
+let m2Left=null,m2Matched=0;
+
+function initMatch2(){
+  const lC=document.getElementById('matchLeft2'),rC=document.getElementById('matchRight2');
+  const shuffledL=[...matchPairs2].sort(()=>Math.random()-.5);
+  const shuffledR=[...matchPairs2].sort(()=>Math.random()-.5);
+  lC.innerHTML='';rC.innerHTML='';
+  shuffledL.forEach(p=>{
+    const d=document.createElement('div');d.className='match-item';d.textContent=p.left;
+    d.dataset.key=p.left;d.onclick=()=>selectM2Left(d);lC.appendChild(d);
+  });
+  shuffledR.forEach(p=>{
+    const d=document.createElement('div');d.className='match-item';d.textContent=p.right;
+    d.dataset.key=p.left;d.onclick=()=>selectM2Right(d);rC.appendChild(d);
+  });
+  m2Left=null;m2Matched=0;
+  document.getElementById('matchScore2').textContent='';
+  document.getElementById('matchFeedback2').className='match-feedback';
+  document.getElementById('matchResetBtn2').style.display='none';
+}
+
+function selectM2Left(el){
+  if(el.classList.contains('matched'))return;
+  document.querySelectorAll('#matchLeft2 .match-item').forEach(e=>e.classList.remove('selected'));
+  el.classList.add('selected');m2Left=el;
+}
+
+function selectM2Right(el){
+  if(!m2Left||el.classList.contains('matched'))return;
+  if(m2Left.dataset.key===el.dataset.key){
+    m2Left.classList.remove('selected');m2Left.classList.add('matched');
+    el.classList.add('matched');m2Matched++;
+    document.getElementById('matchScore2').textContent=m2Matched+' / '+matchPairs2.length+' matched';
+    if(m2Matched===matchPairs2.length){
+      const fb=document.getElementById('matchFeedback2');
+      fb.className='match-feedback show success';fb.textContent='All matched! You know your reform-era chronology.';
+    }
+  } else {
+    el.classList.add('wrong');m2Left.classList.add('wrong');
+    setTimeout(()=>{el.classList.remove('wrong');m2Left.classList.remove('wrong','selected');m2Left=null},800);
+    document.getElementById('matchResetBtn2').style.display='inline-block';
+    return;
+  }
+  m2Left=null;
+}
+
+function resetMatch2(){initMatch2()}
+
+/* ============ QUIZ ============ */
+const quizData=[
+  {q:'Which pamphlet launched A.W.N. Pugin\u0027s moral critique of industrial design?',
+   opts:['The Seven Lamps of Architecture','Contrasts (1836)','The Stones of Venice','The Grammar of Ornament'],
+   ans:1,
+   explain:'Pugin\u0027s Contrasts (1836) paired medieval and modern scenes to argue that industrial Britain had become visually, socially, and spiritually degraded. His True Principles (1841) turned the argument into explicit design rules.'},
+  {q:'Who designed the Crystal Palace for the Great Exhibition of 1851?',
+   opts:['Charles Barry','A.W.N. Pugin','Joseph Paxton','Isambard Kingdom Brunel'],
+   ans:2,
+   explain:'Joseph Paxton, a gardener turned engineer, sketched the Crystal Palace on a piece of blotting paper during a committee meeting. It was prefabricated from cast iron and plate glass and assembled in under nine months.'},
+  {q:'What did Victorian reformers mean by the "crisis of taste"?',
+   opts:['A shortage of silverware during the Crimean War','A critical judgment that mass-produced goods were ornamentally excessive, materially dishonest, and badly proportioned','A Parliamentary scandal about Henry Cole','A collapse of the Staffordshire pottery industry'],
+   ans:1,
+   explain:'The "crisis of taste" was the reformers\u0027 term for the visual failure of industrial goods &mdash; too much ornament, dishonest use of materials, and ugly results. It was the problem that the discipline of design was invented to solve.'},
+  {q:'Who wrote "The Nature of Gothic," the 1853 chapter arguing that design quality depends on the dignity of workers?',
+   opts:['A.W.N. Pugin','John Ruskin','Henry Cole','Owen Jones'],
+   ans:1,
+   explain:'Ruskin\u0027s "The Nature of Gothic" appears in the second volume of The Stones of Venice (1853). It became one of the most influential essays in modern design criticism and shaped William Morris, the Arts and Crafts movement, and every later labor-centered critique.'},
+  {q:'Which institution was founded in 1852 using surplus profits from the Great Exhibition?',
+   opts:['The British Museum','The National Gallery','The Museum of Manufactures (later the Victoria and Albert Museum)','The Natural History Museum'],
+   ans:2,
+   explain:'Henry Cole used the &pound;186,000 surplus from the Great Exhibition to found the Museum of Manufactures, which moved to South Kensington in 1857 and was renamed the Victoria and Albert Museum in 1899.'},
+  {q:'Who is often credited as the first industrial designer for separating the work of designing an object from the work of making it?',
+   opts:['Matthew Boulton','James Watt','Josiah Wedgwood','Richard Arkwright'],
+   ans:2,
+   explain:'Wedgwood hired artists like John Flaxman in the 1770s to supply drawings for his jasperware reliefs &mdash; arguably the first industrial operation to treat designing and making as distinct professional roles.'},
+  {q:'Which 1856 book surveyed twenty decorative traditions and opened with thirty-seven propositions on ornament and color?',
+   opts:['Japan: Its Architecture, Art, and Art Manufactures','The Grammar of Ornament','Hints on Household Taste','The True Principles of Pointed or Christian Architecture'],
+   ans:1,
+   explain:'Owen Jones\u0027s The Grammar of Ornament (1856) is the most influential design book of the nineteenth century. It used a hundred chromolithographed plates to compare ornament from twenty cultures and laid out principles that shaped designers from Morris to Frank Lloyd Wright.'},
+  {q:'Pugin\u0027s two design principles, from The True Principles of Pointed or Christian Architecture (1841), are best summarized as:',
+   opts:['All ornament should be gilded; all buildings should be white','No features that are not necessary for convenience, construction, or propriety; all ornament should enrich essential construction','Use no iron; use only stone and wood','Copy the ancients; improve nothing'],
+   ans:1,
+   explain:'These two rules &mdash; necessity of every feature, and ornament that enriches rather than disguises construction &mdash; echoed through the next century of architectural theory and seeded both the Arts and Crafts movement and modernist functionalism.'},
+  {q:'What was Christopher Dresser\u0027s unusual academic background before he became a designer?',
+   opts:['Medicine','Law','Botany','Engineering'],
+   ans:2,
+   explain:'Dresser studied botany so intensively that he was nearly hired as an academic botanist. His scientific approach to plant structure shaped his geometric design vocabulary and his cross-disciplinary career across ceramics, glass, metalwork, and textiles.'},
+  {q:'The tradition of engineering architecture (the Iron Bridge, the Crystal Palace, Brunel\u0027s stations) was later claimed as a precursor to which twentieth-century movement?',
+   opts:['Art Nouveau','Modernism and the Bauhaus','Art Deco','Postmodernism'],
+   ans:1,
+   explain:'Twentieth-century modernists from Walter Gropius to Sigfried Giedion explicitly traced their functionalism to nineteenth-century iron-and-glass engineering. For them, the real modern style had been sitting in plain sight all along in the bridges, sheds, and stations the art schools had ignored.'},
+];
+
+let quizAnswers=[], quizLocked=[];
+
+function initQuiz(){
+  const wrap=document.getElementById('quizWrap');wrap.innerHTML='';
+  quizAnswers=new Array(quizData.length).fill(-1);
+  quizLocked=new Array(quizData.length).fill(false);
+  document.getElementById('resultsCard').classList.remove('show');
+
+  quizData.forEach((q,qi)=>{
+    let optsHtml=q.opts.map((o,oi)=>'<div class="q-opt" data-qi="'+qi+'" data-oi="'+oi+'" onclick="selectQuizOpt('+qi+','+oi+')"><span class="letter">'+String.fromCharCode(65+oi)+'</span><span>'+o+'</span></div>').join('');
+    wrap.innerHTML+='<div class="q-card"><div class="q-num">Question '+(qi+1)+' of '+quizData.length+'</div><div class="q-text">'+q.q+'</div><div class="q-options">'+optsHtml+'</div><div class="q-feedback" id="qfb'+qi+'"></div></div>';
+  });
+
+  wrap.innerHTML+='<div style="text-align:center;margin-top:24px"><button class="btn-start" onclick="submitQuiz()">Submit Answers</button></div>';
+}
+
+function selectQuizOpt(qi,oi){
+  if(quizLocked[qi])return;
+  quizAnswers[qi]=oi;
+  document.querySelectorAll('.q-opt[data-qi="'+qi+'"]').forEach(e=>{
+    e.classList.remove('selected');
+    if(parseInt(e.dataset.oi)===oi)e.classList.add('selected');
+  });
+}
+
+function submitQuiz(){
+  let score=0;
+  quizData.forEach((q,qi)=>{
+    quizLocked[qi]=true;
+    const opts=document.querySelectorAll('.q-opt[data-qi="'+qi+'"]');
+    opts.forEach(o=>{
+      o.classList.remove('selected');
+      const oi=parseInt(o.dataset.oi);
+      if(oi===q.ans)o.classList.add('correct');
+      else if(oi===quizAnswers[qi])o.classList.add('wrong');
+    });
+    const fb=document.getElementById('qfb'+qi);
+    if(quizAnswers[qi]===q.ans){score++;fb.className='q-feedback show right';fb.textContent='Correct! '+q.explain;}
+    else{fb.className='q-feedback show wrong';fb.textContent='Not quite. '+q.explain;}
+  });
+
+  const pct=Math.round(score/quizData.length*100);
+  const rc=document.getElementById('resultsCard');rc.classList.add('show');
+  const ring=document.getElementById('scoreRing');
+  ring.className='score-ring '+(pct>=70?'pass':'fail');
+  document.getElementById('scoreNum').textContent=pct+'%';
+  document.getElementById('resultsTitle').textContent=pct>=70?'Well Done!':'Keep Studying';
+  document.getElementById('resultsMsg').textContent='You got '+score+' out of '+quizData.length+' correct.'+(pct>=70?' You have a solid grasp of the Industrial Revolution and early design reform.':' Review the lesson sections and try again.');
+}
+
+function retryQuiz(){initQuiz();window.scrollTo({top:document.getElementById('quizWrap').offsetTop-100,behavior:'smooth'})}
+
+/* ============ TIMELINE INTERACTIONS ============ */
+function toggleTlDetail(idx){
+  const d=document.getElementById('tlDetail'+idx);
+  const btn=d.nextElementSibling;
+  if(d.classList.contains('open')){d.classList.remove('open');btn.textContent='Read more';}
+  else{d.classList.add('open');btn.textContent='Read less';}
+}
+
+/* Scroll-reveal for timeline items */
+const tlObserver=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('tl-visible');tlObserver.unobserve(e.target);}});
+},{threshold:0.15,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.timeline-item').forEach(el=>tlObserver.observe(el));
+
+/* ============ INIT ============ */
+initMatch();
+initMatch2();
+initQuiz();
+</script>
+</body>
+</html>
