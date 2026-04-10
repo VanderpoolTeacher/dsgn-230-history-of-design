@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Revolution &amp; Contemporary Design Deep Dive &mdash; DSGN 230</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#111111;--surface:#1a1a1a;--surface2:#222222;--border:#333;
+  --text:#e8e8e8;--text-dim:#999;--accent:#669BBC;--accent-light:#89b4d4;
+  --success:#2ecc71;--fail:#e74c3c;--white:#FDF0D5;--gold:#c9a84c;
+  --font-body:'Segoe UI',system-ui,-apple-system,sans-serif;
+  --font-display:'Georgia',serif;
+  --radius:10px;--shadow:0 4px 24px rgba(0,0,0,.5);
+}
+html.light{
+  --bg:#f4f3f0;--surface:#ffffff;--surface2:#eae9e5;--border:#d5d3cd;
+  --text:#222;--text-dim:#555;--accent:#780000;--accent-light:#C1121F;
+  --success:#1fa85a;--fail:#C1121F;--white:#003049;--gold:#8a6d1b;
+  --shadow:0 4px 24px rgba(0,0,0,.08);
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.7;margin:0}
+a{color:var(--accent-light);text-decoration:none}
+img{max-width:100%;display:block}
+button{cursor:pointer;font-family:var(--font-body)}
+
+.container{max-width:960px;margin:0 auto;padding:0 24px}
+
+/* HERO */
+.hero{
+  min-height:75vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:60px 24px;
+  background:radial-gradient(ellipse at 50% 30%,#1a1a1a 0%,var(--bg) 70%);
+}
+html.light .hero{background:radial-gradient(ellipse at 50% 30%,#e8e6e0 0%,var(--bg) 70%)}
+.hero h1{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.2rem);color:var(--white);margin-bottom:8px;letter-spacing:-.02em;line-height:1.2}
+.hero .subtitle{font-size:1.1rem;color:var(--gold);margin-bottom:8px;font-style:italic}
+.hero p{font-size:1.05rem;color:var(--text-dim);max-width:600px;margin-bottom:36px}
+.btn-start{
+  display:inline-block;padding:14px 40px;background:var(--accent);color:var(--white);
+  border:none;border-radius:50px;font-size:1.05rem;font-weight:600;transition:.2s;
+}
+.btn-start:hover{background:var(--accent-light);transform:translateY(-2px)}
+html.light .btn-start{color:#FDF0D5}
+
+/* TOOLBAR */
+.toolbar{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:12px 0}
+.toolbar-inner{display:flex;align-items:center;gap:12px;padding:0 24px;max-width:960px;margin:0 auto}
+.progress-label{font-size:.8rem;color:var(--text-dim);min-width:90px}
+.progress-bar{flex:1;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-light));width:0;transition:width .4s ease;border-radius:3px}
+.tool-btn{
+  width:34px;height:34px;border-radius:50%;border:1px solid var(--border);
+  background:var(--surface);color:var(--text-dim);display:flex;align-items:center;
+  justify-content:center;font-size:1rem;transition:.2s;padding:0;
+}
+.tool-btn:hover{border-color:var(--accent);color:var(--accent-light)}
+.tool-btn svg{width:16px;height:16px;fill:currentColor}
+
+/* TAB NAV */
+.tab-nav{display:flex;gap:4px;overflow-x:auto;padding:20px 24px 0;max-width:960px;margin:0 auto}
+.tab-btn{
+  padding:10px 18px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius) var(--radius) 0 0;
+  color:var(--text-dim);font-size:.82rem;font-weight:600;white-space:nowrap;transition:.2s;border-bottom:none;
+}
+.tab-btn:hover{color:var(--text);border-color:var(--accent)}
+.tab-btn.active{background:var(--surface2);color:var(--accent-light);border-color:var(--accent)}
+.tab-btn.completed{color:var(--success)}
+
+/* SECTIONS */
+.section{display:none;padding:40px 0 60px;animation:fadeUp .5s ease}
+.section.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+
+.section-header{margin-bottom:32px}
+.section-header .period-label{font-size:.8rem;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px}
+.section-header h2{font-family:var(--font-display);font-size:clamp(1.6rem,3.5vw,2.2rem);color:var(--white);line-height:1.2;font-weight:700}
+.section-header .dates{font-size:.9rem;color:var(--text-dim);margin-top:4px}
+
+/* CONTENT */
+.content-block{margin-bottom:28px}
+.content-block h3{font-size:1.15rem;color:var(--white);margin-bottom:10px;font-weight:700}
+.content-block p{color:var(--text);margin-bottom:14px}
+
+.key-ideas{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:24px 0}
+.idea-chip{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;font-size:.9rem;line-height:1.5}
+.idea-chip .chip-label{font-size:.95rem;color:var(--accent);letter-spacing:.02em;margin-bottom:6px;font-weight:700}
+
+/* TIMELINE */
+.hist-timeline{margin:28px 0;padding:0 0 0 24px;border-left:2px solid var(--accent);position:relative}
+.hist-timeline .ht-title{font-size:.95rem;color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px;margin-left:-24px;padding-left:24px}
+.ht-event{position:relative;padding:0 0 20px 16px;font-size:.88rem;line-height:1.5}
+.ht-event:last-child{padding-bottom:0}
+.ht-event::before{content:"";position:absolute;left:-29px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--accent);border:2px solid var(--bg)}
+.ht-event .ht-year{font-weight:700;color:var(--accent-light);margin-right:6px}
+
+/* THINK QUESTION */
+.think-question{margin:28px 0;padding:20px 22px;background:rgba(102,155,188,.08);border:1px solid rgba(102,155,188,.25);border-radius:var(--radius)}
+html.light .think-question{background:rgba(120,0,0,.05);border-color:rgba(120,0,0,.18)}
+.think-question .tq-label{font-size:.95rem;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;font-weight:700}
+.think-question p{font-size:1rem;color:var(--white);line-height:1.6;margin:0}
+
+/* NAV */
+.section-nav{display:flex;justify-content:space-between;gap:16px;margin-top:40px;padding-top:20px;border-top:1px solid var(--border)}
+.nav-btn{
+  padding:12px 28px;border-radius:50px;font-size:.92rem;font-weight:600;border:1px solid var(--border);
+  background:var(--surface);color:var(--text);transition:.2s;
+}
+.nav-btn:hover{border-color:var(--accent);color:var(--accent-light)}
+.nav-btn.primary{background:var(--accent);border-color:var(--accent);color:var(--white)}
+.nav-btn.primary:hover{background:var(--accent-light)}
+html.light .nav-btn.primary{color:#FDF0D5}
+
+/* FLIP CARDS */
+.flip-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin:28px 0}
+.flip-card{perspective:800px;height:360px;cursor:pointer}
+.flip-card-inner{
+  position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d;
+}
+.flip-card.flipped .flip-card-inner{transform:rotateY(180deg)}
+.flip-front,.flip-back{
+  position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:var(--radius);
+  border:1px solid var(--border);padding:24px;display:flex;flex-direction:column;justify-content:center;
+}
+.flip-front{background:var(--surface);text-align:center;justify-content:stretch}
+.flip-front .flip-name{font-family:var(--font-display);font-size:1.2rem;color:var(--white);margin-bottom:8px}
+.flip-front .flip-dates{font-size:.85rem;color:var(--accent)}
+.flip-front .flip-center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.flip-front .flip-hint{font-size:.75rem;color:var(--text-dim);padding-top:12px}
+.flip-back{background:var(--surface2);transform:rotateY(180deg);overflow-y:auto;font-size:.88rem;line-height:1.6}
+.flip-back .flip-role{font-size:.8rem;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;font-weight:700}
+.flip-back p{margin-bottom:8px}
+
+/* ERA BADGE on flip front */
+.era-badge{
+  display:inline-block;font-size:.65rem;padding:2px 8px;border-radius:10px;
+  border:1px solid var(--accent);color:var(--accent);letter-spacing:.06em;
+  text-transform:uppercase;font-weight:700;margin-top:8px;
+}
+
+/* GALLERY (text-card layout, no images) */
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin:28px 0}
+.gallery-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:22px 20px;transition:.2s;position:relative;overflow:hidden;
+}
+.gallery-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.gallery-card::before{
+  content:"";position:absolute;top:0;left:0;width:100%;height:4px;
+  background:linear-gradient(90deg,var(--accent),var(--accent-light));
+}
+.gallery-card .g-era{
+  font-size:.65rem;color:var(--accent);letter-spacing:.08em;
+  text-transform:uppercase;font-weight:700;margin-bottom:10px;
+}
+.gallery-card .g-title{
+  font-family:var(--font-display);font-size:1.1rem;color:var(--white);
+  margin-bottom:4px;line-height:1.3;
+}
+.gallery-card .g-meta{font-size:.78rem;color:var(--accent-light);margin-bottom:12px}
+.gallery-card .g-desc{font-size:.85rem;color:var(--text-dim);line-height:1.55}
+
+/* MATCHING */
+.match-activity{margin:28px 0}
+.match-instructions{font-size:.9rem;color:var(--text-dim);margin-bottom:16px}
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.match-col-label{font-size:.8rem;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:10px}
+.match-item{
+  padding:14px 16px;background:var(--surface);border:2px solid var(--border);border-radius:var(--radius);
+  font-size:.9rem;cursor:pointer;transition:.2s;margin-bottom:8px;
+}
+.match-item:hover{border-color:var(--accent)}
+.match-item.selected{border-color:var(--accent);background:rgba(102,155,188,.1);box-shadow:0 0 0 1px var(--accent)}
+html.light .match-item.selected{background:rgba(120,0,0,.06)}
+.match-item.correct{border-color:var(--success);background:rgba(46,204,113,.1)}
+.match-item.wrong{border-color:var(--fail);background:rgba(231,76,60,.1)}
+.match-item.matched{opacity:.5;pointer-events:none;border-color:var(--success)}
+.match-feedback{margin-top:16px;padding:14px;border-radius:8px;font-size:.9rem;display:none}
+.match-feedback.show{display:block}
+.match-feedback.success{background:rgba(46,204,113,.1);border:1px solid rgba(46,204,113,.3);color:var(--success)}
+.match-score{font-size:.85rem;color:var(--text-dim);margin-top:8px}
+.match-reset{margin-top:12px;padding:8px 20px;border:1px solid var(--border);border-radius:50px;background:var(--surface);color:var(--text);font-size:.85rem}
+.match-reset:hover{border-color:var(--accent);color:var(--accent-light)}
+
+/* QUIZ */
+.quiz-wrap{margin:28px 0}
+.q-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;margin-bottom:20px}
+.q-card .q-num{font-size:.75rem;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.q-card .q-text{font-size:1.05rem;color:var(--white);margin-bottom:18px;line-height:1.5}
+.q-options{display:flex;flex-direction:column;gap:10px}
+.q-opt{
+  display:flex;align-items:center;gap:12px;padding:14px 18px;
+  background:var(--surface2);border:2px solid var(--border);border-radius:var(--radius);
+  cursor:pointer;transition:.2s;font-size:.95rem;
+}
+.q-opt:hover{border-color:var(--accent)}
+.q-opt.selected{border-color:var(--accent);background:rgba(102,155,188,.1)}
+html.light .q-opt.selected{background:rgba(120,0,0,.06)}
+.q-opt.correct{border-color:var(--success);background:rgba(46,204,113,.1)}
+.q-opt.wrong{border-color:var(--fail);background:rgba(231,76,60,.1)}
+.q-opt .letter{
+  width:30px;height:30px;border-radius:50%;background:var(--surface);display:flex;
+  align-items:center;justify-content:center;font-weight:700;font-size:.8rem;flex-shrink:0;border:1px solid var(--border);
+}
+.q-opt.selected .letter{background:var(--accent);color:var(--white);border-color:var(--accent)}
+.q-opt.correct .letter{background:var(--success);color:var(--white);border-color:var(--success)}
+.q-opt.wrong .letter{background:var(--fail);color:var(--white);border-color:var(--fail)}
+html.light .q-opt.selected .letter,html.light .q-opt.correct .letter,html.light .q-opt.wrong .letter{color:#FDF0D5}
+.q-feedback{margin-top:14px;padding:14px;border-radius:8px;font-size:.9rem;display:none;line-height:1.5}
+.q-feedback.show{display:block}
+.q-feedback.right{background:rgba(46,204,113,.1);border:1px solid rgba(46,204,113,.3);color:var(--success)}
+html.light .q-feedback.right{background:rgba(46,204,113,.08);border-color:rgba(46,204,113,.25)}
+.q-feedback.wrong{background:rgba(231,76,60,.1);border:1px solid rgba(231,76,60,.3);color:var(--fail)}
+html.light .q-feedback.wrong{background:rgba(193,18,31,.08);border-color:rgba(193,18,31,.25)}
+
+/* RESULTS */
+.results-card{
+  display:none;text-align:center;padding:40px;margin:28px 0;
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+}
+.results-card.show{display:block;animation:fadeUp .5s ease}
+.score-ring{
+  width:140px;height:140px;border-radius:50%;margin:0 auto 20px;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  border:5px solid var(--border);
+}
+.score-ring.pass{border-color:var(--success)}
+.score-ring.fail{border-color:var(--fail)}
+.score-num{font-size:2.5rem;font-weight:700;color:var(--white);line-height:1}
+.score-lbl{font-size:.8rem;color:var(--text-dim)}
+.results-card h3{font-family:var(--font-display);font-size:1.4rem;color:var(--white);margin-bottom:8px}
+.results-card p{color:var(--text-dim);margin-bottom:20px}
+.btn-retry{
+  padding:12px 32px;background:var(--accent);color:var(--white);border:none;
+  border-radius:50px;font-size:.95rem;font-weight:600;transition:.2s;
+}
+html.light .btn-retry{color:#FDF0D5}
+.btn-retry:hover{background:var(--accent-light)}
+
+/* FOOTER */
+.footer{padding:40px 24px;text-align:center;border-top:1px solid var(--border);margin-top:60px}
+.footer p{font-size:.8rem;color:var(--text-dim);line-height:1.8}
+
+@media(max-width:640px){
+  .key-ideas{grid-template-columns:1fr}
+  .flip-grid{grid-template-columns:1fr}
+  .match-grid{grid-template-columns:1fr}
+  .gallery-grid{grid-template-columns:1fr}
+  .section-nav{flex-direction:column}
+  .nav-btn{width:100%;text-align:center}
+  .tab-nav{gap:2px}
+  .tab-btn{padding:8px 12px;font-size:.75rem}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <h1>Digital Revolution &amp; Contemporary Design</h1>
+  <div class="subtitle">c. 1990&ndash;Present</div>
+  <p>An interactive deep-dive into the era when the screen became the primary surface of design &mdash; from the first web pages through mobile interfaces, design systems, and generative AI.</p>
+  <button class="btn-start" onclick="startLesson()">Begin Exploring</button>
+</section>
+
+<!-- TOOLBAR -->
+<div class="toolbar" id="toolbar" style="display:none">
+  <div class="toolbar-inner">
+    <span class="progress-label" id="progressLabel">Section 1 / 6</span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <button class="tool-btn" onclick="toggleTheme()" title="Toggle light/dark" aria-label="Toggle theme">
+      <svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zm0 16V5a7 7 0 1 1 0 14z"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- TAB NAV -->
+<nav class="tab-nav" id="tabNav" style="display:none">
+  <button class="tab-btn active" onclick="goSection(0)">Context</button>
+  <button class="tab-btn" onclick="goSection(1)">Gallery</button>
+  <button class="tab-btn" onclick="goSection(2)">People</button>
+  <button class="tab-btn" onclick="goSection(3)">Principles</button>
+  <button class="tab-btn" onclick="goSection(4)">Matching</button>
+  <button class="tab-btn" onclick="goSection(5)">Quiz</button>
+</nav>
+
+<!-- MAIN -->
+<main class="container" id="lessonMain">
+
+<!-- ===== SECTION 0: CONTEXT ===== -->
+<div class="section" data-idx="0">
+  <div class="section-header">
+    <div class="period-label">Historical Context</div>
+    <h2>The Screen Became the Canvas</h2>
+    <div class="dates">Three Eras &middot; Web &middot; Mobile &middot; AI</div>
+  </div>
+
+  <div class="content-block">
+    <h3>From Page to Surface to System</h3>
+    <p>When postmodernism ran out of rebellion in the late 1980s, the next generation of designers found a genuinely new medium waiting for them: the personal computer and, within a decade, the browser. For the first time in design history, the primary surface was luminous, scrollable, interactive, and shared. A page of paper is a finished object; a web page is a running program. That difference is the pivot on which the last thirty-five years of design history turn.</p>
+    <p>The era divides roughly into three overlapping generations. The <strong>web generation</strong> (c. 1990&ndash;2005) invented the vocabulary of the browser as a design surface &mdash; nearly from scratch, and often clumsily. The <strong>mobile and platform generation</strong> (c. 2005&ndash;2020) learned to think in systems rather than pages, treating the Android and iOS home screens as the dominant design surfaces on the planet. The <strong>AI generation</strong> (c. 2020&ndash;present) is still in motion: generative models for text, image, and code are changing what "making a design" even means, and we do not yet know how the story ends.</p>
+  </div>
+
+  <div class="key-ideas">
+    <div class="idea-chip"><div class="chip-label">The Browser Arrives</div>Tim Berners-Lee's first web page goes live at CERN in 1991. Mosaic brings inline images in 1993. By 1996 the commercial web is a business, and its design conventions are being invented in real time.</div>
+    <div class="idea-chip"><div class="chip-label">User-Centered Design</div>Don Norman's <em>The Design of Everyday Things</em> (1988) provides the vocabulary. Jakob Nielsen and Steve Krug turn it into a practice. By 2005 "UX" is a job title, not an argument.</div>
+    <div class="idea-chip"><div class="chip-label">The iPhone Moment</div>January 2007. A touch surface the size of a paperback becomes the primary computing device on the planet within a decade. Interface design becomes mobile design becomes platform design.</div>
+    <div class="idea-chip"><div class="chip-label">Design Systems Era</div>Material Design (2014), Airbnb DLS (2016), Atomic Design (2013), Figma (2016). Design work moves from drawing pages to maintaining systems. The component, not the composition, is the atom.</div>
+    <div class="idea-chip"><div class="chip-label">Inclusive Design</div>Microsoft's Inclusive Design Toolkit (2016) reframes accessibility as inclusion and inclusion as method. Kat Holmes's <em>Mismatch</em> (2018) provides the theory. Accessibility stops being a feature and becomes a baseline.</div>
+    <div class="idea-chip"><div class="chip-label">The AI Question</div>GPT-3 (2020), DALL-E 2 (2022), ChatGPT (2022), Midjourney (2022). Generative models become tools, collaborators, and threats. The profession is actively arguing about what happens next.</div>
+  </div>
+
+  <div class="content-block">
+    <h3>Defining Characteristics</h3>
+    <p><strong>Screen-native</strong>: designs live on luminous, interactive surfaces whose shape changes per device, not fixed pages. <strong>Responsive and fluid</strong>: Ethan Marcotte's 2010 methodology teaches the web to bend around unknown viewports. <strong>Systems over artifacts</strong>: the design system, not the mockup, becomes the primary deliverable. <strong>User-centered</strong>: research, testing, and iteration replace taste and intuition as the basis for design decisions. <strong>Accessible by default</strong>: WCAG compliance, screen-reader support, and keyboard navigation become minimum expectations for public work. <strong>Increasingly data-driven</strong>: analytics, A/B tests, and eventually machine-learning models shape what users see. <strong>Generative</strong>: by the mid-2020s, parts of the design output are being produced by models the designer prompts rather than drawn by the designer directly.</p>
+  </div>
+
+  <div class="hist-timeline">
+    <div class="ht-title">Key Dates</div>
+    <div class="ht-event"><span class="ht-year">1988</span>Don Norman publishes <em>The Design of Everyday Things</em> &mdash; the foundational text of user-centered design</div>
+    <div class="ht-event"><span class="ht-year">1991</span>Tim Berners-Lee publishes the first web page at CERN</div>
+    <div class="ht-event"><span class="ht-year">1993</span>NCSA Mosaic, the first browser with inline images, released at the University of Illinois</div>
+    <div class="ht-event"><span class="ht-year">1994</span>HotWired, the first commercial magazine-style website, launches; the banner ad is invented</div>
+    <div class="ht-event"><span class="ht-year">1998</span>Jeffrey Zeldman founds <em>A List Apart</em>; the Web Standards movement begins organizing</div>
+    <div class="ht-event"><span class="ht-year">2000</span>Steve Krug's <em>Don't Make Me Think</em> and Jakob Nielsen's <em>Designing Web Usability</em> codify the UX discipline</div>
+    <div class="ht-event"><span class="ht-year">2003</span>Apple's iTunes Music Store proves that a designed interface plus a designed business model can reshape an industry</div>
+    <div class="ht-event"><span class="ht-year">2007</span>The original iPhone launches; skeuomorphic iOS becomes the dominant mobile interface language</div>
+    <div class="ht-event"><span class="ht-year">2010</span>Ethan Marcotte publishes "Responsive Web Design" in <em>A List Apart</em>, naming a methodology that will define the decade</div>
+    <div class="ht-event"><span class="ht-year">2012</span>GOV.UK launches in the UK, making plain legible public-service design a global reference</div>
+    <div class="ht-event"><span class="ht-year">2013</span>iOS 7 retires skeuomorphism for flat design; Brad Frost publishes the first "Atomic Design" article</div>
+    <div class="ht-event"><span class="ht-year">2014</span>Google publishes Material Design &mdash; the first comprehensive, publicly documented platform design system</div>
+    <div class="ht-event"><span class="ht-year">2016</span>Figma launches publicly; Microsoft publishes the Inclusive Design Toolkit; Airbnb publishes its Design Language System</div>
+    <div class="ht-event"><span class="ht-year">2018</span>Kat Holmes publishes <em>Mismatch: How Inclusion Shapes Design</em></div>
+    <div class="ht-event"><span class="ht-year">2020</span>GPT-3 released by OpenAI &mdash; generative text becomes a design material</div>
+    <div class="ht-event"><span class="ht-year">2022</span>DALL-E 2, Midjourney, Stable Diffusion, and ChatGPT all launch to the public within a single year</div>
+    <div class="ht-event"><span class="ht-year">2022&ndash;23</span>Refik Anadol's <em>Unsupervised</em> at MoMA &mdash; AI-generated work at the center of a major art museum</div>
+    <div class="ht-event"><span class="ht-year">2023&ndash;24</span>Generative design tools (v0, Framer AI, Figma AI) enter mainstream interface design workflows</div>
+  </div>
+
+  <div class="think-question">
+    <div class="tq-label">Think About It</div>
+    <p>Postmodernism rebelled against a modernist establishment. The digital era never had a single establishment to rebel against &mdash; instead it has been continuously remaking itself, tool by tool, platform by platform. Is that continuous reinvention a kind of health, or a kind of exhaustion? What would it mean for contemporary design to slow down?</p>
+  </div>
+
+  <div class="section-nav">
+    <span></span>
+    <button class="nav-btn primary" onclick="goSection(1)">Next: Gallery &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 1: GALLERY ===== -->
+<div class="section" data-idx="1">
+  <div class="section-header">
+    <div class="period-label">Three Eras, Twelve Works</div>
+    <h2>Gallery</h2>
+    <div class="dates">Web &middot; Mobile &middot; AI</div>
+  </div>
+
+  <div class="gallery-grid">
+    <div class="gallery-card">
+      <div class="g-era">Web &middot; 1991</div>
+      <div class="g-title">info.cern.ch</div>
+      <div class="g-meta">Tim Berners-Lee &middot; CERN, Geneva</div>
+      <div class="g-desc">The first page on the World Wide Web. Plain text, no styling. Its significance is that it exists at all.</div>
+    </div>
+    <div class="gallery-card">
+      <div class="g-era">Web &middot; 1993</div>
+      <div class="g-title">NCSA Mosaic</div>
+      <div class="g-meta">Marc Andreessen et al. &middot; University of Illinois</div>
+      <div class="g-desc">The first browser to render inline images. Suddenly a web page could be a layout.</div>
+    </div>
+    <div class="gallery-card">
+      <div class="g-era">Web &middot; 1994</div>
+      <div class="g-title">HotWired</div>
+      <div class="g-meta">Wired magazine &middot; San Francisco</div>
+      <div class="g-desc">The first commercial magazine-style website, and the first site to sell banner advertising.</div>
+    </div>
+    <div class="gallery-card">
+      <div class="g-era">Web &middot; 1995</div>
+      <div class="g-title">jodi.org</div>
+      <div class="g-meta">Joan Heemskerk &amp; Dirk Paesmans</div>
+      <div class="g-desc">Net.art project treating the browser as material for glitch, chaos, and the gap between markup and render.</div>
+    </div>
+    <div class="gallery-card">
+      <div class="g-era">Mobile &middot; 2007</div>
+      <div class="g-title">iPhone Home Screen</div>
+      <div class="g-meta">Apple &middot; Scott Forstall, design lead</div>
+      <div class="g-desc">Skeuomorphic icons &mdash; leather address book, yellow legal pad &mdash; taught a billion users how to use a touchscreen.</div>
+    </div>
+    <div class="gallery-card">
+      <div class="g-era">Mobile &middot; 2013</div>
+      <div class="g-title">iOS 7 Redesign</div>
+      <div class="g-meta">Apple &middot; Jony Ive, design lead</div>
+      <div class="g-desc">Flat color fields, ultra-thin type, physics-based motion. The moment mobile design abandoned skeuomorphism.</div>
+    </div>
+    <div class="gallery-card">
+      <div class="g-era">Mobile &middot; 2014</div>
+      <div class="g-title">Material Design</div>
+      <div class="g-meta">Google &middot; Matias Duarte, design lead</div>
+      <div class="g-desc">The first comprehensively documented public design system from a major platform. Set the model all others followed.</div>
+    </div>
+    <div class="gallery-card">
+      <div class="g-era">Mobile &middot; 2016</div>
+      <div class="g-title">Figma</div>
+      <div class="g-meta">Dylan Field &amp; Evan Wallace</div>
+      <div class="g-desc">A browser-based, multiplayer interface design tool. By 2020 it was the default tool of professional interface design.</div>
+    </div>
+    <div class="gallery-card">
+      <div class="g-era">Mobile &middot; 2012</div>
+      <div class="g-title">GOV.UK</div>
+      <div class="g-meta">UK Government Digital Service</div>
+      <div class="g-desc">Plain, legible, accessible, fast. The strongest global argument that restrained public-service design is a public good.</div>
+    </div>
+    <div class="gallery-card">
+      <div class="g-era">AI &middot; 2022</div>
+      <div class="g-title">DALL-E 2 &middot; Midjourney</div>
+      <div class="g-meta">OpenAI / Midjourney, Inc.</div>
+      <div class="g-desc">Image generation models coherent enough for professional consideration. The beginning of the AI era in visual design.</div>
+    </div>
+    <div class="gallery-card">
+      <div class="g-era">AI &middot; 2022</div>
+      <div class="g-title">ChatGPT</div>
+      <div class="g-meta">OpenAI</div>
+      <div class="g-desc">A plain chat window that reached 100 million users faster than any previous consumer product. The interface that launched the platform race.</div>
+    </div>
+    <div class="gallery-card">
+      <div class="g-era">AI &middot; 2022&ndash;23</div>
+      <div class="g-title">Unsupervised</div>
+      <div class="g-meta">Refik Anadol &middot; MoMA, New York</div>
+      <div class="g-desc">A wall-scale AI-generated video trained on MoMA's own collection metadata. Beautiful and controversial in equal measure.</div>
+    </div>
+  </div>
+
+  <div class="think-question">
+    <div class="tq-label">Observe</div>
+    <p>These twelve works span thirty-odd years and three distinct technological eras. What holds them together as a single design tradition? Look for the shared commitment to the screen as a surface, the recurring question of who the user is, and the gradual shift from making single artifacts to maintaining running systems.</p>
+  </div>
+
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(0)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(2)">Next: Key People &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 2: PEOPLE ===== -->
+<div class="section" data-idx="2">
+  <div class="section-header">
+    <div class="period-label">Key Figures</div>
+    <h2>The People of the Digital Era</h2>
+    <div class="dates">Click a card to reveal details</div>
+  </div>
+
+  <div class="flip-grid">
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-center">
+            <div class="flip-name">Tim Berners-Lee</div>
+            <div class="flip-dates">b. 1955 &middot; CERN / MIT</div>
+            <div class="era-badge">Web</div>
+          </div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Inventor of the Web</div>
+          <p>Proposed the World Wide Web at CERN in 1989 and published the first web page in 1991. Designed HTTP, URLs, and HTML as open standards rather than proprietary protocols &mdash; the single most consequential design decision of the digital era. Later founded the W3C to keep the web's foundations open.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-center">
+            <div class="flip-name">Don Norman</div>
+            <div class="flip-dates">b. 1935 &middot; UC San Diego / Apple</div>
+            <div class="era-badge">Web</div>
+          </div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Cognitive Scientist &amp; Design Theorist</div>
+          <p>His <em>The Design of Everyday Things</em> (1988) is the foundational text of user-centered design. Coined the design use of the term "affordance." Coined the term "user experience" while at Apple in the early 1990s. The Nielsen Norman Group (1998) became the consultancy that carried UX into industry.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-center">
+            <div class="flip-name">Jakob Nielsen</div>
+            <div class="flip-dates">b. 1957 &middot; Nielsen Norman Group</div>
+            <div class="era-badge">Web</div>
+          </div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Usability Consultant</div>
+          <p>The relentless advocate for usability over visual sophistication. His site useit.com was deliberately ugly as a demonstration that fast-loading, legible pages respect the user's time. <em>Designing Web Usability</em> (2000) codified his method. Famously argued that the web needed plainness, not decoration &mdash; a position that was controversial at the time and quietly correct in retrospect.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-center">
+            <div class="flip-name">Susan Kare</div>
+            <div class="flip-dates">b. 1954 &middot; Apple / General Magic</div>
+            <div class="era-badge">Web</div>
+          </div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Interface Icon Designer</div>
+          <p>Drew the original Macintosh icons in 1983: the trash can, the dogcow, the watch cursor, the smiling Mac. Her pixel-level work taught a generation of designers that an icon was a piece of typography rather than a piece of illustration. The visual grammar she established &mdash; friendly, legible, small &mdash; is still the default for interface iconography four decades later.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-center">
+            <div class="flip-name">Jeffrey Zeldman</div>
+            <div class="flip-dates">b. 1955 &middot; A List Apart / Happy Cog</div>
+            <div class="era-badge">Web</div>
+          </div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Web Standards Advocate</div>
+          <p>Founded <em>A List Apart</em> in 1998 and led the Web Standards Project. His 2003 book <em>Designing With Web Standards</em> taught the professional web to use semantic HTML and CSS instead of the table hacks that dominated the 1990s. One of the reasons the modern web works at all.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-center">
+            <div class="flip-name">Ethan Marcotte</div>
+            <div class="flip-dates">b. 1977 &middot; Boston</div>
+            <div class="era-badge">Web &middot; Mobile</div>
+          </div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Designer &amp; Writer</div>
+          <p>Published "Responsive Web Design" in <em>A List Apart</em> in 2010, naming and specifying the methodology (fluid grids + flexible images + media queries) that taught the web to work on any screen. The 2011 book, <em>Responsive Web Design</em>, became the practical handbook for the entire field.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-center">
+            <div class="flip-name">Jony Ive</div>
+            <div class="flip-dates">b. 1967 &middot; Apple / LoveFrom</div>
+            <div class="era-badge">Mobile</div>
+          </div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Industrial &amp; Interface Designer</div>
+          <p>Led design at Apple from 1996 to 2019. His hardware work (iMac, iPod, iPhone, iPad) shaped consumer electronics worldwide. His 2013 iOS 7 redesign retired skeuomorphism and established the flat, typographically-driven visual language that is now the default across mobile platforms.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-center">
+            <div class="flip-name">Matias Duarte</div>
+            <div class="flip-dates">b. 1973 &middot; Google</div>
+            <div class="era-badge">Mobile</div>
+          </div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Platform Design Lead</div>
+          <p>Led the design of webOS at Palm before moving to Google in 2010. As VP of Design at Google, he oversaw Material Design (2014), the first comprehensive, publicly documented platform design system from a major tech company. Material's "virtual paper" metaphor and its open documentation set the template every subsequent platform has followed.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-center">
+            <div class="flip-name">Kat Holmes</div>
+            <div class="flip-dates">Microsoft / Google / Salesforce</div>
+            <div class="era-badge">Mobile</div>
+          </div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Inclusive Design Leader</div>
+          <p>Led the creation of Microsoft's Inclusive Design Toolkit (2016), which reframed accessibility as inclusion and inclusion as a design methodology. Her 2018 book <em>Mismatch: How Inclusion Shapes Design</em> is the theoretical companion. Argues that disability is a mismatch between a person and their environment, not a property of the person.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-center">
+            <div class="flip-name">Brad Frost</div>
+            <div class="flip-dates">b. 1986 &middot; Pittsburgh</div>
+            <div class="era-badge">Mobile</div>
+          </div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Front-End Designer &amp; Writer</div>
+          <p>Published "Atomic Design" as an article in 2013 and a book in 2016. His atoms / molecules / organisms / templates / pages hierarchy gave the web industry a shared vocabulary for component-based interface design at exactly the moment React and Vue were converging on the same ideas from engineering.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-center">
+            <div class="flip-name">Julie Zhuo</div>
+            <div class="flip-dates">b. 1983 &middot; Facebook / Sundial</div>
+            <div class="era-badge">Mobile</div>
+          </div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Design Manager &amp; Author</div>
+          <p>Became VP of Design at Facebook in her late twenties, eventually leading a team of hundreds. Her 2019 book <em>The Making of a Manager</em> is partly a how-to guide and partly a record of how design management became a distinct discipline as design teams scaled from small craft groups into full organizations.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-center">
+            <div class="flip-name">Refik Anadol</div>
+            <div class="flip-dates">b. 1985 &middot; Istanbul / Los Angeles</div>
+            <div class="era-badge">AI</div>
+          </div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Media Artist</div>
+          <p>Works with machine-learning models as aesthetic material. His <em>Unsupervised</em>, installed at MoMA from November 2022 through March 2023, trained on MoMA's own collection metadata to produce continuously generated "machine hallucinations" on a wall-sized screen. The first major museum presentation to assign aesthetic authorship to a system as much as to the artist using it.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(1)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(3)">Next: Principles &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 3: PRINCIPLES ===== -->
+<div class="section" data-idx="3">
+  <div class="section-header">
+    <div class="period-label">Ideas &amp; Principles</div>
+    <h2>What Makes Design "Digital"</h2>
+    <div class="dates">The operating assumptions of contemporary practice</div>
+  </div>
+
+  <div class="content-block">
+    <p>Unlike postmodernism, the digital era has never had a single manifesto. Its principles accumulated incrementally, argued out in blog posts and conference talks and platform documentation. These are the ideas that almost every serious contemporary design practice now takes as given.</p>
+  </div>
+
+  <div class="flip-grid">
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-center"><div class="flip-name">User-Centered</div><div class="flip-dates">Research, testing, iteration</div></div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">Methodology</div><p>The assumption that design decisions should be grounded in research about actual users rather than the designer's taste. User research, usability testing, analytics, A/B tests, and iteration on feedback are the standard tools. Don Norman articulated the theory in 1988; Jakob Nielsen and Steve Krug turned it into daily practice through the 1990s and 2000s.</p></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-center"><div class="flip-name">Responsive &amp; Fluid</div><div class="flip-dates">Marcotte, 2010</div></div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">Technical Method</div><p>The web's native condition is fluidity: the designer does not know the shape of the user's screen. Responsive design, named by Ethan Marcotte in 2010, combines fluid grids, flexible images, and media queries to produce layouts that bend gracefully from a phone to a desktop monitor. By 2015 it was the default assumption of the field.</p></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-center"><div class="flip-name">Systems Over Artifacts</div><div class="flip-dates">Material Design, Atomic Design</div></div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">Deliverable Shift</div><p>The primary deliverable of serious contemporary design work is no longer a mockup of a page but a design system: a documented, versioned, reusable library of components, tokens, and rules. The system is maintained continuously, not shipped once. The page is a configuration of the system, not the thing the designer made.</p></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-center"><div class="flip-name">Inclusive by Default</div><div class="flip-dates">Holmes &amp; Microsoft, 2016</div></div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">Ethical Baseline</div><p>Accessibility is not a feature to be added; it is a property of the design from the start. Kat Holmes's reframing of disability as a "mismatch" between person and environment (rather than a property of the person) shifted the argument from accommodation to design methodology. Captions help more than deaf users; ramps help more than wheelchair users.</p></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-center"><div class="flip-name">Performance as Craft</div><div class="flip-dates">Nielsen, Krug, and after</div></div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">Respect for the User</div><p>Fast-loading pages and responsive interactions are not just technical goals but design goals. The user's time, battery, data plan, and attention are finite and valuable, and a bloated interface is a form of disrespect. This principle runs from Nielsen's 1990s polemics through GOV.UK's plain-and-fast aesthetic to Low-tech Magazine's solar-powered server.</p></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-center"><div class="flip-name">Sustainability</div><div class="flip-dates">The environmental cost of pixels</div></div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">Emerging Principle</div><p>The physical infrastructure of the web &mdash; servers, network, batteries &mdash; costs energy, and bloated interfaces scale that cost globally. Gerry McGovern's <em>World Wide Waste</em> (2020), Low-tech Magazine's solar-powered site, and the growing "sustainable web" movement make the argument that pixel-level decisions have planetary consequences. This principle is still being fought for.</p></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-center"><div class="flip-name">Data-Driven</div><div class="flip-dates">Analytics, A/B tests, ML</div></div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">Decision-Making</div><p>Contemporary product teams increasingly settle design arguments with data: click-through rates, retention curves, A/B-tested button copy, machine-learned personalization. The upside is that bad assumptions get caught. The downside &mdash; what Mike Monteiro calls "metrics over ethics" &mdash; is that designs optimized for short-term engagement can produce dark patterns and addictive loops the team never explicitly chose.</p></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-center"><div class="flip-name">Generative</div><div class="flip-dates">The AI turn, 2020&ndash;</div></div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">New Material</div><p>With GPT-3, DALL-E, Midjourney, Stable Diffusion, and ChatGPT, designers have begun working with generative models as a design material. Parts of the output are produced by systems the designer prompts rather than drawn directly. The profession is actively debating what this means for authorship, labor, training data, and the environmental cost of the compute involved.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="think-question">
+    <div class="tq-label">Think About It</div>
+    <p>Each of these principles began as an argument someone was making against the current consensus, and each eventually became the new consensus. Which principles on this page are still being argued for? Which have become invisible because they are no longer contested? And which, on reflection, might be ready for their own rebellion?</p>
+  </div>
+
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(2)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(4)">Next: Matching &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 4: MATCHING ===== -->
+<div class="section" data-idx="4">
+  <div class="section-header">
+    <div class="period-label">Activity</div>
+    <h2>Match the Designer to Their Work</h2>
+    <div class="dates">Select one item from each column to form a pair</div>
+  </div>
+
+  <p class="match-instructions">Click a designer on the left, then click their work on the right. Correct matches will lock in place.</p>
+
+  <div class="match-grid">
+    <div>
+      <div class="match-col-label">Designers</div>
+      <div id="matchLeft"></div>
+    </div>
+    <div>
+      <div class="match-col-label">Works</div>
+      <div id="matchRight"></div>
+    </div>
+  </div>
+  <div class="match-score" id="matchScore"></div>
+  <div class="match-feedback" id="matchFeedback"></div>
+  <button class="match-reset" id="matchResetBtn" onclick="resetMatch()" style="display:none">Try Again</button>
+
+  <div style="margin-top:40px"></div>
+
+  <div class="section-header">
+    <div class="period-label">Activity</div>
+    <h2>Match the Concept to Its Source</h2>
+    <div class="dates">Connect each digital-era idea to the figure or work that put it into circulation</div>
+  </div>
+
+  <p class="match-instructions">Click a concept on the left, then its source on the right.</p>
+
+  <div class="match-grid">
+    <div>
+      <div class="match-col-label">Concept</div>
+      <div id="matchLeft2"></div>
+    </div>
+    <div>
+      <div class="match-col-label">Source</div>
+      <div id="matchRight2"></div>
+    </div>
+  </div>
+  <div class="match-score" id="matchScore2"></div>
+  <div class="match-feedback" id="matchFeedback2"></div>
+  <button class="match-reset" id="matchResetBtn2" onclick="resetMatch2()" style="display:none">Try Again</button>
+
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(3)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(5)">Next: Quiz &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 5: QUIZ ===== -->
+<div class="section" data-idx="5">
+  <div class="section-header">
+    <div class="period-label">Knowledge Check</div>
+    <h2>Digital Revolution Quiz</h2>
+    <div class="dates">Test what you've learned</div>
+  </div>
+
+  <div class="quiz-wrap" id="quizWrap"></div>
+
+  <div class="results-card" id="resultsCard">
+    <div class="score-ring" id="scoreRing">
+      <div class="score-num" id="scoreNum">0%</div>
+      <div class="score-lbl">Score</div>
+    </div>
+    <h3 id="resultsTitle">Results</h3>
+    <p id="resultsMsg"></p>
+    <button class="btn-retry" onclick="retryQuiz()">Try Again</button>
+  </div>
+
+  <div class="section-nav" id="quizNav">
+    <button class="nav-btn" onclick="goSection(4)">&larr; Previous</button>
+    <span></span>
+  </div>
+</div>
+
+</main>
+
+<footer class="footer">
+  <p>DSGN 230 &mdash; Survey of Design History<br>Digital Revolution &amp; Contemporary Design Interactive</p>
+  <p style="margin-top:8px"><a href="image-credits.html">View image credits &amp; attributions &rarr;</a></p>
+</footer>
+
+<script>
+/* ============ GLOBALS ============ */
+const TOTAL_SECTIONS = 6;
+let currentSection = 0;
+
+/* ============ NAVIGATION ============ */
+function startLesson(){
+  document.getElementById('hero').style.display='none';
+  document.getElementById('toolbar').style.display='block';
+  document.getElementById('tabNav').style.display='flex';
+  goSection(0);
+}
+
+function goSection(idx){
+  currentSection=idx;
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.section')[idx].classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>{b.classList.toggle('active',i===idx)});
+  document.getElementById('progressLabel').textContent=`Section ${idx+1} / ${TOTAL_SECTIONS}`;
+  document.getElementById('progressFill').style.width=((idx+1)/TOTAL_SECTIONS*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleTheme(){document.documentElement.classList.toggle('light')}
+
+/* ============ MATCHING 1: Designer → Work ============ */
+const matchPairs=[
+  {left:'Tim Berners-Lee',right:'info.cern.ch (first web page)'},
+  {left:'Don Norman',right:'The Design of Everyday Things'},
+  {left:'Ethan Marcotte',right:'"Responsive Web Design" (2010)'},
+  {left:'Jony Ive',right:'iOS 7 redesign (2013)'},
+  {left:'Matias Duarte',right:'Material Design (2014)'},
+  {left:'Kat Holmes',right:'Inclusive Design Toolkit'},
+  {left:'Brad Frost',right:'Atomic Design'},
+  {left:'Refik Anadol',right:'Unsupervised (MoMA)'},
+];
+let m1Left=null,m1Matched=0;
+
+function initMatch(){
+  const lC=document.getElementById('matchLeft'),rC=document.getElementById('matchRight');
+  const shuffledL=[...matchPairs].sort(()=>Math.random()-.5);
+  const shuffledR=[...matchPairs].sort(()=>Math.random()-.5);
+  lC.innerHTML='';rC.innerHTML='';
+  shuffledL.forEach(p=>{
+    const d=document.createElement('div');d.className='match-item';d.textContent=p.left;
+    d.dataset.key=p.left;d.onclick=()=>selectMatchLeft(d);lC.appendChild(d);
+  });
+  shuffledR.forEach(p=>{
+    const d=document.createElement('div');d.className='match-item';d.textContent=p.right;
+    d.dataset.key=p.left;d.onclick=()=>selectMatchRight(d);rC.appendChild(d);
+  });
+  m1Left=null;m1Matched=0;
+  document.getElementById('matchScore').textContent='';
+  document.getElementById('matchFeedback').className='match-feedback';
+  document.getElementById('matchResetBtn').style.display='none';
+}
+
+function selectMatchLeft(el){
+  if(el.classList.contains('matched'))return;
+  document.querySelectorAll('#matchLeft .match-item').forEach(e=>e.classList.remove('selected'));
+  el.classList.add('selected');m1Left=el;
+}
+
+function selectMatchRight(el){
+  if(!m1Left||el.classList.contains('matched'))return;
+  if(m1Left.dataset.key===el.dataset.key){
+    m1Left.classList.remove('selected');m1Left.classList.add('matched');
+    el.classList.add('matched');m1Matched++;
+    document.getElementById('matchScore').textContent=`${m1Matched} / ${matchPairs.length} matched`;
+    if(m1Matched===matchPairs.length){
+      const fb=document.getElementById('matchFeedback');
+      fb.className='match-feedback show success';fb.textContent='All matched! Great work.';
+    }
+  } else {
+    el.classList.add('wrong');m1Left.classList.add('wrong');
+    setTimeout(()=>{el.classList.remove('wrong');m1Left.classList.remove('wrong','selected');m1Left=null},800);
+    document.getElementById('matchResetBtn').style.display='inline-block';
+    return;
+  }
+  m1Left=null;
+}
+
+function resetMatch(){initMatch()}
+
+/* ============ MATCHING 2: Concept → Source ============ */
+const matchPairs2=[
+  {left:'Affordances in design',right:'Don Norman, 1988'},
+  {left:'Responsive Web Design',right:'Ethan Marcotte, A List Apart 2010'},
+  {left:'Atomic Design methodology',right:'Brad Frost, 2013'},
+  {left:'Inclusive design as method',right:'Kat Holmes, Microsoft 2016'},
+  {left:'First public platform design system',right:'Material Design, Google 2014'},
+  {left:'Multiplayer browser-based design tool',right:'Figma, 2016'},
+  {left:'Solar-powered sustainable website',right:'Low-tech Magazine, 2018'},
+  {left:'AI-generated work at a major museum',right:'Refik Anadol, Unsupervised, MoMA 2022'},
+];
+let m2Left=null,m2Matched=0;
+
+function initMatch2(){
+  const lC=document.getElementById('matchLeft2'),rC=document.getElementById('matchRight2');
+  const shuffledL=[...matchPairs2].sort(()=>Math.random()-.5);
+  const shuffledR=[...matchPairs2].sort(()=>Math.random()-.5);
+  lC.innerHTML='';rC.innerHTML='';
+  shuffledL.forEach(p=>{
+    const d=document.createElement('div');d.className='match-item';d.textContent=p.left;
+    d.dataset.key=p.left;d.onclick=()=>selectM2Left(d);lC.appendChild(d);
+  });
+  shuffledR.forEach(p=>{
+    const d=document.createElement('div');d.className='match-item';d.textContent=p.right;
+    d.dataset.key=p.left;d.onclick=()=>selectM2Right(d);rC.appendChild(d);
+  });
+  m2Left=null;m2Matched=0;
+  document.getElementById('matchScore2').textContent='';
+  document.getElementById('matchFeedback2').className='match-feedback';
+  document.getElementById('matchResetBtn2').style.display='none';
+}
+
+function selectM2Left(el){
+  if(el.classList.contains('matched'))return;
+  document.querySelectorAll('#matchLeft2 .match-item').forEach(e=>e.classList.remove('selected'));
+  el.classList.add('selected');m2Left=el;
+}
+
+function selectM2Right(el){
+  if(!m2Left||el.classList.contains('matched'))return;
+  if(m2Left.dataset.key===el.dataset.key){
+    m2Left.classList.remove('selected');m2Left.classList.add('matched');
+    el.classList.add('matched');m2Matched++;
+    document.getElementById('matchScore2').textContent=`${m2Matched} / ${matchPairs2.length} matched`;
+    if(m2Matched===matchPairs2.length){
+      const fb=document.getElementById('matchFeedback2');
+      fb.className='match-feedback show success';fb.textContent='All matched! You know your digital-era design theory.';
+    }
+  } else {
+    el.classList.add('wrong');m2Left.classList.add('wrong');
+    setTimeout(()=>{el.classList.remove('wrong');m2Left.classList.remove('wrong','selected');m2Left=null},800);
+    document.getElementById('matchResetBtn2').style.display='inline-block';
+    return;
+  }
+  m2Left=null;
+}
+
+function resetMatch2(){initMatch2()}
+
+/* ============ QUIZ ============ */
+const quizData=[
+  {q:'Who created the first web page, and where?',
+   opts:['Marc Andreessen at the University of Illinois','Tim Berners-Lee at CERN','Jeffrey Zeldman at NYU','Steve Jobs at NeXT'],
+   ans:1,
+   explain:'Tim Berners-Lee proposed the World Wide Web at CERN in 1989 and published the first web page there in 1991. The page was a plain text document describing the web itself and is still accessible today on CERN\'s servers.'},
+  {q:'Which 1988 book is generally considered the foundational text of user-centered design?',
+   opts:['<em>Don\'t Make Me Think</em> by Steve Krug','<em>Designing With Web Standards</em> by Jeffrey Zeldman','<em>The Design of Everyday Things</em> by Don Norman','<em>Mismatch</em> by Kat Holmes'],
+   ans:2,
+   explain:'Don Norman\'s <em>The Design of Everyday Things</em> (originally published in 1988 as <em>The Psychology of Everyday Things</em>) introduced concepts like affordances and the argument that when someone misuses an object, the designer &mdash; not the user &mdash; is at fault.'},
+  {q:'The methodology of "responsive web design" &mdash; fluid grids, flexible images, and media queries &mdash; was named in a 2010 essay by whom?',
+   opts:['Jeffrey Zeldman','Ethan Marcotte','Brad Frost','Jakob Nielsen'],
+   ans:1,
+   explain:'Ethan Marcotte published "Responsive Web Design" in <em>A List Apart</em> in May 2010. His 2011 book of the same title became the practical handbook for an entire decade of front-end work. He credited John Allsopp\'s 2000 essay "A Dao of Web Design" as the intellectual origin.'},
+  {q:'Which Apple redesign replaced skeuomorphic icons with flat colors and ultra-thin typography?',
+   opts:['iOS 4 (2010)','iOS 7 (2013)','iOS 11 (2017)','macOS Big Sur (2020)'],
+   ans:1,
+   explain:'iOS 7, released in 2013 under Jony Ive, retired the leather, felt, and wood-grain textures of the original iOS and established the flat, typographically-driven visual language that became the default for mobile interface design worldwide.'},
+  {q:'Which company published the first comprehensive, publicly documented platform design system from a major tech company?',
+   opts:['Apple, with Human Interface Guidelines','Microsoft, with Fluent Design','Google, with Material Design (2014)','Airbnb, with its Design Language System'],
+   ans:2,
+   explain:'Google\'s Material Design, led by Matias Duarte and launched in 2014, was the first comprehensive design system published openly at material.io with detailed specifications for type, color, motion, and component behavior. Apple\'s HIG predates it but was not framed as a public "design system" in the modern sense. Airbnb\'s DLS (2016) came later and was itself influenced by Material.'},
+  {q:'Kat Holmes\'s 2018 book <em>Mismatch</em> argues that disability should be understood as:',
+   opts:['A permanent property of individuals','A mismatch between a person and their environment','A category requiring special accommodation','A rare edge case for interface design'],
+   ans:1,
+   explain:'Holmes\'s central move is to relocate disability from the person to the relationship between person and environment. If the mismatch is in the environment, then designers &mdash; who make environments &mdash; are the ones who resolve it. This reframing turned "accessibility" into "inclusive design as methodology."'},
+  {q:'Which launched in 2012 and became the most widely cited example of plain, accessible, legible public-service design?',
+   opts:['Healthcare.gov','GOV.UK','USA.gov','Estonia\'s e-Estonia portal'],
+   ans:1,
+   explain:'GOV.UK, launched in 2012 by the UK Government Digital Service, is the public-facing site of the United Kingdom government. Its design system &mdash; plain, typographically restrained, keyboard-navigable, and fast on bad connections &mdash; has been adopted by dozens of other governments around the world.'},
+  {q:'Which 2016 launch moved interface design into a browser-based, multiplayer, URL-addressable workspace?',
+   opts:['Sketch 3','Adobe XD','Figma','Framer'],
+   ans:2,
+   explain:'Figma, launched in public beta in 2016 by Dylan Field and Evan Wallace, was built on WebGL to run entirely in the browser. Its multiplayer, URL-addressable model collapsed the distinction between the designer\'s file and the reviewable artifact and, by 2020, had replaced Sketch as the default professional tool.'},
+  {q:'Which AI installation was presented at the Museum of Modern Art in New York from late 2022 through early 2023?',
+   opts:['Trevor Paglen, <em>From Apple to Anomaly</em>','Refik Anadol, <em>Unsupervised</em>','Ian Cheng, <em>Emissaries</em>','Hito Steyerl, <em>This Is the Future</em>'],
+   ans:1,
+   explain:'Refik Anadol\'s <em>Unsupervised</em>, installed at MoMA from November 2022 through March 2023, was a wall-scale generative video trained on MoMA\'s own collection metadata. It is widely cited as the first AI-generated work installed at a major art museum with the system credited as an aesthetic collaborator rather than a tool.'},
+  {q:'Which four consumer-facing AI products all launched to the public in a single year, 2022?',
+   opts:['GPT-2, BERT, VGGNet, AlphaFold','DALL-E 2, Midjourney, Stable Diffusion, ChatGPT','Siri, Alexa, Google Assistant, Cortana','AlphaGo, Watson, Tay, Replika'],
+   ans:1,
+   explain:'DALL-E 2 (April 2022), Midjourney (July 2022), Stable Diffusion (August 2022), and ChatGPT (November 2022) all became publicly available within eight months of each other. That year is the standard turning point in design-industry discussions of the beginning of the contemporary AI era.'},
+];
+
+let quizAnswers=[], quizLocked=[];
+
+function initQuiz(){
+  const wrap=document.getElementById('quizWrap');wrap.innerHTML='';
+  quizAnswers=new Array(quizData.length).fill(-1);
+  quizLocked=new Array(quizData.length).fill(false);
+  document.getElementById('resultsCard').classList.remove('show');
+
+  quizData.forEach((q,qi)=>{
+    let optsHtml=q.opts.map((o,oi)=>`
+      <div class="q-opt" data-qi="${qi}" data-oi="${oi}" onclick="selectQuizOpt(${qi},${oi})">
+        <span class="letter">${String.fromCharCode(65+oi)}</span><span>${o}</span>
+      </div>`).join('');
+    wrap.innerHTML+=`
+      <div class="q-card">
+        <div class="q-num">Question ${qi+1} of ${quizData.length}</div>
+        <div class="q-text">${q.q}</div>
+        <div class="q-options">${optsHtml}</div>
+        <div class="q-feedback" id="qfb${qi}"></div>
+      </div>`;
+  });
+
+  wrap.innerHTML+=`<div style="text-align:center;margin-top:24px"><button class="btn-start" onclick="submitQuiz()">Submit Answers</button></div>`;
+}
+
+function selectQuizOpt(qi,oi){
+  if(quizLocked[qi])return;
+  quizAnswers[qi]=oi;
+  document.querySelectorAll(`.q-opt[data-qi="${qi}"]`).forEach(e=>{
+    e.classList.remove('selected');
+    if(parseInt(e.dataset.oi)===oi)e.classList.add('selected');
+  });
+}
+
+function submitQuiz(){
+  let score=0;
+  quizData.forEach((q,qi)=>{
+    quizLocked[qi]=true;
+    const opts=document.querySelectorAll(`.q-opt[data-qi="${qi}"]`);
+    opts.forEach(o=>{
+      o.classList.remove('selected');
+      const oi=parseInt(o.dataset.oi);
+      if(oi===q.ans)o.classList.add('correct');
+      else if(oi===quizAnswers[qi])o.classList.add('wrong');
+    });
+    const fb=document.getElementById('qfb'+qi);
+    if(quizAnswers[qi]===q.ans){score++;fb.className='q-feedback show right';fb.innerHTML='Correct! '+q.explain;}
+    else{fb.className='q-feedback show wrong';fb.innerHTML='Not quite. '+q.explain;}
+  });
+
+  const pct=Math.round(score/quizData.length*100);
+  const rc=document.getElementById('resultsCard');rc.classList.add('show');
+  const ring=document.getElementById('scoreRing');
+  ring.className='score-ring '+(pct>=70?'pass':'fail');
+  document.getElementById('scoreNum').textContent=pct+'%';
+  document.getElementById('resultsTitle').textContent=pct>=70?'Well Done!':'Keep Studying';
+  document.getElementById('resultsMsg').textContent=`You got ${score} out of ${quizData.length} correct.`+(pct>=70?' You have a solid grasp of digital-era design history.':' Review the lesson sections and try again.');
+}
+
+function retryQuiz(){initQuiz();window.scrollTo({top:document.getElementById('quizWrap').offsetTop-100,behavior:'smooth'})}
+
+/* ============ INIT ============ */
+initMatch();
+initMatch2();
+initQuiz();
+</script>
+</body>
+</html>

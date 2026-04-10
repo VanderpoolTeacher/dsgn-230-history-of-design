@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Revolution &amp; Contemporary Design &mdash; DSGN 230</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#111;--surface:#1a1a1a;--surface2:#222;--border:#333;
+  --text:#e8e8e8;--text-dim:#999;--accent:#669BBC;--accent-light:#89b4d4;
+  --white:#FDF0D5;--gold:#c9a84c;
+  --font-body:'Segoe UI',system-ui,-apple-system,sans-serif;
+  --font-display:'Georgia',serif;
+  --radius:10px;
+}
+html.light{
+  --bg:#f4f3f0;--surface:#fff;--surface2:#eae9e5;--border:#d5d3cd;
+  --text:#222;--text-dim:#555;--accent:#780000;--accent-light:#C1121F;
+  --white:#003049;--gold:#8a6d1b;
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.8;margin:0}
+a{color:var(--accent-light);text-decoration:none}
+a:hover{text-decoration:underline}
+img{max-width:100%;height:auto;border-radius:var(--radius);margin:0;display:block}
+figure{margin:28px 0;padding:0}
+figure img{margin:0 0 10px 0}
+figcaption{font-size:.82rem;color:var(--text-dim);line-height:1.5;font-style:italic;padding:0 4px;border-left:2px solid var(--border);padding-left:12px}
+figcaption strong{font-style:normal;color:var(--white);display:block;margin-bottom:2px}
+figcaption .credit{display:block;margin-top:4px;font-size:.72rem;font-style:normal;color:var(--text-dim);opacity:.85}
+
+.toolbar{
+  position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);
+  padding:12px 24px;display:flex;align-items:center;justify-content:space-between;
+}
+.toolbar a{font-size:.85rem;color:var(--text-dim)}
+.toolbar a:hover{color:var(--accent-light)}
+.tool-btn{
+  width:34px;height:34px;border-radius:50%;border:1px solid var(--border);
+  background:var(--surface);color:var(--text-dim);display:flex;align-items:center;
+  justify-content:center;font-size:1rem;cursor:pointer;transition:.2s;padding:0;
+}
+.tool-btn:hover{border-color:var(--accent);color:var(--accent-light)}
+.tool-btn svg{width:16px;height:16px;fill:currentColor}
+
+.hero{
+  padding:60px 24px 40px;text-align:center;
+  background:radial-gradient(ellipse at 50% 30%,#1a1a1a 0%,var(--bg) 70%);
+}
+html.light .hero{background:radial-gradient(ellipse at 50% 30%,#e8e6e0 0%,var(--bg) 70%)}
+.hero h1{font-family:var(--font-display);font-size:clamp(1.8rem,4.5vw,3rem);color:var(--white);margin-bottom:8px;letter-spacing:-.02em;line-height:1.2}
+.hero .subtitle{font-size:1.05rem;color:var(--gold);font-style:italic;margin-bottom:4px}
+.hero .dates{font-size:.95rem;color:var(--text-dim)}
+
+.container{max-width:760px;margin:0 auto;padding:40px 24px 80px}
+.container h2{
+  font-family:var(--font-display);font-size:clamp(1.4rem,3vw,1.9rem);color:var(--white);
+  margin:48px 0 20px;padding-top:20px;border-top:1px solid var(--border);line-height:1.3;
+}
+.container h2:first-child{border-top:none;margin-top:0;padding-top:0}
+.container h3{
+  font-family:var(--font-display);font-size:1.15rem;color:var(--white);
+  margin:32px 0 12px;font-weight:700;
+}
+.container p{margin-bottom:16px;color:var(--text)}
+.container strong{color:var(--white)}
+.container em{color:var(--accent-light);font-style:italic}
+.container hr{border:none;border-top:1px solid var(--border);margin:40px 0}
+.container ul,.container ol{margin:0 0 20px 24px;color:var(--text)}
+.container li{margin-bottom:8px}
+
+footer{padding:40px 24px;text-align:center;border-top:1px solid var(--border)}
+footer p{font-size:.8rem;color:var(--text-dim)}
+
+@media(max-width:640px){
+  .container{padding:24px 16px 60px}
+}
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <a href="../../index.html">&larr; Back to Index</a>
+  <button class="tool-btn" onclick="document.documentElement.classList.toggle('light')" title="Toggle theme" aria-label="Toggle theme">
+    <svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zm0 16V5a7 7 0 1 1 0 14z"/></svg>
+  </button>
+</div>
+
+<div class="hero">
+  <h1>Digital Revolution &amp; Contemporary Design</h1>
+  <div class="subtitle">The Screen as Design Surface</div>
+  <div class="dates">c. 1990&ndash;Present</div>
+</div>
+
+<div class="container">
+
+<h2 id="introduction">Introduction &mdash; The Screen Became the Canvas</h2>
+<p>For most of design history, the substrate was physical. A poster was ink on paper, a chair was wood on a factory floor, a building was stone and steel on a site. The designer's job was to propose a form, hand off a specification, and let a maker realize it. The object was finished when it left the studio. Then the screen arrived, and everything designers knew how to do had to be re-thought.</p>
+<p>The digital revolution in design is not a style. It is an infrastructural shift as large as the arrival of movable type or the industrial press. Between roughly 1990 and today, the dominant surface for visual communication moved from paper and physical product to the backlit screen. Design became something that runs, not something that ships. It became continuous rather than finished, collaborative rather than authorial, and in many cases invisible &mdash; a button that "just works," a layout that "just fits." The craft of the twentieth century was the craft of the artifact. The craft of the last thirty-five years has been the craft of the system.</p>
+<p>Because the shift is still in progress, the history is harder to tell cleanly. Names that are household words today may be forgotten in a decade; ideas that seem central (design thinking, flat design, dark mode) come and go on the timescale of a graduate program. But the underlying arc is already visible, and it runs through three overlapping eras. The <em>web era</em>, roughly 1990 to 2005, was the period in which designers figured out that the browser was a new medium and not a version of print. The <em>mobile and platform era</em>, roughly 2005 to 2020, was when the phone became the default device, design systems replaced style guides, and the biggest product teams in the world began treating design as engineering. The <em>AI era</em>, which is still being written, begins around 2020 and is forcing another complete rethinking of what a designer makes and for whom.</p>
+
+<hr />
+
+<h2 id="part-1-historical-context">Part 1 &mdash; Historical Context: How Design Became Digital</h2>
+
+<h3 id="the-exhaustion-of-postmodernism">The Exhaustion of Postmodernism</h3>
+<p>By the early 1990s, the postmodern movement that had dominated the previous fifteen years was losing its edge. Its vocabulary of historical quotation and ironic ornament had been absorbed into commercial stock style. A new generation of designers wanted something different: not another stylistic rebellion, but a new medium. That medium turned out to be the computer, and specifically the browser. In 1989 Tim Berners-Lee, working at CERN, proposed a system called the World Wide Web that would allow documents to be linked across the early internet. In 1991 he released the first web server and the first browser. In 1993, Mosaic made the web visual and usable by non-experts. Within three years, every major graphic design studio in the world was dealing with the question of what to do about the web &mdash; and most of them were getting it wrong.</p>
+<p>The mistake the early web made was to treat the browser as a printed page that happened to glow. Designers laid out fixed-width pages, measured them in pixels, chose fonts that weren't installed on the reader's computer, and exported everything to GIF and JPEG to preserve the design. The result was a web that rewarded large monitors and punished everything else. It took about a decade of painful adjustment &mdash; and a lot of writing by critics like Jakob Nielsen, who insisted that the web was a <em>user's</em> medium, not a designer's &mdash; before the profession collectively accepted that designing for the screen was not designing for print.</p>
+
+<h3 id="the-mac-the-web-and-the-first-web-generation">The Mac, the Web, and the First Web Generation</h3>
+<p>The immediate technical precondition for the digital revolution was the personal computer, and specifically the graphical workstation. The Apple Macintosh, launched in 1984, had already made desktop publishing possible. By the early 1990s, Adobe Photoshop (1990), Illustrator (1987), QuarkXPress (1987), and Macromedia Director (1987) were standard tools in design studios. When the web arrived, designers already had the software to make images for it &mdash; they just didn't yet have the methodology to build for it.</p>
+<p>The first generation of designers who took the web seriously on its own terms appeared in the mid-1990s. David Siegel's book <em>Creating Killer Web Sites</em> (1996) taught designers how to hack HTML tables to lay out pages. Jeffrey Zeldman founded <em>A List Apart</em> in 1997 to advocate for web standards &mdash; the use of properly structured HTML and CSS in place of the table-and-spacer-GIF hacks &mdash; and later wrote <em>Designing with Web Standards</em> (2003), which became the field's most important text for a decade. Meanwhile, artists like Joan Heemskerk and Dirk Paesmans, working as <em>JODI</em>, produced deliberately broken web work (<em>jodi.org</em>, 1995&ndash;) that treated the browser as a medium for conceptual art, closer to Dada than to graphic design.</p>
+
+<h3 id="from-flash-to-standards">From Flash to Standards</h3>
+<p>Between 1996 and roughly 2010, most design-ambitious websites were built in Macromedia (later Adobe) Flash. Flash allowed designers to produce pixel-perfect, animated, interactive pages that would look the same in every browser &mdash; which was exactly what designers wanted and exactly what the web wasn't supposed to be. Flash-era sites from studios like 2advanced.com, hi-res!, and joshuadavis.com were visually inventive, often spectacular, and almost entirely inaccessible to screen readers, search engines, or mobile devices. The Flash era's creative peak was also its structural dead end.</p>
+<p>The counter-movement came from standards advocates. The Web Standards Project, founded in 1998, pushed browsers and designers to honor HTML and CSS specifications rather than treating the web as a proprietary design canvas. A List Apart published Ethan Marcotte's article "Responsive Web Design" in May 2010, proposing that a single HTML document should fluidly adapt to any screen size through CSS media queries. This was the single most consequential idea in contemporary web design: it meant that designers had to give up the illusion of control over layout and instead design systems of rules that would produce good results at any size. The shift from <em>pages</em> to <em>systems</em> that responsive design demanded became the dominant methodological shift of the next decade.</p>
+
+<h3 id="the-iphone-and-the-platform-era">The iPhone and the Platform Era</h3>
+<p>On January 9, 2007, Steve Jobs introduced the iPhone. The design implications took several years to work through, but in retrospect it was the hinge point of the entire era. The screen in your pocket had a resolution that rivaled a magazine. It had multi-touch, which meant interfaces could use gesture instead of mouse clicks. It had an accelerometer, a camera, GPS, and a persistent network connection. It could not be laid out like a desktop site; the design vocabulary had to start over, a second time in ten years.</p>
+<p>The consequence was the rise of what we now call the platform era. By about 2010, the dominant mode of professional design work was no longer to hand off a finished layout for someone else to execute. It was to contribute to a shared, living design system that ran continuously on iOS, Android, or the web, and to negotiate small improvements to that system with product managers, engineers, researchers, and other designers. Design was no longer a discipline that authored objects. It was a discipline that maintained infrastructure.</p>
+
+<hr />
+
+<h2 id="part-2-defining-characteristics">Part 2 &mdash; Defining Characteristics: How Contemporary Design Thinks</h2>
+
+<h3 id="screen-native-and-responsive">Screen-Native and Responsive</h3>
+<p>The first and most obvious characteristic of contemporary design is that the default substrate is a screen of unknown size, resolution, orientation, and input method. A modern designer cannot assume a 16&times;9 desktop, a 4.7-inch phone, a tablet held in landscape, or a smart TV; the same interface must work on all of them. This forces designs to be <em>systems of rules</em> rather than <em>fixed layouts</em>. Every visual element exists in a range of valid states defined by breakpoints, accessibility constraints, dark and light themes, and input capabilities. The designer's job is to specify the constraints and let the rendering context fill in the details.</p>
+
+<h3 id="systems-over-artifacts">Systems Over Artifacts</h3>
+<p>In a modern product organization, no single designer "owns" a screen the way a poster designer owned a poster. Designs are constructed from components drawn from a shared library &mdash; buttons, input fields, cards, modals, navigation patterns, typographic scales, color tokens, motion primitives &mdash; that are defined once, tested across contexts, and reused thousands of times. The design system (Google's Material Design, Apple's Human Interface Guidelines, IBM Carbon, Atlassian, Shopify Polaris, Salesforce Lightning) is the central artifact of contemporary practice. An individual designer's work is a small edit to a system that hundreds or thousands of other designers are using at the same time. The career role of "design systems designer" &mdash; someone whose job is to maintain and evolve the components rather than to produce screens &mdash; barely existed in 2010 and is now one of the most senior positions in most product teams.</p>
+
+<h3 id="user-centered-methodology">User-Centered Methodology</h3>
+<p>The arrival of the web brought with it a methodological revolution that had been brewing since the 1980s in the field of human-computer interaction. Don Norman's <em>The Design of Everyday Things</em> (1988, revised 2013), Jakob Nielsen's usability heuristics (1990), and the earlier ergonomic research that IDEO was adapting into "design thinking" reframed the designer's job. The question was no longer "does this look good?" but "can a specific person, with specific goals and specific constraints, actually accomplish what they came here to do?" User research, usability testing, personas, journey maps, and field observation became standard parts of the design process. This was a more profound shift than it sounds. Modernism had believed in universal principles; postmodernism had insisted on cultural specificity; contemporary practice insists on <em>individual</em> specificity &mdash; testable, measurable, and grounded in the behavior of actual people.</p>
+
+<h3 id="accessibility-and-inclusive-design">Accessibility and Inclusive Design</h3>
+<p>For most of the twentieth century, the question of whether a design worked for people with disabilities was treated, when it was treated at all, as a separate problem: a sign interpreted for the blind, a ramp added to a staircase. Contemporary practice treats accessibility as a baseline requirement. The Web Content Accessibility Guidelines (WCAG 1.0 in 1999; 2.0 in 2008; 2.1 in 2018), the Americans with Disabilities Act applied to websites in the 2010s, and the rise of lawsuits against inaccessible products forced the profession to take the problem seriously. Kat Holmes's work at Microsoft, collected in her book <em>Mismatch: How Inclusion Shapes Design</em> (2018), made the strongest positive case: designing for people with disabilities is not charity; it is how you find the rough edges in your design that affect everyone. The curb cut that lets a wheelchair cross a street also serves strollers, delivery carts, and travelers with wheeled luggage. Captions added for deaf viewers are used by anyone watching on a phone in a quiet coffee shop. Inclusive design has become one of the field's most productive methodological frames.</p>
+
+<h3 id="sustainability-as-design-constraint">Sustainability as a Design Constraint</h3>
+<p>In the 2010s, designers began to recognize that digital products were not, as had been casually assumed, environmentally weightless. The global internet is responsible for roughly four percent of greenhouse gas emissions, a figure comparable to the airline industry. Every megabyte shipped to a phone has a carbon cost; every unnecessary animation has a battery cost. A small movement of designers &mdash; Tom Greenwood's <em>Sustainable Web Design</em> (2021), the Green Web Foundation's carbon estimation tools, projects like <em>Low-Tech Magazine</em>'s solar-powered website (2018) &mdash; has begun to argue that page weight, rendering complexity, and server infrastructure are design decisions with environmental consequences. This is an echo of the earlier critique that postmodernism failed to produce a body of sustainable practice; contemporary designers are trying not to make the same mistake.</p>
+
+<h3 id="data-driven-and-generative">Data-Driven and Generative</h3>
+<p>Contemporary practice has increasingly replaced intuition with instrumentation. A/B tests tell designers which button color produces more clicks; telemetry reveals where users get stuck; heatmaps show what people actually look at. The risk is that data optimization produces designs that are locally optimal and globally mediocre &mdash; a phenomenon sometimes called "the Google font problem" after the widely reported internal debate over which of 41 shades of blue to use on the search results page. The counter-argument is that data is the only honest corrective to the designer's intuition about what "looks right."</p>
+<p>Most recently, the arrival of generative AI tools (Midjourney, Stable Diffusion, DALL-E in images; ChatGPT and Claude in text; Figma AI, v0, and similar tools in code generation) has raised the possibility that the designer's relationship to the work is about to change again. An AI that can produce a competent layout from a text prompt forces a designer to reconsider which parts of the job are essential and which were always busy work. This question is still open.</p>
+
+<hr />
+
+<h2 id="part-3-people">Part 3 &mdash; People: The Key Figures</h2>
+
+<h3 id="tim-berners-lee">Tim Berners-Lee (b. 1955)</h3>
+<p>The British computer scientist who invented the World Wide Web at CERN in 1989. Berners-Lee is not a designer in the usual sense, but no figure has shaped contemporary visual culture more profoundly. His original design decisions &mdash; that the web should be decentralized, that anyone should be able to link to anyone else, that HTML should be human-readable, that web browsers should be free &mdash; established the infrastructure on which every designer of the last thirty-five years has worked. He gave away the web rather than patenting it, which is one of the more consequential acts of generosity in twentieth-century technical history. In recent years he has been an outspoken critic of what the web has become, particularly under the dominance of a handful of large platforms, and has led efforts (most notably the Solid protocol) to restore user control over personal data.</p>
+
+<h3 id="don-norman-and-jakob-nielsen">Don Norman (b. 1935) and Jakob Nielsen (b. 1957)</h3>
+<p>The two most influential writers on usability and user experience. Norman's <em>The Design of Everyday Things</em> (originally 1988 as <em>The Psychology of Everyday Things</em>, revised 2013) coined the term "user-centered design" and gave the field its central vocabulary &mdash; <em>affordances</em>, <em>signifiers</em>, <em>mental models</em>, <em>mapping</em>, <em>feedback</em>. The book is still assigned in the first week of most graduate HCI programs. Norman also coined the term "user experience" while working at Apple in the 1990s, and co-founded the Nielsen Norman Group with Nielsen in 1998.</p>
+<p>Nielsen's own contribution was the discipline of usability testing as a practical craft. His "10 Usability Heuristics" (1994) remain the most widely cited evaluation framework in UX. His website <em>useit.com</em> (now <em>nngroup.com</em>), with its deliberately ugly, text-heavy layout, was a polemic in itself: the point was that a well-designed site should be readable, fast, and usable even if it wasn't pretty. Designers often found him insufferable; the designers who took him seriously produced more useful work.</p>
+
+<h3 id="susan-kare">Susan Kare (b. 1954)</h3>
+<p>The graphic designer responsible for the original Macintosh icons (1983), the Macintosh system font Chicago, and the visual vocabulary that made the early graphical user interface humane. Kare's work bridges the late-modernist graphic design of her training at NYU with the pixel-grid constraints of the early Mac, and produced a set of icons (the trash can, the happy Mac, the watch cursor, the command key cloverleaf) that became emotionally load-bearing parts of millions of people's daily lives. She later designed icons for Microsoft, Facebook, and Pinterest. Her career is the bridge figure between graphic design before the screen and the interface design of today.</p>
+
+<h3 id="jeffrey-zeldman-and-ethan-marcotte">Jeffrey Zeldman (b. 1955) and Ethan Marcotte (b. 1977)</h3>
+<p>Zeldman founded <em>A List Apart</em> in 1997 and <em>Happy Cog</em> (one of the first professional web design consultancies) the same year. His book <em>Designing with Web Standards</em> (2003, revised 2006, 2009) argued that the web was a legitimate design medium with its own rules, and that those rules rewarded structured, semantic HTML and CSS over proprietary tools like Flash. For roughly a decade, Zeldman's was the voice of conscience for professional web design. He helped rescue the web from becoming a collection of incompatible, inaccessible, platform-locked experiences.</p>
+<p>Marcotte's article "Responsive Web Design," published in <em>A List Apart</em> in May 2010, named and formalized a technique that had been quietly emerging: building single websites that fluidly adapt to any screen size using CSS media queries, flexible grids, and scalable images. The article, and the book that followed later that year, is the founding document of mobile-era web design. Within three years, "responsive" had become the default expectation for any professionally designed website.</p>
+
+<h3 id="jony-ive">Jony Ive (b. 1967)</h3>
+<p>The British industrial designer who led Apple's industrial and interface design from 1996 to 2019 and shaped the physical and visual language of the most influential consumer products of the period. Ive designed the iMac (1998), the iPod (2001), the iPhone (2007), and the iPad (2010); with software lead Scott Forstall through 2012 and then directly through iOS 7 (2013) and onward, he shaped the interface aesthetic that every phone in the world now echoes to some degree. The flattening and simplification of iOS in 2013 &mdash; the removal of skeuomorphic textures, the embrace of translucent layers and stark geometric type &mdash; was an aesthetic argument with global consequences: every product team in the world had to decide whether to follow Apple into flat design. Most did. Ive left Apple in 2019 to found his own studio, LoveFrom, and has been working with OpenAI's Sam Altman since 2024 on a new class of AI-native hardware devices.</p>
+
+<h3 id="matias-duarte">Matias Duarte (b. 1973)</h3>
+<p>The Chilean-American designer who led Google's Android design through the Material Design era. Duarte joined Google in 2010 after leading the design of WebOS at Palm. He introduced the Holo visual language with Android 4.0 (2011) and then, at Google I/O 2014, unveiled Material Design &mdash; a comprehensive cross-platform design system that organized interface surfaces as layers of virtual paper with simulated physical properties (elevation, shadow, motion). Material Design is now the single most widely used design system on the planet, shipping on billions of Android devices and thousands of web products built with its open-source components. Duarte's achievement was less a single visual style than a demonstration that a design system could be the central artifact of a multi-billion-device ecosystem.</p>
+
+<h3 id="kat-holmes">Kat Holmes (b. 1975)</h3>
+<p>Former principal design director at Microsoft, where she led the development of the Microsoft Inclusive Design Toolkit (2015), and later chief design officer at Salesforce. Her book <em>Mismatch: How Inclusion Shapes Design</em> (2018) is the most influential recent reframing of accessibility as a positive design methodology rather than a compliance checkbox. Holmes argues that disability is not a property of a person but a mismatch between a person and an environment, and that the designer's job is to reduce the mismatches. The Inclusive Design Toolkit she developed at Microsoft has been adopted, in whole or in part, by most of the major product organizations in the industry.</p>
+
+<h3 id="brad-frost">Brad Frost (b. 1985)</h3>
+<p>An American web designer and writer whose 2013 blog post (and 2016 book) <em>Atomic Design</em> proposed a mental model for component-based interface design inspired by chemistry: atoms (the smallest reusable pieces like a button or a form label), molecules (simple groupings like a labeled input), organisms (complex components like a page header), templates, and pages. The Atomic Design model gave designers and engineers a shared vocabulary for building, naming, and maintaining design systems. It is the most widely taught framework for how to actually structure a component library, and most of today's design-system practice is a direct descendant of Frost's scheme.</p>
+
+<h3 id="julie-zhuo">Julie Zhuo (b. 1983)</h3>
+<p>A Taiwanese-American designer who joined Facebook in 2006 at age twenty-two and eventually led the product design organization during the period of Facebook's transformation from a college directory into a global platform. Her 2019 book <em>The Making of a Manager</em> became an unexpected best-seller and is now one of the most widely read texts on how to lead design teams. Zhuo's career is representative of the contemporary product designer as organizational leader: the work is less about producing beautiful artifacts than about coaching dozens of other designers, negotiating with product managers and engineers, and stewarding a design system at planetary scale.</p>
+
+<h3 id="paula-scher">Paula Scher (b. 1948)</h3>
+<p>Not strictly a digital-era figure &mdash; Scher began her career at CBS Records in the 1970s and joined Pentagram as a partner in 1991 &mdash; but her work through the 2000s and 2010s is some of the most visible contemporary design of any kind. Her identities for the Public Theater (from 1994), Citi (2000), Microsoft Windows 8 (2012), and the High Line (2009) have defined what corporate and institutional identity look like in the digital era. Scher is a bridge figure: she brought the discipline and craft of late-modernist graphic design into the era of the design system, insisting through her practice that not everything needed to be invented from scratch.</p>
+
+<h3 id="refik-anadol">Refik Anadol (b. 1985)</h3>
+<p>Turkish-American media artist whose large-scale data visualizations and generative AI installations &mdash; <em>Machine Hallucinations</em> (2016&ndash;), <em>Unsupervised &mdash; Machine Hallucinations: MoMA</em> (2022), <em>Living Architecture</em> (2023) &mdash; represent one of the most visible crossovers between contemporary design, data art, and machine learning. Anadol's MoMA piece, a generative work trained on the museum's own collection that projected continuously shifting visual output onto a two-story LED wall, marked the institutional arrival of AI-generated imagery as a legitimate art form. His career foreshadows a whole generation of designers whose primary material is neither pixel nor paper but the weights of a trained model.</p>
+
+<hr />
+
+<h2 id="part-4-places">Part 4 &mdash; Places: Regional Expressions</h2>
+
+<h3 id="silicon-valley">Silicon Valley &mdash; The Platform Headquarters</h3>
+<p>Silicon Valley has been the center of gravity for contemporary design for the entire period. The major product organizations &mdash; Apple, Google, Meta, Netflix, Airbnb, Uber, Stripe, Figma &mdash; are headquartered within about fifty miles of one another, and most of the dominant design systems of the era (Material Design, the Apple Human Interface Guidelines, Airbnb's DLS, Stripe's brand system, Figma itself as a tool) were produced by teams in that corridor. Silicon Valley's contribution is less a stylistic vocabulary than a <em>methodology</em>: the design critique, the product review, the career ladder for individual contributors and design managers, the six-week shipping cycle, the A/B test as design decision. These are now the default working practices of professional design worldwide, and they were mostly codified in the Valley between roughly 2005 and 2020.</p>
+
+<h3 id="new-york">New York &mdash; Editorial, Brand, and Design Agencies</h3>
+<p>New York remained the center of editorial design (<em>The New York Times</em>, <em>The New Yorker</em>, <em>Wired</em>, <em>New York Magazine</em>) and institutional brand identity through the entire digital-revolution period. Pentagram's New York office, under partners like Paula Scher, Michael Bierut, and Natasha Jen, has been the most consistently visible graphic design studio of the era. <em>The New York Times</em> newsroom's interactive design work, particularly its data-visualization team, is widely considered the best editorial information design of the century so far. New York is also where most of the independent design agencies and studios that shape brand identity for the digital era (Collins, Gretel, Athletics, Character) do their work.</p>
+
+<h3 id="london-and-europe">London and Northern Europe &mdash; Service Design and Sustainability</h3>
+<p>London developed a distinctive strand of contemporary design practice built around <em>service design</em> &mdash; the design of processes, touchpoints, and organizational structures rather than individual artifacts. The Design Council UK, the agencies Fjord (Accenture) and Livework, and the Government Digital Service (GDS), which between 2011 and roughly 2019 transformed the UK government's web presence into one of the most admired public-sector digital products in the world, all came out of this tradition. GOV.UK under its lead designer Ben Terrett became a model for how design systems could serve democratic institutions rather than platform companies.</p>
+<p>Copenhagen and Stockholm developed their own variants: the Copenhagen Institute of Interaction Design (CIID), the Royal Danish Academy's service design program, and the Swedish agency Doberman produced some of the most sophisticated work on sustainability, public-sector design, and service design of the era. The Nordic emphasis on thoughtful, low-ego, systemic work was an important counterweight to Silicon Valley's celebration of disruption.</p>
+
+<h3 id="tokyo-and-seoul">Tokyo and Seoul &mdash; Mobile-First Cultures</h3>
+<p>East Asia, and particularly Japan and South Korea, moved to mobile-first internet use years before North America and Europe. NTT DoCoMo's i-mode platform (launched 1999) was the first mass-market mobile internet service anywhere in the world. LINE, KakaoTalk, and WeChat (just across the Yellow Sea in China) developed the "super-app" pattern &mdash; a single application that bundles messaging, payments, transit, retail, and media &mdash; that Western apps are still, in 2026, trying to import. Japanese and Korean graphic design of the period combined meticulous typography and density of information with a playful willingness to break screen conventions that Western design of the same period rarely matched. Designers like Kenya Hara (Muji's art director since 2001) are important bridge figures between contemporary Japanese graphic practice and global platform design.</p>
+
+<h3 id="berlin-and-the-indie-web">Berlin and the Indie Web</h3>
+<p>Berlin in the 2010s became the informal headquarters of what came to be called the "indie web" &mdash; a movement of designers, developers, and writers who resisted platform consolidation and built personal sites, federated services (Mastodon, originating in Germany in 2016 with Eugen Rochko), and small-scale publishing tools. The indie web's visual sensibility is deliberately unpolished, often text-heavy, and dismissive of the homogenizing tendencies of platform design. It is a minor but influential strain of contemporary practice, and probably the one place in the field where postmodernism's willingness to break rules has a living successor.</p>
+
+<hr />
+
+<h2 id="part-5-things">Part 5 &mdash; Things: Landmark Works</h2>
+
+<h3 id="era-1-the-web">Era 1 &mdash; The Web (c. 1990&ndash;2005)</h3>
+<p><strong>The first web page</strong> (Tim Berners-Lee, CERN, December 1990). A plain-text page describing the World Wide Web project. No images, no color, no layout &mdash; and in that sense the purest statement of the web's original promise. Still hosted, in its original form, at <em>info.cern.ch</em>.</p>
+<p><strong>Mosaic browser</strong> (NCSA, 1993). The browser, led by Marc Andreessen at the National Center for Supercomputing Applications, that made the web visual and mass-adoptable. Mosaic's decision to display inline images alongside text &mdash; contested at the time &mdash; was the single choice that converted the web from a physicists' tool into a mass medium.</p>
+<p><strong>HotWired</strong> (1994). The first commercial web magazine, launched by <em>Wired</em> magazine, with design led by Barbara Kuhr and art direction that deliberately imported <em>Wired</em>'s print-era maximalism to the new medium. HotWired was both a stylistic landmark and a cautionary tale: the print-like ambitions of its layout made it almost unusable on the narrow bandwidth connections of the time.</p>
+<p><strong>jodi.org</strong> (JODI, 1995&ndash;). A deliberately broken, glitched, ASCII-flooded web site by the Belgian/Dutch art duo Joan Heemskerk and Dirk Paesmans. Important as a reminder that the web could be a medium for conceptual art, not just commerce, and as the founding work of <em>net.art</em>.</p>
+<p><strong>A List Apart</strong> (Jeffrey Zeldman, 1997&ndash;). A web-standards-focused magazine for designers. Its articles (particularly Ethan Marcotte's 2010 "Responsive Web Design" piece) are the most influential body of writing on contemporary web design.</p>
+<p><strong>Useit.com</strong> (Jakob Nielsen, 1995&ndash;). Deliberately plain, text-heavy, as fast as any site on the early web. A polemic in favor of usability over aesthetics. Widely imitated, widely hated, and durably right.</p>
+
+<h3 id="era-2-mobile-and-platforms">Era 2 &mdash; Mobile &amp; Platforms (c. 2005&ndash;2020)</h3>
+<p><strong>iPhone OS / iOS</strong> (Apple, 2007&ndash;). The single most influential interface design of the era. Each iOS version set expectations for the rest of the industry: iOS 1 introduced multi-touch and a fully gestural mobile interface; iOS 7 (2013) flattened the skeuomorphic textures and set the tone for the flat-design decade; iOS 14 (2020) introduced widgets and the app library. Every phone in the world is some distance from, or some reaction to, iOS.</p>
+<p><strong>Android and Material Design</strong> (Google, 2008&ndash; / 2014&ndash;). Android launched in 2008 but found its distinctive visual identity only with Matias Duarte's Holo vocabulary (2011) and then the Material Design specification (2014). Material's "paper and ink" metaphor, with surfaces at elevations, shadows, and choreographed motion, has become the most deployed design system in history.</p>
+<p><strong>The Microsoft Inclusive Design Toolkit</strong> (Kat Holmes and Microsoft, 2015&ndash;). A freely published set of principles, activities, and a manual for doing inclusive design in product organizations. Has been adopted, in whole or in part, by most of the major product organizations in the industry.</p>
+<p><strong>Figma</strong> (Dylan Field &amp; Evan Wallace, launched 2016). Not an artifact in the old sense but a tool that became infrastructure. Figma was the first serious design tool built natively for the browser, with real-time collaboration as a default. Within five years it had displaced Adobe's Photoshop and Illustrator (and its own closer predecessor, Sketch) as the dominant interface design tool. Adobe agreed to acquire it in 2022 for $20 billion, though the deal was abandoned under regulatory pressure in 2023.</p>
+<p><strong>Airbnb Design Language System (DLS)</strong> (Airbnb, 2016). One of the first publicly discussed comprehensive design systems from a non-platform company. Airbnb's internal documentation of how they built the DLS, published on their design blog, became a foundational text on how to operationalize a design system at startup scale.</p>
+<p><strong>GOV.UK</strong> (Government Digital Service, 2012&ndash;). The UK government's consolidated web presence, built by a small team led by Ben Terrett. GOV.UK is widely cited as the best example of how design systems can serve public institutions; its design patterns and codebase have been copied by governments worldwide.</p>
+<p><strong>Low-tech Magazine</strong> (Kris De Decker, 2018&ndash;). A solar-powered website that sometimes goes offline when Barcelona is overcast. A polemic against the environmental impact of mainstream web design and one of the clearest demonstrations that sustainability could be a design constraint, not just a marketing claim.</p>
+
+<h3 id="era-3-ai">Era 3 &mdash; AI (c. 2020&ndash;Present)</h3>
+<p><strong>GPT-3</strong> (OpenAI, June 2020) and <strong>DALL-E</strong> (OpenAI, January 2021 / 2022). The research releases that made large-language-model text generation and text-to-image generation available as general-purpose creative tools. Neither was a "design product" in the conventional sense, but both rewrote the available toolbox for anyone making visual or written work on a screen.</p>
+<p><strong>Midjourney</strong> (David Holz, July 2022). A text-to-image model with a distinctively painterly default aesthetic, operated at first through a Discord bot. Midjourney was the AI image tool that graphic designers and illustrators actually started using at scale, and its "Midjourney look" became widely recognizable by 2023.</p>
+<p><strong>ChatGPT</strong> (OpenAI, November 2022). The consumer-facing wrapper around GPT-3.5 that turned large-language-model interaction into a mass product almost overnight. ChatGPT's chat-based interface &mdash; a single scrollable conversation with a cursor and a send button &mdash; became the default UI pattern for interacting with AI, and remains the most widely imitated new interface pattern of the decade.</p>
+<p><strong>Refik Anadol, <em>Unsupervised</em> at MoMA</strong> (2022&ndash;2023). A generative AI installation trained on MoMA's own collection, projected onto a two-story lobby wall. The piece marked the institutional arrival of AI-generated imagery as a legitimate art form displayed at the apex of the museum system.</p>
+<p><strong>Figma AI / v0 / Framer AI</strong> (Figma, Vercel, Framer; 2023&ndash;). The first generation of AI features integrated directly into interface design tools &mdash; able to generate layouts from text prompts, suggest components, and write production code. Collectively they are the beginning of a transition whose eventual shape is not yet clear.</p>
+
+<hr />
+
+<h2 id="part-6-tensions-and-critiques">Part 6 &mdash; Tensions and Critiques: What Is Being Questioned</h2>
+
+<h3 id="dark-patterns-and-the-attention-economy">Dark Patterns and the Attention Economy</h3>
+<p>The British designer Harry Brignull coined the term "dark pattern" in 2010 for interfaces deliberately designed to trick users into doing things against their interest &mdash; hidden unsubscribe buttons, cart additions at checkout, forced continuous scrolling. By the late 2010s, the use of behavioral-design techniques to keep users scrolling on social platforms had become a central critique of contemporary design practice. Tristan Harris's "Time Well Spent" movement, Cal Newport's <em>Digital Minimalism</em> (2019), and a growing body of regulation (the European Digital Services Act, the California Consumer Privacy Act) all pushed back on the idea that design's job was to maximize engagement. A profession that had positioned itself as user-centered had, critics argued, ended up at the service of advertising business models that were deeply user-hostile.</p>
+
+<h3 id="platform-sameness">Platform Sameness</h3>
+<p>By the late 2010s, complaints were also accumulating about the homogenization of design aesthetics produced by shared design systems. Every app looked like Material Design or Apple HIG; every startup landing page was a centered headline over a gradient with a call-to-action button in the brand color; every illustration style was "Corporate Memphis" (the Alegria style popularized by Facebook and Google around 2017) or some minor variant. The web of 2020 was measurably more consistent and measurably less surprising than the web of 2005. Whether this was a problem depended on whether you thought surprise was part of design's job.</p>
+
+<h3 id="the-environmental-cost">The Environmental Cost</h3>
+<p>The sustainability critique that began to gain traction in the late 2010s has become harder to dismiss. Data center energy use, cryptocurrency, machine learning model training, and the steady inflation of page sizes have combined to give digital design a real and growing environmental footprint. The counter-movement &mdash; sustainable web design, small-footprint products, the degrowth-influenced corner of the indie web &mdash; is still small but has become harder to laugh off.</p>
+
+<h3 id="the-ai-question">The AI Question</h3>
+<p>The most acute tension in contemporary design is the uncertainty around generative AI. Within three years of ChatGPT's launch, tools had appeared that could produce competent-looking layouts, icons, marketing copy, illustrations, and even working front-end code from text prompts. Many designers began to worry that the parts of their job that involved producing pixels were about to be automated, just as many parts of photography and illustration already had been. Others argued that the designer's role had always been about framing problems, understanding users, and making systemic decisions &mdash; none of which AI tools do well &mdash; and that the profession would adapt. The truthful answer as of 2026 is that nobody knows. The AI transition is the first moment in the history of the field where the status of the human designer has been seriously in question, and the profession is still feeling its way through the implications.</p>
+
+<hr />
+
+<h2 id="part-7-legacy">Part 7 &mdash; Legacy: What the Era Has Already Changed</h2>
+
+<h3 id="the-dissolution-of-the-print-screen-divide">The Dissolution of the Print/Screen Divide</h3>
+<p>For most of the twentieth century, graphic design, industrial design, and interaction design were separate disciplines with separate training programs and separate professional organizations. The digital revolution dissolved those boundaries. A contemporary designer is expected to be fluent in typography, color, layout, interaction, motion, and &mdash; often &mdash; enough code to prototype their own ideas. The monolithic title "designer" has splintered into dozens of specializations (UX, UI, interaction, motion, systems, research, product, content), but the underlying expectation is that the designer moves between media rather than specializing in one.</p>
+
+<h3 id="accessibility-as-baseline">Accessibility as Baseline</h3>
+<p>The shift from treating accessibility as an afterthought to treating it as a baseline requirement is probably the single most consequential ethical change the field has made in the last fifty years. A design that does not work with a screen reader, that does not meet WCAG contrast ratios, or that relies on motion people cannot turn off is now considered unprofessional in most serious organizations &mdash; a bar the profession simply did not enforce as recently as fifteen years ago. This is an achievement that can be easy to take for granted.</p>
+
+<h3 id="design-as-continuous-practice">Design as Continuous Practice</h3>
+<p>The idea that design is something that ships and is done &mdash; an annual report, a poster, a chair, a building &mdash; is now the exception. Most contemporary design work is continuous: shipped a little at a time, measured, adjusted, shipped again. This has brought designers into closer collaboration with engineers, data scientists, product managers, and customer support teams, and it has fundamentally changed what it means to say that a designer is "done" with a project. It has also made design a more political practice than it used to be, because the designer is present for every small decision about how a system treats its users over time, rather than leaving that conversation behind after a hand-off.</p>
+
+<h3 id="the-system-as-the-artifact">The System as the Artifact</h3>
+<p>The design system &mdash; the internal library of components, tokens, patterns, and documentation &mdash; is now the central artifact of the professional field. A contemporary design studio's output is measured less by the beauty of a single poster than by the coherence of the system it has built and the degree to which that system enables dozens or hundreds of other people to do good work downstream. This is a profound shift. Design has moved from a craft of individual authorship to a craft of shared infrastructure, closer in spirit to the work of a software library maintainer or a typographer producing a new typeface family than to the work of a twentieth-century studio designer. Some of what was lost in this shift was authorship and signature. Most of what was gained was scale.</p>
+
+<h3 id="what-the-era-has-not-yet-figured-out">What the Era Has Not Yet Figured Out</h3>
+<p>It is also worth being honest about the unfinished business. Contemporary design has not yet solved the problem of its own business model: most of the profession is funded by advertising-based platforms whose incentives pull against user welfare, and the attempts to design "ethically" within those constraints have had mixed success. It has not yet figured out what sustainability means in practice for a profession whose products ship invisibly through data centers. It has not yet worked out what role AI will play in the studio of the next decade. And it has not yet answered the question that was already being asked in the postmodern 1980s and has only become more urgent: what does it mean to design for a global, pluralistic audience without either imposing a single aesthetic or fragmenting into incoherence?</p>
+<p>These are live questions. The digital revolution in design is not an ended movement like postmodernism; it is a movement whose outlines are still being drawn. Students entering the field today will help draw those outlines, and the best thing a design history course can do is to equip them to recognize the decisions as they are being made.</p>
+
+<hr />
+
+<h2 id="discussion-questions">Discussion Questions</h2>
+<ol>
+<li>
+<p>The shift from designing "pages" to designing "systems" happened in about fifteen years. Is a contemporary designer still an <em>author</em> in the sense that Paul Rand or April Greiman was an author, or has the designer become something closer to a library maintainer? Does the answer depend on what kind of work you want to do?</p>
+</li>
+<li>
+<p>Jakob Nielsen's <em>useit.com</em> was deliberately ugly. His argument was that usability is a kind of moral and ethical question that aesthetics can distract from. Is this a defensible position, or does it miss something important about what design is for?</p>
+</li>
+<li>
+<p>Kat Holmes argues that disability is not a property of a person but a mismatch between a person and an environment. Apply this reframing to an interface you use every day. What mismatches do you see? Who benefits from fixing them beyond the population that is strictly disabled?</p>
+</li>
+<li>
+<p>Material Design, the Apple Human Interface Guidelines, and IBM Carbon are the three most-deployed design systems in the world. Pick one and use it for an hour on a product you don't normally think about. What does it feel like to design inside that system? What does it take for granted that you would want to question?</p>
+</li>
+<li>
+<p>"Platform sameness" is the critique that contemporary design has become homogeneous because so many products draw from a handful of shared systems. Is this a real problem, or is it the natural and even desirable result of the profession learning what works? Compare to how type designers felt about the dominance of Helvetica in the 1970s.</p>
+</li>
+<li>
+<p>Generative AI tools can now produce competent layouts, icons, and marketing copy from text prompts. Imagine a version of your own education in which AI tools are assumed from the first week. What should a design program teach that AI cannot do? What parts of the traditional curriculum are still worth preserving even if students no longer need them to produce work?</p>
+</li>
+<li>
+<p>The environmental footprint of digital design is growing, not shrinking, as machine-learning workloads increase and page sizes inflate. Contemporary designers have not, as a profession, taken meaningful collective action on this. Why not? What would that action even look like? Is this a problem for individual designers or for the organizations they work in?</p>
+</li>
+</ol>
+
+<hr />
+
+</div>
+
+<footer>
+  <p>DSGN 230 &mdash; Survey of Design History</p>
+  <p style="margin-top:8px;font-size:.8rem"><a href="image-credits.html">View image credits &amp; attributions &rarr;</a></p>
+</footer>
+
+</body>
+</html>

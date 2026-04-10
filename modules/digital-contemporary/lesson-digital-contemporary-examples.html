@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Revolution &amp; Contemporary Design &mdash; Key Examples &mdash; DSGN 230</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#111;--surface:#1a1a1a;--surface2:#222;--border:#333;
+  --text:#e8e8e8;--text-dim:#999;--accent:#669BBC;--accent-light:#89b4d4;
+  --white:#FDF0D5;--gold:#c9a84c;
+  --font-body:'Segoe UI',system-ui,-apple-system,sans-serif;
+  --font-display:'Georgia',serif;
+  --radius:10px;
+}
+html.light{
+  --bg:#f4f3f0;--surface:#fff;--surface2:#eae9e5;--border:#d5d3cd;
+  --text:#222;--text-dim:#555;--accent:#780000;--accent-light:#C1121F;
+  --white:#003049;--gold:#8a6d1b;
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.8;margin:0}
+a{color:var(--accent-light);text-decoration:none}
+a:hover{text-decoration:underline}
+img{max-width:100%;height:auto;border-radius:var(--radius);margin:0;display:block}
+figure{margin:20px 0 24px;padding:0}
+figure img{margin:0 0 8px 0}
+figcaption{font-size:.78rem;color:var(--text-dim);line-height:1.5;font-style:italic;padding-left:12px;border-left:2px solid var(--border)}
+figcaption .credit{display:block;margin-top:3px;font-size:.7rem;font-style:normal;color:var(--text-dim);opacity:.85}
+
+.toolbar{
+  position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);
+  padding:12px 24px;display:flex;align-items:center;justify-content:space-between;
+}
+.toolbar a{font-size:.85rem;color:var(--text-dim)}
+.toolbar a:hover{color:var(--accent-light)}
+.tool-btn{
+  width:34px;height:34px;border-radius:50%;border:1px solid var(--border);
+  background:var(--surface);color:var(--text-dim);display:flex;align-items:center;
+  justify-content:center;font-size:1rem;cursor:pointer;transition:.2s;padding:0;
+}
+.tool-btn:hover{border-color:var(--accent);color:var(--accent-light)}
+.tool-btn svg{width:16px;height:16px;fill:currentColor}
+
+.hero{
+  padding:60px 24px 40px;text-align:center;
+  background:radial-gradient(ellipse at 50% 30%,#1a1a1a 0%,var(--bg) 70%);
+}
+html.light .hero{background:radial-gradient(ellipse at 50% 30%,#e8e6e0 0%,var(--bg) 70%)}
+.hero h1{font-family:var(--font-display);font-size:clamp(1.8rem,4.5vw,3rem);color:var(--white);margin-bottom:8px;letter-spacing:-.02em;line-height:1.2}
+.hero .subtitle{font-size:1.05rem;color:var(--gold);font-style:italic;margin-bottom:4px}
+.hero .dates{font-size:.95rem;color:var(--text-dim)}
+
+.container{max-width:760px;margin:0 auto;padding:40px 24px 80px}
+
+.container h2{
+  font-family:var(--font-display);font-size:clamp(1.4rem,3vw,1.9rem);color:var(--white);
+  margin:48px 0 20px;padding-top:20px;border-top:1px solid var(--border);line-height:1.3;
+}
+.container h2:first-child{border-top:none;margin-top:0;padding-top:0}
+.container h3{
+  font-family:var(--font-display);font-size:1.15rem;color:var(--white);
+  margin:32px 0 12px;font-weight:700;
+}
+.container p{margin-bottom:16px;color:var(--text)}
+.container strong{color:var(--white)}
+.container em{color:var(--accent-light);font-style:italic}
+.container hr{border:none;border-top:1px solid var(--border);margin:40px 0}
+.container ul,.container ol{margin:0 0 20px 24px;color:var(--text)}
+.container li{margin-bottom:8px}
+
+.era-label{
+  display:inline-block;font-size:.7rem;padding:3px 10px;border-radius:12px;
+  border:1px solid var(--accent);color:var(--accent);background:transparent;
+  margin-left:8px;letter-spacing:.04em;text-transform:uppercase;vertical-align:middle;font-weight:600;
+}
+
+footer{padding:40px 24px;text-align:center;border-top:1px solid var(--border)}
+footer p{font-size:.8rem;color:var(--text-dim)}
+
+@media(max-width:640px){
+  .container{padding:24px 16px 60px}
+}
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <a href="../../index.html">&larr; Back to Index</a>
+  <button class="tool-btn" onclick="document.documentElement.classList.toggle('light')" title="Toggle theme" aria-label="Toggle theme">
+    <svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zm0 16V5a7 7 0 1 1 0 14z"/></svg>
+  </button>
+</div>
+
+<div class="hero">
+  <h1>Digital Revolution &amp; Contemporary Design &mdash; Key Examples</h1>
+  <div class="subtitle">Visual Reference Guide</div>
+  <div class="dates">DSGN 230 &mdash; Survey of Design History</div>
+</div>
+
+<div class="container">
+
+<h2 id="era-1-web">Era 1 &mdash; The Web, c. 1990&ndash;2005 <span class="era-label">Web</span></h2>
+
+<p><strong>info.cern.ch (the first web page)</strong> &mdash; Tim Berners-Lee, 1991, CERN, Geneva
+The first page on the World Wide Web: a plain text document describing what the web was and how to use it. No graphics, no layout, no styling beyond the browser's default. Its significance is historical rather than visual, but it sets the floor for every page that followed: a link is a link, and the document is universally addressable by URL. The original page is preserved on CERN's servers and is still accessible today.</p>
+
+<p><strong>NCSA Mosaic</strong> &mdash; Marc Andreessen et al., 1993, University of Illinois
+The first web browser to render inline images alongside text. Before Mosaic, images on the web opened as separate files in external viewers; after Mosaic, a page could be a layout. Within eighteen months of its release, the population of the web jumped from a few thousand scientists to millions of ordinary users. The screenshot of Mosaic rendering the NCSA home page is one of the most historically loaded images in the entire module.</p>
+
+<p><strong>HotWired</strong> &mdash; <em>Wired</em> magazine, launched October 1994
+The first commercial magazine-style website, and the first site to sell banner advertising. HotWired treated the browser window as a layout surface rather than a document viewport: navigation bars, grids, colored backgrounds, custom typography via images. Its designers (including Barbara Kuhr and Jeffrey Veen) had to invent conventions that did not yet exist. Much of the first-generation web design vocabulary is traceable to HotWired's early issues.</p>
+
+<p><strong>jodi.org</strong> &mdash; Joan Heemskerk &amp; Dirk Paesmans, 1995
+A net.art project that treats the browser as a medium for glitch, chaos, and strategic misuse. Early versions of the page appear to be a catastrophic system failure (green ASCII characters cascading on a black background); viewing the source reveals a carefully composed ASCII diagram of a hydrogen bomb. jodi.org is the counter-tradition to HotWired: it insists that the web is not a magazine, and that its native material is code, error, and the gap between what the browser shows and what the markup says.</p>
+
+<p><strong>Space Jam website</strong> &mdash; Warner Bros., 1996
+The promotional site for the 1996 Bugs Bunny / Michael Jordan film. Tiled starfield background, orange-on-purple links, animated GIFs, a planet-based navigation map. Left online, essentially unaltered, for nearly three decades. It has become the canonical artifact of 1990s commercial web design: every visual tic the era was later embarrassed about is preserved here in pristine condition.</p>
+
+<p><strong><em>Killing the Web: The Art and Science of Web Design</em></strong> &mdash; David Siegel, 1997
+The book in which Siegel codified the "table hack" that most professional web designers used throughout the late 1990s: abusing HTML table tags to force pixel-precise multi-column layouts that HTML had never been designed to support. Siegel's own site, high5.com, was for several years the most-copied commercial site on the web. The book is now a historical document of a craft that is extinct.</p>
+
+<p><strong>A List Apart</strong> &mdash; Jeffrey Zeldman, founded 1998
+A web magazine written by and for web designers, which through the early 2000s became the primary advocate for the Web Standards movement: the argument that pages should be built with semantic HTML and CSS rather than Siegel's table hacks, that content and presentation should be separated, and that accessibility and device-independence should be built in from the start. Zeldman's 2003 book <em>Designing With Web Standards</em> codified the position; A List Apart published the essays that made the case.</p>
+
+<p><strong>useit.com</strong> &mdash; Jakob Nielsen, 1995&ndash;2012
+Nielsen's personal site, deliberately designed as a polemic against the visual excesses of 1990s web design. Plain text, blue links, minimal images, no color beyond the defaults. Nielsen's argument was that users skim rather than read, that decoration is noise, and that fast-loading pages respect the user's time. The site is aesthetically ugly in a way that was intentional; Nielsen wanted to demonstrate that usability had nothing to do with visual sophistication. The tension between his position and that of visual designers like Zeldman shaped the decade.</p>
+
+<p><strong>Designing Web Usability</strong> &mdash; Jakob Nielsen, 2000, New Riders
+The book-length statement of Nielsen's position. Along with Steve Krug's <em>Don't Make Me Think</em> (2000) and the Nielsen Norman Group's consulting reports, this is the text that carried the UX methodology out of HCI research labs and into the daily practice of commercial web design.</p>
+
+<p><strong>iTunes Music Store</strong> &mdash; Apple, launched April 2003
+Not a visual landmark but a structural one. The Music Store was the first mass-market demonstration that designed interface plus designed business model could disassemble an entire industry (the album-oriented record business) and reassemble it around single-track downloads. Every later argument about platform design as economic design rests on the precedent the iTunes Store set.</p>
+
+<hr />
+
+<h2 id="era-2-mobile">Era 2 &mdash; Mobile &amp; Platforms, c. 2005&ndash;2020 <span class="era-label">Mobile</span></h2>
+
+<p><strong>iPhone launch (original iOS Home Screen)</strong> &mdash; Apple, 2007
+The device that turned the screen into a surface the user holds. The original Home Screen's skeuomorphic icons (a leather address book, a yellow legal pad, a spinning compass) were designed under Scott Forstall to reassure users unfamiliar with touch interfaces that they already knew how to use the apps. The skeuomorphic vocabulary would last until iOS 7 in 2013, when Jony Ive replaced it with a flat, typographically-driven visual language.</p>
+
+<p><strong>iOS 7 redesign</strong> &mdash; Apple, Jony Ive (design lead), 2013
+The moment mobile interface design collectively abandoned skeuomorphism. iOS 7 replaced leather textures and drop shadows with flat color fields, ultra-thin typography (San Francisco would follow in 2015), and a new physics-based approach to motion. The redesign was controversial on release (the legibility of the thin type was widely criticized) and is now the default visual language for most mobile software. It is the closest thing the mobile era has to its own International Typographic Style moment.</p>
+
+<p><strong>Material Design</strong> &mdash; Google, Matias Duarte (design lead), launched 2014
+The first comprehensive design system published as a public document by a major platform. Material codified a "material metaphor" &mdash; interface elements as layered sheets of virtual paper that cast shadows and respond to touch &mdash; along with detailed specifications for type, color, motion, and component behavior. Material Design's site at material.io is the model every subsequent design system has followed: publicly documented, versioned, and implemented in code.</p>
+
+<p><strong>Microsoft Inclusive Design Toolkit</strong> &mdash; Microsoft Design, Kat Holmes (design lead), 2016
+A free, publicly released set of documents that reframed accessibility as inclusion and inclusion as a design methodology. The toolkit's central argument &mdash; that designing for people with permanent disabilities produces solutions that benefit people with temporary or situational limitations (a person with one arm in a cast, a parent holding a baby) &mdash; reshaped how the industry talked about accessibility. Holmes's 2018 book <em>Mismatch: How Inclusion Shapes Design</em> is the theoretical companion.</p>
+
+<p><strong>Atomic Design</strong> &mdash; Brad Frost, 2013 (web article) / 2016 (book)
+The methodology that taught the web community how to think about design systems. Frost's atoms / molecules / organisms / templates / pages hierarchy provided a shared vocabulary for component-based interface design at a moment when front-end frameworks (React, Vue) were converging on the same ideas from the engineering side. Atomic Design and React together form the intellectual scaffolding for the contemporary design-system era.</p>
+
+<p><strong>Figma</strong> &mdash; Dylan Field &amp; Evan Wallace, launched in public beta 2016
+A browser-based interface design tool built on WebGL. Figma's significance is not primarily visual but structural: it moved design work into a multiplayer, URL-addressable surface, collapsing the distinction between the designer's file, the shared document, and the reviewable artifact. By 2020 it had replaced Sketch and Adobe XD as the default tool of professional interface design. Adobe attempted to acquire it in 2022 for twenty billion dollars; regulators blocked the deal in 2023.</p>
+
+<p><strong>Airbnb Design Language System (DLS)</strong> &mdash; Airbnb, Karri Saarinen (design lead), published 2016
+The first widely publicized, comprehensively documented in-house design system at a major consumer internet company. Airbnb's DLS articulated a complete visual language (type, color, grids, components), connected that language to engineering via shared tokens, and published the process as a series of Medium posts that became the how-to for an entire industry. By 2018, every serious consumer-facing product team had (or claimed to have) a design system.</p>
+
+<p><strong>GOV.UK</strong> &mdash; UK Government Digital Service, launched 2012 (design system published 2019)
+The public-facing website of the United Kingdom government, and the Design System that documents it. GOV.UK is the most extensive argument for the claim that plain, accessible, legible interface design is a public good rather than a stylistic preference. Every page is typographically restrained, keyboard-navigable, screen-reader-friendly, and fast on bad connections. The GOV.UK Design System (design-system.service.gov.uk) is open-source and has been adopted by dozens of other governments.</p>
+
+<p><strong>Low-tech Magazine</strong> &mdash; Kris De Decker, solar-powered site launched 2018
+A magazine about the history of technology that publishes on a website hosted on a solar-powered server. When the batteries run low, the site goes offline. The visual design is aggressively minimal: dithered black-and-white images, system fonts, no third-party trackers, no JavaScript beyond the essential. A page load on Low-tech Magazine uses a small fraction of the energy of a page load on a typical news site. It is currently the clearest statement of the sustainable-web argument.</p>
+
+<p><strong>Stripe.com</strong> &mdash; Stripe, 2011&ndash;present (notable redesigns 2014, 2017, 2021)
+The corporate marketing site that taught the developer-tools industry how to present itself. Stripe's site has, across successive redesigns, combined enormous typography, custom gradient artwork, and live code examples embedded in the page, with an aggressive commitment to performance. Its visual style has been copied so widely that it has become a genre (sometimes called "Stripe-ified" design).</p>
+
+<p><strong>Instagram and the square photograph</strong> &mdash; Instagram (launched 2010)
+Not a single designed object but a format. Instagram's original 1:1 aspect ratio forced photographers (professional and amateur) to recompose for a frame most cameras had not shipped since the Rolleiflex. By 2015 the constraint had reshaped the visual vocabulary of commercial photography, food styling, and interior design worldwide. When Instagram relaxed the square requirement in 2015, the format persisted anyway. One of the clearest examples of a software default shaping a global aesthetic.</p>
+
+<hr />
+
+<h2 id="era-3-ai">Era 3 &mdash; AI &amp; Generative Systems, c. 2020&ndash;Present <span class="era-label">AI</span></h2>
+
+<p><strong>GPT-3</strong> &mdash; OpenAI, released June 2020 (API)
+Not a designed object in any conventional sense, but the first widely available language model capable of generating coherent long-form text on demand. GPT-3's release was the moment the design industry started talking seriously about generative text as a material. Within eighteen months, dozens of writing tools (Jasper, Copy.ai, Notion AI) were wrappers around the GPT-3 API.</p>
+
+<p><strong>DALL-E</strong> &mdash; OpenAI, announced January 2021 / DALL-E 2 released April 2022
+The first image-generation model to produce results coherent enough for professional consideration. DALL-E 2's public release in 2022 (initially via a waitlist) is probably the clearest single date for the beginning of the AI era in visual design: it is the moment when designers started discussing, in public, what generative images would do to stock photography, illustration, and concept art.</p>
+
+<p><strong>Midjourney</strong> &mdash; Midjourney, Inc., launched July 2022
+The image generator that reached an enormous non-professional audience first, partly because it ran inside Discord rather than a custom interface. Midjourney's aesthetic (painterly, high-saturation, atmospheric) became so recognizable that "a Midjourney image" became a genre within six months of release. The first major legal disputes about training data, authorship, and style imitation organized themselves around Midjourney outputs.</p>
+
+<p><strong>ChatGPT</strong> &mdash; OpenAI, launched November 2022
+The consumer chat interface that brought large language models to a mainstream audience. ChatGPT's interface design &mdash; a plain chat window with almost no visual chrome &mdash; is itself the design statement: the intelligence is supposed to be in the conversation, not in the app. ChatGPT reached one hundred million users faster than any previous consumer product, and triggered the platform response (Google Gemini, Anthropic Claude, Meta Llama) that has defined the AI era.</p>
+
+<p><strong>Refik Anadol, <em>Unsupervised</em></strong> &mdash; MoMA, New York, November 2022 &ndash; March 2023
+A large wall-sized generative video installation trained on the image metadata of MoMA's own collection. The piece cycles continuously, producing swirling, dreamlike visualizations that the museum describes as "machine hallucinations" of its own holdings. <em>Unsupervised</em> is the first AI-generated work to be installed prominently at a major art museum in a way that claims aesthetic authorship for the system itself rather than for the artist using it as a tool. The piece is genuinely beautiful and genuinely controversial.</p>
+
+<p><strong>Figma AI, v0 by Vercel, Framer AI</strong> &mdash; 2023&ndash;2024
+A cluster of design and prototyping tools that integrate generative models directly into the interface design workflow. v0 (launched 2023) accepts a text prompt and produces a React component. Framer AI generates page layouts from descriptions. Figma AI (announced 2024) is the set of generative features built into the dominant interface design tool. These tools are changing too fast to be evaluated historically, but they are the direct descendants of Memphis's slogan that the tool itself should be expressive: in 2024 the tool is also a collaborator.</p>
+
+<p><strong>Stable Diffusion and the open-model community</strong> &mdash; Stability AI, released August 2022
+The first image generation model released with weights openly downloadable and runnable on consumer hardware. Stable Diffusion is technically less capable than the closed models at any given moment, but its openness produced an enormous ecosystem of fine-tunes, LoRAs, and custom interfaces (Automatic1111, ComfyUI). For the purposes of design history, it is the moment when generative image-making stopped being entirely mediated by three or four large corporations.</p>
+
+<p><strong>Apple Vision Pro launch materials</strong> &mdash; Apple, 2024
+Whatever one thinks of the device itself, the visual language Apple introduced to describe "spatial computing" &mdash; translucent interface panels floating in real rooms, eye-tracked focus states, hand-gesture controls &mdash; is the most serious attempt yet to articulate a design system for head-mounted displays. The Vision Pro's Human Interface Guidelines are the first comprehensive HIG for an HMD platform written by a company with Apple's historical influence. Whether spatial computing becomes a mainstream platform or a footnote, the Vision Pro design materials will be part of the record.</p>
+
+<hr />
+
+<h2 id="theory-texts">Theory &mdash; Texts and Ideas</h2>
+
+<p><strong>The Design of Everyday Things</strong> &mdash; Don Norman, 1988 (revised 2013), originally published as <em>The Psychology of Everyday Things</em>
+The foundational text of the user-centered design movement. Norman's argument that objects have affordances, that good design makes the right action obvious, and that when someone misuses a thing the designer (not the user) is at fault, became the operating assumption of an entire generation of interface designers. The 2013 revision updated the examples for the digital era without changing the core theory, a rare case where a design book survived a forty-year gap.</p>
+
+<p><strong>Don't Make Me Think</strong> &mdash; Steve Krug, 2000 (revised 2014)
+The shortest serious book on web usability, and for many years the one most often handed to new designers. Krug's central claim is that users do not read, do not figure things out, and do not forgive friction; therefore interfaces should be self-explanatory at a glance. The book has the unusual distinction of being demonstrably correct and genuinely useful, which is rare in the UX literature.</p>
+
+<p><strong>Designing With Web Standards</strong> &mdash; Jeffrey Zeldman, 2003
+The book that codified the Web Standards movement's technical argument: semantic HTML, CSS for presentation, JavaScript for behavior, accessibility as a baseline rather than a feature. Zeldman's advocacy &mdash; through the book, through A List Apart, and through speaking &mdash; is one of the reasons the modern web works at all.</p>
+
+<p><strong>A Dao of Web Design</strong> &mdash; John Allsopp, 2000, A List Apart
+The essay Ethan Marcotte credits as the intellectual origin of responsive design. Allsopp argued in 2000 that the web's native condition is fluidity, that print-style fixed layouts fight the medium, and that designers should embrace the unknown shape of the user's screen. Marcotte's 2010 essay <em>Responsive Web Design</em> (also in A List Apart) turned the argument into a practical methodology and named the movement.</p>
+
+<p><strong>Responsive Web Design</strong> &mdash; Ethan Marcotte, 2010 (essay) / 2011 (book, A Book Apart)
+The essay that named the methodology and the short book that taught everyone how to do it. Marcotte's three ingredients &mdash; fluid grids, flexible images, and media queries &mdash; became the basic technical approach of an entire decade of front-end work. "Responsive" is now assumed rather than argued for, which is the highest honor a design methodology can receive.</p>
+
+<p><strong>Mismatch: How Inclusion Shapes Design</strong> &mdash; Kat Holmes, 2018, MIT Press
+The book-length companion to Microsoft's Inclusive Design Toolkit. Holmes reframes disability as a mismatch between a person and their environment, rather than as a property of the person, and argues that designers are the ones who create or resolve those mismatches. Along with Sara Hendren's <em>What Can a Body Do?</em> (2020), it is the defining text of the inclusive-design turn.</p>
+
+<p><strong>The Making of a Manager</strong> &mdash; Julie Zhuo, 2019
+A book about design management rather than design itself, but important because it documents how the design profession at major internet companies grew from small craft teams into organizations of hundreds. Zhuo was VP of Design at Facebook when she wrote it, and the book is in many ways a record of how design management became a distinct discipline during the 2010s.</p>
+
+<p><strong>Ruined by Design</strong> &mdash; Mike Monteiro, 2019
+The angry book. Monteiro's argument is that designers at large technology companies have been morally complicit in platform harms (dark patterns, surveillance, addiction, misinformation) and that the profession needs to license itself like architecture or medicine. <em>Ruined by Design</em> is the clearest single statement of the ethical reckoning the design industry has been circling for most of the 2020s.</p>
+
+<p><strong>World Wide Waste</strong> &mdash; Gerry McGovern, 2020
+The book that made the environmental cost of digital interfaces concrete: how much electricity a page load actually uses, how much server weight a video stream carries, how much carbon a bloated site emits over a year of visits. McGovern's numbers are disputed in detail but the direction of the argument is not, and the book is the rallying point for the sustainable-web conversation.</p>
+
+<p><strong>Atlas of AI</strong> &mdash; Kate Crawford, 2021, Yale University Press
+Not a design book strictly speaking, but the one designers working with AI now reach for first. Crawford traces the physical infrastructure of contemporary machine learning &mdash; the mines, the data centers, the power grids, the labor &mdash; and argues that calling the result "intelligence" obscures what it actually is. For design students, the book is the corrective to the marketing language of the AI platforms.</p>
+
+</div>
+
+<footer>
+  <p>DSGN 230 &mdash; Survey of Design History</p>
+  <p style="margin-top:8px;font-size:.8rem"><a href="image-credits.html">View image credits &amp; attributions &rarr;</a></p>
+</footer>
+
+</body>
+</html>
