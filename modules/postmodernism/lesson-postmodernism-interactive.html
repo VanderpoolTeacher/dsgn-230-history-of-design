@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Postmodernism Deep Dive &mdash; DSGN 230</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#111111;--surface:#1a1a1a;--surface2:#222222;--border:#333;
+  --text:#e8e8e8;--text-dim:#999;--accent:#669BBC;--accent-light:#89b4d4;
+  --success:#2ecc71;--fail:#e74c3c;--white:#FDF0D5;--gold:#c9a84c;
+  --font-body:'Segoe UI',system-ui,-apple-system,sans-serif;
+  --font-display:'Georgia',serif;
+  --radius:10px;--shadow:0 4px 24px rgba(0,0,0,.5);
+}
+html.light{
+  --bg:#f4f3f0;--surface:#ffffff;--surface2:#eae9e5;--border:#d5d3cd;
+  --text:#222;--text-dim:#555;--accent:#780000;--accent-light:#C1121F;
+  --success:#1fa85a;--fail:#C1121F;--white:#003049;--gold:#8a6d1b;
+  --shadow:0 4px 24px rgba(0,0,0,.08);
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.7;margin:0}
+a{color:var(--accent-light);text-decoration:none}
+img{max-width:100%;display:block}
+button{cursor:pointer;font-family:var(--font-body)}
+
+.container{max-width:960px;margin:0 auto;padding:0 24px}
+
+/* HERO */
+.hero{
+  min-height:75vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:60px 24px;
+  background:radial-gradient(ellipse at 50% 30%,#1a1a1a 0%,var(--bg) 70%);
+}
+html.light .hero{background:radial-gradient(ellipse at 50% 30%,#e8e6e0 0%,var(--bg) 70%)}
+.hero h1{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.2rem);color:var(--white);margin-bottom:8px;letter-spacing:-.02em;line-height:1.2}
+.hero .subtitle{font-size:1.1rem;color:var(--gold);margin-bottom:8px;font-style:italic}
+.hero p{font-size:1.05rem;color:var(--text-dim);max-width:600px;margin-bottom:36px}
+.btn-start{
+  display:inline-block;padding:14px 40px;background:var(--accent);color:var(--white);
+  border:none;border-radius:50px;font-size:1.05rem;font-weight:600;transition:.2s;
+}
+.btn-start:hover{background:var(--accent-light);transform:translateY(-2px)}
+
+/* TOOLBAR */
+.toolbar{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:12px 0}
+.toolbar-inner{display:flex;align-items:center;gap:12px;padding:0 24px;max-width:960px;margin:0 auto}
+.progress-label{font-size:.8rem;color:var(--text-dim);min-width:90px}
+.progress-bar{flex:1;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-light));width:0;transition:width .4s ease;border-radius:3px}
+.tool-btn{
+  width:34px;height:34px;border-radius:50%;border:1px solid var(--border);
+  background:var(--surface);color:var(--text-dim);display:flex;align-items:center;
+  justify-content:center;font-size:1rem;transition:.2s;padding:0;
+}
+.tool-btn:hover{border-color:var(--accent);color:var(--accent-light)}
+.tool-btn svg{width:16px;height:16px;fill:currentColor}
+
+/* TAB NAV */
+.tab-nav{display:flex;gap:4px;overflow-x:auto;padding:20px 24px 0;max-width:960px;margin:0 auto}
+.tab-btn{
+  padding:10px 18px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius) var(--radius) 0 0;
+  color:var(--text-dim);font-size:.82rem;font-weight:600;white-space:nowrap;transition:.2s;border-bottom:none;
+}
+.tab-btn:hover{color:var(--text);border-color:var(--accent)}
+.tab-btn.active{background:var(--surface2);color:var(--accent-light);border-color:var(--accent)}
+.tab-btn.completed{color:var(--success)}
+
+/* SECTIONS */
+.section{display:none;padding:40px 0 60px;animation:fadeUp .5s ease}
+.section.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+
+.section-header{margin-bottom:32px}
+.section-header .period-label{font-size:.8rem;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px}
+.section-header h2{font-family:var(--font-display);font-size:clamp(1.6rem,3.5vw,2.2rem);color:var(--white);line-height:1.2;font-weight:700}
+.section-header .dates{font-size:.9rem;color:var(--text-dim);margin-top:4px}
+
+/* IMAGE CARDS */
+.img-card{
+  margin:28px 0;border-radius:var(--radius);overflow:hidden;
+  background:var(--surface);border:1px solid var(--border);
+}
+.img-card img{width:100%;height:auto;max-height:70vh;object-fit:contain;background:#0a0a0a}
+.img-card .caption{padding:14px 18px;font-size:.82rem;color:var(--text-dim);line-height:1.5}
+.img-card .caption strong{color:var(--text)}
+
+/* CONTENT */
+.content-block{margin-bottom:28px}
+.content-block h3{font-size:1.15rem;color:var(--white);margin-bottom:10px;font-weight:700}
+.content-block p{color:var(--text);margin-bottom:14px}
+
+.key-ideas{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:24px 0}
+.idea-chip{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;font-size:.9rem;line-height:1.5}
+.idea-chip .chip-label{font-size:.95rem;color:var(--accent);letter-spacing:.02em;margin-bottom:6px;font-weight:700}
+
+.key-figures{margin:20px 0;padding:18px;background:var(--surface2);border-left:3px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0}
+.key-figures h4{font-size:.85rem;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;font-weight:700}
+.key-figures ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+.key-figures li{font-size:.92rem;padding-left:16px;position:relative;line-height:1.5}
+.key-figures li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+
+/* TIMELINE */
+.hist-timeline{margin:28px 0;padding:0 0 0 24px;border-left:2px solid var(--accent);position:relative}
+.hist-timeline .ht-title{font-size:.95rem;color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px;margin-left:-24px;padding-left:24px}
+.ht-event{position:relative;padding:0 0 20px 16px;font-size:.88rem;line-height:1.5}
+.ht-event:last-child{padding-bottom:0}
+.ht-event::before{content:"";position:absolute;left:-29px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--accent);border:2px solid var(--bg)}
+.ht-event .ht-year{font-weight:700;color:var(--accent-light);margin-right:6px}
+
+/* THINK QUESTION */
+.think-question{margin:28px 0;padding:20px 22px;background:rgba(102,155,188,.08);border:1px solid rgba(102,155,188,.25);border-radius:var(--radius)}
+html.light .think-question{background:rgba(120,0,0,.05);border-color:rgba(120,0,0,.18)}
+.think-question .tq-label{font-size:.95rem;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;font-weight:700}
+.think-question p{font-size:1rem;color:var(--white);line-height:1.6;margin:0}
+
+/* NAV */
+.section-nav{display:flex;justify-content:space-between;gap:16px;margin-top:40px;padding-top:20px;border-top:1px solid var(--border)}
+.nav-btn{
+  padding:12px 28px;border-radius:50px;font-size:.92rem;font-weight:600;border:1px solid var(--border);
+  background:var(--surface);color:var(--text);transition:.2s;
+}
+.nav-btn:hover{border-color:var(--accent);color:var(--accent-light)}
+.nav-btn.primary{background:var(--accent);border-color:var(--accent);color:var(--white)}
+.nav-btn.primary:hover{background:var(--accent-light)}
+html.light .nav-btn.primary{color:#FDF0D5}
+
+/* ============ FLIP CARDS ============ */
+.flip-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin:28px 0}
+.flip-card{perspective:800px;height:360px;cursor:pointer}
+.flip-card-inner{
+  position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d;
+}
+.flip-card.flipped .flip-card-inner{transform:rotateY(180deg)}
+.flip-front,.flip-back{
+  position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:var(--radius);
+  border:1px solid var(--border);padding:24px;display:flex;flex-direction:column;justify-content:center;
+}
+.flip-front{background:var(--surface);text-align:center;justify-content:stretch}
+.flip-front .flip-name{font-family:var(--font-display);font-size:1.2rem;color:var(--white);margin-bottom:8px}
+.flip-front .flip-dates{font-size:.85rem;color:var(--accent)}
+.flip-front .flip-center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.flip-front .flip-hint{font-size:.75rem;color:var(--text-dim);padding-top:12px}
+.flip-back{background:var(--surface2);transform:rotateY(180deg);overflow-y:auto;font-size:.88rem;line-height:1.6}
+.flip-back .flip-role{font-size:.8rem;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;font-weight:700}
+.flip-back p{margin-bottom:8px}
+
+/* ============ MATCHING ============ */
+.match-activity{margin:28px 0}
+.match-instructions{font-size:.9rem;color:var(--text-dim);margin-bottom:16px}
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.match-col-label{font-size:.8rem;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:10px}
+.match-item{
+  padding:14px 16px;background:var(--surface);border:2px solid var(--border);border-radius:var(--radius);
+  font-size:.9rem;cursor:pointer;transition:.2s;margin-bottom:8px;
+}
+.match-item:hover{border-color:var(--accent)}
+.match-item.selected{border-color:var(--accent);background:rgba(102,155,188,.1);box-shadow:0 0 0 1px var(--accent)}
+html.light .match-item.selected{background:rgba(120,0,0,.06)}
+.match-item.correct{border-color:var(--success);background:rgba(46,204,113,.1)}
+.match-item.wrong{border-color:var(--fail);background:rgba(231,76,60,.1)}
+.match-item.matched{opacity:.5;pointer-events:none;border-color:var(--success)}
+.match-feedback{margin-top:16px;padding:14px;border-radius:8px;font-size:.9rem;display:none}
+.match-feedback.show{display:block}
+.match-feedback.success{background:rgba(46,204,113,.1);border:1px solid rgba(46,204,113,.3);color:var(--success)}
+.match-score{font-size:.85rem;color:var(--text-dim);margin-top:8px}
+.match-reset{margin-top:12px;padding:8px 20px;border:1px solid var(--border);border-radius:50px;background:var(--surface);color:var(--text);font-size:.85rem}
+.match-reset:hover{border-color:var(--accent);color:var(--accent-light)}
+
+/* ============ QUIZ ============ */
+.quiz-wrap{margin:28px 0}
+.q-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;margin-bottom:20px}
+.q-card .q-num{font-size:.75rem;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.q-card .q-text{font-size:1.05rem;color:var(--white);margin-bottom:18px;line-height:1.5}
+.q-card .q-img{margin-bottom:16px;border-radius:8px;overflow:hidden}
+.q-card .q-img img{width:100%;max-height:260px;object-fit:contain;background:#0a0a0a}
+.q-options{display:flex;flex-direction:column;gap:10px}
+.q-opt{
+  display:flex;align-items:center;gap:12px;padding:14px 18px;
+  background:var(--surface2);border:2px solid var(--border);border-radius:var(--radius);
+  cursor:pointer;transition:.2s;font-size:.95rem;
+}
+.q-opt:hover{border-color:var(--accent)}
+.q-opt.selected{border-color:var(--accent);background:rgba(102,155,188,.1)}
+html.light .q-opt.selected{background:rgba(120,0,0,.06)}
+.q-opt.correct{border-color:var(--success);background:rgba(46,204,113,.1)}
+.q-opt.wrong{border-color:var(--fail);background:rgba(231,76,60,.1)}
+.q-opt .letter{
+  width:30px;height:30px;border-radius:50%;background:var(--surface);display:flex;
+  align-items:center;justify-content:center;font-weight:700;font-size:.8rem;flex-shrink:0;border:1px solid var(--border);
+}
+.q-opt.selected .letter{background:var(--accent);color:var(--white);border-color:var(--accent)}
+.q-opt.correct .letter{background:var(--success);color:var(--white);border-color:var(--success)}
+.q-opt.wrong .letter{background:var(--fail);color:var(--white);border-color:var(--fail)}
+html.light .q-opt.selected .letter,html.light .q-opt.correct .letter,html.light .q-opt.wrong .letter{color:#FDF0D5}
+.q-feedback{margin-top:14px;padding:14px;border-radius:8px;font-size:.9rem;display:none;line-height:1.5}
+.q-feedback.show{display:block}
+.q-feedback.right{background:rgba(46,204,113,.1);border:1px solid rgba(46,204,113,.3);color:var(--success)}
+html.light .q-feedback.right{background:rgba(46,204,113,.08);border-color:rgba(46,204,113,.25)}
+.q-feedback.wrong{background:rgba(231,76,60,.1);border:1px solid rgba(231,76,60,.3);color:var(--fail)}
+html.light .q-feedback.wrong{background:rgba(193,18,31,.08);border-color:rgba(193,18,31,.25)}
+
+/* RESULTS */
+.results-card{
+  display:none;text-align:center;padding:40px;margin:28px 0;
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+}
+.results-card.show{display:block;animation:fadeUp .5s ease}
+.score-ring{
+  width:140px;height:140px;border-radius:50%;margin:0 auto 20px;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  border:5px solid var(--border);
+}
+.score-ring.pass{border-color:var(--success)}
+.score-ring.fail{border-color:var(--fail)}
+.score-num{font-size:2.5rem;font-weight:700;color:var(--white);line-height:1}
+.score-lbl{font-size:.8rem;color:var(--text-dim)}
+.results-card h3{font-family:var(--font-display);font-size:1.4rem;color:var(--white);margin-bottom:8px}
+.results-card p{color:var(--text-dim);margin-bottom:20px}
+.btn-retry{
+  padding:12px 32px;background:var(--accent);color:var(--white);border:none;
+  border-radius:50px;font-size:.95rem;font-weight:600;transition:.2s;
+}
+html.light .btn-retry{color:#FDF0D5}
+.btn-retry:hover{background:var(--accent-light)}
+
+/* IMAGE GALLERY */
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin:28px 0}
+.gallery-item{
+  border-radius:var(--radius);overflow:hidden;background:var(--surface);border:1px solid var(--border);
+  cursor:pointer;transition:.2s;
+}
+.gallery-item:hover{border-color:var(--accent);transform:translateY(-2px)}
+.gallery-item img{width:100%;height:180px;object-fit:cover;background:#0a0a0a}
+.gallery-item .g-info{padding:12px 14px}
+.gallery-item .g-title{font-size:.88rem;color:var(--white);font-weight:600;margin-bottom:2px}
+.gallery-item .g-meta{font-size:.78rem;color:var(--text-dim)}
+
+/* LIGHTBOX */
+.lightbox{
+  display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.92);
+  align-items:center;justify-content:center;padding:24px;
+}
+.lightbox.show{display:flex}
+.lightbox img{max-width:90vw;max-height:80vh;object-fit:contain;border-radius:var(--radius)}
+.lightbox .lb-caption{
+  position:absolute;bottom:24px;left:50%;transform:translateX(-50%);
+  color:#ccc;font-size:.9rem;text-align:center;max-width:600px;
+}
+.lightbox .lb-close{
+  position:absolute;top:20px;right:24px;width:40px;height:40px;border-radius:50%;
+  background:rgba(255,255,255,.1);border:none;color:#fff;font-size:1.4rem;
+  display:flex;align-items:center;justify-content:center;
+}
+.lightbox .lb-close:hover{background:rgba(255,255,255,.2)}
+
+/* FOOTER */
+.footer{padding:40px 24px;text-align:center;border-top:1px solid var(--border);margin-top:60px}
+.footer p{font-size:.8rem;color:var(--text-dim);line-height:1.8}
+
+@media(max-width:640px){
+  .key-ideas{grid-template-columns:1fr}
+  .flip-grid{grid-template-columns:1fr}
+  .match-grid{grid-template-columns:1fr}
+  .gallery-grid{grid-template-columns:1fr 1fr}
+  .section-nav{flex-direction:column}
+  .nav-btn{width:100%;text-align:center}
+  .tab-nav{gap:2px}
+  .tab-btn{padding:8px 12px;font-size:.75rem}
+}
+</style>
+</head>
+<body>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lb-close" onclick="closeLightbox()">&times;</button>
+  <img id="lbImg" src="" alt="Lightbox image">
+  <div class="lb-caption" id="lbCaption"></div>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <h1>Postmodernism</h1>
+  <div class="subtitle">c. 1970&ndash;1990</div>
+  <p>An interactive deep-dive into design's rebellion against modernist purity &mdash; irony, ornament, historical quotation, and the welcome return of the joke.</p>
+  <button class="btn-start" onclick="startLesson()">Begin Exploring</button>
+</section>
+
+<!-- TOOLBAR -->
+<div class="toolbar" id="toolbar" style="display:none">
+  <div class="toolbar-inner">
+    <span class="progress-label" id="progressLabel">Section 1 / 6</span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <button class="tool-btn" onclick="toggleTheme()" title="Toggle light/dark" aria-label="Toggle theme">
+      <svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zm0 16V5a7 7 0 1 1 0 14z"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- TAB NAV -->
+<nav class="tab-nav" id="tabNav" style="display:none">
+  <button class="tab-btn active" onclick="goSection(0)">Context</button>
+  <button class="tab-btn" onclick="goSection(1)">Gallery</button>
+  <button class="tab-btn" onclick="goSection(2)">People</button>
+  <button class="tab-btn" onclick="goSection(3)">Principles</button>
+  <button class="tab-btn" onclick="goSection(4)">Matching</button>
+  <button class="tab-btn" onclick="goSection(5)">Quiz</button>
+</nav>
+
+<!-- MAIN -->
+<main class="container" id="lessonMain">
+
+<!-- ===== SECTION 0: CONTEXT ===== -->
+<div class="section" data-idx="0">
+  <div class="section-header">
+    <div class="period-label">Historical Context</div>
+    <h2>The World That Made Postmodernism</h2>
+    <div class="dates">Exhausted Modernism &middot; Irony &middot; The Macintosh Era</div>
+  </div>
+
+  <div class="img-card">
+    <img src="images/Sottsass_Casablanca.jpg"
+         alt="Sottsass Casablanca sideboard"
+         loading="lazy">
+    <div class="caption"><strong>Casablanca Sideboard.</strong> Ettore Sottsass, 1981, for the Memphis Group. Plastic laminate over particleboard in clashing patterns &mdash; a sideboard that mocks everything mid-century furniture held sacred. Photo via Wikimedia Commons.</div>
+  </div>
+
+  <div class="content-block">
+    <h3>When Modernism Became the Establishment</h3>
+    <p>By the late 1960s, modernism had won so completely that it had ceased to be rebellious. The glass-and-steel corporate tower, the open-plan office, the minimalist interior, and the Helvetica-on-a-grid annual report had become the dominant visual language of Western capitalism. A young designer in 1970 looking at a Mies tower saw a building that insurance companies liked. The revolution had become the mortgage.</p>
+    <p>Two things happened in response. First, a wave of rigorous criticism from inside the profession itself &mdash; above all Robert Venturi's 1966 book <em>Complexity and Contradiction in Architecture</em> and his 1972 sequel <em>Learning from Las Vegas</em>, co-written with Denise Scott Brown. Second, a wave of playful, sometimes outrageous object-making from Milan &mdash; Studio Alchymia, and then in 1981 the Memphis Group. These two currents, plus a parallel rebellion in graphic design spreading out of Basel and Cranbrook, combined to form what we now call postmodernism.</p>
+  </div>
+
+  <div class="key-ideas">
+    <div class="idea-chip"><div class="chip-label">Less Is a Bore</div>Venturi's reply to Mies van der Rohe's "Less is more." A joke that became a manifesto: modernism's purity had become an aesthetic trap, and design needed to reclaim ornament, color, and historical reference.</div>
+    <div class="idea-chip"><div class="chip-label">Learning from Las Vegas</div>Venturi, Scott Brown &amp; Izenour's 1972 book argued that the Las Vegas Strip was legitimate vernacular architecture. The book's distinction between the "duck" and the "decorated shed" became one of the most productive ideas in twentieth-century design theory.</div>
+    <div class="idea-chip"><div class="chip-label">The Memphis Moment</div>In September 1981 Milan, Ettore Sottsass and a group of younger designers exhibited brightly laminated furniture that looked like toys. Within a year, Memphis had colonized fashion, graphic design, and early MTV.</div>
+    <div class="idea-chip"><div class="chip-label">The Macintosh Arrives</div>1984. Suddenly typographic experimentation was possible without typesetters or photomechanical transfer. April Greiman and Emigre pushed the new tools to their limit, producing layered, layered-on-layered compositions that would have been impossible &mdash; or prohibitively expensive &mdash; a decade earlier.</div>
+  </div>
+
+  <div class="content-block">
+    <h3>Defining Characteristics</h3>
+    <p><strong>Historical quotation</strong>: columns, pediments, classical motifs plucked out of context and reassembled with ironic distance. <strong>Ornament welcomed back</strong>: pattern and decoration returned as legitimate tools after seventy years of modernist prohibition. <strong>Clashing color</strong>: pastels, electric turquoise, brick red and mustard together &mdash; the colors of motel roadsides and 1950s diners reclaimed as avant-garde material. <strong>Contradiction as method</strong>: a single object might mix incompatible styles, materials, or voices on purpose. <strong>Irony and wit</strong>: the willingness to be funny in serious professional contexts, which modernism had mostly forbidden. <strong>Honesty abandoned</strong>: plastic laminate printed to look like marble, sheet metal pretending to be stone, plywood pretending to be mahogany &mdash; "honesty to materials" recast as an ideology rather than a law.</p>
+  </div>
+
+  <div class="hist-timeline">
+    <div class="ht-title">Key Dates</div>
+    <div class="ht-event"><span class="ht-year">1964</span><span class="ht-desc">Robert Venturi designs the Vanna Venturi House in Chestnut Hill, PA &mdash; widely considered the first true postmodern building</span></div>
+    <div class="ht-event"><span class="ht-year">1966</span><span class="ht-desc">Venturi publishes <em>Complexity and Contradiction in Architecture</em> &mdash; the movement's foundational text</span></div>
+    <div class="ht-event"><span class="ht-year">1972</span><span class="ht-desc">Venturi, Scott Brown &amp; Izenour publish <em>Learning from Las Vegas</em>; Pruitt-Igoe public housing demolished in St. Louis &mdash; later cited as "the death of modernism"</span></div>
+    <div class="ht-event"><span class="ht-year">1976</span><span class="ht-desc">Alessandro Mendini founds Studio Alchymia in Milan</span></div>
+    <div class="ht-event"><span class="ht-year">1977</span><span class="ht-desc">Charles Jencks publishes <em>The Language of Post-Modern Architecture</em>, naming the movement</span></div>
+    <div class="ht-event"><span class="ht-year">1978</span><span class="ht-desc">Charles Moore's Piazza d'Italia opens in New Orleans; Mendini's Proust armchair is exhibited</span></div>
+    <div class="ht-event"><span class="ht-year">1981</span><span class="ht-desc">Memphis Group's first exhibition, Milan. Sottsass's Carlton bookcase and Casablanca sideboard launch the aesthetic globally</span></div>
+    <div class="ht-event"><span class="ht-year">1982</span><span class="ht-desc">Michael Graves's Portland Building opens &mdash; the first monumental built postmodern commission</span></div>
+    <div class="ht-event"><span class="ht-year">1984</span><span class="ht-desc">Philip Johnson's AT&amp;T Building completed in New York; James Stirling's Neue Staatsgalerie opens in Stuttgart; Apple Macintosh launches</span></div>
+    <div class="ht-event"><span class="ht-year">1985</span><span class="ht-desc">Michael Graves designs the 9093 "Bird Kettle" for Alessi &mdash; the best-selling kettle in the world</span></div>
+    <div class="ht-event"><span class="ht-year">1986</span><span class="ht-desc">April Greiman's Mac-produced poster issue of <em>Design Quarterly</em> published</span></div>
+    <div class="ht-event"><span class="ht-year">1988</span><span class="ht-desc">MoMA's "Deconstructivist Architecture" exhibition signals the next turn</span></div>
+    <div class="ht-event"><span class="ht-year">c. 1995</span><span class="ht-desc">Postmodernism absorbed into stock commercial style; new minimalism and web design take over</span></div>
+  </div>
+
+  <div class="think-question">
+    <div class="tq-label">Think About It</div>
+    <p>Postmodernism argued that modernism had become the establishment. Today, many of postmodernism's own gestures &mdash; irony, historical quotation, playful color &mdash; are themselves the establishment of brand culture and consumer design. What would a rebellion against contemporary design orthodoxy look like? What are the untouchable rules of design in 2026 that nobody is allowed to break?</p>
+  </div>
+
+  <div class="section-nav">
+    <span></span>
+    <button class="nav-btn primary" onclick="goSection(1)">Next: Image Gallery &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 1: GALLERY ===== -->
+<div class="section" data-idx="1">
+  <div class="section-header">
+    <div class="period-label">Visual Examples</div>
+    <h2>Image Gallery</h2>
+    <div class="dates">Click any image to enlarge</div>
+  </div>
+
+  <div class="gallery-grid">
+    <div class="gallery-item" onclick="openLightbox('images/Sottsass_Casablanca.jpg','Casablanca Sideboard &mdash; Ettore Sottsass, 1981, Memphis Group. Plastic laminate over particleboard in clashing patterns. The totemic object of the first Memphis show. Photo: Wikimedia Commons.')">
+      <img src="images/Sottsass_Casablanca.jpg" alt="Sottsass Casablanca sideboard" loading="lazy">
+      <div class="g-info"><div class="g-title">Casablanca Sideboard</div><div class="g-meta">Ettore Sottsass, 1981 &middot; Memphis</div></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox('images/Vanna_Venturi_House.jpg','Vanna Venturi House &mdash; Robert Venturi, 1964, Chestnut Hill, PA. Widely considered the first true postmodern building. Designed for Venturi\u2019s mother, with a symbolic gable, a broken pediment, and a ribbon window that refuses to align with the classical cues around it.')">
+      <img src="images/Vanna_Venturi_House.jpg" alt="Vanna Venturi House" loading="lazy">
+      <div class="g-info"><div class="g-title">Vanna Venturi House</div><div class="g-meta">Robert Venturi, 1964</div></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox('images/Portland_Building.jpg','Portland Building &mdash; Michael Graves, 1982, Portland, OR. Fifteen-story municipal office building clad in painted stucco and colored tile, with oversized keystones and stylized garlands. The first major built commission of American postmodern architecture.')">
+      <img src="images/Portland_Building.jpg" alt="Portland Building" loading="lazy">
+      <div class="g-info"><div class="g-title">Portland Building</div><div class="g-meta">Michael Graves, 1982</div></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox('images/ATT_Building.jpg','AT&amp;T Building (now 550 Madison Avenue) &mdash; Philip Johnson &amp; John Burgee, 1984, New York. Pink granite Manhattan skyscraper topped by an open pediment widely read as a Chippendale highboy. The moment corporate postmodernism arrived at full scale.')">
+      <img src="images/ATT_Building.jpg" alt="AT&amp;T Building" loading="lazy">
+      <div class="g-info"><div class="g-title">AT&amp;T Building</div><div class="g-meta">Philip Johnson, 1984 &middot; New York</div></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox('images/Piazza_dItalia.jpg','Piazza d\u2019Italia &mdash; Charles Moore, 1978, New Orleans. A public plaza designed for the city\u2019s Italian-American community. Classical columns rendered in neon and stainless steel; a map of Italy inlaid in stone with water for the rivers.')">
+      <img src="images/Piazza_dItalia.jpg" alt="Piazza d&apos;Italia" loading="lazy">
+      <div class="g-info"><div class="g-title">Piazza d&apos;Italia</div><div class="g-meta">Charles Moore, 1978 &middot; New Orleans</div></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox('images/Neue_Staatsgalerie.jpg','Neue Staatsgalerie &mdash; James Stirling, 1984, Stuttgart. Widely regarded as the finest postmodern building in the world. Stone rustication, central rotunda, bright green steel window frames, pink and blue handrails, and a public pathway cutting through the building at an angle.')">
+      <img src="images/Neue_Staatsgalerie.jpg" alt="Neue Staatsgalerie" loading="lazy">
+      <div class="g-info"><div class="g-title">Neue Staatsgalerie</div><div class="g-meta">James Stirling, 1984 &middot; Stuttgart</div></div>
+    </div>
+  </div>
+
+  <div class="think-question">
+    <div class="tq-label">Observe</div>
+    <p>These works span architecture and furniture, but share a visual strategy. What connects them? Look for historical quotation, deliberate mismatch, the return of applied ornament, and the embrace of colors and materials that modernism would have rejected as vulgar. What would each of these objects communicate if you encountered it without knowing its design history?</p>
+  </div>
+
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(0)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(2)">Next: Key People &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 2: FLIP CARDS — PEOPLE ===== -->
+<div class="section" data-idx="2">
+  <div class="section-header">
+    <div class="period-label">Key Figures</div>
+    <h2>The People of Postmodernism</h2>
+    <div class="dates">Click a card to reveal details</div>
+  </div>
+
+  <div class="flip-grid">
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-center"><div class="flip-name">Robert Venturi &amp; Denise Scott Brown</div>
+          <div class="flip-dates">1925&ndash;2018 &amp; b. 1931 &middot; Philadelphia</div></div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Architects &amp; Theorists</div>
+          <p>The intellectual founders of architectural postmodernism. Venturi's <em>Complexity and Contradiction</em> (1966) and their co-authored <em>Learning from Las Vegas</em> (1972) reframed architecture as a communicative act. Scott Brown's contribution was long under-credited due to the sexism of the profession.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-center"><div class="flip-name">Michael Graves</div>
+          <div class="flip-dates">1934&ndash;2015 &middot; Princeton, NJ</div></div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Architect &amp; Product Designer</div>
+          <p>The postmodern architect whose work most successfully colonized popular culture. Broke from his early rigorous modernism in the late 1970s. His Portland Building (1982) was the first monumental built postmodern commission. Later designed thousands of household objects for Alessi and Target.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-center"><div class="flip-name">Ettore Sottsass</div>
+          <div class="flip-dates">1917&ndash;2007 &middot; Milan</div></div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Designer &amp; Theorist</div>
+          <p>Founder of the Memphis Group (1981). Spent two decades as a serious modernist consultant to Olivetti before turning his attention to questions modernism had ignored: emotion, play, vulgarity, and the cultural weight of cheap materials. His laminate totems are now in museum collections worldwide.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-center"><div class="flip-name">Alessandro Mendini</div>
+          <div class="flip-dates">1931&ndash;2019 &middot; Milan</div></div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Designer &amp; Editor</div>
+          <p>Founded Studio Alchymia (1976), predecessor to Memphis. Edited <em>Casabella</em>, <em>Modo</em>, and <em>Domus</em>. His Proust armchair &mdash; a Baroque chair overpainted in Pointillist dots &mdash; is one of the clearest demonstrations of postmodern methodology.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-center"><div class="flip-name">Philip Johnson</div>
+          <div class="flip-dates">1906&ndash;2005 &middot; New York</div></div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Architect &amp; Stylistic Impresario</div>
+          <p>Switched from modernism to postmodernism to deconstructivism over his long career, always positioning himself near whichever movement was winning. His AT&amp;T Building (1984) put postmodernism on the cover of <em>Time</em> magazine and made corporate clients take it seriously.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-center"><div class="flip-name">James Stirling</div>
+          <div class="flip-dates">1926&ndash;1992 &middot; United Kingdom</div></div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Architect</div>
+          <p>The most important European architect to turn postmodern. His Neue Staatsgalerie in Stuttgart (1984) is widely regarded as the finest postmodern building anywhere &mdash; its rigorous composition holds together where weaker postmodernism would collapse into pastiche.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-center"><div class="flip-name">Charles Moore</div>
+          <div class="flip-dates">1925&ndash;1993 &middot; USA</div></div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Architect &amp; Teacher</div>
+          <p>American architect whose Piazza d'Italia in New Orleans (1978) was one of postmodernism's most joyous public projects. A long teaching career at UCLA and Yale shaped a generation of architects to take pleasure and vernacular reference seriously.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-center"><div class="flip-name">Wolfgang Weingart</div>
+          <div class="flip-dates">1941&ndash;2021 &middot; Basel</div></div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Typographer &amp; Teacher</div>
+          <p>The Swiss typographer who broke the Swiss grid from within. Taught at the Basel School of Design from 1968, systematically violating the rules of the International Style he had been trained in. His students &mdash; above all April Greiman &mdash; carried the experiments to America.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-center"><div class="flip-name">April Greiman</div>
+          <div class="flip-dates">b. 1948 &middot; Los Angeles</div></div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Graphic Designer</div>
+          <p>Trained with Weingart in Basel, moved to Los Angeles in 1976. Fused Weingart's typographic experiments with a Californian embrace of color, video imagery, and &mdash; crucially &mdash; the early Macintosh. Her 1986 issue of <em>Design Quarterly</em> was a manifesto object for computer-native graphic design.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-center"><div class="flip-name">Katherine McCoy</div>
+          <div class="flip-dates">b. 1945 &middot; Cranbrook, MI</div></div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Designer &amp; Educator</div>
+          <p>Co-chair of Cranbrook Academy's graphic design program (1971&ndash;1995). Presided over the most theoretically ambitious graphic design education of the era: students read Derrida and Barthes alongside type specimens. Cranbrook's output defined "deconstructed" graphic design in America.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-center"><div class="flip-name">Neville Brody</div>
+          <div class="flip-dates">b. 1957 &middot; London</div></div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Graphic Designer &amp; Type Designer</div>
+          <p>Art director of British style magazine <em>The Face</em> (1981&ndash;1986). Designed every issue as a typographic experiment and drew custom typefaces for each project. The most influential magazine design of the decade, and the point at which postmodern typography crossed into mainstream youth culture.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-center"><div class="flip-name">Peter Eisenman</div>
+          <div class="flip-dates">b. 1932 &middot; New York / New Haven</div></div>
+          <div class="flip-hint">Click to flip</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-role">Architect &amp; Theorist</div>
+          <p>The bridge figure from postmodernism to deconstructivism. His Wexner Center for the Arts (1989) &mdash; two grids colliding at an angle, walls cut away &mdash; marks the point where postmodernism's interest in quotation gives way to deconstructivism's interest in formal rupture.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(1)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(3)">Next: Design Principles &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 3: DESIGN PRINCIPLES ===== -->
+<div class="section" data-idx="3">
+  <div class="section-header">
+    <div class="period-label">Ideas &amp; Principles</div>
+    <h2>What Made It "Postmodern"</h2>
+    <div class="dates">Irony, ornament, quotation, contradiction</div>
+  </div>
+
+  <div class="content-block">
+    <p>Postmodernism was never a single manifesto. It was a coordinated rebellion across architecture, furniture, product design, graphic design, and theory, animated by a shared exhaustion with modernist orthodoxy. These principles travelled across disciplines and gave the movement its family resemblance.</p>
+  </div>
+
+  <div class="flip-grid">
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-center"><div class="flip-name">Historical Quotation</div><div class="flip-dates">Columns, pediments, patterns</div></div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">Method</div><p>Postmodern designers raided the history of architecture and decorative art the way a DJ samples old records. A column might be Doric, Tuscan, or cartoon-stylized. A pattern might reference Art Deco or a 1950s Formica counter. The quotation was rarely straightforward homage; it was almost always at one ironic remove.</p></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-center"><div class="flip-name">Ornament Welcomed Back</div><div class="flip-dates">"Ornament is no longer a crime"</div></div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">Philosophy</div><p>Adolf Loos had declared ornament a crime in 1908. Modernism took him seriously for seventy years. Postmodernism reversed the verdict. Applied pattern, molding, decoration, and explicit color returned as legitimate tools &mdash; not as revived craft ornament, but as deliberate, often cheap-looking quotation.</p></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-center"><div class="flip-name">The Decorated Shed</div><div class="flip-dates">Venturi, Scott Brown &amp; Izenour, 1972</div></div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">Concept</div><p>A "duck" is a building whose form is its own sign (like the Long Island duck-shaped restaurant). A "decorated shed" is a conventional structure that communicates through applied signage. <em>Learning from Las Vegas</em> argued that most real architecture is and should be decorated sheds, and that modernism's obsession with duck-like pure form had been an expensive mistake.</p></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-center"><div class="flip-name">Clashing Color</div><div class="flip-dates">Pastels, neon, "vulgar" hues</div></div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">Palette</div><p>Postmodernism embraced exactly the colors modernism had ruled out: pastel pinks and mint greens, electric turquoise, brick red and mustard together, salmon and teal. The colors of motel roadsides and 1950s diners were reclaimed as avant-garde material. The vulgarity was the point.</p></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-center"><div class="flip-name">Contradiction as Method</div><div class="flip-dates">Incompatible elements on purpose</div></div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">Strategy</div><p>A postmodern building might have a classical facade on one side and a glass curtain wall on another. A postmodern layout might use three typefaces where modernism insisted on one. The simultaneity of incompatible elements was a deliberate refusal of modernism's demand that a good design express a single clear idea.</p></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-center"><div class="flip-name">Irony &amp; Wit</div><div class="flip-dates">Design allowed to be funny</div></div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">Tone</div><p>Modernism had been serious. Postmodernism wanted to be funny. A kettle with a bird on the spout. A skyscraper with a Chippendale pediment. A bookshelf shaped like a prehistoric totem. The willingness to make visual jokes in serious professional contexts was itself a departure.</p></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-center"><div class="flip-name">Honesty Abandoned</div><div class="flip-dates">Laminate pretending to be marble</div></div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">Material Strategy</div><p>Modernism insisted that materials should be expressed honestly. Postmodernism dropped the rule. Memphis pieces were particleboard wrapped in laminate printed to look like marble, terrazzo, or cartoon patterns. The insistence on material honesty had itself been an ideology, not a law of nature.</p></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-front"><div class="flip-center"><div class="flip-name">Deconstructed Type</div><div class="flip-dates">The Swiss grid broken from within</div></div><div class="flip-hint">Click to flip</div></div>
+        <div class="flip-back"><div class="flip-role">Graphic Method</div><p>Weingart set type at angles and at exaggerated letter-spacing; Greiman layered bitmap imagery on a Mac; Brody drew custom typefaces for every issue; Cranbrook students layered text over text so readers constructed meaning rather than receiving it. The discipline of the Swiss grid was replaced by the discipline of the well-argued contradiction.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="think-question">
+    <div class="tq-label">Think About It</div>
+    <p>Postmodernism's favorite tool was irony &mdash; making a gesture while simultaneously signaling that you didn't quite mean it. Irony depends on the audience sharing your distance from the thing being quoted. When does that distance collapse? What happens to an ironic gesture when people start to take it seriously, or when people forget what the original joke was about?</p>
+  </div>
+
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(2)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(4)">Next: Matching Activity &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 4: MATCHING ===== -->
+<div class="section" data-idx="4">
+  <div class="section-header">
+    <div class="period-label">Activity</div>
+    <h2>Match the Designer to Their Work</h2>
+    <div class="dates">Select one item from each column to form a pair</div>
+  </div>
+
+  <p class="match-instructions">Click a designer on the left, then click their work on the right. Correct matches will lock in place.</p>
+
+  <div class="match-grid">
+    <div>
+      <div class="match-col-label">Designers</div>
+      <div id="matchLeft"></div>
+    </div>
+    <div>
+      <div class="match-col-label">Works</div>
+      <div id="matchRight"></div>
+    </div>
+  </div>
+  <div class="match-score" id="matchScore"></div>
+  <div class="match-feedback" id="matchFeedback"></div>
+  <button class="match-reset" id="matchResetBtn" onclick="resetMatch()" style="display:none">Try Again</button>
+
+  <div style="margin-top:40px"></div>
+
+  <div class="section-header">
+    <div class="period-label">Activity</div>
+    <h2>Match the Concept to Its Source</h2>
+    <div class="dates">Connect each postmodern idea to the figure or work that put it into circulation</div>
+  </div>
+
+  <p class="match-instructions">Click a concept on the left, then its source on the right.</p>
+
+  <div class="match-grid">
+    <div>
+      <div class="match-col-label">Concept</div>
+      <div id="matchLeft2"></div>
+    </div>
+    <div>
+      <div class="match-col-label">Source</div>
+      <div id="matchRight2"></div>
+    </div>
+  </div>
+  <div class="match-score" id="matchScore2"></div>
+  <div class="match-feedback" id="matchFeedback2"></div>
+  <button class="match-reset" id="matchResetBtn2" onclick="resetMatch2()" style="display:none">Try Again</button>
+
+  <div class="section-nav">
+    <button class="nav-btn" onclick="goSection(3)">&larr; Previous</button>
+    <button class="nav-btn primary" onclick="goSection(5)">Next: Quiz &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 5: QUIZ ===== -->
+<div class="section" data-idx="5">
+  <div class="section-header">
+    <div class="period-label">Knowledge Check</div>
+    <h2>Postmodernism Quiz</h2>
+    <div class="dates">Test what you've learned</div>
+  </div>
+
+  <div class="quiz-wrap" id="quizWrap"></div>
+
+  <div class="results-card" id="resultsCard">
+    <div class="score-ring" id="scoreRing">
+      <div class="score-num" id="scoreNum">0%</div>
+      <div class="score-lbl">Score</div>
+    </div>
+    <h3 id="resultsTitle">Results</h3>
+    <p id="resultsMsg"></p>
+    <button class="btn-retry" onclick="retryQuiz()">Try Again</button>
+  </div>
+
+  <div class="section-nav" id="quizNav">
+    <button class="nav-btn" onclick="goSection(4)">&larr; Previous</button>
+    <span></span>
+  </div>
+</div>
+
+</main>
+
+<footer class="footer">
+  <p>DSGN 230 &mdash; Survey of Design History<br>Postmodernism Deep Dive Interactive</p>
+  <p style="margin-top:8px">Image credits: Sottsass Casablanca sideboard via Wikimedia Commons. Additional architectural and object photographs from Wikimedia Commons; specific photographer and license credits to be confirmed when final image set is in place.</p>
+</footer>
+
+<script>
+/* ============ GLOBALS ============ */
+const TOTAL_SECTIONS = 6;
+let currentSection = 0;
+
+/* ============ NAVIGATION ============ */
+function startLesson(){
+  document.getElementById('hero').style.display='none';
+  document.getElementById('toolbar').style.display='block';
+  document.getElementById('tabNav').style.display='flex';
+  goSection(0);
+}
+
+function goSection(idx){
+  currentSection=idx;
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.section')[idx].classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>{b.classList.toggle('active',i===idx)});
+  document.getElementById('progressLabel').textContent=`Section ${idx+1} / ${TOTAL_SECTIONS}`;
+  document.getElementById('progressFill').style.width=((idx+1)/TOTAL_SECTIONS*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleTheme(){document.documentElement.classList.toggle('light')}
+
+/* ============ LIGHTBOX ============ */
+function openLightbox(src,cap){
+  const lb=document.getElementById('lightbox');
+  document.getElementById('lbImg').src=src;
+  document.getElementById('lbCaption').textContent=cap;
+  lb.classList.add('show');
+}
+function closeLightbox(){document.getElementById('lightbox').classList.remove('show')}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox()});
+
+/* ============ MATCHING 1: Designer → Work ============ */
+const matchPairs=[
+  {left:'Robert Venturi',right:'Vanna Venturi House'},
+  {left:'Michael Graves',right:'Portland Building'},
+  {left:'Ettore Sottsass',right:'Carlton Bookcase'},
+  {left:'Philip Johnson',right:'AT&T Building'},
+  {left:'James Stirling',right:'Neue Staatsgalerie'},
+  {left:'Charles Moore',right:"Piazza d'Italia"},
+  {left:'Alessandro Mendini',right:'Proust Armchair'},
+  {left:'April Greiman',right:'"Does It Make Sense?" poster'},
+];
+let m1Left=null,m1Matched=0;
+
+function initMatch(){
+  const lC=document.getElementById('matchLeft'),rC=document.getElementById('matchRight');
+  const shuffledL=[...matchPairs].sort(()=>Math.random()-.5);
+  const shuffledR=[...matchPairs].sort(()=>Math.random()-.5);
+  lC.innerHTML='';rC.innerHTML='';
+  shuffledL.forEach(p=>{
+    const d=document.createElement('div');d.className='match-item';d.textContent=p.left;
+    d.dataset.key=p.left;d.onclick=()=>selectMatchLeft(d);lC.appendChild(d);
+  });
+  shuffledR.forEach(p=>{
+    const d=document.createElement('div');d.className='match-item';d.textContent=p.right;
+    d.dataset.key=p.left;d.onclick=()=>selectMatchRight(d);rC.appendChild(d);
+  });
+  m1Left=null;m1Matched=0;
+  document.getElementById('matchScore').textContent='';
+  document.getElementById('matchFeedback').className='match-feedback';
+  document.getElementById('matchResetBtn').style.display='none';
+}
+
+function selectMatchLeft(el){
+  if(el.classList.contains('matched'))return;
+  document.querySelectorAll('#matchLeft .match-item').forEach(e=>e.classList.remove('selected'));
+  el.classList.add('selected');m1Left=el;
+}
+
+function selectMatchRight(el){
+  if(!m1Left||el.classList.contains('matched'))return;
+  if(m1Left.dataset.key===el.dataset.key){
+    m1Left.classList.remove('selected');m1Left.classList.add('matched');
+    el.classList.add('matched');m1Matched++;
+    document.getElementById('matchScore').textContent=`${m1Matched} / ${matchPairs.length} matched`;
+    if(m1Matched===matchPairs.length){
+      const fb=document.getElementById('matchFeedback');
+      fb.className='match-feedback show success';fb.textContent='All matched! Great work.';
+    }
+  } else {
+    el.classList.add('wrong');m1Left.classList.add('wrong');
+    setTimeout(()=>{el.classList.remove('wrong');m1Left.classList.remove('wrong','selected');m1Left=null},800);
+    document.getElementById('matchResetBtn').style.display='inline-block';
+    return;
+  }
+  m1Left=null;
+}
+
+function resetMatch(){initMatch()}
+
+/* ============ MATCHING 2: Concept → Source ============ */
+const matchPairs2=[
+  {left:'"Less is a bore"',right:'Robert Venturi, 1966'},
+  {left:'Duck vs. Decorated Shed',right:'Learning from Las Vegas, 1972'},
+  {left:'Memphis Group founded',right:'Ettore Sottsass, Milan, 1981'},
+  {left:'Deconstruction in graphic design',right:'Katherine McCoy / Cranbrook'},
+  {left:'Breaking the Swiss grid',right:'Wolfgang Weingart, Basel'},
+  {left:'Mac-native graphic design',right:'April Greiman, Design Quarterly 133'},
+];
+let m2Left=null,m2Matched=0;
+
+function initMatch2(){
+  const lC=document.getElementById('matchLeft2'),rC=document.getElementById('matchRight2');
+  const shuffledL=[...matchPairs2].sort(()=>Math.random()-.5);
+  const shuffledR=[...matchPairs2].sort(()=>Math.random()-.5);
+  lC.innerHTML='';rC.innerHTML='';
+  shuffledL.forEach(p=>{
+    const d=document.createElement('div');d.className='match-item';d.textContent=p.left;
+    d.dataset.key=p.left;d.onclick=()=>selectM2Left(d);lC.appendChild(d);
+  });
+  shuffledR.forEach(p=>{
+    const d=document.createElement('div');d.className='match-item';d.textContent=p.right;
+    d.dataset.key=p.left;d.onclick=()=>selectM2Right(d);rC.appendChild(d);
+  });
+  m2Left=null;m2Matched=0;
+  document.getElementById('matchScore2').textContent='';
+  document.getElementById('matchFeedback2').className='match-feedback';
+  document.getElementById('matchResetBtn2').style.display='none';
+}
+
+function selectM2Left(el){
+  if(el.classList.contains('matched'))return;
+  document.querySelectorAll('#matchLeft2 .match-item').forEach(e=>e.classList.remove('selected'));
+  el.classList.add('selected');m2Left=el;
+}
+
+function selectM2Right(el){
+  if(!m2Left||el.classList.contains('matched'))return;
+  if(m2Left.dataset.key===el.dataset.key){
+    m2Left.classList.remove('selected');m2Left.classList.add('matched');
+    el.classList.add('matched');m2Matched++;
+    document.getElementById('matchScore2').textContent=`${m2Matched} / ${matchPairs2.length} matched`;
+    if(m2Matched===matchPairs2.length){
+      const fb=document.getElementById('matchFeedback2');
+      fb.className='match-feedback show success';fb.textContent='All matched! You know your postmodern theory.';
+    }
+  } else {
+    el.classList.add('wrong');m2Left.classList.add('wrong');
+    setTimeout(()=>{el.classList.remove('wrong');m2Left.classList.remove('wrong','selected');m2Left=null},800);
+    document.getElementById('matchResetBtn2').style.display='inline-block';
+    return;
+  }
+  m2Left=null;
+}
+
+function resetMatch2(){initMatch2()}
+
+/* ============ QUIZ ============ */
+const quizData=[
+  {q:'Which building is widely considered the first true postmodern building?',
+   opts:['The Portland Building (Michael Graves, 1982)','The Vanna Venturi House (Robert Venturi, 1964)','The AT&T Building (Philip Johnson, 1984)','The Neue Staatsgalerie (James Stirling, 1984)'],
+   ans:1,
+   explain:'Robert Venturi designed the Vanna Venturi House in 1964 for his mother in Chestnut Hill, PA. Its deliberate violations of modernist protocol &mdash; a symbolic gable, a broken pediment, asymmetrical openings &mdash; make it the usual starting point for the movement.'},
+  {q:'Robert Venturi\'s famous inversion of Mies van der Rohe\'s "Less is more" was:',
+   opts:['"More is better"','"Less is never enough"','"Less is a bore"','"More or less, it depends"'],
+   ans:2,
+   explain:'"Less is a bore" appears in Venturi\'s 1966 book <em>Complexity and Contradiction in Architecture</em>. It started as a joke, but it became the counter-motto of the entire movement.'},
+  {q:'What is the central distinction in <em>Learning from Las Vegas</em> (Venturi, Scott Brown &amp; Izenour, 1972)?',
+   opts:['Between modernism and premodernism','Between the duck and the decorated shed','Between Las Vegas and Rome','Between high style and vernacular'],
+   ans:1,
+   explain:'The "duck" is a building whose form is its own sign (like the Long Island duck-shaped restaurant). The "decorated shed" is a conventional structure that communicates through applied signage. The book argued that most real architecture is, and should be, decorated sheds.'},
+  {q:'Where and when did the Memphis Group exhibit for the first time?',
+   opts:['Milan, September 1981','New York, October 1982','Paris, April 1980','Tokyo, May 1981'],
+   ans:0,
+   explain:'The Memphis Group\'s first exhibition took place at the Milan furniture fair in September 1981, bringing Ettore Sottsass\'s Carlton Bookcase and Casablanca Sideboard &mdash; along with work by Michele De Lucchi, Martine Bedin, and others &mdash; to international attention.'},
+  {q:'Which Memphis Group object is usually cited as the movement\'s defining piece?',
+   img:'images/Sottsass_Casablanca.jpg',
+   opts:['The Proust Armchair (Mendini)','The Carlton Bookcase (Sottsass)','The First Chair (De Lucchi)','The Super Lamp (Bedin)'],
+   ans:1,
+   explain:'Sottsass\'s Carlton Bookcase &mdash; a particleboard totem covered in clashing plastic laminate &mdash; is the single most reproduced Memphis object and the image that travelled globally after the 1981 Milan exhibition.'},
+  {q:'Which Michael Graves product became the best-selling kettle in the world?',
+   opts:['The 9091 (a two-note whistle)','The 9093 "Bird Kettle" for Alessi','The Graves Target Stovetop','The Humana Tea Service'],
+   ans:1,
+   explain:'The 9093 kettle &mdash; polished stainless steel with a cobalt-blue handle and a little red plastic bird that whistles on the spout &mdash; was designed by Graves for Alessi in 1985. It is the defining consumer object of postmodern design.'},
+  {q:'Which Swiss typographer systematically broke the rules of the International Typographic Style from within, teaching at Basel?',
+   opts:['Armin Hofmann','Emil Ruder','Wolfgang Weingart','Max Miedinger'],
+   ans:2,
+   explain:'Wolfgang Weingart taught at the Basel School of Design from 1968. His covers for <em>Typographische Monatsbl&auml;tter</em> through the 1970s and 80s worked out his break from the Swiss Style in public, and his American students &mdash; above all April Greiman &mdash; carried the experiments across the Atlantic.'},
+  {q:'What made April Greiman\'s 1986 issue of <em>Design Quarterly</em> ("Does It Make Sense?") historically significant?',
+   opts:['It was the first magazine set entirely in Helvetica','It was produced start-to-finish on an early Macintosh','It was banned in three countries','It featured a cover by Ettore Sottsass'],
+   ans:1,
+   explain:'Greiman produced the entire fold-out poster issue on a Macintosh II using MacPaint and MacDraw. It demonstrated to a generation of skeptical designers that computer-native graphic design could produce work of real ambition.'},
+  {q:'Which book first named "post-modern architecture" as a movement and popularized the claim that modernism "died" with the demolition of Pruitt-Igoe?',
+   opts:['<em>Complexity and Contradiction</em> by Venturi','<em>Learning from Las Vegas</em> by Venturi, Scott Brown &amp; Izenour','<em>The Language of Post-Modern Architecture</em> by Charles Jencks','<em>Delirious New York</em> by Rem Koolhaas'],
+   ans:2,
+   explain:'Charles Jencks\'s 1977 book coined the term as a movement label and dramatized the claim that "modern architecture died in St. Louis, Missouri on July 15, 1972 at 3:32 pm" with the demolition of the Pruitt-Igoe public housing project.'},
+  {q:'Which European building is widely regarded as the finest postmodern building in the world?',
+   opts:['The Pompidou Centre (Piano &amp; Rogers)','The Neue Staatsgalerie, Stuttgart (James Stirling)','The Grande Arche de la D&eacute;fense','The Humana Building (Michael Graves)'],
+   ans:1,
+   explain:'James Stirling\'s 1984 extension to the Stuttgart state gallery combines stone rustication, a central open rotunda, bright green window frames, pink and blue handrails, and a public pathway cutting through the building. Its rigorous composition holds it together where weaker postmodern buildings collapse into pastiche.'},
+];
+
+let quizAnswers=[], quizLocked=[];
+
+function initQuiz(){
+  const wrap=document.getElementById('quizWrap');wrap.innerHTML='';
+  quizAnswers=new Array(quizData.length).fill(-1);
+  quizLocked=new Array(quizData.length).fill(false);
+  document.getElementById('resultsCard').classList.remove('show');
+
+  quizData.forEach((q,qi)=>{
+    let imgHtml=q.img?`<div class="q-img"><img src="${q.img}" alt="Quiz image" loading="lazy"></div>`:'';
+    let optsHtml=q.opts.map((o,oi)=>`
+      <div class="q-opt" data-qi="${qi}" data-oi="${oi}" onclick="selectQuizOpt(${qi},${oi})">
+        <span class="letter">${String.fromCharCode(65+oi)}</span><span>${o}</span>
+      </div>`).join('');
+    wrap.innerHTML+=`
+      <div class="q-card">
+        <div class="q-num">Question ${qi+1} of ${quizData.length}</div>
+        ${imgHtml}
+        <div class="q-text">${q.q}</div>
+        <div class="q-options">${optsHtml}</div>
+        <div class="q-feedback" id="qfb${qi}"></div>
+      </div>`;
+  });
+
+  wrap.innerHTML+=`<div style="text-align:center;margin-top:24px"><button class="btn-start" onclick="submitQuiz()">Submit Answers</button></div>`;
+}
+
+function selectQuizOpt(qi,oi){
+  if(quizLocked[qi])return;
+  quizAnswers[qi]=oi;
+  document.querySelectorAll(`.q-opt[data-qi="${qi}"]`).forEach(e=>{
+    e.classList.remove('selected');
+    if(parseInt(e.dataset.oi)===oi)e.classList.add('selected');
+  });
+}
+
+function submitQuiz(){
+  let score=0;
+  quizData.forEach((q,qi)=>{
+    quizLocked[qi]=true;
+    const opts=document.querySelectorAll(`.q-opt[data-qi="${qi}"]`);
+    opts.forEach(o=>{
+      o.classList.remove('selected');
+      const oi=parseInt(o.dataset.oi);
+      if(oi===q.ans)o.classList.add('correct');
+      else if(oi===quizAnswers[qi])o.classList.add('wrong');
+    });
+    const fb=document.getElementById('qfb'+qi);
+    if(quizAnswers[qi]===q.ans){score++;fb.className='q-feedback show right';fb.innerHTML='Correct! '+q.explain;}
+    else{fb.className='q-feedback show wrong';fb.innerHTML='Not quite. '+q.explain;}
+  });
+
+  const pct=Math.round(score/quizData.length*100);
+  const rc=document.getElementById('resultsCard');rc.classList.add('show');
+  const ring=document.getElementById('scoreRing');
+  ring.className='score-ring '+(pct>=70?'pass':'fail');
+  document.getElementById('scoreNum').textContent=pct+'%';
+  document.getElementById('resultsTitle').textContent=pct>=70?'Well Done!':'Keep Studying';
+  document.getElementById('resultsMsg').textContent=`You got ${score} out of ${quizData.length} correct.`+(pct>=70?' You have a solid understanding of postmodern design.':' Review the lesson sections and try again.');
+}
+
+function retryQuiz(){initQuiz();window.scrollTo({top:document.getElementById('quizWrap').offsetTop-100,behavior:'smooth'})}
+
+/* ============ INIT ============ */
+initMatch();
+initMatch2();
+initQuiz();
+</script>
+</body>
+</html>
